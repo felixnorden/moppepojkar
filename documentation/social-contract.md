@@ -1,5 +1,7 @@
 # Team Social Contract
 
+<https://theagileexecutive.com/tag/social-contract/>
+
 ## Whole group culture
 
 - Be on time for meetings
