@@ -21,7 +21,7 @@ The following links can be used for navigation throughout the repo:
 | Jesper Blidkvist | jesbli@student.chalmers.se | konglobemeralt |
 | Anton Kimfors|                           |               |
 | Marcus Lindvärn|                         |               |
-| Kevin Solovjov|                          |               |
+| Kevin Solovjov| solovjov@student.chalmers.se | Nightingale1997 |
 | Anthony Kalcic| kalcic@student.chalmers.se | NinjaWazzzabi |
 | Emil Jansson | jaemil@student.chalmers.se | EmiljanQ3 |
 | Elias Burström|                          |               |
