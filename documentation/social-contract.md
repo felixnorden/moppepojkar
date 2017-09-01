@@ -1,6 +1,11 @@
 # Team Social Contract
 
-<https://theagileexecutive.com/tag/social-contract/>
+- [Team Social Contract](#team-social-contract)
+    - [Whole group culture](#whole-group-culture)
+    - [Group workflow](#group-workflow)
+    - [Meetings](#meetings)
+    - [Smaller group requirements](#smaller-group-requirements)
+    - [References](#references)
 
 ## Whole group culture
 
@@ -26,13 +31,22 @@
     - Every commit will have to be documented before it is pushed to master
     - More info can be found in the [git workflow ADD LINK](ADD LINK)
 - TDD is enforced for everyone
-- BDD will be used where it is necessary
+- BDD will be used **if** it is necessary
 - Code will not pushed unless tests are passing
+- Sequenced versioning, i.e A.B.C
+    - A is a breaking release
+    - B is a major release
+    - C is patches and bug fixes.
 
 ## Meetings
 
 - Whole group meetings will be held once a week
     - Will be for 2 hours
+- The project manager will be the chairman of each meeting
+- When a discussion is held on a specific subject the following rules apply:
+    - Switching subject is prohibited until the current discussion is finished
+    - No request for the right of speech will be made if it will be unrelated
+- The secretary for the upcoming meeting will be decided upon at the end of the previous meeting
 - Daily stand ups for the smaller groups
 - 2-3 stand ups for whole group meetings
 
@@ -40,3 +54,7 @@
 
 - Groups will be kept flexible
 - Documentation needs to be made for each meeting
+
+## References
+
+[Social Contract](https://theagileexecutive.com/tag/social-contract/)
