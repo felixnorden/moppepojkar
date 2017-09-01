@@ -1,0 +1,5 @@
+Reflections about the lego exercise
+
+-Check the SCRUM board, verify that no other person is assigned to a task so that two persons don't work on the same task at the same time.
+-I've learned that we as a team has the power to negotiate with the product owner about the tasks that should be done in the sprints.
+-It's very hard to estimate the amount of work for each story. Since we didn't have a lot of time to estimate a lot of them were mere guesses. The SCRUM masters roll feels more defined after the exercise and especially the roll as a mediator when breaking down stories and grading them with points relevant to velocity. 
