@@ -14,4 +14,14 @@ The following links can be used for navigation throughout the repo:
 |     Name     |          :email:          |    :octocat:  |
 |--------------|---------------------------|---------------|
 | Felix Nordén | feljo@student.chalmers.se |  felixnorden  |
-|              |                           |               |
+| Zack Lundqvist  |                        |               |
+| Edvin Meijer |                           |               |
+| Hampus Carlsson|                         |               |
+| Jesper Blidqvist |                       |               |
+| Anton Kimfors|                           |               |
+| Marcus Lindvärn|                         |               |
+| Kevin Solovjov|                          |               |
+| Anthony Kalcic|                          |               |
+| Emil Jansson |                           |               |
+| Elias Burström|                          |               |
+| Hugo Ekelund |                           |               |
