@@ -17,7 +17,7 @@ The following links can be used for navigation throughout the repo:
 | Felix Nordén | feljo@student.chalmers.se |  felixnorden  |
 | Zack Lundqvist  |                        |               |
 | Edvin Meijer |                           |               |
-| Hampus Carlsson|                         |               |
+| Hampus Carlsson| champus@student.chalmers.se | isZumpo   |
 | Jesper Blidkvist | jesbli@student.chalmers.se | konglobemeralt |
 | Anton Kimfors|                           |               |
 | Marcus Lindvärn|                         |               |
