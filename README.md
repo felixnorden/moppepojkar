@@ -23,6 +23,6 @@ The following links can be used for navigation throughout the repo:
 | Marcus Lindvärn|                         |               |
 | Kevin Solovjov|                          |               |
 | Anthony Kalcic| kalcic@student.chalmers.se | NinjaWazzzabi |
-| Emil Jansson |                           |               |
+| Emil Jansson | jaemil@student.chalmers.se | EmiljanQ3 |
 | Elias Burström|                          |               |
 | Hugo Ekelund |                           |               |
