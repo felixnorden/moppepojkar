@@ -32,6 +32,7 @@
     - More info can be found in the [git workflow ADD LINK](ADD LINK)
 - TDD is enforced for everyone
 - BDD will be used **if** it is necessary
+- Continuous integration
 - Code will not pushed unless tests are passing
 - Sequenced versioning, i.e A.B.C
     - A is a breaking release
