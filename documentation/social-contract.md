@@ -25,14 +25,12 @@
 
 ## Group workflow
 
-- Pair programming will kept be in focus during the work process
-- All code will be reviewed by another group member
-    - After a review, the code will be revised before a merge can be made to the master branch
-    - Every commit will have to be documented before it is pushed to master
-    - More info can be found in the [Git workflow](./git-workflow.md)
+- Pair programming will be a focal point during the work process
+- All code will be reviewed by another group member according to [Code reviews](./code-reviews.md)
+- Every contributor will employ the [Git workflow](./git-workflow.md)
+- Continuous integration is enforced
 - TDD is enforced for everyone
 - BDD will be used **if** it is necessary
-- Continuous integration
 - Code will not pushed unless tests are passing
 - Sequenced versioning, i.e A.B.C
     - A is a breaking release
