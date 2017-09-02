@@ -1,0 +1,3 @@
+language: java
+notifications: 
+	slack: moppepojkar:nC9dOhmtdPoSgbW3Awqm9p92  
