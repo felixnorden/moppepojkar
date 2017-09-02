@@ -29,7 +29,7 @@
 - All code will be reviewed by another group member
     - After a review, the code will be revised before a merge can be made to the master branch
     - Every commit will have to be documented before it is pushed to master
-    - More info can be found in the [git workflow ADD LINK](ADD LINK)
+    - More info can be found in the [Git workflow](./git-workflow.md)
 - TDD is enforced for everyone
 - BDD will be used **if** it is necessary
 - Continuous integration
