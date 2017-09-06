@@ -8,9 +8,12 @@ Connect the two battery cables and enable the turningly power switch. This start
 To enable driving, turn on the switch under the car, this gives the esc power.
 
 ## Setup a wifi network
-Start a wifi network with the 
+Start a wifi network with the following configurations:
+
 SSID/Name: JuanDev
+
 Password: 12345678
+
 The raspberry pi will connect to this wifi network. Find the local ip-address for the raspberry.
 
 ## Connect to the car with the app
