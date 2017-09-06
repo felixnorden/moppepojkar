@@ -1,11 +1,11 @@
 # How to manually controll the moped
 
 ## Download the app
-Download the app at: , make sure to enable unknown sources.
+Download the app from: <https://github.com/sics-sse/moped/tree/master/WirelessIno>, build it and make sure to enable unknown sources on your phone.
 
 ## Start the car
-Connect the two battery cables and enable the turningly power switch. This starts all systems.
-To enable driving, turn on the switch under the car, this gives the esc power.
+Connect the two battery cables and enable the power by turning on the switch. This will start all systems.
+To enable driving, turn on the switch under the car, this gives the ESC power.
 
 ## Setup a wifi network
 Start a wifi network with the following configurations:
