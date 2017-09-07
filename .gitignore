@@ -1,6 +1,7 @@
 # Built application files
 *.apk
 *.ap_
+!resources/WirelessIno.apk
 
 # Files for the ART/Dalvik VM
 *.dex
