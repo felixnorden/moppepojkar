@@ -1,7 +1,7 @@
 # How to manually controll the moped
 
 ## Download the app
-Download the app from: <https://github.com/sics-sse/moped/tree/master/WirelessIno>, build it and make sure to enable unknown sources on your phone.
+Build the app from: <https://github.com/sics-sse/moped/tree/master/WirelessIno>, or download the apk from slack: <https://moppepojkar.slack.com/files/virtuality/F6Y9GNFRN/wirelessino.apk> and make sure to enable unknown sources on your phone.
 
 ## Start the car
 Connect the two battery cables and enable the power by turning on the switch. This will start all systems.
