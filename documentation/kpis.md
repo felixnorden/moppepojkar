@@ -32,6 +32,6 @@ The delegated user story will then be split up into different use cases with a s
 At the weekly sprint review, the Product Owner will be asked to grade his/her value of the current product.
 This will then be set into perspective with the agreed Produced velocity. If there are big differences, then actions regarding adaptation and negotiation with the Product Owner will be taken. This way, the communication between the team and the Product Owner will improve and follow up questions can be asked for eliciting clearer requirements.
 
-## Code coverage
+## Code/test coverage
 
 Charts based upon test coverage on produced code.
