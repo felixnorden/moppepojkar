@@ -33,9 +33,16 @@ The objective with this method is to have an estimation of the size of each stor
 
 ## Product Owner satisfaction
 
-At the weekly sprint review, the Product Owner will be asked to grade his/her value of the current product.
-This will then be set into perspective with the agreed Produced velocity. If there are big differences, then actions regarding adaptation and negotiation with the Product Owner will be taken. This way, the communication between the team and the Product Owner will improve and follow up questions can be asked for eliciting clearer requirements.
+### Strategy for staying on track
+A problem with not having the Product Owner available to you while working at all times is 
+getting off track and not producing what the owner actually wants. To make sure that this does not happen we are going to use product owner satisfaction as a kpi.
+
+At the weekly sprint review, the Product Owner will be asked to grade his/her value of the current product. This will then be set into perspective with the agreed Produced velocity. If there are big differences, then actions regarding adaptation and negotiation with the Product Owner 
+
 
 ## Code/test coverage
 
 Charts based upon test coverage on produced code.
+
+### Strategy for code quality
+To reduce the risk of writing unnecessary or untested code we have chosen to use code coverage as an kpi. Striving for a high code coverage will result in cleaner code that works as intended. We will use a plugin that automatically calculates code coverage. Testing coverage does not mean that the code is perfect, it is just as good as the test.
