@@ -1,4 +1,4 @@
-# Retrospective
+# Sprint Retrospective
 
 This file is a template that encapsulates the four key factors in having a successful sprint retrospective. Use these questions to allow each team member to reflect upon the work of the now ending sprint, and to find a possibly more effective workflow for the upcoming sprint.
 
