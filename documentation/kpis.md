@@ -4,7 +4,7 @@
     - [Individual velocity](#individual-velocity)
     - [Produced velocity](#produced-velocity)
     - [Product Owner satisfaction](#product-owner-satisfaction)
-    - [Code coverage](#code-test-coverage)
+    - [Code coverage](#codetest-coverage)
 
 The following KPIs are the primary indicators that will be used during the project's iterations to facilitate scrum retrospectives and reviews. 
 
