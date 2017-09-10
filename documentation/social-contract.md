@@ -19,7 +19,7 @@
     - If a member won't adapt to the feedback given, further actions will be taken
     - In the most extreme case, the member may be removed from the group
 - Each member will attend course lectures to their own ability
-    - If they are going to miss a lecture, they will need to inform the others beforehand
+    - If they are going to miss a lecture, they will need to inform the others beforehand as to avoid any loss of communication afterwards
     - If a member misses a lecture, the others will summarize the lecture and the member can read more in-depth on the repository
 - Each member will keep their work updated on the Scrum board
 
@@ -40,7 +40,7 @@
 ## Meetings
 
 - Whole group meetings will be held once a week
-    - Will be for 2 hours
+    - Will be for ~2 hours
 - The project manager will be the chairman of each meeting
 - When a discussion is held on a specific subject the following rules apply:
     - Switching subject is prohibited until the current discussion is finished
