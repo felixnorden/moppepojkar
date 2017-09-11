@@ -36,6 +36,12 @@ This section will contain the Sprint Goal for the sprint, which should describe:
 
 #### How
 
+The primary goal of this sprint will be to set up the MOPED in a configuration where it will be able to work autonomously using any, already available, plugin the work will be split up among three smaller teams:
+
+- Architecture - Whom will manage the overall structure of the MOPED's software, and how the different modules interact with each other when the it's running.
+- Logic - Whom will manage the logic and calculations for the plugin that the team will develop.
+- Communication - Whom will manage the interaction between the controller/phone and the MOPED for switching states between manual and autonomous.
+
 ##### Architecture
 
 - "Set car to move autonomously"
@@ -51,7 +57,9 @@ This section will contain the Sprint Goal for the sprint, which should describe:
 
 ### Why
 
-The primary goal set 
+This goal has been set with taking the overall overhead from setting things up into account. With each of the smaller teams managing their own layer of the vertically sliced user stories, they will become more familiar with its already existing eco system and therefore be able to work in other, more diversified teams in future sprints.
+
+Even though learning a new codebase has a steep learning curve, we still want to produce some sort of value for the PO. Therefore, we at least plan to make the MOPED act autonomously, without any interaction of a user. 
 
 ---
 
