@@ -1,7 +1,7 @@
 package com_protocols;
 
 /**
- * Interface for an InputReceiver that listen to data inputted.
+ * Interface for an InputReceiver that listens for data input.
  */
 public interface InputReciever {
     /**
