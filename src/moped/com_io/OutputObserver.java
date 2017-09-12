@@ -1,4 +1,4 @@
-package com_protocols;
+package com_io;
 
 /**
  * Interface for observers that listen for data outputs.

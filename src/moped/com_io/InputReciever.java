@@ -1,4 +1,4 @@
-package com_protocols;
+package com_io;
 
 /**
  * Interface for an InputReceiver that listens for data input.
