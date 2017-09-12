@@ -15,7 +15,7 @@ The following links can be used for navigation throughout the repo:
 |     Name     |          :email:          |    :octocat:  |
 |--------------|---------------------------|---------------|
 | Felix Nordén | feljo@student.chalmers.se |  felixnorden  |
-| Zack Lundqvist  |                        |               |
+| Zack Lundqvist | zackl@student.chalmers.se | ZLundqvist  |
 | Edvin Meijer |edvinme@student.chalmers.se | Sk8eddie    |
 | Hampus Carlsson| champus@student.chalmers.se | isZumpo   |
 | Jesper Blidkvist | jesbli@student.chalmers.se | konglobemeralt |
