@@ -1,7 +1,7 @@
 package com_protocols;
 
 /**
- * Interface for obervers that listen to data outputted.
+ * Interface for observers that listen for data outputs.
  */
 public interface OutputObserver {
     /**
