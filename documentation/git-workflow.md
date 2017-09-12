@@ -8,32 +8,32 @@ In practice, it works as follows:
 
 ### Steps to Follow:
 
-1. Start with an updated local development branch -- by checking out the dev branch and pulling changes:
+1. Start with an updated local development branch -- by checking out the dev branch and pulling changes:  
 `git checkout development`
 `git pull origin development`
 
-1. Create and checkout a feature branch:
-`git checkout -b initials/fancy-branch-name`
+1. Create and checkout a feature branch:  
+`git checkout -b initials/fancy-branch-name`  
 *Note: LP convention: Your branch name should start with your initials and then a description of your feature (as above).*
 
-1. Do work in your feature branch, committing early and often:
+1. Do work in your feature branch, committing early and often:  
 `git commit -m "Comment about the commit"`
 
-1. Rebase frequently to incorporate upstream changes:
+1. Rebase frequently to incorporate upstream changes:  
 `git fetch origin development`
 `git rebase origin/development`
 
-- or -
+- or -  
 `git checkout development`
 `git pull`
 `git checkout initials/fancy-branch-name`
 `git rebase development`
 
-1. Optional: Perform an interactive rebase (squash) your commits before pushing the branch:
+1. Optional: Perform an interactive rebase (squash) your commits before pushing the branch:  
 `git fetch origin development`
 `git rebase -i origin/development`
 
-1. Once you have reviewed your changes, and verified formatting and intention, push your changes upstream to origin:
+1. Once you have reviewed your changes, and verified formatting and intention, push your changes upstream to origin:  
 `git push -u origin initials/fancy-branch-name`
 
 ### Get Your Code Reviewed (by creating a Pull Request)!
@@ -48,33 +48,33 @@ Your code must be reviewed by **at least one** other developer, preferably two, 
 
 ### Steps to Follow:
 
-1. Pull to update your local master branch:
+1. Pull to update your local master branch:  
 `git checkout master`
 `git pull origin master`
 
-1. Check out a hotfix branch.  **Note:** The hotfix branch name should start with the issue number the work is related to and a brief description. For example: 1234-big-fix
+1. Check out a hotfix branch.  **Note:** The hotfix branch name should start with the issue number the work is related to and a brief description. For example: 1234-big-fix  
 `git checkout -b hotfix-branch-name`
 
-1. Do work in your hotfix branch, committing early and often:
+1. Do work in your hotfix branch, committing early and often:  
 `git commit -m "Comment about the commit"`
 
-1. **VERY IMPORTANT:** Interactive rebase (squash) your commits before merging with development:
-This provides a single commit on master with everything in the hotfix.
+1. **VERY IMPORTANT:** Interactive rebase (squash) your commits before merging with development:  
+This provides a single commit on master with everything in the hotfix.  
 `git fetch origin master`
 `git rebase -i origin/master`
 
-1. See above for details on squashing during a rebase.
-1. Push your changes upstream to get code reviewed
+1. See above for details on squashing during a rebase.  
+1. Push your changes upstream to get code reviewed  
 `git push -u origin hotfix-branch-name`
-1. Merge your changes with master
-`git checkout master`
-`git merge --no-ff hotfix-branch-name`
-1. Back-merge your changes with development
-`git checkout development`
-`git merge --no-ff hotfix-branch-name`
-1. Push your changes upstream
-`git push origin master`
-`git push origin development`
+1. Merge your changes with master  
+`git checkout master`  
+`git merge --no-ff hotfix-branch-name`  
+1. Back-merge your changes with development  
+`git checkout development`  
+`git merge --no-ff hotfix-branch-name`  
+1. Push your changes upstream  
+`git push origin master`  
+`git push origin development`  
 
 ## PRODUCTION RELEASE
 
