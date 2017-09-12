@@ -5,21 +5,23 @@ This document serves to help the group know when they can consider a part of the
 ## Tasks
 
 A task can be considered done when the following is true:
-A description of the task has been written.
-Unit tests have been completed for all testable functions.
-All functionality defined in the task description has been implemented.
-The implementation has been reviewed by at least one person who has not taken part in developing the code.
-The task has been merged with all other tasks in the same user story.
-The task’s function has been confirmed working as intended by testing of the entire user story in relation to already developed functionality.
+
+- A description of the task has been written.
+- Unit tests have been completed for all testable functions.
+- All functionality defined in the task description has been implemented.
+- The implementation has been reviewed by at least one person who has not taken part in developing the code.
+- The task has been merged with all other tasks in the same user story.
+- The task’s function has been confirmed working as intended by testing of the entire user story in relation to already developed functionality.
 
 ## User Stories
 
 A user story can be considered done when the following is true:
-A description of the user story has been written.
-The user story has been divided into tasks.
-All tasks belonging to the user story have been confirmed done.
-The user story has been merged with the main git branch.
-The user story’s function has been confirmed working as intended by testing it as a part of the entire system.
+
+- A description of the user story has been written.
+- The user story has been divided into tasks.
+- All tasks belonging to the user story have been confirmed done.
+- The user story has been merged with the main git branch.
+- The user story’s function has been confirmed working as intended by testing it as a part of the entire system.
 
 ## Epics
 
