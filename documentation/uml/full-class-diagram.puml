@@ -84,6 +84,14 @@ package moped {
 				
 			}
 			
+			+interface InputReciever {
+			
+			}
+			
+			+interface OutputObserver {
+			
+			}
+			
 			class CommunicatorFactory {
 				+ExternalCommunicator getExtComInstance()
 			}
@@ -94,6 +102,9 @@ package moped {
 			
 			ExternalCommunications --> Observer
 			ExternalCommunications --|> ExternalCommunicator
+			
+			ExternalCommunications --> OutputObserver
+			ExternalCommunications --|> InputReciever
 			
 			CommunicatorFactory ..> ExternalCommunicator
 			CommunicatorFactory ..> ExternalCommunications
@@ -110,6 +121,13 @@ package moped {
 
 	}
 
+	package communication_protocols {
+	
+	}
+	
+	app --> communication_protocols
+	moped --> communication_protocols
+	
 	plugin --> com_io
 	
 }
