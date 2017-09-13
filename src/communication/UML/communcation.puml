@@ -1,28 +1,38 @@
 @startuml
-abstract class ComModule
-class ServerComModule
-class ClientComModule
+Communicator <-- AbstractCommunicator
+AbstractCommunicator <-- ClientCommunicator
+AbstractCommunicator <-- ServerCommunicator
+Communicator o- CommunicationListener
+MopedState -o AbstractCommunicator
+MopedState -o Communicator
 
-interface IServerComModule
-interface IServer
 
-interface IClientComModule
-interface IClient
+interface Communicator {
+  +void sendState(MopedState)
+  +void sendState(int)
+  +void addListener(CommunicationListener)
+  +void disconnect()
+}
 
-ServerComModule --|> ComModule
-ClientComModule --|> ComModule
+interface CommunicationListener {
+  +void notifyState(MopedState)
+}
 
-ClientComModule --|> IClientComModule
-ServerComModule --|> IServerComModule
+abstract class AbstractCommunicator{
+  +void methods()
+  +int decode(MopedState)
+  +MopedState encode()
+}
 
-IServerComModule --> IServer
-IClientComModule --> IClient
+class ClientCommunicator{
+  +void connect()
+}
 
-IServerComModule --> DrivingState
-IClientComModule --> DrivingState
+class ServerCommunicator{
+}
 
-enum DrivingState {
-ON (1)
-OFF (0)
+Enum MopedState {
+  MANUAL = 0
+  ACC= 1
 }
 @enduml
