@@ -26,7 +26,7 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 
 	private class CustomButton{
 
-		CustomButton(int sizeX, int sizeY, int posX, int posY, Color color){
+		CustomButton(int sizeX, int sizeY, int posX, int posY, Paint color){
 			isPressed = false;
 			boundingBox = new RectF(sizeX, sizeY, posX, posY);
 			buttonColor = color;
@@ -36,7 +36,7 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 
 		public RectF boundingBox;
 		boolean isPressed;
-		Color buttonColor;
+		Paint buttonColor;
 
 		public RectF getBounds(){
 			return boundingBox;
@@ -44,9 +44,16 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 
 		public void toggle(){
 			isPressed = !isPressed;
+
+			if(isPressed){
+				buttonColor = pRed;
+			}
+			else{
+				buttonColor = pYellow;
+			}
 		}
 
-		Color getColor(){
+		Paint getColor(){
 			return buttonColor;
 		}
 	}
@@ -477,7 +484,7 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 	}
 
 	private void createModeSwitchingButton(){
-		modeButton = new CustomButton(getWidth()-150, getHeight()-150, getWidth()-50, getHeight()-50);
+		modeButton = new CustomButton(getWidth()-150, getHeight()-150, getWidth()-50, getHeight()-50, pYellow);
 	}
 
 	private void drawModeSwitchingButton(Canvas canvas){
@@ -485,8 +492,5 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 	}
 
 
-
-
-	}
 
 }

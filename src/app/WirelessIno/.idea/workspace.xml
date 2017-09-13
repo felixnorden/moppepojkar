@@ -53,11 +53,15 @@
       <file leaf-file-name="PadView.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/se/sics/sse/fresta/wirelessino/PadView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="47" column="5" selection-start-line="47" selection-start-column="5" selection-end-line="47" selection-end-column="5" />
+            <state relative-caret-position="275">
+              <caret line="48" column="35" selection-start-line="48" selection-start-column="35" selection-end-line="48" selection-end-column="35" />
               <folding>
-                <element signature="e#2471#2523#0" expanded="true" />
-                <element signature="e#3015#3067#0" expanded="true" />
+                <element signature="e#1169#1170#0" expanded="true" />
+                <element signature="e#1196#1197#0" expanded="true" />
+                <element signature="e#1362#1363#0" expanded="true" />
+                <element signature="e#1389#1390#0" expanded="true" />
+                <element signature="e#3112#3164#0" expanded="true" />
+                <element signature="e#3656#3708#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -2187,11 +2191,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/se/sics/sse/fresta/wirelessino/PadView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="47" column="5" selection-start-line="47" selection-start-column="5" selection-end-line="47" selection-end-column="5" />
+        <state relative-caret-position="275">
+          <caret line="48" column="35" selection-start-line="48" selection-start-column="35" selection-end-line="48" selection-end-column="35" />
           <folding>
-            <element signature="e#2471#2523#0" expanded="true" />
-            <element signature="e#3015#3067#0" expanded="true" />
+            <element signature="e#1169#1170#0" expanded="true" />
+            <element signature="e#1196#1197#0" expanded="true" />
+            <element signature="e#1362#1363#0" expanded="true" />
+            <element signature="e#1389#1390#0" expanded="true" />
+            <element signature="e#3112#3164#0" expanded="true" />
+            <element signature="e#3656#3708#0" expanded="true" />
           </folding>
         </state>
       </provider>
