@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.graphics.Paint.Align;
 import android.util.Log;
@@ -109,6 +110,11 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 
 
 			drawText(canvas, p);
+
+			createModeSwitchingButton(canvas);
+
+
+
 		} catch (Exception e) {
 			Log.e(Main.TAG, "onDraw - ", e);
 		}
@@ -425,6 +431,10 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 			}
 		}
 
+	}
+
+	private void createModeSwitchingButton(Canvas canvas){
+		canvas.drawRoundRect(new RectF(getWidth() - 300, 200, getWidth()-50, 50), 6, 6, pYellow);
 	}
 
 }
