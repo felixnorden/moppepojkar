@@ -19,7 +19,6 @@ class CustomButton{
         buttonColor = color;
 
         initColors();
-
     }
 
     Paint pYellow, pRed;
@@ -28,23 +27,36 @@ class CustomButton{
     boolean isPressed;
     Paint buttonColor;
 
+    /**
+     * gets the bounding box of the button as defined by a RectF object.
+     * @return Return RectF
+     */
     public RectF getBounds(){
         return boundingBox;
     }
 
+    /**
+     * Toggles the isPressed state of the button
+     */
     public void toggle(){
         isPressed = !isPressed;
-
         changeColor();
     }
 
-    void initColors(){
+    /**
+     * Initiates the colours used by the button to show current state.
+     */
+    private void initColors(){
         pYellow = new Paint();
         pYellow.setColor(Color.YELLOW);
         pRed = new Paint();
         pRed.setColor(Color.RED);
     }
 
+
+    /**
+     * Changes the colour of the button depending on current state.
+     */
     private void changeColor(){
         if(isPressed){
             buttonColor = pRed;
@@ -54,6 +66,10 @@ class CustomButton{
         }
     }
 
+    /**
+     * Returns the colour of the button as a Paint object.
+     * @return Return Paint
+     */
     Paint getColor(){
         return buttonColor;
     }
