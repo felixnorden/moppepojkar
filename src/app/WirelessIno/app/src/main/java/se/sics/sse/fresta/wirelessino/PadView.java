@@ -484,7 +484,7 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 	}
 
 	private void createModeSwitchingButton(){
-		modeButton = new CustomButton(getWidth()-150, getHeight()-150, getWidth()-50, getHeight()-50, pYellow);
+		modeButton = new CustomButton(getWidth()-250, getHeight()-150, getWidth()-50, getHeight()-50, pYellow);
 	}
 
 	private void drawModeSwitchingButton(Canvas canvas){
