@@ -1,0 +1,28 @@
+@startuml
+abstract class ComModule
+class ServerComModule
+class ClientComModule
+
+interface IServerComModule
+interface IServer
+
+interface IClientComModule
+interface IClient
+
+ServerComModule --|> ComModule
+ClientComModule --|> ComModule
+
+ClientComModule --|> IClientComModule
+ServerComModule --|> IServerComModule
+
+IServerComModule --> IServer
+IClientComModule --> IClient
+
+IServerComModule --> DrivingState
+IClientComModule --> DrivingState
+
+enum DrivingState {
+ON
+OFF
+}
+@enduml
