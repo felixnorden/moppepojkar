@@ -22,7 +22,7 @@ IServerComModule --> DrivingState
 IClientComModule --> DrivingState
 
 enum DrivingState {
-ON
-OFF
+ON (1)
+OFF (0)
 }
 @enduml
