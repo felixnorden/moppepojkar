@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.graphics.Paint.Align;
 import android.util.Log;
@@ -21,6 +22,44 @@ import android.content.pm.ActivityInfo;
 import android.app.Activity;
 
 public class PadView extends SurfaceView implements Callback, Runnable {
+
+
+	private class CustomButton{
+
+		CustomButton(int sizeX, int sizeY, int posX, int posY, Paint color){
+			isPressed = false;
+			boundingBox = new RectF(sizeX, sizeY, posX, posY);
+			buttonColor = color;
+			//modeButton = modeButton = new RectF(getWidth()-150, getHeight()-150, getWidth()-50, getHeight()-50);;
+		}
+
+
+		public RectF boundingBox;
+		boolean isPressed;
+		Paint buttonColor;
+
+		public RectF getBounds(){
+			return boundingBox;
+		}
+
+		public void toggle(){
+			isPressed = !isPressed;
+
+			if(isPressed){
+				buttonColor = pRed;
+			}
+			else{
+				buttonColor = pYellow;
+			}
+		}
+
+		Paint getColor(){
+			return buttonColor;
+		}
+	}
+
+	CustomButton modeButton;
+
 	private boolean run;
 	private SurfaceHolder sh;
         private Paint p, pRed, pBlue, pYellow, pControls;
@@ -32,6 +71,7 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 				idMap[]   = new int[balls.length]; // pointerId depends on how many fingers are pressed and can exceed the number of balls. Thus, a mapping is needed.
 	private int textSize, w, h;
 	public Rect screen, bar1, bar2, notif;
+
 	private Thread tDraw;
 	private Bitmap bluinoBMP;
 	public static final int UMBRAL_TACTIL = 70;
@@ -109,6 +149,11 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 
 
 			drawText(canvas, p);
+
+			drawModeSwitchingButton(canvas);
+
+
+
 		} catch (Exception e) {
 			Log.e(Main.TAG, "onDraw - ", e);
 		}
@@ -200,6 +245,15 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 														// secret routine in
 														// Arduino
 				}
+
+
+
+				if (modeButton.getBounds().contains(x, y)) {
+						Log.i(Main.TAG,
+								"Clicked mode switch button ");
+					modeButton.toggle();
+				}
+
 	
 				/* Check if a new ball should be activated */
 				for (int i=0; i<balls.length; i++) {
@@ -391,7 +445,9 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 
 		bluinoBMP = resizeImage(this.getContext(), R.drawable.bluinotooth,
 				7 * w, 2 * getHeight() / 8);
-		
+
+		createModeSwitchingButton();
+
 		for (int i=0; i<idMap.length; i++) {
 			idMap[i] = -1;
 		}
@@ -426,5 +482,15 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 		}
 
 	}
+
+	private void createModeSwitchingButton(){
+		modeButton = new CustomButton(getWidth()-250, getHeight()-150, getWidth()-50, getHeight()-50, pYellow);
+	}
+
+	private void drawModeSwitchingButton(Canvas canvas){
+		canvas.drawRoundRect(modeButton.getBounds(), 6, 6, modeButton.getColor());
+	}
+
+
 
 }
