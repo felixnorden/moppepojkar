@@ -1,9 +1,6 @@
 package test;
 
-import com.ClientCommunicator;
-import com.CommunicationListener;
-import com.Communicator;
-import com.ServerCommunicator;
+import com.*;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -22,7 +19,13 @@ class ClientCommunicatorTest {
         CommunicationListener cl = new CommunicationListener() {
             @Override
             public void onConnection() {
+                System.out.println("Yes");
                 vars.add(true);
+            }
+
+            @Override
+            public void onStateChange(MopedStates stateChange) {
+
             }
         };
 
@@ -34,10 +37,24 @@ class ClientCommunicatorTest {
             ServerSocket serverSocket = new ServerSocket(9501);
             serverSocket.setSoTimeout(5000);
             serverSocket.accept();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        try {
+            //Wait up to 5 seconds before failing
+            for (int i = 0; i < 100; i++) {
+                Thread.sleep(50);
+                if (vars.size() == 1) {
+                    break;
+                }
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(vars.size());
         assertTrue(vars.size() == 1);
         assertTrue(vars.get(0));
     }

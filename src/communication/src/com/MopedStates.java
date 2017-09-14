@@ -41,7 +41,7 @@ public enum MopedStates {
      * @return MopedStates enum
      */
     public static MopedStates parseInt(int mopedState) {
-        if (mopedState <= MopedStates.values().length && mopedState > 0) {
+        if (mopedState <= MopedStates.values().length && mopedState >= 0) {
             return MopedStates.values()[mopedState];
         }
         return null;

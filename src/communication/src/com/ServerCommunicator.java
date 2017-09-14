@@ -1,5 +1,7 @@
 package com;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 
@@ -12,6 +14,7 @@ public class ServerCommunicator extends AbstractCommunicator {
 
         try {
             serverSocket = new ServerSocket(port);
+            serverSocket.setSoTimeout(10000);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -33,9 +36,14 @@ public class ServerCommunicator extends AbstractCommunicator {
                 try {
                     socket = serverSocket.accept();
                     notifyConnected();
+                    this.inputStream = new DataInputStream(socket.getInputStream());
+                    this.outputStream = new DataOutputStream(socket.getOutputStream());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            //Run update if connected to socket
+            }else {
+                this.update();
             }
 
             try {

@@ -2,6 +2,7 @@ package test;
 
 import com.CommunicationListener;
 import com.Communicator;
+import com.MopedStates;
 import com.ServerCommunicator;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -23,6 +24,11 @@ class ServerCommunicatorTest {
             @Override
             public void onConnection() {
                 vars.add(true);
+            }
+
+            @Override
+            public void onStateChange(MopedStates stateChange) {
+
             }
         };
 
