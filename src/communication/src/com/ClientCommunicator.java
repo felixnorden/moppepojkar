@@ -1,5 +1,7 @@
 package com;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
@@ -31,9 +33,14 @@ public class ClientCommunicator extends AbstractCommunicator {
                 try {
                     socket = new Socket(ip, this.port);
                     notifyConnected();
+                    this.inputStream = new DataInputStream(socket.getInputStream());
+                    this.outputStream = new DataOutputStream(socket.getOutputStream());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            }else {
+                //Run update if connected to socket
+                this.update();
             }
 
             try {
