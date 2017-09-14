@@ -18,23 +18,24 @@ public class PreliminaryDistanceLogicTest {
 
         PreliminaryDistanceLogic logic = new PreliminaryDistanceLogic(1, 35, 2,4);
 
-        logic.enginePower(35,0);
-        int b = logic.enginePower(35,0);
+        logic.enginePower(35);
+        int b = logic.enginePower(35);
         System.out.println(b);
         assertEquals(4, b);
 
 
-        int a = logic.enginePower(40,0);
+        int a = logic.enginePower(40);
         System.out.println(a + "  " + b);
         assertTrue(a>b);
         try {Thread.sleep(2000);
         }catch (Exception e){}
-        logic.enginePower(35, 5);
-        b = logic.enginePower(25, 5);
+        logic.enginePower(35);
+        b = logic.enginePower(25);
         System.out.println(b);
         assertEquals(3,b);
 
     }
+
 
 
 }
