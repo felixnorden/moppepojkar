@@ -6,56 +6,77 @@ package distancekeeper;
 
 public class PreliminaryDistanceLogic {
 
-    private float targetRelation; //The relation between distance offset and target relative speed.
+    private float offsetToSpeedRelation; //The relation between distance offset and target relative speed.
 
-    private int targetDistance; //Value in cm
-    private static int distanceErrorMargin;
+    private float optimalDistance; //Value in cm
+    private float velocityErrorMargin; //Value in cm/s
 
-    private int lastEnginePower; //Value between -100 and 100
+    private int powerIndex; //Index for powerList
 
-    private int lastDistanceToTarget; //Value in cm
+    private float lastDistanceToTarget; //Value in cm, value created with sensor data the first time the loop executes
 
     private long lastSystemTime; //Value in nanoseconds
 
-    public PreliminaryDistanceLogic(float targetRelation, int targetDistance) {
-        this.targetRelation = targetRelation;
-        this.targetDistance = targetDistance;
-    }
+    private boolean isFirstTime = true;
 
-    public int enginePower(int distanceToTarget, int currentVelocity){
-        int currentEnginePower; //Value in cm
-        int currentDistanceToTarget; //Value between -100 and 100
-        long currentSystemTime; //Value in cm
-        long deltaSystemTime; //Value in nanoseconds
-        double relativeSpeed; //Value in cm/s          (cm/nanosecond * 10^-7 = m/s)
-
-        determineTargetSpeed();
-        determineDeltaTime();
-        determineRelativeSpeed();
-        determineNewEnginePower();
-        updateValues();
-
-        return 0;   //TODO currentEnginePower;
-    }
-
-    private void determineTargetSpeed(){
+    public PreliminaryDistanceLogic(float offsetToSpeedRelation, float optimalDistance, float velocityErrorMargin, int startingPowerIndex) {
+        this.offsetToSpeedRelation = offsetToSpeedRelation;
+        this.optimalDistance = optimalDistance;
+        this.velocityErrorMargin = velocityErrorMargin;
+        this.powerIndex = startingPowerIndex;
 
     }
 
-    private  void determineDeltaTime(){
+    public int enginePower(float distanceToTarget) {
+
+        if (isFirstTime) {
+            this.lastDistanceToTarget = distanceToTarget;
+            this.lastSystemTime = System.currentTimeMillis();
+            this.isFirstTime = false;
+        } else {
+
+            float targetSpeed = determineTargetSpeed(distanceToTarget);
+            float deltaTime = determineDeltaTime();
+            float relativeSpeed = determineRelativeSpeed(deltaTime, distanceToTarget);
+            setPowerIndex(relativeSpeed, targetSpeed);
+            updateValues(distanceToTarget);
+        }
+
+        return powerIndex;
 
     }
 
-    private  void determineRelativeSpeed(){
+
+
+    private float determineTargetSpeed(float distanceToTarget){
+
+        return ( distanceToTarget - optimalDistance) * offsetToSpeedRelation;
+    }
+
+    private  float determineDeltaTime(){
+            long currentSystemTime = System.currentTimeMillis();
+            float deltaTime = ((float)(currentSystemTime-lastSystemTime)/1000); //milliseconds to seconds
+            lastSystemTime = currentSystemTime;
+
+            return deltaTime;
+    }
+
+    private  float determineRelativeSpeed(float deltaTime, float distanceToTarget){
+
+        return (lastDistanceToTarget - distanceToTarget)/deltaTime;
+    }
+
+    private void updateValues(float distanceToTarget){
+        lastDistanceToTarget=distanceToTarget;
 
     }
 
-    private void updateValues(){
-
-    }
-
-    private void determineNewEnginePower(){
-
+    private void setPowerIndex(float relativeSpeed, float targetSpeed){
+        if(relativeSpeed>(targetSpeed+velocityErrorMargin)){// TODO limit to size of list
+            powerIndex--;
+        }else if(relativeSpeed<(targetSpeed-velocityErrorMargin)){// TODO limit to size of list
+            powerIndex++;
+        }
     }
 
 

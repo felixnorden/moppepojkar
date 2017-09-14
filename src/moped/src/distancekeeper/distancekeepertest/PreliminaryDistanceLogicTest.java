@@ -7,24 +7,34 @@ import org.junit.jupiter.api.Test;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Created by Emil Jansson on 2017-09-13.
  */
 public class PreliminaryDistanceLogicTest {
     @Test
-    public void enginePower() {
+    public void enginePower1() {
 
-        PreliminaryDistanceLogic logic = new PreliminaryDistanceLogic(1, 35);
+        PreliminaryDistanceLogic logic = new PreliminaryDistanceLogic(1, 35, 2,4);
 
-        int a = logic.enginePower(35,0);
+        logic.enginePower(35,0);
         int b = logic.enginePower(35,0);
-        assertEquals(b, 0);
+        System.out.println(b);
+        assertEquals(4, b);
 
-        a = logic.enginePower(40,0);
+
+        int a = logic.enginePower(40,0);
+        System.out.println(a + "  " + b);
+        assertTrue(a>b);
         try {Thread.sleep(2000);
         }catch (Exception e){}
-        b = logic.enginePower(35, 5);
-        //TODO test not completed
+        logic.enginePower(35, 5);
+        b = logic.enginePower(25, 5);
+        System.out.println(b);
+        assertEquals(3,b);
+
     }
+
+
 }
