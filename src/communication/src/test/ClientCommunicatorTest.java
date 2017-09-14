@@ -17,7 +17,7 @@ class ClientCommunicatorTest {
 
     @Test
     public void testOnConnection() {
-        ArrayList<Boolean> vars = new ArrayList();
+        ArrayList<Boolean> vars = new ArrayList<>();
 
         CommunicationListener cl = new CommunicationListener() {
             @Override
@@ -26,12 +26,12 @@ class ClientCommunicatorTest {
             }
         };
 
-        Communicator client = new ClientCommunicator("localhost", 9500);
+        Communicator client = new ClientCommunicator("localhost", 9501);
         client.addListener(cl);
         client.start();
 
         try {
-            ServerSocket serverSocket = new ServerSocket(9500);
+            ServerSocket serverSocket = new ServerSocket(9501);
             serverSocket.setSoTimeout(5000);
             serverSocket.accept();
         } catch (IOException e) {

@@ -7,29 +7,15 @@ MopedState -o AbstractCommunicator
 MopedState -o Communicator
 
 
-interface Communicator {
-  +void sendState(MopedState)
-  +void sendState(int)
-  +void addListener(CommunicationListener)
-  +void disconnect()
-}
+interface Communicator
 
-interface CommunicationListener {
-  +void notifyState(MopedState)
-}
+interface CommunicationListener
 
-abstract class AbstractCommunicator{
-  +void methods()
-  +int decode(MopedState)
-  +MopedState encode()
-}
+abstract class AbstractCommunicator
 
-class ClientCommunicator{
-  +void connect()
-}
+class ClientCommunicator
 
-class ServerCommunicator{
-}
+class ServerCommunicator
 
 Enum MopedState {
   MANUAL = 0
