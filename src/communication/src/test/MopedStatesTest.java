@@ -3,6 +3,8 @@ package test;
 import com.MopedStates;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 /**
  * Created by konglobemeralt on 2017-09-14.
  */
@@ -10,13 +12,12 @@ import org.junit.jupiter.api.Test;
 class MopedStatesTest {
 
     @Test
-    public void enumTest(){
-       // System.out.println(MopedState.DrivingState.ACC.value);
-       //  System.out.println(MopedState.foo.ordinal());
-        System.out.println(MopedStates.ACC.getStateType());
-        System.out.println(MopedStates.MANUAL.getStateType());
-        System.out.println(MopedStates.MANUAL.ordinal());
-        System.out.println(MopedStates.values()[MopedStates.MANUAL.ordinal()]);
+    public void convert() {
+        MopedStates mopedState = MopedStates.MANUAL;
+        assertTrue(MopedStates.parseInt(MopedStates.toInt(mopedState)) == mopedState);
+        assertTrue(MopedStates.parseInt(MopedStates.values().length + 1) == null);
+        assertTrue(MopedStates.parseInt(-5) == null);
     }
+
 
 }
