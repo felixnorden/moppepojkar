@@ -33,12 +33,12 @@ public abstract class AbstractCommunicator implements Communicator {
         queuedMopedStates = new LinkedList<MopedStates>();
     }
 
-	@Override
-	public void setState(MopedStates state) {
-		queuedMopedStates.add(state);
-	}
+    @Override
+    public void setState(MopedStates state) {
+        queuedMopedStates.add(state);
+    }
 
-	@Override
+    @Override
     public void addListener(CommunicationListener cl) {
         listeners.add(cl);
     }
@@ -48,31 +48,29 @@ public abstract class AbstractCommunicator implements Communicator {
         mainThread.start();
     }
 
-	/**
-	 * Fetches and sends new information from the connected socket.
-	 */
-	protected void update() {
-		try {
+    /**
+     * Fetches and sends new information from the connected socket.
+     */
+    protected void update() {
+        try {
 
-			//Send all queued state changes through socket link
-			while (queuedMopedStates.size() > 0) {
-				outputStream.write(queuedMopedStates.poll().toInt());
-			}
+            //Send all queued state changes through socket link
+            while (queuedMopedStates.size() > 0) {
+                outputStream.writeUTF(Integer.toString(queuedMopedStates.poll().toInt()));
+            }
 
-			// Get all state changes from other sender in socket link
-			int stateChange = inputStream.read();
-			while (stateChange != -1) {
-				notifyStateChange(MopedStates.parseInt(stateChange));
-				stateChange = inputStream.read();
-			}
-
-
+            // Get all state changes from other sender in socket link
+            while (inputStream.available() > 0) {
+                String input = inputStream.readUTF();
+                int i = Integer.parseInt(input);
+                notifyStateChange(MopedStates.parseInt(i));
+            }
 
 
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Notifies all listeners that a connection has been established.
@@ -83,12 +81,12 @@ public abstract class AbstractCommunicator implements Communicator {
         }
     }
 
-	/**
-	 * Notifies all listeners that a state change from the sender has been received.
-	 */
-	protected void notifyStateChange(MopedStates mopedState) {
-		for (CommunicationListener cl : listeners) {
-			cl.onStateChange(mopedState);
-		}
-	}
+    /**
+     * Notifies all listeners that a state change from the sender has been received.
+     */
+    protected void notifyStateChange(MopedStates mopedState) {
+        for (CommunicationListener cl : listeners) {
+            cl.onStateChange(mopedState);
+        }
+    }
 }
