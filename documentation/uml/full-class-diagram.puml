@@ -1,0 +1,139 @@
+@startuml
+
+package moped {
+
+	package core {
+		
+		class Main {
+		
+		}
+		
+		class RunnableLoop {
+		
+		}
+		
+		package states {
+		
+			class StateController {
+			
+			}
+		
+			interface State {
+				void run()
+			}
+		
+			class Manual {
+			
+			}
+			
+			class AdaptiveCruiseControl {
+			
+			}
+			
+			StateController --> State
+		
+			Manual --|> State
+			Acc --|> State
+		}
+		
+		package strategy {
+			
+			interface Strategy {
+				void run()
+			}
+			
+			class PidParser {
+			
+			}
+			
+			class EmgyStop {
+			
+			}
+			
+			class DirectControl {
+			
+			}
+			
+			PidParser --|> Strategy
+			EmrStop --|> Strategy
+			DirectControl --|> Strategy
+			
+		}
+		
+		package CarControl {
+		
+		}
+		
+		Main ..> states
+		Main --> RunnableLoop
+		RunnableLoop --> states
+		
+		states --> strategy
+		strategy --> CarControl
+	}
+	
+	package com_io {
+
+		package ext_com {
+			
+			+interface Observer {
+			
+			}
+			
+			+interface ExternalCommunicator {
+				
+			}
+			
+			+interface InputReciever {
+			
+			}
+			
+			+interface OutputObserver {
+			
+			}
+			
+			class CommunicatorFactory {
+				+ExternalCommunicator getExtComInstance()
+			}
+			
+			~class ExternalCommunications {
+				
+			}
+			
+			ExternalCommunications --> Observer
+			ExternalCommunications --|> ExternalCommunicator
+			
+			ExternalCommunications --> OutputObserver
+			ExternalCommunications --|> InputReciever
+			
+			CommunicatorFactory ..> ExternalCommunicator
+			CommunicatorFactory ..> ExternalCommunications
+			
+		}
+		
+		package int_com {
+		
+		}
+	
+	}
+
+	package pid {
+
+	}
+
+	package communication_protocols {
+	
+	}
+	
+	app --> communication_protocols
+	moped --> communication_protocols
+	
+	plugin --> com_io
+	
+}
+
+package app {
+
+}
+
+@enduml
