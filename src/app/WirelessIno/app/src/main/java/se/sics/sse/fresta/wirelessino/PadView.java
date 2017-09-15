@@ -24,40 +24,6 @@ import android.app.Activity;
 public class PadView extends SurfaceView implements Callback, Runnable {
 
 
-	private class CustomButton{
-
-		CustomButton(int sizeX, int sizeY, int posX, int posY, Paint color){
-			isPressed = false;
-			boundingBox = new RectF(sizeX, sizeY, posX, posY);
-			buttonColor = color;
-			//modeButton = modeButton = new RectF(getWidth()-150, getHeight()-150, getWidth()-50, getHeight()-50);;
-		}
-
-
-		public RectF boundingBox;
-		boolean isPressed;
-		Paint buttonColor;
-
-		public RectF getBounds(){
-			return boundingBox;
-		}
-
-		public void toggle(){
-			isPressed = !isPressed;
-
-			if(isPressed){
-				buttonColor = pRed;
-			}
-			else{
-				buttonColor = pYellow;
-			}
-		}
-
-		Paint getColor(){
-			return buttonColor;
-		}
-	}
-
 	CustomButton modeButton;
 
 	private boolean run;
