@@ -28,7 +28,7 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 
 	private boolean run;
 	private SurfaceHolder sh;
-        private Paint p, pRed, pBlue, pYellow, pControls;
+    private Paint p, pRed, pBlue, pYellow, pControls;
 	public Ball balls[]   = new Ball[2];
 	private int touchX[]  = new int[balls.length], 
 				touchY[]  = new int[balls.length],
@@ -96,18 +96,9 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 						getContext().getString(R.string.title_not_connected),
 						screen.centerX(), (getHeight() / 8) + textSize * 2, p);
 			}
-			canvas.drawRect(bar1, p);
-			canvas.drawRect(bar2, p);
-			canvas.drawRect(balls[0].getRect(), pControls);
-			// canvas.drawCircle(balls[0].getRect().centerX(),
-			// balls[0].getRect().centerY(), balls[0].getRect().width() / 2,
-			// pControls);
-			// canvas.drawRect(balls[1].getRect(),pControls);
-			canvas.drawCircle(balls[1].getRect().centerX(), balls[1].getRect()
-					.centerY(), balls[1].getRect().width() / 2, pControls);
+			drawSliders(canvas);
 
-			canvas.drawBitmap(bluinoBMP, screen.centerX() - w * 7 / 2,
-					6 * getHeight() / 8, null);
+			drawDecorations(canvas);
 
 			// Arndt: this will become a signalling button
 			canvas.drawCircle(getWidth() / 4, getHeight() / 8, balls[0]
@@ -394,12 +385,16 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 
 		w = getWidth() / 60;
 		h = getHeight() / 2;
+
 		int left = getWidth() / 6, top = (getHeight() / 4), right = left + w, bottom = 3 * top;
 		textSize = getHeight() / 15;
 		initPaints();
+
 		screen = new Rect(0, 0, getWidth(), getHeight());
+
 		bar1 = new Rect(left, top, right, bottom);
 		bar2 = new Rect(3 * left, h - w / 2, 5 * left, h + w / 2);
+
 		balls[0] = new Ball(left - w, top - 5 - w + (bottom - top) / 2, right + w,
 							  top + 5 + w + (bottom - top) / 2, Ball.LEFT_BAR);
 		balls[1] = new Ball(4 * left - w - (w / 2), top - w - 5 + (bottom - top)
@@ -409,10 +404,9 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 				(screen.height() / 8) - w - 5, (screen.centerX()) + w
 						+ (UMBRAL_TACTIL / 2), (screen.height() / 8) + w + 5);
 
-		bluinoBMP = resizeImage(this.getContext(), R.drawable.bluinotooth,
-				7 * w, 2 * getHeight() / 8);
+		createDecorations();
 
-		createModeSwitchingButton();
+        createModeSwitchingButton();
 
 		for (int i=0; i<idMap.length; i++) {
 			idMap[i] = -1;
@@ -456,6 +450,27 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 	private void drawModeSwitchingButton(Canvas canvas){
 		canvas.drawRoundRect(modeButton.getBounds(), 6, 6, modeButton.getColor());
 	}
+
+	private void createDecorations(){
+		bluinoBMP = resizeImage(this.getContext(), R.drawable.bluinotooth,
+				7 * w, 2 * getHeight() / 8);
+	}
+
+    private void drawDecorations(Canvas canvas){
+        canvas.drawBitmap(bluinoBMP, screen.centerX() - w * 7 / 2,
+                6 * getHeight() / 8, null);
+    }
+    private void drawSliders(Canvas canvas){
+        canvas.drawRect(bar1, p);
+        canvas.drawRect(bar2, p);
+        canvas.drawRect(balls[0].getRect(), pControls);
+        // canvas.drawCircle(balls[0].getRect().centerX(),
+        // balls[0].getRect().centerY(), balls[0].getRect().width() / 2,
+        // pControls);
+        // canvas.drawRect(balls[1].getRect(),pControls);
+        canvas.drawCircle(balls[1].getRect().centerX(), balls[1].getRect()
+                .centerY(), balls[1].getRect().width() / 2, pControls);
+    }
 
 
 
