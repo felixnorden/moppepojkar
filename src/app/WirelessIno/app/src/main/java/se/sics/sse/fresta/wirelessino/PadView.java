@@ -27,7 +27,7 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 
 	private boolean run;
 	private SurfaceHolder sh;
-    private Paint pWhite, pRed, pBlue, pYellow, pControls;
+    private Paint pWhite, pRed, pBlue, pYellow, pControls, pBackground;
 	public Ball balls[]   = new Ball[2];
 	private int touchX[]  = new int[balls.length], 
 				touchY[]  = new int[balls.length],
@@ -38,7 +38,7 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 	public Rect screen, bar1, bar2, notif;
 
 	private Thread tDraw;
-	private Bitmap bluinoBMP;
+	private Bitmap decoration;
 	public static final int UMBRAL_TACTIL = 70;
 	private static String canTextL = "", canTextR = "";
 
@@ -68,14 +68,17 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 		pYellow.setColor(Color.YELLOW);
 		pYellow.setAntiAlias(true);
 		pControls = new Paint();
-		pControls.setColor(Color.argb(220, 100, 180, 180));
+		pControls.setColor(Color.argb(220, 140, 180, 255));
 		pControls.setAntiAlias(true);
+
+        pBackground = new Paint();
+        pBackground.setColor(Color.argb(120, 68, 138, 255));
 
 	}
 
 	public void onDraw(Canvas canvas) {
 		try {
-			canvas.drawColor(Color.LTGRAY);
+			canvas.drawColor(pBackground.getColor());
 			if (Main.socket == null) {
 				canvas.drawCircle(getWidth() / 2, getHeight() / 8, balls[0]
 						.getRect().width() / 2, pRed);
@@ -446,12 +449,12 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 	}
 
 	private void createDecorations(){
-		bluinoBMP = resizeImage(this.getContext(), R.drawable.bluinotooth,
-				7 * w, 2 * getHeight() / 8);
+		decoration = resizeImage(this.getContext(), R.drawable.moped,
+				20 * w, 2 * getHeight() / 8);
 	}
 
     private void drawDecorations(Canvas canvas){
-        canvas.drawBitmap(bluinoBMP, screen.centerX() - w * 7 / 2,
+        canvas.drawBitmap(decoration, screen.centerX() - w * 20 / 2,
                 6 * getHeight() / 8, null);
     }
     private void drawSliders(Canvas canvas){
