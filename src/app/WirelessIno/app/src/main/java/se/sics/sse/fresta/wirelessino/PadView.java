@@ -9,7 +9,6 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.graphics.Paint.Align;
 import android.util.Log;
@@ -28,7 +27,7 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 
 	private boolean run;
 	private SurfaceHolder sh;
-    private Paint p, pRed, pBlue, pYellow, pControls;
+    private Paint pWhite, pRed, pBlue, pYellow, pControls;
 	public Ball balls[]   = new Ball[2];
 	private int touchX[]  = new int[balls.length], 
 				touchY[]  = new int[balls.length],
@@ -52,13 +51,13 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 	}
 
 	public void initPaints() {
-		p = new Paint();
-		p.setColor(Color.WHITE);
-		p.setTextAlign(Align.CENTER);
-		p.setTypeface(Typeface.createFromAsset(this.getContext().getAssets(),
+		pWhite = new Paint();
+		pWhite.setColor(Color.WHITE);
+		pWhite.setTextAlign(Align.CENTER);
+		pWhite.setTypeface(Typeface.createFromAsset(this.getContext().getAssets(),
 				"fonts/KellySlab-Regular.ttf"));
-		p.setTextSize(textSize);
-		p.setAntiAlias(true);
+		pWhite.setTextSize(textSize);
+		pWhite.setAntiAlias(true);
 		pRed = new Paint();
 		pRed.setColor(Color.RED);
 		pRed.setAntiAlias(true);
@@ -76,38 +75,33 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 
 	public void onDraw(Canvas canvas) {
 		try {
-			canvas.drawColor(Color.DKGRAY);
+			canvas.drawColor(Color.LTGRAY);
 			if (Main.socket == null) {
 				canvas.drawCircle(getWidth() / 2, getHeight() / 8, balls[0]
 						.getRect().width() / 2, pRed);
 				canvas.drawText(
 						getContext().getString(R.string.title_not_connected),
-						screen.centerX(), (getHeight() / 8) + textSize * 2, p);
+						screen.centerX(), (getHeight() / 8) + textSize * 2, pWhite);
 			} else if (Main.socket != null) {
 				canvas.drawCircle(screen.exactCenterX(), screen.height() / 8,
 						balls[0].getRect().width() / 2, pBlue);
 				canvas.drawText(getContext()
 						.getString(R.string.title_connected), screen.centerX(),
-						(getHeight() / 8) + textSize * 2, p);
+						(getHeight() / 8) + textSize * 2, pWhite);
 			} else {
 				canvas.drawCircle(getWidth() / 2, getHeight() / 8, balls[0]
 						.getRect().width() / 2, pRed);
 				canvas.drawText(
 						getContext().getString(R.string.title_not_connected),
-						screen.centerX(), (getHeight() / 8) + textSize * 2, p);
+						screen.centerX(), (getHeight() / 8) + textSize * 2, pWhite);
 			}
+
+
 			drawSliders(canvas);
-
-			drawDecorations(canvas);
-
-			// Arndt: this will become a signalling button
-			canvas.drawCircle(getWidth() / 4, getHeight() / 8, balls[0]
-					  .getRect().width(), pYellow);
-
-
-			drawText(canvas, p);
-
-			drawModeSwitchingButton(canvas);
+            drawDecorations(canvas);
+            drawSignalingButton(canvas);
+            drawText(canvas, pWhite);
+            drawModeSwitchingButton(canvas);
 
 
 
@@ -461,8 +455,8 @@ public class PadView extends SurfaceView implements Callback, Runnable {
                 6 * getHeight() / 8, null);
     }
     private void drawSliders(Canvas canvas){
-        canvas.drawRect(bar1, p);
-        canvas.drawRect(bar2, p);
+        canvas.drawRect(bar1, pWhite);
+        canvas.drawRect(bar2, pWhite);
         canvas.drawRect(balls[0].getRect(), pControls);
         // canvas.drawCircle(balls[0].getRect().centerX(),
         // balls[0].getRect().centerY(), balls[0].getRect().width() / 2,
@@ -470,6 +464,12 @@ public class PadView extends SurfaceView implements Callback, Runnable {
         // canvas.drawRect(balls[1].getRect(),pControls);
         canvas.drawCircle(balls[1].getRect().centerX(), balls[1].getRect()
                 .centerY(), balls[1].getRect().width() / 2, pControls);
+    }
+
+    private void drawSignalingButton(Canvas canvas){
+        // Arndt: this will become a signalling button
+        canvas.drawCircle(getWidth() / 4, getHeight() / 8, balls[0]
+                .getRect().width(), pYellow);
     }
 
 
