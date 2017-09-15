@@ -27,11 +27,10 @@ public enum MopedStates {
     /**
      * Convert enum to int
      *
-     * @param mopedState MopedStates enum
      * @return int
      */
-    public static int toInt(MopedStates mopedState) {
-        return mopedState.ordinal();
+    public int toInt() {
+        return this.ordinal();
     }
 
     /**

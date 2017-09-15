@@ -14,7 +14,7 @@ class MopedStatesTest {
     @Test
     public void convert() {
         MopedStates mopedState = MopedStates.MANUAL;
-        assertTrue(MopedStates.parseInt(MopedStates.toInt(mopedState)) == mopedState);
+        assertTrue(MopedStates.parseInt(mopedState.toInt()) == mopedState);
         assertTrue(MopedStates.parseInt(MopedStates.values().length + 1) == null);
         assertTrue(MopedStates.parseInt(-5) == null);
     }
