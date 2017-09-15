@@ -66,7 +66,6 @@ public abstract class AbstractCommunicator implements Communicator {
                 notifyStateChange(MopedStates.parseInt(i));
             }
 
-
         } catch (IOException e) {
             e.printStackTrace();
         }
