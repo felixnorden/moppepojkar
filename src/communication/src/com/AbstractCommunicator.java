@@ -53,9 +53,10 @@ public abstract class AbstractCommunicator implements Communicator {
 	 */
 	protected void update() {
 		try {
+
 			//Send all queued state changes through socket link
 			while (queuedMopedStates.size() > 0) {
-				outputStream.write(MopedStates.toInt(queuedMopedStates.poll()));
+				outputStream.write(queuedMopedStates.poll().toInt());
 			}
 
 			// Get all state changes from other sender in socket link
@@ -64,6 +65,9 @@ public abstract class AbstractCommunicator implements Communicator {
 				notifyStateChange(MopedStates.parseInt(stateChange));
 				stateChange = inputStream.read();
 			}
+
+
+
 
 		} catch (IOException e) {
 			e.printStackTrace();
