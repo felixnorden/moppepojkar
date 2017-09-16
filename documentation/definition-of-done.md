@@ -20,7 +20,8 @@ A user story can be considered done when the following is true:
 - A description of the user story has been written.
 - The user story has been divided into tasks.
 - All tasks belonging to the user story have been confirmed done.
-- The user story has been merged with the main git branch.
+- The user story has been merged with the master branch.
+- Integration tests for the involved units have been created and are all passing.
 - The user story’s function has been confirmed working as intended by testing it as a part of the entire system.
 
 ## Epics
