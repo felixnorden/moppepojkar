@@ -6,7 +6,7 @@ Each methodology has been chosen with a rationale of what the team can manage to
 
 Key values that the group has in mind are:
 
-- Readability - Code is meant for humans to read, not machines to interpret
+- Readability - Code is meant for humans to read, not machines to interpret **TODO - Principles**
 - Modularity - Code separated into modules mean that they can be switched out for other modules in the future. Principles that are kept in mind are:
     - [Separation of Concerns](https://en.wikipedia.org/wiki/Separation_of_concerns)
     - [Single Responsibility Principle](https://en.wikipedia.org/wiki/Single_responsibility_principle)
@@ -15,7 +15,7 @@ Key values that the group has in mind are:
 - Extensibility - Code should be independent enough so that it functions on its own, but is still open for extensions and further development, without breaking the previous implementations. Principles that are kept in mind are:
     - [Open Closed Principle](https://en.wikipedia.org/wiki/Open/closed_principle)
     - [Single Responsibility Principle](https://en.wikipedia.org/wiki/Single_responsibility_principle)
-- Reusability
+- Reusability **TODO - Principles**
 
 ## Group workflow
 
@@ -59,7 +59,17 @@ Therefore, the team chooses quality over quantity, as to avoid the risk of creat
 
 ### Code Reviews
 
+Every single line of code has to be reviewed by a team member whom has not been involved with the that is reviewed. This is for reassuring that the code is **readable** and that the logic behind it is reasonable to the unfamiliar eye. More information as to how the code review is done can be found in the [Code Review document](./code-review.md).
 
+#### Benefits
+
+By having at least one unfamiliar eye to review the produced code will contribute to a significant increase of code quality. This is due to the fact that the person who reviews the code has to be able to understand everything that has been written, without the help of the developer whom was the writer. The reviewer therefore acts as a filter that filters out unnecessary code and odd logic, thus mitigating the risk of gaining technical debt and bugs creeping into the deployed product. Additionally, the reviews increase the possibilities of immediate refactoring and revising of the coding logic, which means that the code will be more readable, maintainable, extensible and reusable.
+
+#### Trade-offs
+
+The major trade-off of having code reviews is the aspect of time, as reviewing a codebase requires a lot of time and focus from the reviewer, as well as the reviewee when the reviewed code has to be revised according to the reviewed results.
+
+Additionally, having your code reviewed entails you being subject to constructive feedback. If the feedback is poorly given, or if it is misinterpreted, unnecessary friction among the team members can occur. This may lead to group dynamic pollution which, in return, can lead to conflicts and future teamwork disabilities.
 
 ### Git Workflow
 
