@@ -15,7 +15,7 @@ public class PreliminaryDistanceLogic {
 
     private float lastDistanceToTarget; //Value in cm, value created with sensor data the first time the loop executes
 
-    private long lastSystemTime; //Value in nanoseconds
+    private long lastSystemTime; //Value in milliseconds
 
     private boolean isFirstTime = true;
 
@@ -35,7 +35,7 @@ public class PreliminaryDistanceLogic {
             this.isFirstTime = false;
         } else {
 
-            float targetSpeed = determineTargetSpeed(distanceToTarget);
+            float targetSpeed = determineDesiredSpeed(distanceToTarget);
             float deltaTime = determineDeltaTime();
             float relativeSpeed = determineRelativeSpeed(deltaTime, distanceToTarget);
             setPowerIndex(relativeSpeed, targetSpeed);
@@ -47,11 +47,14 @@ public class PreliminaryDistanceLogic {
     }
 
 
+    //Determines desired speed by comparing actual distance to target with the optimal distance
 
-    private float determineTargetSpeed(float distanceToTarget){
+    private float determineDesiredSpeed(float distanceToTarget){
 
         return ( distanceToTarget - optimalDistance) * offsetToSpeedRelation;
     }
+
+    //Determines the change in time since the last loop and converts it to seconds
 
     private  float determineDeltaTime(){
             long currentSystemTime = System.currentTimeMillis();
@@ -61,20 +64,23 @@ public class PreliminaryDistanceLogic {
             return deltaTime;
     }
 
-    private  float determineRelativeSpeed(float deltaTime, float distanceToTarget){
+    //Determines which relative speed the target has had compared to the car since the last loop
 
+    private  float determineRelativeSpeed(float deltaTime, float distanceToTarget){
         return (lastDistanceToTarget - distanceToTarget)/deltaTime;
     }
 
+    //Updates values which is needed for the next loop
     private void updateValues(float distanceToTarget){
         lastDistanceToTarget=distanceToTarget;
 
     }
 
-    private void setPowerIndex(float relativeSpeed, float targetSpeed){
-        if(relativeSpeed>(targetSpeed+velocityErrorMargin)){// TODO limit to size of list
+    //This determines which speed of the array is to be used by changing the current powerIndex to the index of the desired speed
+    private void setPowerIndex(float relativeSpeed, float desiredSpeed){
+        if(relativeSpeed>(desiredSpeed+velocityErrorMargin)){// TODO limit to size of list
             powerIndex--;
-        }else if(relativeSpeed<(targetSpeed-velocityErrorMargin)){// TODO limit to size of list
+        }else if(relativeSpeed<(desiredSpeed-velocityErrorMargin)){// TODO limit to size of list
             powerIndex++;
         }
     }
