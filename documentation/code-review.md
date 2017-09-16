@@ -69,6 +69,8 @@ An example response to style comments:
 If you disagree with a guideline, open an issue on the guides repository rather than
 debating it within the code review. In the meantime, apply the guideline.
 
-### Source
+### Resources
 
 These guidelines have been taken from Thoughtbot's guidelines found at <https://github.com/thoughtbot/guides> under the [Creative Commons Attribution Licence (CC BY 3.0)](https://creativecommons.org/licenses/by/3.0/).
+
+Useful best practices for code reviews can be read more in-depth at [Best practices for peer code review](https://smartbear.com/learn/code-review/best-practices-for-peer-code-review/)
