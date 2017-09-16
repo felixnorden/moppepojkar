@@ -36,6 +36,8 @@ The list below shortly summarizes the different strategies and how they will be 
     - B is a major release
     - C is patches and bug fixes.
 
+---
+
 ### Pair Programming
 
 All team members are to develop the product in pairs of two utilizing [Pair Programming](http://www.extremeprogramming.org/rules/pair.html). The reason for this decision is simple - pair programming means that two minds are implementing the same feature, which will lead to the produced code being more motivated and reasonable.
@@ -57,6 +59,8 @@ The main trade-off of having two developers on the same task when developing is 
 
 Therefore, the team chooses quality over quantity, as to avoid the risk of creating a big ball of mud and instead maintain a good and maintainable structure of the codebase.
 
+---
+
 ### Code Reviews
 
 Every single line of code has to be reviewed by a team member whom has not been involved with the that is reviewed. This is for reassuring that the code is **readable** and that the logic behind it is reasonable to the unfamiliar eye. More information as to how the code review is done can be found in the [Code Review document](./code-review.md).
@@ -71,20 +75,22 @@ The major trade-off of having code reviews is the aspect of time, as reviewing a
 
 Additionally, having your code reviewed entails you being subject to constructive feedback. If the feedback is poorly given, or if it is misinterpreted, unnecessary friction among the team members can occur. This may lead to group dynamic pollution which, in return, can lead to conflicts and future teamwork disabilities.
 
+---
+
 ### Git Workflow
 
-
+---
 
 ### Continuous integration
 
-
+---
 
 ### Test-driven Development
 
-
+---
 
 ### Behavior-driven Development
 
-
+---
 
 ### Sequenced Versioning
