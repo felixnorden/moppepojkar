@@ -38,7 +38,24 @@ The list below shortly summarizes the different strategies and how they will be 
 
 ### Pair Programming
 
-All team members are to develop the product in pairs of two utilizing [Pair Programming](http://www.extremeprogramming.org/rules/pair.html). The reason for this decision is simple - pair programming means that two minds are implementing the same feature, which will lead to the produced code being more motivated and reasonable. This increases the 
+All team members are to develop the product in pairs of two utilizing [Pair Programming](http://www.extremeprogramming.org/rules/pair.html). The reason for this decision is simple - pair programming means that two minds are implementing the same feature, which will lead to the produced code being more motivated and reasonable.
+
+#### Benefits
+
+Pair programming increases the **readability** and **maintainability** of the codebase, which will mean that the risk of refactoring later on is mitigated. Having a *"driver"* and *"navigator"* work on the same lines of code minimizes poor code quality through factors such as:
+
+- minimizing the amount of bad naming choices
+- noticing compile time errors immediately
+- rational, well-motivated and effective implementations of design patterns
+- lessens the rate of bugs that can creep into the codebase
+
+Overall, the main benefit of utilizing pair programming is that it minimizes the amount of technical debt, and, therefore, increases the code quality by a noticeable degree when compared to having the team developing individually.
+
+#### Trade-offs
+
+The main trade-off of having two developers on the same task when developing is that it means that the lines of code (LOC) is halved, thus increasing the risk of not producing the estimated value of the current sprint. However, as mentioned above, the code quality instead increases of the produced code, which means that the risk of having to revise/refactor the codebase in later sprints is mitigated.
+
+Therefore, the team chooses quality over quantity, as to avoid the risk of creating a big ball of mud and instead maintain a good and maintainable structure of the codebase.
 
 ### Code Reviews
 
