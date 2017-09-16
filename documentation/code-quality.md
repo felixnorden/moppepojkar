@@ -4,7 +4,18 @@ This document describes the strategies and methodologies that the team has chose
 
 Each methodology has been chosen with a rationale of what the team can manage to adhere to, even though there are more strategies available to reach an even higher standard of code quality.
 
-Focal 
+Key values that the group has in mind are:
+
+- Readability - Code is meant for humans to read, not machines to interpret
+- Modularity - Code separated into modules mean that they can be switched out for other modules in the future. Principles that are kept in mind are:
+    - [Separation of Concerns](https://en.wikipedia.org/wiki/Separation_of_concerns)
+    - [Single Responsibility Principle](https://en.wikipedia.org/wiki/Single_responsibility_principle)
+    - [High cohesion](https://en.wikipedia.org/wiki/Cohesion_(computer_science))
+    - [Low coupling](https://en.wikipedia.org/wiki/Coupling_(computer_programming))
+- Extensibility - Code should be independent enough so that it functions on its own, but is still open for extensions and further development, without breaking the previous implementations. Principles that are kept in mind are:
+    - [Open Closed Principle](https://en.wikipedia.org/wiki/Open/closed_principle)
+    - [Single Responsibility Principle](https://en.wikipedia.org/wiki/Single_responsibility_principle)
+- Reusability
 
 ## Group workflow
 

@@ -23,20 +23,6 @@
     - If a member misses a lecture, the others will summarize the lecture and the member can read more in-depth on the repository
 - Each member will keep their work updated on the Scrum board
 
-## Group workflow
-
-- Pair programming will be a focal point during the work process
-- All code will be reviewed by another group member according to [Code reviews](./code-reviews.md)
-- Every contributor will employ the [Git workflow](./git-workflow.md)
-- Continuous integration is enforced
-- TDD is enforced for everyone
-- BDD will be used **if** it is necessary
-- Code will not pushed unless tests are passing
-- Sequenced versioning, i.e A.B.C
-    - A is a breaking release
-    - B is a major release
-    - C is patches and bug fixes.
-
 ## Meetings
 
 - Whole group meetings will be held once a week
