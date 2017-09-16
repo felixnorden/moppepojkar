@@ -45,7 +45,6 @@ This document describes the key features that the Product Owner has in mind, in 
 
 - Change GUI for more UX
 - Armed state on startup
-- 
 
 ## End Product
 
