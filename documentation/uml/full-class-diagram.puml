@@ -5,106 +5,162 @@ package moped {
 	package core {
 		
 		class Main {
+			
 		
 		}
 		
-		class RunnableLoop {
-		
-		}
-		
-		package states {
+		package bahaviour_states {
 		
 			class StateController {
+				- currentState: BehaviourState
+
+				.. Setters ..
+				+ setNewState(BehaviourState newState): void
+
+				.. Getters ..
+				+ getCurrentState(): State
+
+				.. Methods ..
+
+			}
+
+			package states {
+
+				interface BehaviourStateFactory {
+					createManualBehaviour(): BehaviourState
+					createAdaptiveCruiseControlBehaviour(): BehaviourState
+				}
+
+				interface BehaviourState {
+					run(double deltaTime): void
+				}
 			
+				class Manual {
+					
+				}
+
+				class BehaviourStateFactoryImpl {
+
+				}
+				
+				class AdaptiveCruiseControl {
+					- currentActionStrategy: ActionStrategy
+					- pidStrategy: ActionStrategy
+					- emgyStopStrategy: ActionStrategy
+
+					- determineStrategy(): ActionStrategy
+
+				}
+				
+				Manual --|> BehaviourState
+				AdaptiveCruiseControl --|> BehaviourState
+				BehaviourStateFactoryImpl --|> BehaviourStateFactory
 			}
 		
-			interface State {
-				void run()
-			}
-		
-			class Manual {
 			
-			}
-			
-			class AdaptiveCruiseControl {
-			
-			}
-			
-			StateController --> State
-		
-			Manual --|> State
-			Acc --|> State
+			StateController --> BehaviourState
 		}
 		
-		package strategy {
+		package strategies {
 			
-			interface Strategy {
-				void run()
+			interface ActionStrategy {
+				takeAction(double deltaTime) : void
 			}
-			
+
 			class PidParser {
-			
+				- pid: PID
+
+				- calcPIDVal(double deltaTime): float
+
 			}
 			
 			class EmgyStop {
-			
+				
 			}
 			
-			class DirectControl {
-			
+			class RemoteController {
+				- appSocket: ExternalCommunicator
+				- steerValue: int
+				- throttleValue: int
 			}
 			
-			PidParser --|> Strategy
-			EmrStop --|> Strategy
-			DirectControl --|> Strategy
+			PidParser --|> ActionStrategy
+			EmgyStop --|> ActionStrategy
+			RemoteController --|> ActionStrategy
+			RemoteController --|> InputReceiver
+
+			note top of PidParser
+				DI sensor data reference
+				in constructor
+			end note
 			
 		}
 		
-		package CarControl {
-		
+		package car_control {
+			
+			interface CarControl {
+				
+				.. Getters ..
+				getLastThrottle(): int
+				getSteerValue(): int
+	
+				.. Setters ..
+				setThrottleValue(int value): void
+				setSteerValue(int value): void
+
+			}
+
+			class CarControlImpl {
+				- lastThrottleValue: int
+				- lastSteerValue: int
+			}
+
+			CarControlImpl --|> CarControl
+
 		}
 		
 		Main ..> states
-		Main --> RunnableLoop
-		RunnableLoop --> states
 		
-		states --> strategy
-		strategy --> CarControl
+		states --> strategies
+		strategies --> car_control
 	}
 	
 	package com_io {
 
 		package ext_com {
 			
-			+interface Observer {
+			interface Observer {
 			
 			}
 			
-			+interface ExternalCommunicator {
+			interface ExternalCommunicator {
 				
 			}
 			
-			+interface InputReciever {
-			
+			interface InputReceiver {
+				externalDataRecieved(inputData: ComProtocol)
 			}
 			
-			+interface OutputObserver {
-			
+			interface OutputObserver {
+				
 			}
 			
 			class CommunicatorFactory {
-				+ExternalCommunicator getExtComInstance()
+				- extComInstance: ExternalCommunicator
+
+				.. Getters ..
+				+getExtComInstance():  ExternalCommunicator
 			}
 			
-			~class ExternalCommunications {
-				
+			class ExternalCommunications {
+				- 
 			}
 			
 			ExternalCommunications --> Observer
 			ExternalCommunications --|> ExternalCommunicator
 			
 			ExternalCommunications --> OutputObserver
-			ExternalCommunications --|> InputReciever
+			ExternalCommunications --|> InputReceiver
 			
 			CommunicatorFactory ..> ExternalCommunicator
 			CommunicatorFactory ..> ExternalCommunications
@@ -118,7 +174,10 @@ package moped {
 	}
 
 	package pid {
+		'
+		class PID{
 
+		}
 	}
 
 	package communication_protocols {
@@ -128,7 +187,7 @@ package moped {
 	app --> communication_protocols
 	moped --> communication_protocols
 	
-	plugin --> com_io
+	core --> com_io
 	
 }
 
