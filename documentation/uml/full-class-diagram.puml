@@ -5,7 +5,7 @@ package moped {
 	package core {
 		
 		class Main {
-			
+			+ {static}main(String[] args): void
 		
 		}
 		
@@ -36,7 +36,7 @@ package moped {
 				}
 			
 				class Manual {
-					
+					- controller: RemoteController
 				}
 
 				class BehaviourStateFactoryImpl {
@@ -59,23 +59,33 @@ package moped {
 		
 			
 			StateController --> BehaviourState
-		}
-		
-		package strategies {
-			
+		}			
+
+		package action_strategies {
+
+			interface ActionStrategyFactory {
+				createPidParser(): ActionStrategy
+				createEmgyStop(): ActionStrategy
+				createRemoteController(): ActionStrategy
+			}
+
 			interface ActionStrategy {
 				takeAction(double deltaTime) : void
 			}
 
+			class ActionStrategyFactoryImpl{
+				- appsocket: ExternalCommunicator
+				- distanceSensor: Sensor
+			}
+
 			class PidParser {
 				- pid: PID
-
-				- calcPIDVal(double deltaTime): float
-
-			}
-			
-			class EmgyStop {
 				
+				- calcPIDVal(double deltaTime): float
+			}
+			class EmgyStop {
+				- defaultThrottle: int
+				- defaultSteer: int
 			}
 			
 			class RemoteController {
@@ -84,10 +94,10 @@ package moped {
 				- throttleValue: int
 			}
 			
-			PidParser --|> ActionStrategy
-			EmgyStop --|> ActionStrategy
-			RemoteController --|> ActionStrategy
-			RemoteController --|> InputReceiver
+				PidParser --|> ActionStrategy
+				EmgyStop --|> ActionStrategy
+				RemoteController --|> ActionStrategy
+				RemoteController --|> InputReceiver
 
 			note top of PidParser
 				DI sensor data reference
@@ -174,7 +184,7 @@ package moped {
 	}
 
 	package pid {
-		'
+		
 		class PID{
 
 		}
