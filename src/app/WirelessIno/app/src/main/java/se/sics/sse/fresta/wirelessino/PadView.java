@@ -11,6 +11,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.Paint.Align;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -482,6 +483,10 @@ public class PadView extends SurfaceView implements Callback, Runnable {
     private void displayToggleButtonStatusToast(){
         Toast.makeText(this.getContext(), "Status = " + modeButton.getStatus(),
                 Toast.LENGTH_SHORT).show();
+        Vibrator v = (Vibrator) this.getContext().getSystemService(Context.VIBRATOR_SERVICE);
+        // Vibrate for 500 milliseconds
+        v.vibrate(250);
+
 
     }
 }
