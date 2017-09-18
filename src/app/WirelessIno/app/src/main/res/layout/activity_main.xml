@@ -7,20 +7,31 @@ android:layout_height="match_parent">
 
 
     <SeekBar
-        android:id="@+id/seekBar2"
+        android:id="@+id/TopBar"
         style="@android:style/Widget.SeekBar"
         android:layout_width="500px"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="27dp"
         android:layout_marginRight="27dp"
-        android:max="1000"
-        android:progress="3"
+        android:max="200"
+        android:progress="100"
         android:rotation="270"
-        tools:style="@android:style/Widget.Material.SeekBar" />
+        tools:style="@android:style/Widget.Material.SeekBar"
+        android:layout_above="@+id/BottomBar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="160dp" />
 
+    <SeekBar
+        android:id="@+id/BottomBar"
+        style="@android:style/Widget.SeekBar"
+        android:layout_width="500px"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="27dp"
+        android:max="200"
+        android:progress="100"
+        tools:style="@android:style/Widget.Material.SeekBar"
+        android:layout_marginBottom="82dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/TopBar" />
 
 
 </RelativeLayout>

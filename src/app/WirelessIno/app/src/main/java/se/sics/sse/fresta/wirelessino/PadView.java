@@ -34,8 +34,8 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 
     private int touchX[]  = new int[balls.length],
 				touchY[]  = new int[balls.length],
-				origenY[] = new int[balls.length], 
-				origenX[] = new int[balls.length], 
+				origenY[] = new int[balls.length],
+				origenX[] = new int[balls.length],
 				idMap[]   = new int[balls.length]; // pointerId depends on how many fingers are pressed and can exceed the number of balls. Thus, a mapping is needed.
 	private int textSize, fakeWitdh, fakeHeight;
 	public Rect screen, bar1, bar2, notif;
@@ -45,12 +45,12 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 	public static final int UMBRAL_TACTIL = 70;
 	private static String canTextL = "", canTextR = "";
 
-        private Activity host;
+	private Activity host;
 
 	public PadView(Context context) {
 		super(context);
 		sh = getHolder();
-		sh.addCallback(this); 
+		sh.addCallback(this);
 	}
 
 	public void initPaints() {

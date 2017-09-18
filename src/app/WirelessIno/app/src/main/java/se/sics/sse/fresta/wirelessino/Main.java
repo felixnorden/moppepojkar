@@ -11,14 +11,23 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.SeekBar;
 
 public class Main extends Activity {
+
+    /*Listener for change in SeekBars (Sliders) */
+
+
+    private SeekBar topBar;
+    private SeekBar bottomBar;
+
+
 	public static final String TAG = "WirelessIno";
 	public static Socket socket = null;
 	public static final boolean D = true; // The debug option
 	
 	private static PrintWriter out = null;
-	private PadView view = null;
 	private Menu menu = null;
 	
 	private static final int EXIT_INDEX = 0;		// Menu bar: exit  
@@ -27,9 +36,53 @@ public class Main extends Activity {
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		view = new PadView(this);
-		setContentView(view);
+		setContentView(R.layout.activity_main);
+        topBar = (SeekBar) findViewById(R.id.TopBar);
+        bottomBar = (SeekBar) findViewById(R.id.BottomBar);
+
+
+
+        topBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                /* The value 100 turns into "0" in calculations */
+                topBar.setProgress(100);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
+                transformPWM();
+            }
+        });
+
+        bottomBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                /* The value 100 turns into "0" in calculations */
+                bottomBar.setProgress(100);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
+                transformPWM();
+            }
+        });
+
+
+
+
 	}
 	
 	/* 
@@ -40,6 +93,36 @@ public class Main extends Activity {
 		updateMenuVisibility();
 		super.onResume();
 	}
+
+
+    public void transformPWM(){
+		/*Here the values are formatted in a way that the arduino will understand */
+        String textTop = "V0";
+        String textBottom = "H0";
+
+        /* Subtract 100 since the bar goes from 0 to 200 and we want values between -100 and 100 */
+        if(topBar.getProgress()-100 < 10){
+			textTop += "00";
+		}
+		else if(topBar.getProgress()-100 < 100){
+			textTop += "0";
+		}
+
+		if(bottomBar.getProgress()-100 < 10){
+			textBottom += "00";
+		}
+		else if(bottomBar.getProgress()-100 < 100){
+			textBottom += "0";
+		}
+
+        textTop += Integer.toString(topBar.getProgress()-100);
+        textBottom += Integer.toString(bottomBar.getProgress()-100);
+        String out = textTop +  textBottom;
+
+		/* Send speed and steering values through the socket */
+        if (Main.socket != null)
+            Main.send(out);
+    }
 	
 	/* 
 	 * Add menu options 
@@ -72,7 +155,6 @@ public class Main extends Activity {
 					socket = null;
 					
 					menu.getItem(DISCONNECT_INDEX).setVisible(false); // Hide the disconnect option
-					view.invalidate(); // Repaint (to show "not connected" in the main view)
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
