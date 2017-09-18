@@ -35,7 +35,7 @@ public class Ball {
 		}
 	}
 	
-	public int getmoveType(){
+	public int getMoveType(){
 		return moveType;
 	}
 	

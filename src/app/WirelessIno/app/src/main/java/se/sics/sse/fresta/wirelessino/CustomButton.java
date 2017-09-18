@@ -73,4 +73,8 @@ class CustomButton{
     Paint getColor(){
         return buttonColor;
     }
+
+    Boolean getStatus(){
+        return isPressed;
+    }
 }

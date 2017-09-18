@@ -19,6 +19,7 @@ import android.view.SurfaceView;
 
 import android.content.pm.ActivityInfo;
 import android.app.Activity;
+import android.widget.Toast;
 
 public class PadView extends SurfaceView implements Callback, Runnable {
 
@@ -29,12 +30,13 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 	private SurfaceHolder sh;
     private Paint pWhite, pRed, pBlue, pYellow, pControls, pBackground;
 	public Ball balls[]   = new Ball[2];
-	private int touchX[]  = new int[balls.length], 
+
+    private int touchX[]  = new int[balls.length],
 				touchY[]  = new int[balls.length],
 				origenY[] = new int[balls.length], 
 				origenX[] = new int[balls.length], 
 				idMap[]   = new int[balls.length]; // pointerId depends on how many fingers are pressed and can exceed the number of balls. Thus, a mapping is needed.
-	private int textSize, w, h;
+	private int textSize, fakeWitdh, fakeHeight;
 	public Rect screen, bar1, bar2, notif;
 
 	private Thread tDraw;
@@ -206,6 +208,7 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 						Log.i(Main.TAG,
 								"Clicked mode switch button ");
 					modeButton.toggle();
+                    displayToggleButtonStatusToast();
 				}
 
 	
@@ -243,7 +246,7 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 
 				balls[ballId].moveToCenter();
 				transformPWM();
-//				if (balls[ballId].getmoveType() == Ball.RIGHT_BAR) {
+//				if (balls[ballId].getMoveType() == Ball.RIGHT_BAR) {
 //					transformPWM(balls[ballId], bar2, Options
 //							.getInstance().getRBarValue());
 //				} else {
@@ -271,7 +274,7 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 					touchX[ballId] = (int) event.getX(pointerIndex);
 					touchY[ballId] = (int) event.getY(pointerIndex);
 	
-					if (balls[ballId].getmoveType() == Ball.RIGHT_BAR) {
+					if (balls[ballId].getMoveType() == Ball.RIGHT_BAR) {
 						// lastWheelValue =
 						// Options.getInstance().getRBarValue();
 						if (balls[ballId].puedoMover(touchX[ballId]
@@ -380,26 +383,26 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 
 	    host.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 
-		w = getWidth() / 60;
-		h = getHeight() / 2;
+		fakeWitdh = getWidth() / 60;
+		fakeHeight = getHeight() / 2;
 
-		int left = getWidth() / 6, top = (getHeight() / 4), right = left + w, bottom = 3 * top;
+		int left = getWidth() / 6, top = (getHeight() / 4), right = left + fakeWitdh, bottom = 3 * top;
 		textSize = getHeight() / 15;
 		initPaints();
 
 		screen = new Rect(0, 0, getWidth(), getHeight());
 
 		bar1 = new Rect(left, top, right, bottom);
-		bar2 = new Rect(3 * left, h - w / 2, 5 * left, h + w / 2);
+		bar2 = new Rect(3 * left, fakeHeight - fakeWitdh / 2, 5 * left, fakeHeight + fakeWitdh / 2);
 
-		balls[0] = new Ball(left - w, top - 5 - w + (bottom - top) / 2, right + w,
-							  top + 5 + w + (bottom - top) / 2, Ball.LEFT_BAR);
-		balls[1] = new Ball(4 * left - w - (w / 2), top - w - 5 + (bottom - top)
-							  / 2, 4 * left + w + (w / 2), top + w + 5 + (bottom - top) / 2,
+		balls[0] = new Ball(left - fakeWitdh, top - 5 - fakeWitdh + (bottom - top) / 2, right + fakeWitdh,
+							  top + 5 + fakeWitdh + (bottom - top) / 2, Ball.LEFT_BAR);
+		balls[1] = new Ball(4 * left - fakeWitdh - (fakeWitdh / 2), top - fakeWitdh - 5 + (bottom - top)
+							  / 2, 4 * left + fakeWitdh + (fakeWitdh / 2), top + fakeWitdh + 5 + (bottom - top) / 2,
 							  Ball.RIGHT_BAR);
-		notif = new Rect(screen.centerX() - w - (UMBRAL_TACTIL / 2),
-				(screen.height() / 8) - w - 5, (screen.centerX()) + w
-						+ (UMBRAL_TACTIL / 2), (screen.height() / 8) + w + 5);
+		notif = new Rect(screen.centerX() - fakeWitdh - (UMBRAL_TACTIL / 2),
+				(screen.height() / 8) - fakeWitdh - 5, (screen.centerX()) + fakeWitdh
+						+ (UMBRAL_TACTIL / 2), (screen.height() / 8) + fakeWitdh + 5);
 
 		createDecorations();
 
@@ -450,11 +453,11 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 
 	private void createDecorations(){
 		decoration = resizeImage(this.getContext(), R.drawable.moped,
-				20 * w, 2 * getHeight() / 8);
+				20 * fakeWitdh, 2 * getHeight() / 8);
 	}
 
     private void drawDecorations(Canvas canvas){
-        canvas.drawBitmap(decoration, screen.centerX() - w * 20 / 2,
+        canvas.drawBitmap(decoration, screen.centerX() - fakeWitdh * 20 / 2,
                 6 * getHeight() / 8, null);
     }
     private void drawSliders(Canvas canvas){
@@ -476,5 +479,9 @@ public class PadView extends SurfaceView implements Callback, Runnable {
     }
 
 
+    private void displayToggleButtonStatusToast(){
+        Toast.makeText(this.getContext(), "Status = " + modeButton.getStatus(),
+                Toast.LENGTH_SHORT).show();
 
+    }
 }
