@@ -9,7 +9,7 @@ package moped {
 		
 		}
 		
-		package bahaviour_states {
+		package behaviour_states {
 		
 			class StateController {
 				- currentState: BehaviourState
@@ -131,8 +131,8 @@ package moped {
 		
 		Main ..> states
 		
-		states --> strategies
-		strategies --> car_control
+		states --> action_strategies
+		action_strategies --> car_control
 	}
 	
 	package com_io {
@@ -195,9 +195,9 @@ package moped {
 	}
 	
 	app --> communication_protocols
-	moped --> communication_protocols
-	
+	StateController --> communication_protocols
 	core --> com_io
+	
 	
 }
 
