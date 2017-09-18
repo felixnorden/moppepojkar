@@ -1,11 +1,14 @@
 package com;
 
+import javafx.util.Pair;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Queue;
 
 
@@ -21,7 +24,7 @@ public abstract class AbstractCommunicator implements Communicator {
     protected DataInputStream inputStream;
     protected DataOutputStream outputStream;
     protected Thread mainThread;
-    private Queue<MopedStates> queuedMopedStates;
+    private Queue<Pair<MopedDataType, Integer>> queue;
     private final ArrayList<CommunicationListener> listeners;
 
     /**
@@ -30,12 +33,13 @@ public abstract class AbstractCommunicator implements Communicator {
     protected AbstractCommunicator(int port) {
         this.port = port;
         listeners = new ArrayList<>();
-        queuedMopedStates = new LinkedList<MopedStates>();
+        queue = new LinkedList<Pair<MopedDataType, Integer>>();
     }
 
     @Override
     public void setState(MopedStates state) {
-        queuedMopedStates.add(state);
+        Pair p = new Pair(MopedDataType.MopedState, state.toInt());
+        queue.add(p);
     }
 
     @Override
@@ -45,7 +49,7 @@ public abstract class AbstractCommunicator implements Communicator {
 
     @Override
     public void start() {
-        queuedMopedStates.clear();
+        queue.clear();
         mainThread.start();
     }
 
@@ -61,15 +65,24 @@ public abstract class AbstractCommunicator implements Communicator {
         try {
 
             //Send all queued state changes through socket link
-            while (queuedMopedStates.size() > 0) {
-                outputStream.writeUTF(Integer.toString(queuedMopedStates.poll().toInt()));
+            while (queue.size() > 0) {
+                Pair<MopedDataType, Integer> pair = queue.poll();
+                String output = String.valueOf((pair.getKey().toInt()));
+                output += "," + pair.getValue();
+
+                outputStream.writeUTF(output);
             }
 
-            // Get all state changes from other sender in socket link
+            // Read and interpret data from inputstream.
             while (inputStream.available() > 0) {
                 String input = inputStream.readUTF();
-                int i = Integer.parseInt(input);
-                notifyStateChange(MopedStates.parseInt(i));
+                String[] args = input.split(",");
+
+                //Extract data from input.
+                MopedDataType type = MopedDataType.parseInt(Integer.parseInt(args[0]));
+                int value = Integer.parseInt(args[1]);
+
+                handleInput(type, value);
             }
 
         } catch (IOException e) {
@@ -106,6 +119,15 @@ public abstract class AbstractCommunicator implements Communicator {
             outputStream = null;
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void handleInput(MopedDataType type, int value) {
+        switch (type) {
+            case MopedState:
+                notifyStateChange(MopedStates.parseInt(value));
+            default:
+                // TODO: 2017-09-18 Notify value change
         }
     }
 }
