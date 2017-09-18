@@ -27,18 +27,17 @@ public class ClientCommunicator extends AbstractCommunicator {
      */
     @Override
     public void run() {
-        while (true) {
-            // TODO: 2017-09-13 Is this kind of loop optimal?
+        while (!Thread.interrupted()) {
             if (socket == null || !socket.isConnected()) {
                 try {
                     socket = new Socket(ip, this.port);
-                    notifyConnected();
                     this.inputStream = new DataInputStream(socket.getInputStream());
                     this.outputStream = new DataOutputStream(socket.getOutputStream());
+                    notifyConnected();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }else {
+            } else {
                 //Run update if connected to socket
                 this.update();
             }
@@ -46,8 +45,11 @@ public class ClientCommunicator extends AbstractCommunicator {
             try {
                 Thread.sleep(UPDATE_INTERVAL);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                //Just catch, do nothing.
+                System.out.println("Interrupted sleep");
             }
         }
+
+        clearConnection();
     }
 }

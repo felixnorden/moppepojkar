@@ -13,9 +13,17 @@ public interface Communicator extends Runnable {
     void addListener(CommunicationListener cl);
 
     /**
-     * Starts a Communicator.
+     * Starts a Communicator in a new thread. Must be called for communicator to start
+     * communicating.
+     * If the queue contains items, the queue will be cleared.
      */
     void start();
+
+    /**
+     * Stops the Communicator from communicating. Use start() to start communicating once again.
+     * DOESN'T CLEAR THE QUEUE.
+     */
+    void stop();
 
     void setState(MopedStates state);
 }

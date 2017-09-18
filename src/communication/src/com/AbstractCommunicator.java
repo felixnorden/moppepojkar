@@ -45,7 +45,13 @@ public abstract class AbstractCommunicator implements Communicator {
 
     @Override
     public void start() {
+        queuedMopedStates.clear();
         mainThread.start();
+    }
+
+    @Override
+    public void stop() {
+        mainThread.interrupt();
     }
 
     /**
@@ -86,6 +92,20 @@ public abstract class AbstractCommunicator implements Communicator {
     protected void notifyStateChange(MopedStates mopedState) {
         for (CommunicationListener cl : listeners) {
             cl.onStateChange(mopedState);
+        }
+    }
+
+    /**
+     * Closes the socket, nullifies it and nullifies the in/output-streams.
+     */
+    protected void clearConnection() {
+        try {
+            socket.close();
+            socket = null;
+            inputStream = null;
+            outputStream = null;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
