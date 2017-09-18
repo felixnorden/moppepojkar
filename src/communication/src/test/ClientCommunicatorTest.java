@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,7 +18,6 @@ class ClientCommunicatorTest {
         CommunicationListener cl = new CommunicationListener() {
             @Override
             public void onConnection() {
-                System.out.println("Yes");
                 vars.add(true);
             }
 
@@ -54,9 +52,7 @@ class ClientCommunicatorTest {
             e.printStackTrace();
         }
 
-        System.out.println(vars.size());
         assertTrue(vars.size() == 1);
         assertTrue(vars.get(0));
     }
-
 }

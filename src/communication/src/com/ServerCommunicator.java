@@ -30,27 +30,29 @@ public class ServerCommunicator extends AbstractCommunicator {
      */
     @Override
     public void run() {
-        while (true) {
-            // TODO: 2017-09-13 Is this kind of loop optimal? 
+        while (!Thread.interrupted()) {
             if (socket == null || !socket.isConnected()) {
                 try {
                     socket = serverSocket.accept();
-                    notifyConnected();
                     this.inputStream = new DataInputStream(socket.getInputStream());
                     this.outputStream = new DataOutputStream(socket.getOutputStream());
+                    notifyConnected();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            //Run update if connected to socket
-            }else {
+            } else {
+                //Run update if connected to socket
                 this.update();
             }
 
             try {
                 Thread.sleep(UPDATE_INTERVAL);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                //Do nothing.
             }
         }
+
+        //This section only runs when the thread is interrupted aka on stop().
+        clearConnection();
     }
 }
