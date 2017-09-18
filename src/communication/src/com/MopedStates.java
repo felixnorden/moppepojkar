@@ -9,6 +9,7 @@ public enum MopedStates {
     ACC(MopedStateType.DRIVING_STATE),
     MANUAL(MopedStateType.DRIVING_STATE);
 
+    private static MopedStates[] values = MopedStates.values();
     private final MopedStateType stateType;
 
     MopedStates(final MopedStateType stateType) {
@@ -27,11 +28,10 @@ public enum MopedStates {
     /**
      * Convert enum to int
      *
-     * @param mopedState MopedStates enum
      * @return int
      */
-    public static int toInt(MopedStates mopedState) {
-        return mopedState.ordinal();
+    public int toInt() {
+        return this.ordinal();
     }
 
     /**
@@ -41,8 +41,8 @@ public enum MopedStates {
      * @return MopedStates enum
      */
     public static MopedStates parseInt(int mopedState) {
-        if (mopedState <= MopedStates.values().length && mopedState >= 0) {
-            return MopedStates.values()[mopedState];
+        if (mopedState <= values.length && mopedState >= 0) {
+            return values[mopedState];
         }
         return null;
     }
