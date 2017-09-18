@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "se.sics.sse.fresta.wirelessino"
-        minSdkVersion 11
+        minSdkVersion 21
         targetSdkVersion 21
     }
 
@@ -20,4 +20,6 @@ android {
 
 dependencies {
     compile 'com.android.support:support-v4:20.0.0'
+    compile 'com.android.support:appcompat-v7:20.0.0'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }
