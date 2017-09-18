@@ -18,7 +18,7 @@
 - We will give continuous, **constructive** feedback on each members' performance
     - If a member won't adapt to the feedback given, further actions will be taken
     - In the most extreme case, the member may be removed from the group
-- Each member will attend course lectures to their own ability
+- Each member will attend course (DAT255) lectures to their own ability
     - If they are going to miss a lecture, they will need to inform the others beforehand as to avoid any loss of communication afterwards
     - If a member misses a lecture, the others will summarize the lecture and the member can read more in-depth on the repository
 - Each member will keep their work updated on the Scrum board
@@ -26,19 +26,21 @@
 ## Meetings
 
 - Whole group meetings will be held once a week
-    - Will be for ~2 hours
-- The project manager will be the chairman of each meeting
+    - Max 1 hour. 
+- In the beginning of each meeting specify a chairman.
 - When a discussion is held on a specific subject the following rules apply:
     - Switching subject is prohibited until the current discussion is finished
     - No request for the right of speech will be made if it will be unrelated
-- The secretary for the upcoming meeting will be decided upon at the end of the previous meeting
+- The secretary for the meeting will be decided at the beginning of each meeting with the assistance of random.org.
 - Daily stand ups for the smaller groups
-- 2-3 stand ups for whole group meetings
+- 2-3 stand ups for reps group meetings
 
 ## Smaller group requirements
 
 - Groups will be kept flexible
 - Documentation needs to be made for each meeting
+- Agreements between teams about code will be written down and specified so that a common conceptional ground. 
+- All UML-charts will be added to the common directory. Arbitrary UML will be put in the "documentation/UML"-dir.
 
 ## References
 
