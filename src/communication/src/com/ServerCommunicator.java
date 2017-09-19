@@ -11,27 +11,38 @@ public class ServerCommunicator extends AbstractCommunicator {
 
     /**
      * Creates a ServerCommunicator acting on the specified port.
+     *
      * @param port
      */
     public ServerCommunicator(int port) {
         super(port);
 
+        mainThread = new Thread(this);
+    }
+
+    @Override
+    protected void clearConnection() {
         try {
-            serverSocket = new ServerSocket(port);
+            serverSocket.close();
+            socket.close();
+            serverSocket = null;
+            socket = null;
+            inputStream = null;
+            outputStream = null;
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        mainThread = new Thread(this);
     }
 
     protected void connectSocket() {
         try {
+            serverSocket = new ServerSocket(port);
             socket = serverSocket.accept();
             this.inputStream = new DataInputStream(socket.getInputStream());
             this.outputStream = new DataOutputStream(socket.getOutputStream());
             notifyConnected();
         } catch (IOException e) {
+            //Runs if port was already bound by another socket (possibly ours)
             e.printStackTrace();
         }
     }

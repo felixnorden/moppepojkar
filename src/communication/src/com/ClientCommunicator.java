@@ -20,6 +20,18 @@ public class ClientCommunicator extends AbstractCommunicator {
         mainThread = new Thread(this);
     }
 
+    @Override
+    protected void clearConnection() {
+        try {
+            socket.close();
+            socket = null;
+            inputStream = null;
+            outputStream = null;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     protected void connectSocket() {
         try {
             socket = new Socket(ip, this.port);
@@ -27,7 +39,7 @@ public class ClientCommunicator extends AbstractCommunicator {
             this.outputStream = new DataOutputStream(socket.getOutputStream());
             notifyConnected();
         } catch (IOException e) {
-            e.printStackTrace();
+            //This block runs if socket cannot connect.
         }
     }
 }

@@ -20,9 +20,10 @@ public abstract class AbstractCommunicator implements Communicator {
     //Constants
     private static final String EXIT_CODE = "#EXIT";
     private static final String SEPARATOR = ",";
-    protected final long UPDATE_INTERVAL = 10;//This essentially controls the input lag between app and MOPED
+    protected static final long UPDATE_INTERVAL = 10;//This essentially controls the input lag between app and MOPED
 
     protected final int port;
+    protected boolean running;
     protected Socket socket;
     protected DataInputStream inputStream;
     protected DataOutputStream outputStream;
@@ -47,13 +48,14 @@ public abstract class AbstractCommunicator implements Communicator {
      */
     @Override
     public void run() {
-        while (!Thread.interrupted()) {
+        while (running) {
             // If there is no connection or if connection is broken.
             if (socket == null || !socket.isConnected()) {
                 connectSocket();
             } else {
                 update();
             }
+
             try {
                 Thread.sleep(UPDATE_INTERVAL);
             } catch (InterruptedException e) {
@@ -61,7 +63,7 @@ public abstract class AbstractCommunicator implements Communicator {
             }
         }
 
-        //This section only runs when the thread is interrupted aka on stop().
+        //Only runs after running has been set to false (aka onDisconnect and stop())
         clearConnection();
     }
 
@@ -79,7 +81,13 @@ public abstract class AbstractCommunicator implements Communicator {
     @Override
     public void start() {
         queue.clear();
-        mainThread.start();
+        running = true;
+        try {
+            mainThread.start();
+        } catch (IllegalThreadStateException e) {
+            //If this is thrown, thread was already started once before.
+            System.out.println(this.getClass() + " has already been started once.");
+        }
     }
 
     @Override
@@ -87,9 +95,11 @@ public abstract class AbstractCommunicator implements Communicator {
         try {
             //Ignore queue and send exit code to other communicator, then exit.
             outputStream.writeUTF(EXIT_CODE);
-            mainThread.interrupt();
+            running = false;
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (NullPointerException e) {
+            //If the communicator hasn't been started (.start()) yet, NullPointerException will be thrown.
         }
     }
 
@@ -181,21 +191,14 @@ public abstract class AbstractCommunicator implements Communicator {
 
     /**
      * Closes the socket, nullifies it and nullifies the in/output-streams.
+     * This is necessary because one communicator acts as a server and the other one as a client.
      */
-    protected void clearConnection() {
-        try {
-            socket.close();
-            socket = null;
-            inputStream = null;
-            outputStream = null;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+    protected abstract void clearConnection();
 
     /**
      * Decides what happens to the received data once it has been converted into the objects it was converted from.
-     * @param type Type of data received.
+     *
+     * @param type  Type of data received.
      * @param value The value of the type.
      */
     private void handleInput(MopedDataType type, int value) {
@@ -213,7 +216,7 @@ public abstract class AbstractCommunicator implements Communicator {
      * sending the EXIT_CODE
      */
     private void onDisconnect() {
-        mainThread.interrupt();
+        running = false;
         notifyDisconnected();
     }
 
