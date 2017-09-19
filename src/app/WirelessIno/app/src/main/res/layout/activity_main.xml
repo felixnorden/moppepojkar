@@ -3,43 +3,53 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:tools="http://schemas.android.com/tools"
 android:orientation="horizontal" android:layout_width="match_parent"
-android:layout_height="match_parent">
+android:layout_height="match_parent"
+                android:background="#8cb4ff">
 
 
     <SeekBar
         android:id="@+id/TopBar"
         style="@android:style/Widget.SeekBar"
         android:layout_width="500px"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/BottomBar"
         android:layout_marginRight="27dp"
         android:max="200"
         android:progress="100"
         android:rotation="270"
-        tools:style="@android:style/Widget.Material.SeekBar"
-        android:layout_alignTop="@+id/BottomBar"
-        android:layout_alignParentStart="true"/>
+        tools:style="@android:style/Widget.Material.SeekBar"/>
 
     <SeekBar
         android:id="@+id/BottomBar"
         style="@android:style/Widget.SeekBar"
         android:layout_width="500px"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
         android:layout_marginRight="27dp"
         android:max="200"
         android:progress="100"
-        tools:style="@android:style/Widget.Material.SeekBar"
-        android:layout_centerVertical="true"
-        android:layout_alignParentEnd="true"/>
+        tools:style="@android:style/Widget.Material.SeekBar"/>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/connectButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="13dp"
         android:onClick="goToOptions"
-        android:text="Button" />
+        android:text="Connect"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignStart="@+id/modeButton"/>
+
+    <Button
+        android:id="@+id/modeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="goToOptions"
+        android:text="ACC disabled"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"/>
 
 
 </RelativeLayout>
