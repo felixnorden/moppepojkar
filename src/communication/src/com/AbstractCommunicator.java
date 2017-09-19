@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Map;
 import java.util.Queue;
 
 
@@ -37,7 +36,7 @@ public abstract class AbstractCommunicator implements Communicator {
     }
 
     @Override
-    public void setState(MopedStates state) {
+    public void setState(MopedState state) {
         Pair p = new Pair(MopedDataType.MopedState, state.toInt());
         queue.add(p);
     }
@@ -102,7 +101,7 @@ public abstract class AbstractCommunicator implements Communicator {
     /**
      * Notifies all listeners that a state change from the sender has been received.
      */
-    protected void notifyStateChange(MopedStates mopedState) {
+    protected void notifyStateChange(MopedState mopedState) {
         for (CommunicationListener cl : listeners) {
             cl.onStateChange(mopedState);
         }
@@ -125,7 +124,7 @@ public abstract class AbstractCommunicator implements Communicator {
     private void handleInput(MopedDataType type, int value) {
         switch (type) {
             case MopedState:
-                notifyStateChange(MopedStates.parseInt(value));
+                notifyStateChange(MopedState.parseInt(value));
             default:
                 // TODO: 2017-09-18 Notify value change
         }

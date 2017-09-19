@@ -25,5 +25,5 @@ public interface Communicator extends Runnable {
      */
     void stop();
 
-    void setState(MopedStates state);
+    void setState(MopedState state);
 }

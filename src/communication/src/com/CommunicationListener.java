@@ -15,5 +15,5 @@ public interface CommunicationListener {
      *
      * @param stateChange New state which communicator received.
      */
-    void onStateChange(MopedStates stateChange);
+    void onStateChange(MopedState stateChange);
 }

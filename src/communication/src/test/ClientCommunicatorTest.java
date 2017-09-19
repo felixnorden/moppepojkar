@@ -22,7 +22,7 @@ class ClientCommunicatorTest {
             }
 
             @Override
-            public void onStateChange(MopedStates stateChange) {
+            public void onStateChange(MopedState stateChange) {
 
             }
         };
