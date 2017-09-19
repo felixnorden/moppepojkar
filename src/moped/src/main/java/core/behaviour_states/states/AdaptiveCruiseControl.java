@@ -5,9 +5,12 @@ import core.action_strategies.ActionStrategy;
 public class AdaptiveCruiseControl implements BehaviourState {
 
     private ActionStrategy currentStrategy;
-
     // Remove?
     private ActionStrategy emgyStopStrategy;
+
+    public AdaptiveCruiseControl() {
+
+    }
 
     @Override
     public void run() {
