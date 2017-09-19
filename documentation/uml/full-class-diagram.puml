@@ -5,130 +5,191 @@ package moped {
 	package core {
 		
 		class Main {
+			+ {static}main(String[] args): void
 		
 		}
 		
-		class RunnableLoop {
-		
-		}
-		
-		package states {
+		package behaviour_states {
 		
 			class StateController {
+				- currentState: BehaviourState
+
+				.. Setters ..
+				+ setNewState(BehaviourState newState): void
+
+				.. Getters ..
+				+ getCurrentState(): State
+
+				.. Methods ..
+
+			}
+
+			package states {
+
+				interface BehaviourStateFactory {
+					createManualBehaviour(): BehaviourState
+					createAdaptiveCruiseControlBehaviour(): BehaviourState
+				}
+
+				interface BehaviourState {
+					run(double deltaTime): void
+				}
 			
+				class Manual {
+					- controller: RemoteController
+				}
+
+				class BehaviourStateFactoryImpl {
+
+				}
+				
+				class AdaptiveCruiseControl {
+					- currentActionStrategy: ActionStrategy
+					- pidStrategy: ActionStrategy
+					- emgyStopStrategy: ActionStrategy
+
+					- determineStrategy(): ActionStrategy
+
+				}
+				
+				Manual --|> BehaviourState
+				AdaptiveCruiseControl --|> BehaviourState
+				BehaviourStateFactoryImpl --|> BehaviourStateFactory
 			}
 		
-			interface State {
-				void run()
+			
+			StateController --> BehaviourState
+		}			
+
+		package action_strategies {
+
+			interface ActionStrategyFactory {
+				createPidParser(): ActionStrategy
+				createEmgyStop(): ActionStrategy
+				createRemoteController(): ActionStrategy
 			}
-		
-			class Manual {
-			
+
+			interface ActionStrategy {
+				takeAction(double deltaTime) : void
 			}
-			
-			class AdaptiveCruiseControl {
-			
+
+			class ActionStrategyFactoryImpl{
+				- appsocket: ExternalCommunicator
+				- distanceSensor: Sensor
 			}
-			
-			StateController --> State
-		
-			Manual --|> State
-			Acc --|> State
-		}
-		
-		package strategy {
-			
-			interface Strategy {
-				void run()
-			}
-			
+
 			class PidParser {
-			
+				- pid: PID
+				
+				- calcPIDVal(double deltaTime): float
 			}
-			
 			class EmgyStop {
-			
+				- defaultThrottle: int
+				- defaultSteer: int
 			}
 			
-			class DirectControl {
-			
+			class RemoteController {
+				- appSocket: ExternalCommunicator
+				- steerValue: int
+				- throttleValue: int
 			}
 			
-			PidParser --|> Strategy
-			EmrStop --|> Strategy
-			DirectControl --|> Strategy
+				PidParser --|> ActionStrategy
+				EmgyStop --|> ActionStrategy
+				RemoteController --|> ActionStrategy
+
+			note top of PidParser
+				DI sensor data reference
+				in constructor
+			end note
 			
 		}
 		
-		package CarControl {
-		
+		package car_control {
+			
+			interface CarControl {
+				
+				.. Getters ..
+				getLastThrottle(): int
+				getSteerValue(): int
+	
+				.. Setters ..
+				setThrottleValue(int value): void
+				setSteerValue(int value): void
+
+			}
+
+			class CarControlImpl {
+				- lastThrottleValue: int
+				- lastSteerValue: int
+			}
+
+			CarControlImpl --|> CarControl
+
 		}
 		
 		Main ..> states
-		Main --> RunnableLoop
-		RunnableLoop --> states
 		
-		states --> strategy
-		strategy --> CarControl
+		states --> action_strategies
+		states --> car_control
 	}
 	
 	package com_io {
 
-		package ext_com {
-			
-			+interface Observer {
-			
-			}
-			
-			+interface ExternalCommunicator {
-				
-			}
-			
-			+interface InputReciever {
-			
-			}
-			
-			+interface OutputObserver {
-			
-			}
-			
-			class CommunicatorFactory {
-				+ExternalCommunicator getExtComInstance()
-			}
-			
-			~class ExternalCommunications {
-				
-			}
-			
-			ExternalCommunications --> Observer
-			ExternalCommunications --|> ExternalCommunicator
-			
-			ExternalCommunications --> OutputObserver
-			ExternalCommunications --|> InputReciever
-			
-			CommunicatorFactory ..> ExternalCommunicator
-			CommunicatorFactory ..> ExternalCommunications
-			
+		enum Direction {
+			Internal
+			External
 		}
 		
-		package int_com {
-		
+		interface DataReceiver {
+			dataRecieved(int[] data, Direction direction): void
 		}
-	
+
+		interface CommunicationsMediator {
+			transmitData(int[] data, Direction direction): void
+			subscribe(InputReceiver receiver, Direction direction): void
+			unsubscribe(InputReceiver receiver): void
+		}
+		
+		class CommunicatorFactory {
+			- comInstance: CommunicationsMediator
+
+			.. Getters ..
+			+getComInstance():  ExternalCommunicator
+		}
+		
+		class CommunicationsMediatorImpl {
+			- Map<DataReceiver> subscribers
+			- directPacket(int[] data, Direction direction)
+		}
+		
+		CommunicationsMediator --> DataReceiver
+		
+
+		CommunicatorFactory ..> CommunicationsMediator
+		CommunicatorFactory ..> CommunicationsMediatorImpl
+		
+		
 	}
 
 	package pid {
+		
+		class PID{
 
+		}
 	}
 
 	package communication_protocols {
 	
 	}
-	
+
+	PidParser --> PID
 	app --> communication_protocols
-	moped --> communication_protocols
+	StateController --> communication_protocols
+	core --> com_io	
+	RemoteController --|> DataReceiver
+	StateController --|> DataReceiver
 	
-	plugin --> com_io
 	
 }
 
