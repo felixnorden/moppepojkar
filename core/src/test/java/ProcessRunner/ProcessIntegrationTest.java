@@ -21,8 +21,8 @@ class ProcessIntegrationTest {
         ProcessBuilder pb = new ProcessBuilder("cmd");
         ProcessRunner process = ProcessFactory.createCustomProcess(pb);
 
-        InputReceiver receiver = new InputReceiver();
-        process.addInputObserver(receiver);
+        InputSubscriberImpl receiver = new InputSubscriberImpl();
+        process.subscribeToInput(receiver);
 
         process.start();
 
@@ -51,8 +51,8 @@ class ProcessIntegrationTest {
         ProcessBuilder pb = new ProcessBuilder("cmd");
         ProcessRunner process = ProcessFactory.createCustomProcess(pb);
 
-        InputReceiver receiver = new InputReceiver();
-        process.addInputObserver(receiver);
+        InputSubscriberImpl receiver = new InputSubscriberImpl();
+        process.subscribeToInput(receiver);
 
         process.start();
 
@@ -64,12 +64,13 @@ class ProcessIntegrationTest {
 
 
         // 3. Skip beginning lines from cmd
-        receiver.discardBufferedLinesReceived();
+        receiver.clearBuffer();
 
 
         // 4. Send "test"
         try {
-            process.outputToScript("test");
+            process.outputToScript("test\n");
+            process.flushOutput();
         } catch (IOException ignored) {
         }
 
@@ -118,14 +119,14 @@ class ProcessIntegrationTest {
         // 2. Create Python process
         ProcessRunner process = ProcessFactory.createPythonProcess(pyScript.getAbsolutePath());
 
-        InputReceiver receiver = new InputReceiver();
-        process.addInputObserver(receiver);
+        InputSubscriberImpl receiver = new InputSubscriberImpl();
+        process.subscribeToInput(receiver);
         process.start();
 
         // 3. Wait for process to start
         Thread.sleep(500);
 
-        // 3. Read the first word of the command output
+        // 4. Read the first word of the command output
         String lastReceived;
         StringBuilder sb = new StringBuilder();
         while (
@@ -136,7 +137,7 @@ class ProcessIntegrationTest {
             sb.append(lastReceived);
         }
 
-        // First word should be "test"
+        // First word should be "test" as seen in the python code
         assert sb.toString().equals("test");
     }
 
@@ -144,8 +145,8 @@ class ProcessIntegrationTest {
     void pythonWriteTest() throws IOException, InterruptedException {
         // 1. Create temporary Python file
         File pyScript = new File("pythonTemp.py");
-        BufferedWriter bf;
-        bf = new BufferedWriter(new FileWriter(pyScript));
+        BufferedWriter bufferedWriter;
+        bufferedWriter = new BufferedWriter(new FileWriter(pyScript));
 
         String[] pythonCode = {
                 "import time\n" +
@@ -154,26 +155,27 @@ class ProcessIntegrationTest {
                 "print(\"test\")\n",
         };
 
-        bf.write("");
+        bufferedWriter.write("");
         for (String s : pythonCode) {
-            bf.append(s);
-            bf.flush();
+            bufferedWriter.append(s);
+            bufferedWriter.flush();
         }
 
         // 2. Create Python process
         ProcessRunner process = ProcessFactory.createPythonProcess(pyScript.getAbsolutePath());
 
-        InputReceiver receiver = new InputReceiver();
-        process.addInputObserver(receiver);
+        InputSubscriberImpl receiver = new InputSubscriberImpl();
+        process.subscribeToInput(receiver);
         process.start();
 
         // 3. Wait for process to start
         Thread.sleep(250);
 
         // 4. Output "1" to the process
-        process.outputToScript("1");
+        process.outputToScript("1\n");
+        process.flushOutput();
 
-        // 5. Wait for process to handle the output
+        // 5. Wait for process to receive and process the output
         Thread.sleep(250);
 
         // 6. Read the first output from the process
@@ -187,42 +189,41 @@ class ProcessIntegrationTest {
             sb.append(lastReceived);
         }
 
-        // First word should be test
+        // First word should be "test" as seen in the python code
         assert sb.toString().equals("test");
     }
 
 
-    class InputReceiver implements InputObserver {
+    class InputSubscriberImpl implements InputSubscriber {
 
-        private final List<String> receivedInputs;
+        private final List<String> buffer;
 
-        InputReceiver() {
-            this.receivedInputs = new ArrayList<>();
+        InputSubscriberImpl() {
+            this.buffer = new ArrayList<>();
         }
 
         @Override
-        public void stringOutputted(String s) {
-            synchronized (receivedInputs) {
-                receivedInputs.add(s);
+        public void outputString(String s) {
+            synchronized (buffer) {
+                buffer.add(s);
             }
         }
 
         String getNextInput() {
             String returningInput = null;
-            synchronized (receivedInputs) {
-                if (receivedInputs.size() > 0) {
-                    returningInput = receivedInputs.get(0);
-                    receivedInputs.remove(0);
+            synchronized (buffer) {
+                if (buffer.size() > 0) {
+                    returningInput = buffer.get(0);
+                    buffer.remove(0);
                 }
             }
             return returningInput;
         }
 
-        private void discardBufferedLinesReceived() {
-            while (true) {
-                String nextInput = this.getNextInput();
-                if (nextInput == null) {
-                    break;
+        private void clearBuffer() {
+            synchronized (buffer) {
+                while (buffer.size() > 0) {
+                    buffer.remove(0);
                 }
             }
         }
