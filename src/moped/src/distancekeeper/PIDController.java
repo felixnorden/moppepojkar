@@ -51,6 +51,8 @@ public class PIDController {
         this.constantIRelation = constantIRelation;
     }
 
+    public double getConstantIRelation(){return constantIRelation;}
+
     public double getConstantD() {
         return constantD;
     }
@@ -58,6 +60,8 @@ public class PIDController {
     public void setConstantDRelation(double constantDRelation) {
         this.constantDRelation = constantDRelation;
     }
+
+    public double getConstantDRelation(){return constantDRelation;}
 
     public double getTargetValue() {
         return targetValue;

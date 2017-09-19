@@ -38,7 +38,8 @@ class PIDControllerTest{
     void evaluation1() {
         System.out.println("\n\n\n\n");
         double targetValue = 50;
-        PIDController pid = new PIDController(targetValue, 0.5, 1/10, 1.5);
+        PIDController pid = new PIDController(targetValue, 0.5, 1.0/10, 1.5);
+        System.out.println(pid.getConstantIRelation());
         double currentValue = 0;
         double currentSpeedOfChange = 1;
         double lastError = 51;
@@ -51,7 +52,7 @@ class PIDControllerTest{
             double error = currentValue-targetValue;
             System.out.println("Error 1: " + error);
             System.out.println("throttle 1: " + throttle);
-            //assertTrue(Math.abs(error) < lastError || Math.abs(error) < 2);
+            assertTrue(Math.abs(error) < lastError || Math.abs(error) < 2 || i < 10);
             lastError = Math.abs(error);
 
         }
