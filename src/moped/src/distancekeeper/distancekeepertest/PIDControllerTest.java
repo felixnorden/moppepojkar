@@ -39,7 +39,6 @@ class PIDControllerTest{
         System.out.println("\n\n\n\n");
         double targetValue = 50;
         PIDController pid = new PIDController(targetValue, 0.5, 1.0/10, 1.5);
-        System.out.println(pid.getConstantIRelation());
         double currentValue = 0;
         double currentSpeedOfChange = 1;
         double lastError = 51;

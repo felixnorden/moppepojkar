@@ -37,6 +37,11 @@ public class PIDController {
         return constantP;
     }
 
+    /**
+     * This function sets the constant P to a new value and updates dependant constants (I and D) accordingly.
+     * @param constantP The new value for the proportional constant.
+     */
+
     public void setConstantP(double constantP) {
         this.constantP = constantP;
         this.constantI = constantP * constantIRelation;
