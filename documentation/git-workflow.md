@@ -41,7 +41,7 @@ In practice, it works as follows:
 Your code must be reviewed by **at least one** other developer, preferably two,  and receive +1s from each of them, in order to be eligible for a Merge.
 
 1. Create a Pull Request in github between your feature branch and development.
-1. Standards for Code Review can be found here [INSERT LINK TO Code Review](#LINK).
+1. Standards for Code Review can be found here [Code Review](./code-review.md).
 1. After your code passes Code Review, merge your code into **Development Branch** via the GitHub interface. Delete your branch after merging.
 
 ## PRODUCTION HOTFIX
