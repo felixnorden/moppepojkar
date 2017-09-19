@@ -15,11 +15,13 @@ public class PIDController {
     private Double lastError = Double.NaN;
 
     /**
-     * This is the PIDController constructor. It creates a new PIDController with custom constants which
-     * @param targetValue
-     * @param constantP
-     * @param constantIRelation
-     * @param constantDRelation
+     * This is the PIDController constructor. It creates a new PIDController with custom constants which affect the controllers behavior.
+     * @param targetValue The target value the PID strives to minimize error for.
+     * @param constantP The proportional constant. A bigger constant means greater reaction effect.
+     * @param constantIRelation The relation between the proportional and integral constant where: constantP * constantIRelation = constantI.
+     *                          A higher value gives the integral part of the controller more weight which creates a more rapid climb to the target value but might cause overshoot.
+     * @param constantDRelation The relation between the proportional and derivative constant where: constantP * constantDRelation = constantD.
+     *                          A higher value gives the derivative part of the controller more weight which creates cushioning effect when the error is minimised to fast to mitigate overshoot.
      */
 
     public PIDController(double targetValue, double constantP, double constantIRelation, double constantDRelation) {
