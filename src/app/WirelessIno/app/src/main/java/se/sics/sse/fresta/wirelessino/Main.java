@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Random;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -100,7 +101,7 @@ public class Main extends Activity {
         });
 
 
-        Toast.makeText(getApplicationContext(), "Tänk på hur ni kör!" , Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), getMoppeToast() , Toast.LENGTH_SHORT).show();
 
 
     }
@@ -230,5 +231,11 @@ public class Main extends Activity {
             else
                 menu.getItem(DISCONNECT_INDEX).setVisible(true);
         }
+    }
+
+
+    private String getMoppeToast(){
+        String[] strs = new String[] {"Tänk på hur ni kör!", "Hallå moppepojkar, tänk på vad ni gör!", "Git gud!"};
+        return strs[new Random().nextInt(3)];
     }
 }
