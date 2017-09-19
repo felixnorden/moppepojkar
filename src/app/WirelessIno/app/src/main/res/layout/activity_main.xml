@@ -33,5 +33,15 @@ android:layout_height="match_parent">
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/TopBar" />
 
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="13dp"
+        android:onClick="goToOptions"
+        android:text="Button" />
+
 
 </RelativeLayout>

@@ -9,8 +9,10 @@ import java.net.Socket;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.SeekBar;
 
@@ -94,34 +96,56 @@ public class Main extends Activity {
 		super.onResume();
 	}
 
+	public void goToOptions (View view){
+		Intent intent = new Intent (this, SocketConnector.class);
+		startActivity(intent);
+	}
 
     public void transformPWM(){
 		/*Here the values are formatted in a way that the arduino will understand */
-        String textTop = "V0";
-        String textBottom = "H0";
+		String textTop = "";
+		String textBottom = "";
+		if(topBar.getProgress()-100 > -1){
+			textTop = "V0";
+		}
+		else{
+			textTop = "V-";
+		}
+		if(bottomBar.getProgress()-100 > -1){
+			textBottom = "H0";
+		}
+		else{
+			textBottom = "H-";
+		}
+
 
         /* Subtract 100 since the bar goes from 0 to 200 and we want values between -100 and 100 */
-        if(topBar.getProgress()-100 < 10){
-			textTop += "00";
+        if(topBar.getProgress()-100 < 10 && topBar.getProgress()-100 > -10){
+
+				textTop += "00";
+
+
+
 		}
-		else if(topBar.getProgress()-100 < 100){
+		else if(topBar.getProgress()-100 < 100 && topBar.getProgress()-100 > -100){
 			textTop += "0";
 		}
 
-		if(bottomBar.getProgress()-100 < 10){
+		if(bottomBar.getProgress()-100 < 10 && bottomBar.getProgress()-100 > -10){
 			textBottom += "00";
 		}
-		else if(bottomBar.getProgress()-100 < 100){
+		else if(bottomBar.getProgress()-100 < 100 && bottomBar.getProgress()-100 > -100){
 			textBottom += "0";
 		}
-
-        textTop += Integer.toString(topBar.getProgress()-100);
-        textBottom += Integer.toString(bottomBar.getProgress()-100);
+        textTop += Integer.toString(Math.abs(topBar.getProgress()-100));
+        textBottom += Integer.toString(Math.abs(bottomBar.getProgress()-100));
         String out = textTop +  textBottom;
-
+		Log.e("Before Socket", out);
 		/* Send speed and steering values through the socket */
-        if (Main.socket != null)
-            Main.send(out);
+        if (socket != null) {
+			send(out);
+			Log.e("Test After Socket if", out);
+		}
     }
 	
 	/* 
