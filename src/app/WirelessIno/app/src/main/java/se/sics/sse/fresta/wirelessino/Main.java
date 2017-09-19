@@ -235,7 +235,7 @@ public class Main extends Activity {
 
 
     private String getMoppeToast(){
-        String[] strs = new String[] {"Tänk på hur ni kör!", "Hallå moppepojkar, tänk på vad ni gör!", "Git gud!"};
+        String[] strs = new String[] {"Tänk på hur ni kör!", "Hallå moppepojkar, tänk på vad ni gör!", "Sen var de bara nio!"};
         return strs[new Random().nextInt(3)];
     }
 }
