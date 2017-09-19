@@ -10,8 +10,6 @@ import java.util.function.Consumer;
  * Created by Virtuality.
  */
 
-//Class is largely based on:
-//https://stackoverflow.com/questions/14165517/processbuilder-forwarding-stdout-and-stderr-of-started-processes-without-blocki
 class StreamReader extends Thread {
 
     private InputStream inputStream;
@@ -48,16 +46,5 @@ class StreamReader extends Thread {
             }
         }
         System.out.println("StreamReader closed!");
-    }
-
-
-    //Bug found, will only return a string when a \n has been read.
-    private void readLineLoop() throws IOException {
-        InputStreamReader isr = new InputStreamReader(inputStream);
-        BufferedReader br = new BufferedReader(isr);
-
-        String line;
-        while ((line = br.readLine()) != null)
-            onInputRead.accept(line);
     }
 }
