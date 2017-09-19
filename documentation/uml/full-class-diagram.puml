@@ -97,7 +97,6 @@ package moped {
 				PidParser --|> ActionStrategy
 				EmgyStop --|> ActionStrategy
 				RemoteController --|> ActionStrategy
-				RemoteController --|> InputReceiver
 
 			note top of PidParser
 				DI sensor data reference
@@ -132,55 +131,45 @@ package moped {
 		Main ..> states
 		
 		states --> action_strategies
-		action_strategies --> car_control
+		states --> car_control
 	}
 	
 	package com_io {
 
-		package ext_com {
-			
-			interface Observer {
-			
-			}
-			
-			interface ExternalCommunicator {
-				
-			}
-			
-			interface InputReceiver {
-				externalDataRecieved(inputData: ComProtocol)
-			}
-			
-			interface OutputObserver {
-				
-			}
-			
-			class CommunicatorFactory {
-				- extComInstance: ExternalCommunicator
+		enum Direction {
+			Internal
+			External
+		}
+		
+		interface DataReceiver {
+			dataRecieved(int[] data, Direction direction): void
+		}
 
-				.. Getters ..
-				+getExtComInstance():  ExternalCommunicator
-			}
-			
-			class ExternalCommunications {
-				- 
-			}
-			
-			ExternalCommunications --> Observer
-			ExternalCommunications --|> ExternalCommunicator
-			
-			ExternalCommunications --> OutputObserver
-			ExternalCommunications --|> InputReceiver
-			
-			CommunicatorFactory ..> ExternalCommunicator
-			CommunicatorFactory ..> ExternalCommunications
-			
+		interface CommunicationsMediator {
+			transmitData(int[] data, Direction direction): void
+			subscribe(InputReceiver receiver, Direction direction): void
+			unsubscribe(InputReceiver receiver): void
 		}
 		
-		package int_com {
-		
+		class CommunicatorFactory {
+			- comInstance: CommunicationsMediator
+
+			.. Getters ..
+			+getComInstance():  ExternalCommunicator
 		}
-	
+		
+		class CommunicationsMediatorImpl {
+			- Map<DataReceiver> subscribers
+			- directPacket(int[] data, Direction direction)
+		}
+		
+		CommunicationsMediator --> DataReceiver
+		
+
+		CommunicatorFactory ..> CommunicationsMediator
+		CommunicatorFactory ..> CommunicationsMediatorImpl
+		
+		
 	}
 
 	package pid {
@@ -193,10 +182,13 @@ package moped {
 	package communication_protocols {
 	
 	}
-	
+
+	PidParser --> PID
 	app --> communication_protocols
 	StateController --> communication_protocols
-	core --> com_io
+	core --> com_io	
+	RemoteController --|> DataReceiver
+	StateController --|> DataReceiver
 	
 	
 }
