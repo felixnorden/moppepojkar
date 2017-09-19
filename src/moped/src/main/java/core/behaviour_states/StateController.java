@@ -2,7 +2,7 @@ package core.behaviour_states;
 
 import core.behaviour_states.states.BehaviourState;
 
-public class StateController {
+public class StateController implements Runnable{
     private BehaviourState currentState;
 
     public StateController() {
@@ -20,5 +20,10 @@ public class StateController {
 
     public void setNewState(BehaviourState newState) {
         this.currentState = newState;
+    }
+
+    @Override
+    public void run() {
+
     }
 }
