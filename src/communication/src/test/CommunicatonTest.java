@@ -1,11 +1,8 @@
 package test;
 
 import com.*;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
-import java.net.Socket;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -24,13 +21,13 @@ public class CommunicatonTest {
         CommunicationListener cl = new CommunicationListener() {
             @Override
             public void onConnection() {
-                server.setState(MopedStates.ACC);
+                server.setState(MopedState.ACC);
             }
 
             @Override
-            public void onStateChange(MopedStates stateChange) {
+            public void onStateChange(MopedState stateChange) {
                 vars.add(true);
-                assertTrue(stateChange == MopedStates.ACC);
+                assertTrue(stateChange == MopedState.ACC);
             }
         };
 
@@ -61,13 +58,13 @@ public class CommunicatonTest {
         CommunicationListener cl = new CommunicationListener() {
             @Override
             public void onConnection() {
-                client.setState(MopedStates.MANUAL);
+                client.setState(MopedState.MANUAL);
             }
 
             @Override
-            public void onStateChange(MopedStates stateChange) {
+            public void onStateChange(MopedState stateChange) {
                 vars.add(true);
-                assertTrue(stateChange == MopedStates.MANUAL);
+                assertTrue(stateChange == MopedState.MANUAL);
             }
         };
 
