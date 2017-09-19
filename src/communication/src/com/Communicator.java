@@ -26,5 +26,10 @@ public interface Communicator extends Runnable {
      */
     void stop();
 
+    /**
+     * Adds the new state to the queue of data to be sent to another communicator.
+     * Will call onStateChange(MopedState state) on the CommunicationListeners registered to the other communicator.
+     * @param state The state to add to the queue.
+     */
     void setState(MopedState state);
 }

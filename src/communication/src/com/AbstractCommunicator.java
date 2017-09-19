@@ -193,9 +193,15 @@ public abstract class AbstractCommunicator implements Communicator {
         }
     }
 
+    /**
+     * Decides what happens to the received data once it has been converted into the objects it was converted from.
+     * @param type Type of data received.
+     * @param value The value of the type.
+     */
     private void handleInput(MopedDataType type, int value) {
         switch (type) {
             case MopedState:
+                //This means a state was changed. Extract new state from value and send to listeners.
                 notifyStateChange(MopedState.parseInt(value));
             default:
                 // TODO: 2017-09-18 Notify value change
@@ -212,7 +218,8 @@ public abstract class AbstractCommunicator implements Communicator {
     }
 
     /**
-     * This method needs to be implemented differently between server and client.
+     * Does the necessary setup for the sockets to establish a connection.
+     * This is necessary because one communicator needs to act as a server and the other one as a client.
      */
     protected abstract void connectSocket();
 }

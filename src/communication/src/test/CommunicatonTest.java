@@ -1,17 +1,19 @@
 package test;
 
 import com.*;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 /**
  * Created by Hampus on 2017-09-14.
  */
 
 public class CommunicatonTest {
+
     @Test
     public void testSendFromClient() {
         Communicator client = new ClientCommunicator("localhost", 12939);

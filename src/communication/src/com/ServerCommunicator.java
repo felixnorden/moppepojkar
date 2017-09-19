@@ -9,12 +9,15 @@ public class ServerCommunicator extends AbstractCommunicator {
 
     private ServerSocket serverSocket;
 
+    /**
+     * Creates a ServerCommunicator acting on the specified port.
+     * @param port
+     */
     public ServerCommunicator(int port) {
         super(port);
 
         try {
             serverSocket = new ServerSocket(port);
-            serverSocket.setSoTimeout(10000);
         } catch (IOException e) {
             e.printStackTrace();
         }
