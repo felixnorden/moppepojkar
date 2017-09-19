@@ -32,12 +32,12 @@ public abstract class AbstractCommunicator implements Communicator {
     protected AbstractCommunicator(int port) {
         this.port = port;
         listeners = new ArrayList<>();
-        queue = new LinkedList<Pair<MopedDataType, Integer>>();
+        queue = new LinkedList<>();
     }
 
     @Override
     public void setState(MopedState state) {
-        Pair p = new Pair(MopedDataType.MopedState, state.toInt());
+        Pair<MopedDataType, Integer> p = new Pair(MopedDataType.MopedState, state.toInt());
         queue.add(p);
     }
 
@@ -71,14 +71,21 @@ public abstract class AbstractCommunicator implements Communicator {
 
     /**
      * Sends all queued data through socket link
+     *
      * @throws IOException
      */
     private void sendQueuedData() throws IOException {
         //Send all queued data
         while (queue.size() > 0) {
             Pair<MopedDataType, Integer> pair = queue.poll();
-            String output = String.valueOf((pair.getKey().toInt()));
-            output += "," + pair.getValue();
+
+            String dataType = String.valueOf(pair.getKey().toInt());
+            String value = String.valueOf(pair.getValue());
+
+            //Format is 'x,y' where
+            //  x = MopedDataType integer
+            //  y = integer value of specified MopedDataType
+            String output = dataType + "," + value;
 
             outputStream.writeUTF(output);
         }
@@ -86,6 +93,7 @@ public abstract class AbstractCommunicator implements Communicator {
 
     /**
      * Read and interpret data from socket link.
+     *
      * @throws IOException
      */
     private void receiveData() throws IOException {
