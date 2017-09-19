@@ -11,7 +11,7 @@ public class DistancePIDController extends PIDController {
     public double evaluation(double currentValue, double deltaTime){
 
         //Checking if the sensor data is valid (invalid sensor data is represented with -1)
-        if (currentValue != -1) {
+        if (currentValue>0) {
             return super.evaluation(currentValue,deltaTime);
         } else {
             return 0;

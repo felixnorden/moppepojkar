@@ -1,6 +1,5 @@
 package distancekeeper.distancekeepertest;
 
-import distancekeeper.DistancePIDController;
 import distancekeeper.PIDController;
 import org.junit.jupiter.api.Test;
 
@@ -53,31 +52,6 @@ class PIDControllerTest{
             System.out.println("Error 1: " + error);
             System.out.println("throttle 1: " + throttle);
             assertTrue(Math.abs(error) < lastError || Math.abs(error) < 2 || i < 10);
-            lastError = Math.abs(error);
-
-        }
-
-    }
-
-
-    //Tests if DistancePIDController is dormant if the sensordata reads -1 (invalid sensor data)
-    @Test
-    void evaluation2() {
-        System.out.println("\n\n\n\n");
-        double targetValue = 50;
-        DistancePIDController pid2 = new DistancePIDController(targetValue, 0.5, 1.0/10, 1.5);
-        double currentValue = -1;
-        double currentSpeedOfChange = 0;
-        double lastError = 51;
-        double targetSpeedOfChange = 0;
-
-        for (int i=0; i<50; i++){
-            double throttle = pid2.evaluation(currentValue,1);
-            System.out.println(throttle);
-            currentSpeedOfChange = currentSpeedOfChange + throttle - currentSpeedOfChange * 0.1;
-            currentValue+= currentSpeedOfChange - targetSpeedOfChange;
-            double error = currentValue-targetValue;
-            //assertTrue(Math.abs(error) < lastError || Math.abs(error) < 2 || i < 10);
             lastError = Math.abs(error);
 
         }
