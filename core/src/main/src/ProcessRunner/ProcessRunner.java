@@ -4,6 +4,7 @@ import java.io.IOException;
 
 /**
  * Created by Virtuality.
+ * I/O Definition: Output is sent to the process and input is received from the process.
  */
 public interface ProcessRunner {
 
@@ -13,33 +14,41 @@ public interface ProcessRunner {
     public void start();
 
     /**
-     * Send output dynamically to the process.
+     * Stores the output that will be sent to the process in a buffer.
+     * Use {@link ProcessRunner#flushOutput()} to send the buffer to the process.
      *
-     * @param s String that will be outputted to the process.
+     * @param text String that will be output to the process.
      * @throws IOException Throws if process has yet to be started or if another output error has occurred.
      */
-    public void outputToScript(String s) throws IOException;
+    public void outputToScript(String text) throws IOException;
+
+    /**
+     * Flushes the output buffer to the process.
+     *
+     * @throws IOException Throws if the process has yet to be started or if another output error has occurred.
+     */
+    public void flushOutput() throws IOException;
 
     /**
      * Force stops the process execution.
-     * This current object will be useless once this method has been run.
+     * Once executed on the ProcessRunner-object, the ProcessRunner will be obsolete.
      */
     public void forceCloseProcess();
 
     /**
-     * Adds an observer that will receive the output from the process.
-     * Warning, all data that is outputted from the process will be sent,
+     * Subscribes an observer to receive input from the process.
+     * Warning, all data that is output from the process will be sent,
      * including all echoes that the process will output from using the
      * {@link ProcessRunner#outputToScript(String)} method.
      *
      * @param observer Object that will receive the output.
      */
-    public void addInputObserver(InputObserver observer);
+    public void subscribeToInput(InputSubscriber observer);
 
     /**
-     * Removes an observer to stop receiving the input from the process's output.
+     * Unsubscribes an observer to stop receiving the input from the process's output.
      *
-     * @param observer Object that will stop receiving the input.
+     * @param observer Object that will unsubscribe.
      */
-    public void removeInputObserver(InputObserver observer);
+    public void unsubscribeFromInput(InputSubscriber observer);
 }

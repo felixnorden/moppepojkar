@@ -7,14 +7,14 @@ import java.util.List;
 /**
  * {@link ProcessRunnerImpl} is used to run external processes from Java.
  * It can both write output to the process's input and receive its output as an input.
+ * I/O Definition: Output is sent to the process and input is received from the process.
  */
-//I/O Definition: Output is sent to the process and input is received from the process.
 public class ProcessRunnerImpl extends Thread implements ProcessRunner {
 
     private ProcessBuilder pb;
     private Process p;
 
-    private List<InputObserver> inputObservers;
+    private List<InputSubscriber> inputSubscribers;
     private BufferedWriter writer;
 
 
@@ -25,7 +25,7 @@ public class ProcessRunnerImpl extends Thread implements ProcessRunner {
      * @param pb The {@link ProcessBuilder} that will be used.
      */
     ProcessRunnerImpl(ProcessBuilder pb) {
-        inputObservers = new ArrayList<>();
+        inputSubscribers = new ArrayList<>();
         this.pb = pb;
     }
 
@@ -46,13 +46,17 @@ public class ProcessRunnerImpl extends Thread implements ProcessRunner {
     }
 
     @Override
-    public void outputToScript(String s) throws IOException {
+    public void outputToScript(String text) throws IOException {
         if (writer != null) {
-            writer.write(s + "\n");
-            writer.flush();
+            writer.write(text);
         } else {
             throw new IOException("Process has not yet been started!");
         }
+    }
+
+    @Override
+    public void flushOutput() throws IOException {
+        writer.flush();
     }
 
     @Override
@@ -61,23 +65,23 @@ public class ProcessRunnerImpl extends Thread implements ProcessRunner {
     }
 
     @Override
-    public void addInputObserver(InputObserver observer) {
-        inputObservers.add(observer);
+    public void subscribeToInput(InputSubscriber observer) {
+        inputSubscribers.add(observer);
     }
 
     @Override
-    public void removeInputObserver(InputObserver observer) {
-        inputObservers.remove(observer);
+    public void unsubscribeFromInput(InputSubscriber observer) {
+        inputSubscribers.remove(observer);
     }
 
     /**
-     * Alerts all of the current observers of the String that has been outputted from the process.
+     * Alerts all of the current observers of the String that has been output from the process.
      *
-     * @param s String that has been outputted from the process.
+     * @param s String that has been outputt from the process.
      */
     private void alertObservers(String s) {
-        for (InputObserver inputObserver : inputObservers) {
-            inputObserver.stringOutputted(s);
+        for (InputSubscriber inputSubscriber : inputSubscribers) {
+            inputSubscriber.outputString(s);
         }
     }
 }
