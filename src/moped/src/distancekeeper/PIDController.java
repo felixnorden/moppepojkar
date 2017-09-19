@@ -25,12 +25,11 @@ public class PIDController {
      */
 
     public PIDController(double targetValue, double constantP, double constantIRelation, double constantDRelation) {
-        this.constantP = constantP;
-        this.constantIRelation = constantIRelation;
-        this.constantI = this.constantP * constantIRelation;
-        this.constantDRelation = constantDRelation;
-        this.constantD = this.constantP * constantDRelation;
         this.targetValue = targetValue;
+        this.constantIRelation = constantIRelation;
+        this.constantDRelation = constantDRelation;
+
+        setConstants(constantP);
     }
 
     public double getConstantP() {
@@ -42,7 +41,7 @@ public class PIDController {
      * @param constantP The new value for the proportional constant.
      */
 
-    public void setConstantP(double constantP) {
+    public void setConstants(double constantP) {
         this.constantP = constantP;
         this.constantI = constantP * constantIRelation;
         this.constantD = constantP * constantDRelation;
