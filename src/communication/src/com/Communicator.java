@@ -21,7 +21,8 @@ public interface Communicator extends Runnable {
 
     /**
      * Stops the Communicator from communicating. Use start() to start communicating once again.
-     * DOESN'T CLEAR THE QUEUE.
+     * If data is queued to be sent and stop is called, the queue doesn't get cleared.
+     * Queue does get cleared in start() though.
      */
     void stop();
 

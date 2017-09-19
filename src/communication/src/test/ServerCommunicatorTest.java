@@ -28,6 +28,11 @@ class ServerCommunicatorTest {
             public void onStateChange(MopedState stateChange) {
 
             }
+
+            @Override
+            public void onDisconnection() {
+
+            }
         };
 
         Communicator server = new ServerCommunicator(9500);

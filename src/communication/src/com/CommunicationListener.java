@@ -16,4 +16,10 @@ public interface CommunicationListener {
      * @param stateChange New state which communicator received.
      */
     void onStateChange(MopedState stateChange);
+
+    /**
+     * This method get called as soon as a current connection is lost.
+     * This method doesn't get called when stop() is called on the same unit.
+     */
+    void onDisconnection();
 }

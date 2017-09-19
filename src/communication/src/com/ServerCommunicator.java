@@ -22,33 +22,7 @@ public class ServerCommunicator extends AbstractCommunicator {
         mainThread = new Thread(this);
     }
 
-    /**
-     * Loop which tries to maintain a connection to a client.
-     * If a client is lost, it looks for another one till found.
-     * <p>
-     * When a connection is established, all listeners will be notified.
-     */
-    @Override
-    public void run() {
-        while (!Thread.interrupted()) {
-            // If there is no connection or if connection is broken.
-            if (socket == null || !socket.isConnected()) {
-                connectSocket();
-            } else {
-                update();
-            }
-            try {
-                Thread.sleep(UPDATE_INTERVAL);
-            } catch (InterruptedException e) {
-                //Do nothing.
-            }
-        }
-
-        //This section only runs when the thread is interrupted aka on stop().
-        clearConnection();
-    }
-
-    private void connectSocket() {
+    protected void connectSocket() {
         try {
             socket = serverSocket.accept();
             this.inputStream = new DataInputStream(socket.getInputStream());

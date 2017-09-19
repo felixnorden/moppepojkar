@@ -25,6 +25,11 @@ class ClientCommunicatorTest {
             public void onStateChange(MopedState stateChange) {
 
             }
+
+            @Override
+            public void onDisconnection() {
+
+            }
         };
 
         Communicator client = new ClientCommunicator("localhost", 9501);

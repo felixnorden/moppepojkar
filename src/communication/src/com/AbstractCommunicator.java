@@ -17,7 +17,11 @@ import java.util.Queue;
  */
 public abstract class AbstractCommunicator implements Communicator {
 
-    protected final long UPDATE_INTERVAL = 10;
+    //Constants
+    private static final String EXIT_CODE = "#EXIT";
+    private static final String SEPARATOR = ",";
+    protected final long UPDATE_INTERVAL = 10;//This essentially controls the input lag between app and MOPED
+
     protected final int port;
     protected Socket socket;
     protected DataInputStream inputStream;
@@ -33,6 +37,32 @@ public abstract class AbstractCommunicator implements Communicator {
         this.port = port;
         listeners = new ArrayList<>();
         queue = new LinkedList<>();
+    }
+
+    /**
+     * Mainloop which tries to maintain a connection to another communicator.
+     * If a communicator is lost, it looks for another one till found.
+     * <p>
+     * When a connection is established, all listeners will be notified.
+     */
+    @Override
+    public void run() {
+        while (!Thread.interrupted()) {
+            // If there is no connection or if connection is broken.
+            if (socket == null || !socket.isConnected()) {
+                connectSocket();
+            } else {
+                update();
+            }
+            try {
+                Thread.sleep(UPDATE_INTERVAL);
+            } catch (InterruptedException e) {
+                //Do nothing.
+            }
+        }
+
+        //This section only runs when the thread is interrupted aka on stop().
+        clearConnection();
     }
 
     @Override
@@ -54,13 +84,19 @@ public abstract class AbstractCommunicator implements Communicator {
 
     @Override
     public void stop() {
-        mainThread.interrupt();
+        try {
+            //Ignore queue and send exit code to other communicator, then exit.
+            outputStream.writeUTF(EXIT_CODE);
+            mainThread.interrupt();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
      * Fetches and sends new information from the connected socket.
      */
-    protected void update() {
+    private void update() {
         try {
             sendQueuedData();
             receiveData();
@@ -85,7 +121,7 @@ public abstract class AbstractCommunicator implements Communicator {
             //Format is 'x,y' where
             //  x = MopedDataType integer
             //  y = integer value of specified MopedDataType
-            String output = dataType + "," + value;
+            String output = dataType + SEPARATOR + value;
 
             outputStream.writeUTF(output);
         }
@@ -100,7 +136,13 @@ public abstract class AbstractCommunicator implements Communicator {
         while (inputStream.available() > 0) {
             // Input string is formatted as "xxxxx,yyyy" where x is MopedDataType and y is a int value
             String input = inputStream.readUTF();
-            String[] args = input.split(",");
+
+            if (input.equals(EXIT_CODE)) {
+                onDisconnect();
+                break;
+            }
+
+            String[] args = input.split(SEPARATOR);
 
             //Extract data from input.
             MopedDataType type = MopedDataType.parseInt(Integer.parseInt(args[0]));
@@ -129,6 +171,15 @@ public abstract class AbstractCommunicator implements Communicator {
     }
 
     /**
+     * Notifies all listeners that a disconnection has occurred.
+     */
+    protected void notifyDisconnected() {
+        for (CommunicationListener cl : listeners) {
+            cl.onDisconnection();
+        }
+    }
+
+    /**
      * Closes the socket, nullifies it and nullifies the in/output-streams.
      */
     protected void clearConnection() {
@@ -150,4 +201,18 @@ public abstract class AbstractCommunicator implements Communicator {
                 // TODO: 2017-09-18 Notify value change
         }
     }
+
+    /**
+     * Runs when other side has requested a disconnect by
+     * sending the EXIT_CODE
+     */
+    private void onDisconnect() {
+        mainThread.interrupt();
+        notifyDisconnected();
+    }
+
+    /**
+     * This method needs to be implemented differently between server and client.
+     */
+    protected abstract void connectSocket();
 }
