@@ -2,7 +2,7 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:tools="http://schemas.android.com/tools"
-android:orientation="horizontal" android:layout_width="match_parent"
+android:orientation="landscape" android:layout_width="match_parent"
 android:layout_height="match_parent">
 
 
@@ -16,9 +16,8 @@ android:layout_height="match_parent">
         android:progress="100"
         android:rotation="270"
         tools:style="@android:style/Widget.Material.SeekBar"
-        android:layout_above="@+id/BottomBar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="160dp" />
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"/>
 
     <SeekBar
         android:id="@+id/BottomBar"
@@ -29,9 +28,8 @@ android:layout_height="match_parent">
         android:max="200"
         android:progress="100"
         tools:style="@android:style/Widget.Material.SeekBar"
-        android:layout_marginBottom="82dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/TopBar" />
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"/>
 
     <Button
         android:id="@+id/button"

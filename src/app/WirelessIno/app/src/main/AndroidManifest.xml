@@ -27,7 +27,9 @@
         <activity
             android:name=".SocketConnector"
             android:label="Target Server Setting"></activity>
-        <activity android:name=".Main">
+        <activity android:name=".Main"
+                  android:screenOrientation="landscape">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
