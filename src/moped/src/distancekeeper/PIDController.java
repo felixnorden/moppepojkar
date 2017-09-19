@@ -85,7 +85,7 @@ public class PIDController {
 
     public double evaluation(double currentValue, double deltaTime){
         double currentError = (targetValue - currentValue);
-        if (!lastError.isNaN()) {
+        if (!(lastError.isNaN() || deltaTime == 0)) {
             double P = decideP(currentError);
             double I = decideI(currentError, deltaTime);
             double D = decideD(currentError, deltaTime);
