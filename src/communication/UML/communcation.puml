@@ -40,10 +40,12 @@ abstract class AbstractCommunicator {
 
 class ClientCommunicator {
     +ClientCommunicator(String, int)
+    -void connectSocket()
 }
 
 class ServerCommunicator {
     +ServerCommunicator(int)
+    -void connectSocket()
 }
 
 Enum MopedState {

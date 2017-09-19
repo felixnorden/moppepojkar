@@ -28,20 +28,12 @@ public class ClientCommunicator extends AbstractCommunicator {
     @Override
     public void run() {
         while (!Thread.interrupted()) {
+            // If there is no connection or if connection is broken.
             if (socket == null || !socket.isConnected()) {
-                try {
-                    socket = new Socket(ip, this.port);
-                    this.inputStream = new DataInputStream(socket.getInputStream());
-                    this.outputStream = new DataOutputStream(socket.getOutputStream());
-                    notifyConnected();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                connectSocket();
             } else {
-                //Run update if connected to socket
-                this.update();
+                update();
             }
-
             try {
                 Thread.sleep(UPDATE_INTERVAL);
             } catch (InterruptedException e) {
@@ -51,5 +43,15 @@ public class ClientCommunicator extends AbstractCommunicator {
         }
 
         clearConnection();
+    }
+    private void connectSocket() {
+        try {
+            socket = new Socket(ip, this.port);
+            this.inputStream = new DataInputStream(socket.getInputStream());
+            this.outputStream = new DataOutputStream(socket.getOutputStream());
+            notifyConnected();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
