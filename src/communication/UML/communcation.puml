@@ -33,6 +33,8 @@ abstract class AbstractCommunicator {
     #void notifyConnected()
     #void notifyStateChange(MopedState)
     #void clearConnection()
+    -void sendQueuedData()
+    -void receiveData()
     -void handleInput(MopedDataType, int)
 }
 

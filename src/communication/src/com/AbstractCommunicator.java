@@ -62,30 +62,43 @@ public abstract class AbstractCommunicator implements Communicator {
      */
     protected void update() {
         try {
-
-            //Send all queued state changes through socket link
-            while (queue.size() > 0) {
-                Pair<MopedDataType, Integer> pair = queue.poll();
-                String output = String.valueOf((pair.getKey().toInt()));
-                output += "," + pair.getValue();
-
-                outputStream.writeUTF(output);
-            }
-
-            // Read and interpret data from inputstream.
-            while (inputStream.available() > 0) {
-                String input = inputStream.readUTF();
-                String[] args = input.split(",");
-
-                //Extract data from input.
-                MopedDataType type = MopedDataType.parseInt(Integer.parseInt(args[0]));
-                int value = Integer.parseInt(args[1]);
-
-                handleInput(type, value);
-            }
-
+            sendQueuedData();
+            receiveData();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Sends all queued data through socket link
+     * @throws IOException
+     */
+    private void sendQueuedData() throws IOException {
+        //Send all queued data
+        while (queue.size() > 0) {
+            Pair<MopedDataType, Integer> pair = queue.poll();
+            String output = String.valueOf((pair.getKey().toInt()));
+            output += "," + pair.getValue();
+
+            outputStream.writeUTF(output);
+        }
+    }
+
+    /**
+     * Read and interpret data from socket link.
+     * @throws IOException
+     */
+    private void receiveData() throws IOException {
+        while (inputStream.available() > 0) {
+            // Input string is formatted as "xxxxx,yyyy" where x is MopedDataType and y is a int value
+            String input = inputStream.readUTF();
+            String[] args = input.split(",");
+
+            //Extract data from input.
+            MopedDataType type = MopedDataType.parseInt(Integer.parseInt(args[0]));
+            int value = Integer.parseInt(args[1]);
+
+            handleInput(type, value);
         }
     }
 
