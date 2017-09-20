@@ -98,6 +98,10 @@ public class PIDController {
         }
     }
 
+    public double timeSensetiveEvaluation(double currentValue, double deltaTime){
+        return this.evaluation(currentValue, deltaTime) * deltaTime;
+    }
+
     private double decideP(double currentError) {
         return currentError * constantP;
     }
