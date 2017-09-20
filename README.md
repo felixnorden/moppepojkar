@@ -25,4 +25,4 @@ The following links can be used for navigation throughout the repo:
 | Anthony Kalcic| kalcic@student.chalmers.se | NinjaWazzzabi |
 | Emil Jansson | jaemil@student.chalmers.se | EmiljanQ3 |
 | Elias Burström|   eliasbu@student.chalmers.se| Landsfadern |
-| Hugo Ekelund |                           |               |
+| Hugo Ekelund | ehugo@student.chalmers.se| Hugormen  |
