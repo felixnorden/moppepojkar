@@ -15,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
@@ -28,10 +27,8 @@ import android.widget.Toast;
 public class Main extends Activity {
 
 
-
-
-    private SeekBar topBar;
-    private SeekBar bottomBar;
+    private SeekBar speedBar;
+    private SeekBar steeringBar;
     private Button modeButton;
     private boolean isACCenabled;
 
@@ -50,20 +47,21 @@ public class Main extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        topBar = (SeekBar) findViewById(R.id.TopBar);
-        bottomBar = (SeekBar) findViewById(R.id.BottomBar);
+        speedBar = (SeekBar) findViewById(R.id.speedBar);
+        steeringBar = (SeekBar) findViewById(R.id.SteeringBar);
 
         /*Listener for change in SeekBars (Sliders) */
 
         /**
-     * Listener for topBar
-     */
-        topBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+         * Listener for topBar
+         */
+
+        speedBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 /* The value 100 turns into "0" in calculations */
-                topBar.setProgress(100);
+                speedBar.setProgress(100);
             }
 
             @Override
@@ -78,14 +76,15 @@ public class Main extends Activity {
         });
 
         /**
-         * Listener for bottomBar
+         * Listener for steeringBar
          */
-        bottomBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+        steeringBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 /* The value 100 turns into "0" in calculations */
-                bottomBar.setProgress(100);
+                steeringBar.setProgress(100);
             }
 
             @Override
@@ -104,10 +103,9 @@ public class Main extends Activity {
         modeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isACCenabled){
+                if (isACCenabled) {
                     modeButton.setText("ACC enabled");
-                }
-                else{
+                } else {
                     modeButton.setText("ACC disabled");
                 }
 
@@ -115,7 +113,7 @@ public class Main extends Activity {
         });
 
 
-        Toast.makeText(getApplicationContext(), getMoppeToast() , Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), getMoppeToast(), Toast.LENGTH_SHORT).show();
 
 
     }
@@ -123,6 +121,7 @@ public class Main extends Activity {
     /**
      * Add a disconnect option when connected to a socket.
      */
+
     protected void onResume() {
         /* Disable the disconnect option if no connection has been established */
         updateMenuVisibility();
@@ -131,6 +130,7 @@ public class Main extends Activity {
 
     /**
      * Method to reach the options screen on "connect" button press
+     *
      * @param view the current view, provided by the onClick method
      */
 
@@ -145,13 +145,13 @@ public class Main extends Activity {
      */
 
     public void transformPWM() {
-		/*Here the values are formatted in a way that the arduino will understand */
+        /*Here the values are formatted in a way that the arduino will understand */
         String textTop = "V";
         String textBottom = "H";
 
          /* Subtract 100 since the bar goes from 0 to 200 and we want values between -100 and 100 */
-        int topValue = topBar.getProgress() - 100;
-        int bottomValue = bottomBar.getProgress() - 100;
+        int topValue = speedBar.getProgress() - 100;
+        int bottomValue = steeringBar.getProgress() - 100;
 
 
         /*Check if the value is negative and add prefix*/
@@ -190,11 +190,12 @@ public class Main extends Activity {
     }
 
 
-
     /**
      * Adds options to the menu
+     *
      * @param menu the menu which is being modified
      */
+
     public boolean onCreateOptionsMenu(Menu menu) {
         this.menu = menu;
 	
@@ -214,7 +215,6 @@ public class Main extends Activity {
      *
      * @param item the pressed menu item
      */
-
 
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == EXIT_INDEX) {
@@ -241,6 +241,7 @@ public class Main extends Activity {
     /**
      * Initialize the output stream for the socket.
      */
+
     public static void init(Socket socket) {
         Main.socket = socket;
         try {
@@ -256,6 +257,7 @@ public class Main extends Activity {
      *
      * @param message the message that will be sent to the MOPED
      */
+
     public static void send(Object message) {
         out.println(message);
     }
@@ -264,6 +266,7 @@ public class Main extends Activity {
      * Checks if a socket connection has been established and updates
      * the visibility of the "disconnect" menu option accordingly.
      */
+
     private void updateMenuVisibility() {
         if (menu != null) {
             if (socket == null || !socket.isConnected())
@@ -275,10 +278,12 @@ public class Main extends Activity {
 
     /**
      * Crucial method to increase morale and safety while using the app
+     *
      * @return returns an important warning message about safe driving to the user.
      */
-    private String getMoppeToast(){
-        String[] strs = new String[] {"Tänk på hur ni kör!", "Hallå moppepojkar, tänk på vad ni gör!", "Sen var de bara nio!"};
+
+    private String getMoppeToast() {
+        String[] strs = new String[]{"Tänk på hur ni kör!", "Hallå moppepojkar, tänk på vad ni gör!", "Sen var de bara nio!"};
         return strs[new Random().nextInt(3)];
     }
 }

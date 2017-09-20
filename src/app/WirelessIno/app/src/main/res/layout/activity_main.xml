@@ -9,12 +9,12 @@ android:layout_height="match_parent"
 
 
     <SeekBar
-        android:id="@+id/TopBar"
+        android:id="@+id/speedBar"
         style="@android:style/Widget.SeekBar"
         android:layout_width="900px"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/BottomBar"
+        android:layout_alignTop="@+id/SteeringBar"
         android:layout_marginRight="27dp"
         android:max="200"
         android:progress="100"
@@ -22,7 +22,7 @@ android:layout_height="match_parent"
         tools:style="@android:style/Widget.Material.SeekBar"/>
 
     <SeekBar
-        android:id="@+id/BottomBar"
+        android:id="@+id/SteeringBar"
         style="@android:style/Widget.SeekBar"
         android:layout_width="900px"
         android:layout_height="match_parent"
