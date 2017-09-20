@@ -4,6 +4,10 @@ public class BehaviourStateFactoryImpl implements BehaviourStateFactory{
 
     private static final BehaviourStateFactory INSTANCE = new BehaviourStateFactoryImpl();
 
+    public static BehaviourStateFactory getInstance() {
+        return INSTANCE;
+    }
+
     @Override
     public BehaviourState createManualBehaviour() {
         return new Manual();

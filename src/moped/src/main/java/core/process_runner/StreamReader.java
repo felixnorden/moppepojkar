@@ -1,4 +1,4 @@
-package ProcessRunner;
+package core.process_runner;
 
 import java.io.BufferedReader;
 import java.io.IOException;

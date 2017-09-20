@@ -2,7 +2,7 @@ package core.behaviour_states.states;
 
 import core.action_strategies.ActionStrategy;
 
-public class AdaptiveCruiseControl implements BehaviourState {
+class AdaptiveCruiseControl implements BehaviourState {
 
     private ActionStrategy currentStrategy;
 

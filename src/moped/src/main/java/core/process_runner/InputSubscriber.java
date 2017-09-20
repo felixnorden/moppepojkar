@@ -1,4 +1,4 @@
-package ProcessRunner;
+package core.process_runner;
 
 /**
  * Created by Virtuality.

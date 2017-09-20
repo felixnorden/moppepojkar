@@ -1,4 +1,4 @@
-package ProcessRunner;
+package core.process_runner;
 
 
 import org.junit.jupiter.api.Test;

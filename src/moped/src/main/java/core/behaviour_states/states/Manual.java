@@ -3,7 +3,7 @@ package core.behaviour_states.states;
 import core.action_strategies.ActionStrategy;
 import core.action_strategies.RemoteController;
 
-public class Manual implements BehaviourState {
+class Manual implements BehaviourState {
 
     private ActionStrategy controller;
 
