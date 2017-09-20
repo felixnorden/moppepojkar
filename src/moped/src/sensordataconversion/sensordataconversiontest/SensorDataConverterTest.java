@@ -14,10 +14,9 @@ public class SensorDataConverterTest {
     @Test
     public void convertDistanceTest(){
         SensorDataConverter sensorDataConverter = new SensorDataConverter();
-        assertEquals(-1.0,sensorDataConverter.convertDistance("ASD"),0.01);
-        assertEquals(-1.0,sensorDataConverter.convertDistance("-1"), 0.01);
+        assertEquals(Double.NaN,sensorDataConverter.convertDistance("ASD"),0.01);
+        assertEquals(Double.NaN,sensorDataConverter.convertDistance("-1"), 0.01);
         assertEquals(23.3,sensorDataConverter.convertDistance("23.3"),0.01);
-        assertEquals(23.3,sensorDataConverter.convertDistance("23.31"),0.01);
 
 
     }
@@ -28,7 +27,7 @@ public class SensorDataConverterTest {
     @Test
     public void convertVelocityTest(){
         SensorDataConverter sensorDataConverter = new SensorDataConverter();
-        assertEquals(-1,sensorDataConverter.convertVelocity("ASD"), 0.01);
+        assertEquals(Double.NaN,sensorDataConverter.convertVelocity("ASD"), 0.01);
         //assertEquals(0,sensorDataConverter.convertVelocity("-1"), 0.01);
         assertEquals(23,sensorDataConverter.convertVelocity("23"), 0.01);
 
