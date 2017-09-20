@@ -11,7 +11,7 @@ public class CarControlImpl implements CarControl {
     }
 
     @Override
-    public int getSpeedVaue() {
+    public int getLastSteer() {
         return 0;
     }
 
@@ -22,6 +22,16 @@ public class CarControlImpl implements CarControl {
 
     @Override
     public void setSteerValue(int value) {
+
+    }
+
+    @Override
+    public void addThrottle(int value) {
+
+    }
+
+    @Override
+    public void addSteer(int value) {
 
     }
 }
