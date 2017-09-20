@@ -2,6 +2,10 @@ package distancekeeper;
 
 /**
  * Created by Emil Jansson on 2017-09-16.
+ *
+ * This class should be used as a controller for a feedback loop. It contains three constants and a target value which can be modified.
+ * The the controller aims to reach a stable state where the current actual value is as close as possible to the target value.
+ * Modifying the constants calibrates the controller and changes it's "strategy" to reach equilibrium.
  */
 public class PIDController {
     private double targetValue;
@@ -76,11 +80,12 @@ public class PIDController {
     }
 
     /**
-     * This method evaluates the proper acceleration value to minimize error, where error is the difference between the current value and the target value.
+     * This method evaluates the proper return to minimize error, where error is the difference between the current value and the target value.
+     * This return could for example be applied pressure to the accelerator (gaspedal) of a car.
      * The method is dependant on the P-, I- and D-constants and these variables have to be calibrated to maximize the evaluations accuracy.
      * @param currentValue Current value to be compared to the target value.
      * @param deltaTime Elapsed time since the last method call.
-     * @return Acceleration value to be fed back into the loop. The first time this method is called it will always return 0.
+     * @return Return value to be fed back into the loop. The first time this method is called it will always return 0.
      */
 
     public double evaluation(double currentValue, double deltaTime){
@@ -98,6 +103,13 @@ public class PIDController {
         }
     }
 
+    /**
+     * Preforms the regular evaluation function but scales the return to be proportional to elapsed time. This makes this function preferable to the regular evaluation
+     * when the return is supposed to be a change instead of an absolute value. This could for ex. be the change in applied pressure to the accelerator (gaspedal) of a car.
+     * @param currentValue Current value to be compared to the target value.
+     * @param deltaTime Elapsed time since the last method call.
+     * @return Return value to be added to the value fed into the loop. The first time this method is called it will always return 0.
+     */
     public double timeSensetiveEvaluation(double currentValue, double deltaTime){
         return this.evaluation(currentValue, deltaTime) * deltaTime;
     }
