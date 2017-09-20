@@ -1,9 +1,10 @@
 package distancekeeper.distancekeepertest;
 
 import distancekeeper.DistancePIDController;
-import org.junit.jupiter.api.Test;
+import org.junit.*;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
+
 
 class DistancePIDControllerTest {
     //Tests if DistancePIDController is dormant if the sensordata reads -1 (invalid sensor data)
