@@ -3,11 +3,13 @@ package core.states;
 import core.behaviour_states.states.BehaviourState;
 import core.behaviour_states.states.BehaviourStateFactory;
 import core.behaviour_states.states.BehaviourStateFactoryImpl;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class BehaviourStateFactoryTest {
 
     @Test
+    @DisplayName("should initialize the factory")
     void initializationTest() {
         BehaviourStateFactory factoryInstance = BehaviourStateFactoryImpl.getInstance();
 
