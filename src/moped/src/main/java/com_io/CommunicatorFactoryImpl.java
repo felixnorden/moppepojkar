@@ -1,4 +1,11 @@
 package com_io;
 
-public class CommunicatorFactoryImpl implements CommunicatorFactory {
-}
+ class CommunicatorFactoryImpl implements CommunicatorFactory {
+
+    CommunicationsMediator comInstance;
+
+     @Override
+     public CommunicationsMediator getComInstance() {
+         return comInstance;
+     }
+ }

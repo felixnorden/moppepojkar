@@ -1,4 +1,10 @@
 package com_io;
 
-public class CommunicationsMediatorImpl implements CommunicationsMediator{
+import java.util.Map;
+
+abstract class CommunicationsMediatorImpl implements CommunicationsMediator{
+
+    private Map<Direction, DataReceiver> subscribers;
+
+    private void directPacket(int[] data, Direction direction){};
 }
