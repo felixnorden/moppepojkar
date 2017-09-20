@@ -19,9 +19,15 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
+/**
+ * This is the Main class which is the main activity for the application.
+ * All the interactive GUI elements are defined here as well as their
+ * corresponding methods and calculations.
+ */
+
 public class Main extends Activity {
 
-    /*Listener for change in SeekBars (Sliders) */
+
 
 
     private SeekBar topBar;
@@ -47,6 +53,11 @@ public class Main extends Activity {
         topBar = (SeekBar) findViewById(R.id.TopBar);
         bottomBar = (SeekBar) findViewById(R.id.BottomBar);
 
+        /*Listener for change in SeekBars (Sliders) */
+
+        /**
+     * Listener for topBar
+     */
         topBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             @Override
@@ -66,6 +77,9 @@ public class Main extends Activity {
             }
         });
 
+        /**
+         * Listener for bottomBar
+         */
         bottomBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             @Override
@@ -106,7 +120,7 @@ public class Main extends Activity {
 
     }
 
-    /*
+    /**
      * Add a disconnect option when connected to a socket.
      */
     protected void onResume() {
@@ -115,40 +129,57 @@ public class Main extends Activity {
         super.onResume();
     }
 
+    /**
+     * Method to reach the options screen on "connect" button press
+     * @param view the current view, provided by the onClick method
+     */
+
     public void goToOptions(View view) {
         Intent intent = new Intent(this, SocketConnector.class);
         startActivity(intent);
     }
 
+    /**
+     * Method which gets the data from the sliders and formats it in a way that an arduino will understand.
+     * Uses the predefined send(Object message) method to notify the MOPED of a change in instructions.
+     */
+
     public void transformPWM() {
 		/*Here the values are formatted in a way that the arduino will understand */
-        String textTop = "";
-        String textBottom = "";
-        if (topBar.getProgress() - 100 > -1) {
-            textTop = "V0";
+        String textTop = "V";
+        String textBottom = "H";
+
+         /* Subtract 100 since the bar goes from 0 to 200 and we want values between -100 and 100 */
+        int topValue = topBar.getProgress() - 100;
+        int bottomValue = bottomBar.getProgress() - 100;
+
+
+        /*Check if the value is negative and add prefix*/
+        if (topValue > -1) {
+            textTop += "0";
         } else {
-            textTop = "V-";
+            textTop += "-";
         }
-        if (bottomBar.getProgress() - 100 > -1) {
-            textBottom = "H0";
+        if (bottomValue > -1) {
+            textBottom += "0";
         } else {
-            textBottom = "H-";
+            textBottom += "-";
         }
 
-        /* Subtract 100 since the bar goes from 0 to 200 and we want values between -100 and 100 */
-        if (topBar.getProgress() - 100 < 10 && topBar.getProgress() - 100 > -10) {
+
+        if (topValue < 10 && topValue > -10) {
             textTop += "00";
-        } else if (topBar.getProgress() - 100 < 100 && topBar.getProgress() - 100 > -100) {
+        } else if (topValue < 100 && topValue > -100) {
             textTop += "0";
         }
 
-        if (bottomBar.getProgress() - 100 < 10 && bottomBar.getProgress() - 100 > -10) {
+        if (bottomValue < 10 && bottomValue > -10) {
             textBottom += "00";
-        } else if (bottomBar.getProgress() - 100 < 100 && bottomBar.getProgress() - 100 > -100) {
+        } else if (bottomValue < 100 && bottomValue > -100) {
             textBottom += "0";
         }
-        textTop += Integer.toString(Math.abs(topBar.getProgress() - 100));
-        textBottom += Integer.toString(Math.abs(bottomBar.getProgress() - 100));
+        textTop += Integer.toString(Math.abs(topValue));
+        textBottom += Integer.toString(Math.abs(bottomValue));
         String out = textTop + textBottom;
         Log.e("Before Socket", out);
 		/* Send speed and steering values through the socket */
@@ -158,8 +189,11 @@ public class Main extends Activity {
         }
     }
 
-    /*
-     * Add menu options
+
+
+    /**
+     * Adds options to the menu
+     * @param menu the menu which is being modified
      */
     public boolean onCreateOptionsMenu(Menu menu) {
         this.menu = menu;
@@ -175,9 +209,13 @@ public class Main extends Activity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    /*
+    /**
      * Handle different menu options
+     *
+     * @param item the pressed menu item
      */
+
+
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == EXIT_INDEX) {
             finish();
@@ -200,7 +238,7 @@ public class Main extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    /*
+    /**
      * Initialize the output stream for the socket.
      */
     public static void init(Socket socket) {
@@ -213,14 +251,16 @@ public class Main extends Activity {
         }
     }
 
-    /*
+    /**
      * Send a message through the socket.
+     *
+     * @param message the message that will be sent to the MOPED
      */
     public static void send(Object message) {
         out.println(message);
     }
 
-    /*
+    /**
      * Checks if a socket connection has been established and updates
      * the visibility of the "disconnect" menu option accordingly.
      */
@@ -233,7 +273,10 @@ public class Main extends Activity {
         }
     }
 
-
+    /**
+     * Crucial method to increase morale and safety while using the app
+     * @return returns an important warning message about safe driving to the user.
+     */
     private String getMoppeToast(){
         String[] strs = new String[] {"Tänk på hur ni kör!", "Hallå moppepojkar, tänk på vad ni gör!", "Sen var de bara nio!"};
         return strs[new Random().nextInt(3)];
