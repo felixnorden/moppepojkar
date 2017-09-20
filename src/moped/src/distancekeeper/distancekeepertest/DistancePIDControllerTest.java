@@ -1,9 +1,10 @@
 package distancekeeper.distancekeepertest;
 
 import distancekeeper.DistancePIDController;
-import org.junit.*;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 class DistancePIDControllerTest {
