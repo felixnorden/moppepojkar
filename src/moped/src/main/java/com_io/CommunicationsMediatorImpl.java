@@ -6,5 +6,5 @@ abstract class CommunicationsMediatorImpl implements CommunicationsMediator{
 
     private Map<Direction, DataReceiver> subscribers;
 
-    private void directPacket(int[] data, Direction direction){};
+    private void directPacket(int[] data, Direction direction){}
 }
