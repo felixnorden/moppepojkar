@@ -23,7 +23,6 @@ public abstract class AbstractCommunicator implements Communicator {
     protected static final long UPDATE_INTERVAL = 10;//This essentially controls the input lag between app and MOPED
 
     protected final int port;
-    protected boolean running;
     protected Socket socket;
     protected DataInputStream inputStream;
     protected DataOutputStream outputStream;
@@ -48,7 +47,7 @@ public abstract class AbstractCommunicator implements Communicator {
      */
     @Override
     public void run() {
-        while (running) {
+        while (!Thread.interrupted()) {
             // If there is no connection or if connection is broken.
             if (socket == null || !socket.isConnected()) {
                 connectSocket();
@@ -59,7 +58,8 @@ public abstract class AbstractCommunicator implements Communicator {
             try {
                 Thread.sleep(UPDATE_INTERVAL);
             } catch (InterruptedException e) {
-                //Do nothing.
+                //If thread was interrupted while sleeping, set flag to interrupt
+                Thread.currentThread().interrupt();
             }
         }
 
@@ -81,12 +81,16 @@ public abstract class AbstractCommunicator implements Communicator {
     @Override
     public void start() {
         queue.clear();
-        running = true;
         try {
             mainThread.start();
         } catch (IllegalThreadStateException e) {
             //If this is thrown, thread was already started once before.
-            System.out.println(this.getClass() + " has already been started once.");
+            if (!mainThread.isAlive()) {
+                mainThread = new Thread(this);
+                mainThread.start();
+            } else {
+                System.out.println(this.getClass() + " has already been started once.");
+            }
         }
     }
 
@@ -94,12 +98,15 @@ public abstract class AbstractCommunicator implements Communicator {
     public void stop() {
         try {
             //Ignore queue and send exit code to other communicator, then exit.
+            mainThread.interrupt();
             outputStream.writeUTF(EXIT_CODE);
-            running = false;
+
         } catch (IOException e) {
             e.printStackTrace();
         } catch (NullPointerException e) {
             //If the communicator hasn't been started (.start()) yet, NullPointerException will be thrown.
+            System.out.println("Tried to send data but outputstream is null " +
+                    "(happens when stop() is called before a connection has been made");
         }
     }
 
@@ -216,8 +223,8 @@ public abstract class AbstractCommunicator implements Communicator {
      * sending the EXIT_CODE
      */
     private void onDisconnect() {
-        running = false;
         notifyDisconnected();
+        mainThread.interrupt();
     }
 
     /**
