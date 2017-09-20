@@ -63,6 +63,13 @@ public abstract class AbstractCommunicator implements Communicator {
             }
         }
 
+        try {
+            //Send that communicator is exiting
+            outputStream.writeUTF(EXIT_CODE);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         //Only runs after running has been set to false (aka onDisconnect and stop())
         clearConnection();
     }
@@ -96,18 +103,7 @@ public abstract class AbstractCommunicator implements Communicator {
 
     @Override
     public void stop() {
-        try {
-            //Ignore queue and send exit code to other communicator, then exit.
-            mainThread.interrupt();
-            outputStream.writeUTF(EXIT_CODE);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (NullPointerException e) {
-            //If the communicator hasn't been started (.start()) yet, NullPointerException will be thrown.
-            System.out.println("Tried to send data but outputstream is null " +
-                    "(happens when stop() is called before a connection has been made");
-        }
+        mainThread.interrupt();
     }
 
     /**
