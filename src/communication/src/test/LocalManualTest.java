@@ -1,13 +1,15 @@
-package com;
+package test;
+
+import com.*;
 
 import java.util.Scanner;
 
 /**
  * Created by Zack on 2017-09-20.
  */
-public class Test {
+public class LocalManualTest {
     public static void main(String[] args) {
-        new Test();
+        new LocalManualTest();
     }
 
     CommunicationListener cl1 = new CommunicationListener() {
@@ -44,7 +46,7 @@ public class Test {
         }
     };
 
-    public Test() {
+    public LocalManualTest() {
         Communicator server = new ServerCommunicator(9000);
         Communicator client = new ClientCommunicator("localhost", 9000);
 
