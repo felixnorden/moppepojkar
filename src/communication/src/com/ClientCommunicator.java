@@ -23,7 +23,10 @@ public class ClientCommunicator extends AbstractCommunicator {
     @Override
     protected void clearConnection() {
         try {
-            socket.close();
+            if (socket != null) {
+                socket.close();
+            }
+
             socket = null;
             inputStream = null;
             outputStream = null;
