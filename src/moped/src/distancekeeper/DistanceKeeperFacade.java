@@ -1,5 +1,7 @@
 package distancekeeper;
 
+import sensordataconversion.SensorDataConverter;
+
 /**
  * Created by Elias and Marcus
  * This class is used as a facade for the distanceKeeper module. Other parts of the program can use this class to calculate

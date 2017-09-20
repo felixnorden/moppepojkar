@@ -1,8 +1,8 @@
-package distancekeeper.distancekeepertest;
+package sensordataconversion.sensordataconversiontest;
 
-        import org.junit.*;
-        import static org.junit.Assert.assertEquals;
-      import distancekeeper.SensorDataConverter;
+        import static org.junit.jupiter.api.Assertions.assertEquals;
+        import org.junit.jupiter.api.Test;
+        import sensordataconversion.SensorDataConverter;
 
 /**
  * Created by elias on 2017-09-12.

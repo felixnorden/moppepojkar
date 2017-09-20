@@ -1,6 +1,6 @@
-package distancekeeper.distancekeepertest;
+package enginedataconversion.enginedataconversiontest;
 
-import distancekeeper.EngineDataConverter;
+import enginedataconversion.EngineDataConverter;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
