@@ -1,5 +1,7 @@
 package distancekeeper;
 
+import static java.lang.Double.NaN;
+
 /**
  * Created by elias and marcus on 2017-09-12.
  * The class is used to validate and convert the inputs to doubles in order to make them usable for calculations.
@@ -17,13 +19,10 @@ public class SensorDataConverter {
             if (validateDistance(convertedDistance)) {
                 return convertedDistance;
             } else {
-                //TODO add exception handling
-                System.out.println("INVALID DISTANCE-VALIDATION");
-                return -1;
+                return NaN;
             }
         } else {
-            System.out.println("INVALID DISTANCE-NOT A NUMBER");
-            return -1;
+            return NaN;
         }
     }
 
@@ -35,17 +34,9 @@ public class SensorDataConverter {
      */
     public double convertVelocity(String velocity) {
         if (velocity.matches("[0-9.-]+")) {
-            double convertedVelocity = Double.valueOf(velocity);
-            if (validateVelocity(convertedVelocity)) {
-                return convertedVelocity;
-            } else {
-                //TODO add exception handling
-                System.out.println("INVALID VELOCITY-VALIDATION");
-                return -1;
-            }
+            return Double.valueOf(velocity);
         } else {
-            System.out.println("INVALID VELOCITY-NOT A NUMBER");
-            return -1;
+            return NaN;
         }
     }
 
@@ -55,23 +46,10 @@ public class SensorDataConverter {
      * @return true if the distance is valid
      */
     private boolean validateDistance(double distanceToValidate) {
-        if (distanceToValidate < 0) {
-            //TODO additional validations
+        if (distanceToValidate < 0)  {
             return false;
         } else return true;
 
 
     }
-
-    /**
-     * Validates the given velocity to make sure that it's valid
-     * @param velocityToValidate the given velocity to be validated
-     * @return true if the velocity is valid
-     */
-    private boolean validateVelocity(double velocityToValidate) {
-        //TODO validations
-        return true;
-
-    }
-
 }
