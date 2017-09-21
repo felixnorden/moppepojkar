@@ -27,7 +27,7 @@ public class CarControlImpl implements CarControl {
         try {
             carControl = ProcessFactory.createPythonProcess(pathToPythonScript);
             carControl.start();
-            Thread.sleep(1500);     //Waits for process to start
+            Thread.sleep(3000);     //Waits for process to start
         } catch (FileNotFoundException | InterruptedException e) {
             e.printStackTrace();
         }
