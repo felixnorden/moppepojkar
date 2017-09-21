@@ -8,6 +8,10 @@ public class BehaviourStateFactoryImpl implements BehaviourStateFactory{
     private static final BehaviourStateFactory INSTANCE = new BehaviourStateFactoryImpl();
     private static final CarControl carController = new CarControlImpl("run.py");
 
+    /**
+     *
+     * @return the singleton instance of the behaviour factory
+     */
     public static BehaviourStateFactory getInstance() {
         return INSTANCE;
     }
