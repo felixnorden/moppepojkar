@@ -8,24 +8,21 @@ import sensordataconversion.SensorDataConverter;
  * the effect that should be sent to the engine when ACC is activated.
  */
 public class DistanceKeeperFacade {
+    private DistancePIDController distancePIDController;
+    private SensorDataConverter sensorDataConverter = new SensorDataConverter();
 
-
-    //PreliminaryDistancKeeper distancKeeper = new PreliminaryDistanceKeeper();
-    SensorDataConverter sensorDataConverter = new SensorDataConverter();
-
+    public DistanceKeeperFacade(double targetValue, double constantP, double constantIRelation, double constantDRelation){
+        distancePIDController = new DistancePIDController(targetValue, constantP, constantIRelation, constantDRelation);
+    }
     /**
      *
      * This method uses the different classes in the distanceKeeper module in order to calculate the
      * desired engine effect.
-     * @param distance the current distance to the object in front of the moped, given in cm.
-     * @param velocity the current velocity of the moped given in cm/s.
-     * @return the appropriate engine value needed to keep the desired distance.
+     * @param targetDistance the current distance to the object in front of the moped, given in cm.
+     * @param deltaTime delta Time since last call.
+     * @return the PID-value for distance keeping.
      */
-    public int calculateEngineEffect(String distance, String velocity){
-
-
-        //return distanceKeeper.enginePower(sensorDataConverter.convertDistance(distance),sensorDataConverter.convertVelocity(velocity));
-
-        return 0;
+    public double calculatePIDValue(double targetDistance, double deltaTime){
+        return distancePIDController.evaluation(targetDistance,deltaTime);
     }
 }
