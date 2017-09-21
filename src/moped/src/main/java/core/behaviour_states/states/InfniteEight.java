@@ -11,7 +11,7 @@ public class InfniteEight implements BehaviourState {
     private CarControl cc = new CarControlImpl("run.py");
 
     public InfniteEight(){
-        cc.setSteerValue(50);
+        cc.setSteerValue(100);
         cc.setThrottle(10);
     }
 
