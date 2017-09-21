@@ -21,8 +21,8 @@ public class RemoteController implements ActionStrategy, DataReceiver {
     }
 
     @Override
-    public synchronized void dataRecieved(int[] data, Direction direction) {
-
+    public synchronized void dataReceived(int[] data, Direction direction) {
+        
     }
 
 
