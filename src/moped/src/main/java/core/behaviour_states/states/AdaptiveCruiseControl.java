@@ -19,11 +19,11 @@ class AdaptiveCruiseControl implements BehaviourState {
         ActionStrategyFactory strategyFactory = ActionStrategyFactoryImpl.getInstance();
 
         ActionStrategy pidController = strategyFactory.createPIDController();
-        ActionStrategy steerController = new RemoteController(RemoteController.Axis.X, comIO);
+        ActionStrategy steerController = strategyFactory.createSteerController();
 
         this.accHandler = new BidirectionalHandlerImpl(pidController, steerController);
 
-        ActionStrategy emergencyController = new EmgyStop()
+        ActionStrategy emergencyController = strategyFactory.createEmgyController();
 
     }
 

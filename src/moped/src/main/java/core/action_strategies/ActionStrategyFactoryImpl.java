@@ -11,14 +11,20 @@ public class ActionStrategyFactoryImpl implements ActionStrategyFactory {
 
 
     @Override
-    public ActionStrategy createPidParser() {
+    public ActionStrategy createPIDController() {
         return null;
     }
 
     @Override
-    public ActionStrategy createEmgyStop() {
+    public ActionStrategy createEmgyController() {
         return null;
     }
+
+    @Override
+    public ActionStrategy createSteerController() {
+        return new RemoteController(RemoteController.Axis.X, comIO);
+    }
+
     @Override
     public ActionStrategy createRemoteController() {
         return null;
