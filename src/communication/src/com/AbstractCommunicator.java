@@ -58,8 +58,8 @@ public abstract class AbstractCommunicator implements Communicator {
             try {
                 Thread.sleep(UPDATE_INTERVAL);
             } catch (InterruptedException e) {
-                //If thread was interrupted while sleeping, set flag to interrupt
-                Thread.currentThread().interrupt();
+                //If thread was interrupted while sleeping, break
+                break;
             }
         }
 
