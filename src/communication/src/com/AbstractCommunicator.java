@@ -63,15 +63,23 @@ public abstract class AbstractCommunicator implements Communicator {
             }
         }
 
+        //Only runs after running has been set to false (aka onDisconnect and stop())
+        sendExitCode();
+        clearConnection();
+    }
+
+    /**
+     * If connected to a communicator, send exit code to it.
+     */
+    private void sendExitCode() {
         try {
-            //Send that communicator is exiting
-            outputStream.writeUTF(EXIT_CODE);
+            if (outputStream != null) {
+                //Send that communicator is exiting
+                outputStream.writeUTF(EXIT_CODE);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        //Only runs after running has been set to false (aka onDisconnect and stop())
-        clearConnection();
     }
 
     @Override
@@ -96,7 +104,7 @@ public abstract class AbstractCommunicator implements Communicator {
                 mainThread = new Thread(this);
                 mainThread.start();
             } else {
-                System.out.println(this.getClass() + " has already been started once.");
+                System.out.println(this.getClass().getName() + " has already been started once.");
             }
         }
     }
