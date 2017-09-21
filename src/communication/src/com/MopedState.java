@@ -5,13 +5,14 @@ package com;
  * <p>
  * Basic states for operation of MOPED
  */
-public enum MopedStates {
+public enum MopedState {
     ACC(MopedStateType.DRIVING_STATE),
     MANUAL(MopedStateType.DRIVING_STATE);
 
+    private static MopedState[] values = MopedState.values();
     private final MopedStateType stateType;
 
-    MopedStates(final MopedStateType stateType) {
+    MopedState(final MopedStateType stateType) {
         this.stateType = stateType;
     }
 
@@ -37,11 +38,11 @@ public enum MopedStates {
      * Convert int to enum
      *
      * @param mopedState int
-     * @return MopedStates enum
+     * @return MopedState enum
      */
-    public static MopedStates parseInt(int mopedState) {
-        if (mopedState <= MopedStates.values().length && mopedState >= 0) {
-            return MopedStates.values()[mopedState];
+    public static MopedState parseInt(int mopedState) {
+        if (mopedState <= values.length && mopedState >= 0) {
+            return values[mopedState];
         }
         return null;
     }

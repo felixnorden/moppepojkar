@@ -2,14 +2,12 @@ package test;
 
 import com.CommunicationListener;
 import com.Communicator;
-import com.MopedStates;
+import com.MopedState;
 import com.ServerCommunicator;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -27,7 +25,12 @@ class ServerCommunicatorTest {
             }
 
             @Override
-            public void onStateChange(MopedStates stateChange) {
+            public void onStateChange(MopedState stateChange) {
+
+            }
+
+            @Override
+            public void onDisconnection() {
 
             }
         };

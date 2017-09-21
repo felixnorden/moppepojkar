@@ -1,5 +1,7 @@
 package com;
 
+import javafx.util.Pair;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -15,13 +17,17 @@ import java.util.Queue;
  */
 public abstract class AbstractCommunicator implements Communicator {
 
-    protected final long UPDATE_INTERVAL = 10;
+    //Constants
+    private static final String EXIT_CODE = "#EXIT";
+    private static final String SEPARATOR = ",";
+    protected static final long UPDATE_INTERVAL = 10;//This essentially controls the input lag between app and MOPED
+
     protected final int port;
     protected Socket socket;
     protected DataInputStream inputStream;
     protected DataOutputStream outputStream;
     protected Thread mainThread;
-    private Queue<MopedStates> queuedMopedStates;
+    private Queue<Pair<MopedDataType, Integer>> queue;
     private final ArrayList<CommunicationListener> listeners;
 
     /**
@@ -30,49 +36,138 @@ public abstract class AbstractCommunicator implements Communicator {
     protected AbstractCommunicator(int port) {
         this.port = port;
         listeners = new ArrayList<>();
-        queuedMopedStates = new LinkedList<MopedStates>();
+        queue = new LinkedList<>();
     }
 
-	@Override
-	public void setState(MopedStates state) {
-		queuedMopedStates.add(state);
-	}
+    /**
+     * Mainloop which tries to maintain a connection to another communicator.
+     * If a communicator is lost, it looks for another one till found.
+     * <p>
+     * When a connection is established, all listeners will be notified.
+     */
+    @Override
+    public void run() {
+        while (!Thread.interrupted()) {
+            // If there is no connection or if connection is broken.
+            if (socket == null || !socket.isConnected()) {
+                connectSocket();
+            } else {
+                update();
+            }
 
-	@Override
+            try {
+                Thread.sleep(UPDATE_INTERVAL);
+            } catch (InterruptedException e) {
+                //If thread was interrupted while sleeping, set flag to interrupt
+                Thread.currentThread().interrupt();
+            }
+        }
+
+        //Only runs after running has been set to false (aka onDisconnect and stop())
+        clearConnection();
+    }
+
+    @Override
+    public void setState(MopedState state) {
+        Pair<MopedDataType, Integer> p = new Pair(MopedDataType.MopedState, state.toInt());
+        queue.add(p);
+    }
+
+    @Override
     public void addListener(CommunicationListener cl) {
         listeners.add(cl);
     }
 
     @Override
     public void start() {
-        mainThread.start();
+        queue.clear();
+        try {
+            mainThread.start();
+        } catch (IllegalThreadStateException e) {
+            //If this is thrown, thread was already started once before.
+            if (!mainThread.isAlive()) {
+                mainThread = new Thread(this);
+                mainThread.start();
+            } else {
+                System.out.println(this.getClass() + " has already been started once.");
+            }
+        }
     }
 
-	/**
-	 * Fetches and sends new information from the connected socket.
-	 */
-	protected void update() {
-		try {
+    @Override
+    public void stop() {
+        try {
+            //Ignore queue and send exit code to other communicator, then exit.
+            mainThread.interrupt();
+            outputStream.writeUTF(EXIT_CODE);
 
-			//Send all queued state changes through socket link
-			while (queuedMopedStates.size() > 0) {
-				outputStream.write(queuedMopedStates.poll().toInt());
-			}
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e) {
+            //If the communicator hasn't been started (.start()) yet, NullPointerException will be thrown.
+            System.out.println("Tried to send data but outputstream is null " +
+                    "(happens when stop() is called before a connection has been made");
+        }
+    }
 
-			// Get all state changes from other sender in socket link
-			int stateChange = inputStream.read();
-			while (stateChange != -1) {
-				notifyStateChange(MopedStates.parseInt(stateChange));
-				stateChange = inputStream.read();
-			}
+    /**
+     * Fetches and sends new information from the connected socket.
+     */
+    private void update() {
+        try {
+            sendQueuedData();
+            receiveData();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
+    /**
+     * Sends all queued data through socket link
+     *
+     * @throws IOException
+     */
+    private void sendQueuedData() throws IOException {
+        //Send all queued data
+        while (queue.size() > 0) {
+            Pair<MopedDataType, Integer> pair = queue.poll();
 
+            String dataType = String.valueOf(pair.getKey().toInt());
+            String value = String.valueOf(pair.getValue());
 
+            //Format is 'x,y' where
+            //  x = MopedDataType integer
+            //  y = integer value of specified MopedDataType
+            String output = dataType + SEPARATOR + value;
 
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+            outputStream.writeUTF(output);
+        }
+    }
+
+    /**
+     * Read and interpret data from socket link.
+     *
+     * @throws IOException
+     */
+    private void receiveData() throws IOException {
+        while (inputStream.available() > 0) {
+            // Input string is formatted as "xxxxx,yyyy" where x is MopedDataType and y is a int value
+            String input = inputStream.readUTF();
+
+            if (input.equals(EXIT_CODE)) {
+                onDisconnect();
+                break;
+            }
+
+            String[] args = input.split(SEPARATOR);
+
+            //Extract data from input.
+            MopedDataType type = MopedDataType.parseInt(Integer.parseInt(args[0]));
+            int value = Integer.parseInt(args[1]);
+
+            handleInput(type, value);
+        }
+    }
 
     /**
      * Notifies all listeners that a connection has been established.
@@ -83,12 +178,58 @@ public abstract class AbstractCommunicator implements Communicator {
         }
     }
 
-	/**
-	 * Notifies all listeners that a state change from the sender has been received.
-	 */
-	protected void notifyStateChange(MopedStates mopedState) {
-		for (CommunicationListener cl : listeners) {
-			cl.onStateChange(mopedState);
-		}
-	}
+    /**
+     * Notifies all listeners that a state change from the sender has been received.
+     */
+    protected void notifyStateChange(MopedState mopedState) {
+        for (CommunicationListener cl : listeners) {
+            cl.onStateChange(mopedState);
+        }
+    }
+
+    /**
+     * Notifies all listeners that a disconnection has occurred.
+     */
+    protected void notifyDisconnected() {
+        for (CommunicationListener cl : listeners) {
+            cl.onDisconnection();
+        }
+    }
+
+    /**
+     * Closes the socket, nullifies it and nullifies the in/output-streams.
+     * This is necessary because one communicator acts as a server and the other one as a client.
+     */
+    protected abstract void clearConnection();
+
+    /**
+     * Decides what happens to the received data once it has been converted into the objects it was converted from.
+     *
+     * @param type  Type of data received.
+     * @param value The value of the type.
+     */
+    private void handleInput(MopedDataType type, int value) {
+        switch (type) {
+            case MopedState:
+                //This means a state was changed. Extract new state from value and send to listeners.
+                notifyStateChange(MopedState.parseInt(value));
+            default:
+                // TODO: 2017-09-18 Notify value change
+        }
+    }
+
+    /**
+     * Runs when other side has requested a disconnect by
+     * sending the EXIT_CODE
+     */
+    private void onDisconnect() {
+        notifyDisconnected();
+        mainThread.interrupt();
+    }
+
+    /**
+     * Does the necessary setup for the sockets to establish a connection.
+     * This is necessary because one communicator needs to act as a server and the other one as a client.
+     */
+    protected abstract void connectSocket();
 }

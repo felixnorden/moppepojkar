@@ -20,7 +20,7 @@ Velocity charts on individual team members, which have been evaluated using the 
 1. Performance
 1. Produced quality
 
-A form with questions will be sent out to every group member in the end of every sprint. The answers will be collected by the Scrum Master to appreciate wether the psychological stress produced by the work environment is healthy/effective or not. The results will be saved for later use in the reflection, which will be when the product has been shipped. Also, this data is to be distributed to each corresponding individual for them to evaluate their weekly psychological health.
+A form with questions will be sent out to every group member in the end of every sprint. The answers will be collected by the Scrum Master to appreciate wether the psychological stress produced by the work environment is healthy/effective or not. The results (1-10 on each question) will be saved for later use in the reflection, which will be when the product has been shipped. Also, this data is to be distributed to each corresponding individual for them to evaluate their weekly psychological health.
 
 The main reason for this KPI is to derive an indication of wether a good work enviroment has been achieved or not. This KPI will be used as an indicator of both group dynamics as a whole group and as smaller teams. If taken seriously, this KPI will also indicate, and warn, each team member if they are overworking themselves while working with the project.
 

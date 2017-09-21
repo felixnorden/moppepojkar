@@ -20,34 +20,29 @@ public class ClientCommunicator extends AbstractCommunicator {
         mainThread = new Thread(this);
     }
 
-    /**
-     * Loop which tries to maintain a connection to the server.
-     * <p>
-     * When a connection is established, all listeners will be notified.
-     */
     @Override
-    public void run() {
-        while (true) {
-            // TODO: 2017-09-13 Is this kind of loop optimal?
-            if (socket == null || !socket.isConnected()) {
-                try {
-                    socket = new Socket(ip, this.port);
-                    notifyConnected();
-                    this.inputStream = new DataInputStream(socket.getInputStream());
-                    this.outputStream = new DataOutputStream(socket.getOutputStream());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }else {
-                //Run update if connected to socket
-                this.update();
+    protected void clearConnection() {
+        try {
+            if (socket != null) {
+                socket.close();
             }
 
-            try {
-                Thread.sleep(UPDATE_INTERVAL);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            socket = null;
+            inputStream = null;
+            outputStream = null;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected void connectSocket() {
+        try {
+            socket = new Socket(ip, this.port);
+            this.inputStream = new DataInputStream(socket.getInputStream());
+            this.outputStream = new DataOutputStream(socket.getOutputStream());
+            notifyConnected();
+        } catch (IOException e) {
+            //This block runs if socket cannot connect.
         }
     }
 }
