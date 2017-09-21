@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 20
+    compileSdkVersion 21
     buildToolsVersion "25.0.2"
 
     defaultConfig {
         applicationId "se.sics.sse.fresta.wirelessino"
-        minSdkVersion 11
+        minSdkVersion 21
         targetSdkVersion 21
     }
 
@@ -19,5 +19,7 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:20.0.0'
+    compile 'com.android.support:support-v4:21.0.0'
+    compile 'com.android.support:appcompat-v7:21.0.0'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }

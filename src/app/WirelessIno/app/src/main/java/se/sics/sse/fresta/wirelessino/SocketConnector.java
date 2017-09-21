@@ -16,6 +16,12 @@ import android.widget.EditText;
 
 import android.os.StrictMode;
 
+/**
+ * This is the activity for connecting to the MOPED where the user has
+ * to input an IP adress and a port to connect to, it also contains
+ * instructions on how to do this properly.
+ */
+
 public class SocketConnector extends Activity {
     private final static int CONNECTION_TIMEOUT = 3000;
 	
@@ -47,7 +53,7 @@ public class SocketConnector extends Activity {
 		if (oldPort != null)
 			ed_port.setText(oldPort);
 		
-		/* Setup the "connect"-button. On click, new host ip and port numbers should 
+		/** Setup the "connect"-button. On click, new host ip and port numbers should
 		 * be stored and a socket connection created (this is done as a background task). 
 		 */
 		btn_connect.setOnClickListener(new Button.OnClickListener() {
@@ -75,16 +81,19 @@ public class SocketConnector extends Activity {
 		return socket;
 	}
 
-	/* 
-	 * This asynchronous task is responsible for creating a socket connection 
+	/**
+	 * This asynchronous task is responsible for creating a socket connection
 	 * (typically such tasks should not be done from the UI-thread, otherwise a
-	 * NetworkOnMainThreadException exception may be thrown by the Android runtime tools).  
+	 * NetworkOnMainThreadException exception may be thrown by the Android runtime tools).
 	 */
 	private class AsyncConnectionTask extends AsyncTask<String, Void, String> {
 		private String msg = "def message";
-		
-		/*
+
+		/**
 		 * Establish a socket connection in the background.
+		 *
+		 * @param params
+		 * @return
 		 */
 		protected String doInBackground(String... params) {
 			try {
@@ -109,10 +118,13 @@ public class SocketConnector extends Activity {
 			
 			return null;
 		}
-		
-		/*
-		 * Once the background operation is finished, pass the socket reference to the 
-		 * Main class and exit from this view. If something went wrong, notify the user. 
+
+		/**
+		 *
+		 * Once the background operation is finished, pass the socket reference to the
+		 * Main class and exit from this view. If something went wrong, notify the user.
+		 *
+		 * @param result
 		 */
 		protected void onPostExecute(String result) {
 			if (socket != null && socket.isConnected()) {
