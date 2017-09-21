@@ -1,15 +1,29 @@
 package core.behaviour_states.states;
 
-import core.action_strategies.ActionStrategy;
+import com_io.CommunicationsMediator;
+import com_io.CommunicatorFactory;
+import core.action_strategies.*;
 
 class AdaptiveCruiseControl implements BehaviourState {
 
-    private ActionStrategy currentStrategy;
+    private BidirectionalHandler currentHandler;
 
-    // May be removed in the near future
-    private ActionStrategy emgyStopStrategy;
+    private final BidirectionalHandler accHandler;
+    private final BidirectionalHandler emergencyHandler;
+    private final BidirectionalHandler manualHandler;
 
     public AdaptiveCruiseControl() {
+
+        CommunicationsMediator comIO = CommunicatorFactory.getComInstance();
+
+        ActionStrategyFactory strategyFactory = ActionStrategyFactoryImpl.getInstance();
+
+        ActionStrategy pidController = strategyFactory.createPIDController();
+        ActionStrategy steerController = strategyFactory.createSteerController();
+
+        this.accHandler = new BidirectionalHandlerImpl(pidController, steerController);
+
+        ActionStrategy emergencyController = strategyFactory.createEmgyController();
 
     }
 
