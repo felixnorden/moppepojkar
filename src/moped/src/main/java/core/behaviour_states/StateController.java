@@ -1,9 +1,14 @@
+
+
 package core.behaviour_states;
 
 import core.behaviour_states.states.BehaviourState;
 import core.behaviour_states.states.BehaviourStateFactory;
 import core.behaviour_states.states.BehaviourStateFactoryImpl;
 
+/**
+ *
+ */
 public class StateController implements Runnable {
     private BehaviourStateFactory stateFactory;
     private BehaviourState currentState;
@@ -20,14 +25,25 @@ public class StateController implements Runnable {
 
     }
 
+    /**
+     *
+     * @return current behaviour of the MOPED
+     */
     public BehaviourState getCurrentState() {
         return this.currentState;
     }
 
+    /**
+     *
+     * @param newState the new current state for the MOPED
+     */
     public void setNewState(BehaviourState newState) {
         this.currentState = newState;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void run() {
         currentState.run();
