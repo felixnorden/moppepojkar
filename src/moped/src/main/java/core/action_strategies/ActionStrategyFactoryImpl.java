@@ -27,6 +27,11 @@ public class ActionStrategyFactoryImpl implements ActionStrategyFactory {
     }
 
     @Override
+    public ActionStrategy createVelocityController() {
+        return new RemoteController(RemoteController.Axis.Y, CommunicatorFactoryImpl.getFactoryInstance().getComInstance());
+    }
+
+    @Override
     public ActionStrategy createRemoteController() {
         return null;
     }

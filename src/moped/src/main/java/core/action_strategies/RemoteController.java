@@ -26,6 +26,9 @@ public class RemoteController implements ActionStrategy, DataReceiver {
     }
 
 
+    /**
+     * The filter used to filter out unwanted data
+     */
     public enum Axis {
         X,
         Y

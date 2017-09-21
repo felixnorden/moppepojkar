@@ -18,13 +18,14 @@ public class BehaviourStateFactoryImpl implements BehaviourStateFactory{
 
     @Override
     public BehaviourState createManualBehaviour() {
-        return new Manual();
+        return new Manual(carController);
     }
 
     @Override
     public BehaviourState createAdaptiveCruiseControlBehaviour() {
         return new AdaptiveCruiseControl(carController);
     }
+
 
     private BehaviourStateFactoryImpl() {}
 

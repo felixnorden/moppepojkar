@@ -19,8 +19,4 @@ public class BidirectionalHandlerImpl implements BidirectionalHandler {
         return longitudeStrategy.takeAction();
     }
 
-    @Override
-    public void stratergyDualComposite(ActionStrategy latitudeStrategy, ActionStrategy longitudeStratergy) {
-
-    }
 }
