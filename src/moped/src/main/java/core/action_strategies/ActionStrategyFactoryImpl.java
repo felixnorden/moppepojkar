@@ -1,6 +1,7 @@
 package core.action_strategies;
 
 import com_io.CommunicationsMediator;
+import com_io.CommunicatorFactoryImpl;
 import sun.management.Sensor;
 
 public class ActionStrategyFactoryImpl implements ActionStrategyFactory {
@@ -22,7 +23,7 @@ public class ActionStrategyFactoryImpl implements ActionStrategyFactory {
 
     @Override
     public ActionStrategy createSteerController() {
-        return new RemoteController(RemoteController.Axis.X, comIO);
+        return new RemoteController(RemoteController.Axis.X, CommunicatorFactoryImpl.getFactoryInstance().getComInstance());
     }
 
     @Override
