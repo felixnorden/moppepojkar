@@ -1,4 +1,4 @@
-import org.junit.Test;
+/*import org.junit.Test;
 
 public class test {
 
@@ -7,4 +7,4 @@ public class test {
     public void helloWorld() {
         System.out.println("Hello world");
     }
-}
+}*/
