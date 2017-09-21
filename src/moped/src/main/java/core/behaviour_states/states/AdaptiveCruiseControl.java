@@ -4,6 +4,7 @@ import com_io.CommunicationsMediator;
 import com_io.CommunicatorFactory;
 import com_io.CommunicatorFactoryImpl;
 import core.action_strategies.*;
+import core.car_control.CarControl;
 import core.sensors.DistanceSensor;
 import core.sensors.DistanceSensorImpl;
 
@@ -19,7 +20,9 @@ class AdaptiveCruiseControl implements BehaviourState {
     private DistanceSensor distanceSensor;
     private int emergencyCount;
 
-    public AdaptiveCruiseControl() {
+    private CarControl carController;
+
+    public AdaptiveCruiseControl(CarControl carController) {
         emergencyCount = 0;
 
         CommunicatorFactory comFactory = CommunicatorFactoryImpl.getFactoryInstance();
@@ -35,23 +38,21 @@ class AdaptiveCruiseControl implements BehaviourState {
         this.emergencyHandler = new BidirectionalHandlerImpl(emergencyController, emergencyController);
 
         this.distanceSensor = DistanceSensorImpl.getInstance();
+        this.carController = carController;
     }
 
     @Override
     public void run() {
+        this.currentHandler = determineHandler();
 
+        carController.setThrottle((int) currentHandler.takeLatitudeAction());
+        carController.setSteerValue((int) currentHandler.takeLongitudeAction());
     }
 
-    private BidirectionalHandler determineStrategy() {
-        // check range
-        // check brake length for speed, from engine throttle
-        // if brake length is longer than range, increase emergency count.
-        // if counter is over the threshold, set strategy to emergency stop.
-        // else, use acc.
-
+    private BidirectionalHandler determineHandler() {
         double range = distanceSensor.getDistance();
         // TODO: 21/09/2017 Create class to calculate break length.
-        double breakLength = 75; // Temporary value
+        double breakLength = 110; // Temporary value
 
         if (breakLength > range) {
             emergencyCount++;
