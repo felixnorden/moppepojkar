@@ -1,15 +1,15 @@
-package test;
+package com;
 
-import com.MopedState;
-import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.Test;
+
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by konglobemeralt on 2017-09-14.
  */
 
-class MopedStateTest {
+public class MopedStateTest {
 
     @Test
     public void convert() {

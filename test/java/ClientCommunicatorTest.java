@@ -1,22 +1,19 @@
-package test;
+package test.java;
 
-import com.CommunicationListener;
-import com.Communicator;
-import com.MopedState;
-import com.ServerCommunicator;
+import com.*;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.net.Socket;
+import java.net.ServerSocket;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ServerCommunicatorTest {
+class ClientCommunicatorTest {
 
     @Test
     public void testOnConnection() {
-        ArrayList<Boolean> vars = new ArrayList();
+        ArrayList<Boolean> vars = new ArrayList<>();
 
         CommunicationListener cl = new CommunicationListener() {
             @Override
@@ -35,14 +32,20 @@ class ServerCommunicatorTest {
             }
         };
 
-        Communicator server = new ServerCommunicator(9500);
-        server.addListener(cl);
-        server.start();
-
+        Communicator client = new ClientCommunicator("localhost", 9501);
+        client.addListener(cl);
+        client.start();
 
         try {
-            Socket socket = new Socket("localhost", 9500);
+            ServerSocket serverSocket = new ServerSocket(9501);
+            serverSocket.setSoTimeout(5000);
+            serverSocket.accept();
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
             //Wait up to 5 seconds before failing
             for (int i = 0; i < 100; i++) {
                 Thread.sleep(50);
@@ -50,7 +53,7 @@ class ServerCommunicatorTest {
                     break;
                 }
             }
-        } catch (InterruptedException | IOException e) {
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
