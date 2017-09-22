@@ -36,7 +36,7 @@ public class Main extends Activity implements CommunicationListener {
     private SeekBar steeringBar;
     private Button modeButton;
     private Button connectButton;
-    private boolean isACCenabled;
+    private boolean isACCenabled = false;
     private boolean isConnected = false;
 
     private Communicator communicator;
@@ -118,9 +118,13 @@ public class Main extends Activity implements CommunicationListener {
             @Override
             public void onClick(View v) {
                 if (isACCenabled) {
-                    modeButton.setText("ACC enabled");
+                    modeButton.setText("ACC");
+                    communicator.setState(MopedState.ACC);
+                    isACCenabled = !isACCenabled;
                 } else {
-                    modeButton.setText("ACC disabled");
+                    modeButton.setText("MANUAL");
+                    communicator.setState(MopedState.MANUAL);
+                    isACCenabled = !isACCenabled;
                 }
 
             }
