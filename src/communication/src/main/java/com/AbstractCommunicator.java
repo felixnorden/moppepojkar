@@ -29,6 +29,11 @@ public abstract class AbstractCommunicator implements Communicator {
     protected Thread mainThread;
     private Queue<Pair<MopedDataType, Integer>> queue;
     private final ArrayList<CommunicationListener> listeners;
+    //This variable is true when a disconnect just happened and
+    //it needs to be taken care of in the main loop. The main loop
+    //will set this back to false when it has been handled.
+    private volatile boolean hasDisconnected = false;
+
 
     /**
      * @param port Port for the socket to use.
@@ -48,6 +53,12 @@ public abstract class AbstractCommunicator implements Communicator {
     @Override
     public void run() {
         while (!Thread.interrupted()) {
+            if (hasDisconnected) {
+                handleDisconnect();
+                hasDisconnected = false;
+                continue;
+            }
+
             // If there is no connection or if connection is broken.
             if (socket == null || !socket.isConnected()) {
                 connectSocket();
@@ -113,6 +124,8 @@ public abstract class AbstractCommunicator implements Communicator {
     public void stop() {
         mainThread.interrupt();
     }
+
+    protected abstract void handleDisconnect();
 
     /**
      * Fetches and sends new information from the connected socket.
@@ -228,7 +241,7 @@ public abstract class AbstractCommunicator implements Communicator {
      */
     private void onDisconnect() {
         notifyDisconnected();
-        mainThread.interrupt();
+        hasDisconnected = true;
     }
 
     /**

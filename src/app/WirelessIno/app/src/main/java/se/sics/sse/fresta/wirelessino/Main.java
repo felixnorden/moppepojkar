@@ -138,17 +138,20 @@ public class Main extends Activity implements CommunicationListener {
 
     protected void onResume() {
         /* Disable the disconnect option if no connection has been established */
+        communicator.start();
         updateMenuVisibility();
         super.onResume();
     }
 
     @Override
     protected void onRestart(){
+        communicator.start();
         super.onRestart();
     }
 
     @Override
     protected void onStop() {
+        communicator.stop();
         super.onStop();
     }
 

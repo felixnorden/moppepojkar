@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="1" failures="0" name="com.ServerCommunicationTest" time="0.528" errors="0" skipped="0">
+<testsuite tests="1" failures="0" name="com.ServerCommunicationTest" time="0.498" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_101\jre\bin"/>
@@ -65,5 +65,5 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="com.ServerCommunicationTest" name="testOnConnection" time="0.528"/>
+  <testcase classname="com.ServerCommunicationTest" name="testOnConnection" time="0.498"/>
 </testsuite>

@@ -20,6 +20,15 @@ public class ClientCommunicator extends AbstractCommunicator {
         mainThread = new Thread(this);
     }
 
+    /**
+     * We do not want the client to try to reconnect automagically when disconnected.
+     * Therefore, stop mainthread.
+     */
+    @Override
+    protected void handleDisconnect() {
+        this.stop();
+    }
+
     @Override
     protected void clearConnection() {
         try {
@@ -37,6 +46,7 @@ public class ClientCommunicator extends AbstractCommunicator {
 
     protected void connectSocket() {
         try {
+            System.out.println("[CLIENT] Looking for server on port " + ip + ":" + port + "...");
             socket = new Socket(ip, this.port);
             this.inputStream = new DataInputStream(socket.getInputStream());
             this.outputStream = new DataOutputStream(socket.getOutputStream());
