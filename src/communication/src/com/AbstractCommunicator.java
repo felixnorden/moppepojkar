@@ -20,7 +20,7 @@ public abstract class AbstractCommunicator implements Communicator {
     //Constants
     private static final String EXIT_CODE = "#EXIT";
     private static final String SEPARATOR = ",";
-    protected static final long UPDATE_INTERVAL = 10;//This essentially controls the input lag between app and MOPED
+    private static final long UPDATE_INTERVAL = 10;//This essentially controls the input lag between app and MOPED
 
     protected final int port;
     protected Socket socket;
@@ -41,9 +41,9 @@ public abstract class AbstractCommunicator implements Communicator {
 
     /**
      * Mainloop which tries to maintain a connection to another communicator.
-     * If a communicator is lost, it looks for another one till found.
-     * <p>
      * When a connection is established, all listeners will be notified.
+     * If a connection is established, data will be sent/received.
+     * If a communicator is lost, it looks for another one till found.
      */
     @Override
     public void run() {
@@ -58,20 +58,28 @@ public abstract class AbstractCommunicator implements Communicator {
             try {
                 Thread.sleep(UPDATE_INTERVAL);
             } catch (InterruptedException e) {
-                //If thread was interrupted while sleeping, set flag to interrupt
-                Thread.currentThread().interrupt();
+                //If thread was interrupted while sleeping, break
+                break;
             }
         }
 
+        //Only runs after running has been set to false (aka onDisconnect and stop())
+        sendExitCode();
+        clearConnection();
+    }
+
+    /**
+     * If connected to a communicator, send exit code to it.
+     */
+    private void sendExitCode() {
         try {
-            //Send that communicator is exiting
-            outputStream.writeUTF(EXIT_CODE);
+            if (outputStream != null) {
+                //Send that communicator is exiting
+                outputStream.writeUTF(EXIT_CODE);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        //Only runs after running has been set to false (aka onDisconnect and stop())
-        clearConnection();
     }
 
     @Override
@@ -96,7 +104,7 @@ public abstract class AbstractCommunicator implements Communicator {
                 mainThread = new Thread(this);
                 mainThread.start();
             } else {
-                System.out.println(this.getClass() + " has already been started once.");
+                System.out.println(this.getClass().getName() + " has already been started once.");
             }
         }
     }
@@ -168,7 +176,7 @@ public abstract class AbstractCommunicator implements Communicator {
     /**
      * Notifies all listeners that a connection has been established.
      */
-    protected void notifyConnected() {
+    void notifyConnected() {
         for (CommunicationListener cl : listeners) {
             cl.onConnection();
         }
@@ -177,7 +185,7 @@ public abstract class AbstractCommunicator implements Communicator {
     /**
      * Notifies all listeners that a state change from the sender has been received.
      */
-    protected void notifyStateChange(MopedState mopedState) {
+    private void notifyStateChange(MopedState mopedState) {
         for (CommunicationListener cl : listeners) {
             cl.onStateChange(mopedState);
         }
@@ -186,7 +194,7 @@ public abstract class AbstractCommunicator implements Communicator {
     /**
      * Notifies all listeners that a disconnection has occurred.
      */
-    protected void notifyDisconnected() {
+    private void notifyDisconnected() {
         for (CommunicationListener cl : listeners) {
             cl.onDisconnection();
         }
