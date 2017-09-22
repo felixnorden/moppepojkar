@@ -18,13 +18,18 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
+import com.ClientCommunicator;
+import com.CommunicationListener;
+import com.Communicator;
+import com.MopedState;
+
 /**
  * This is the Main class which is the main activity for the application.
  * All the interactive GUI elements are defined here as well as their
  * corresponding methods and calculations.
  */
 
-public class Main extends Activity {
+public class Main extends Activity implements CommunicationListener{
 
 
     private SeekBar speedBar;
@@ -32,6 +37,7 @@ public class Main extends Activity {
     private Button modeButton;
     private boolean isACCenabled;
 
+    private Communicator communicator;
 
     public static final String TAG = "WirelessIno";
     public static Socket socket = null;
@@ -49,6 +55,10 @@ public class Main extends Activity {
         setContentView(R.layout.activity_main);
         speedBar = (SeekBar) findViewById(R.id.speedBar);
         steeringBar = (SeekBar) findViewById(R.id.SteeringBar);
+
+        communicator = new ClientCommunicator("192.168.137.1", 9000);
+        communicator.addListener(this);
+        communicator.start();
 
         /*Listener for change in SeekBars (Sliders) */
 
@@ -285,5 +295,20 @@ public class Main extends Activity {
     private String getMoppeToast() {
         String[] strs = new String[]{"Tänk på hur ni kör!", "Hallå moppepojkar, tänk på vad ni gör!", "Sen var de bara nio!"};
         return strs[new Random().nextInt(3)];
+    }
+
+    @Override
+    public void onConnection() {
+        System.out.println("Connected");
+    }
+
+    @Override
+    public void onStateChange(MopedState mopedState) {
+        System.out.println("New state: " + mopedState.name());
+    }
+
+    @Override
+    public void onDisconnection() {
+
     }
 }
