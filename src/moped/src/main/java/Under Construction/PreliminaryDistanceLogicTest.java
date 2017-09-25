@@ -1,8 +1,4 @@
-package distancekeeper.distancekeepertest;
-
-
-
-import distancekeeper.PreliminaryDistanceLogic;
+import PreliminaryDistanceLogic;
 import org.junit.jupiter.api.Test;
 
 

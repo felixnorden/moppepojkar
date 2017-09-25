@@ -1,5 +1,3 @@
-package distancekeeper.distancekeepertest;
-
 import distancekeeper.PIDController;
 import org.junit.*;
 import org.junit.jupiter.api.Test;

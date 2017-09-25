@@ -2,8 +2,6 @@
  * Created by Emil Jansson and Hugo Ekelund on 2017-09-12.
  */
 
-package distancekeeper;
-
 public class PreliminaryDistanceLogic {
 
     private float offsetToSpeedRelation; //The relation between distance offset and target relative speed.

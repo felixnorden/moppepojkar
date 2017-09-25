@@ -1,5 +1,3 @@
-package enginedataconversion.enginedataconversiontest;
-
 import enginedataconversion.EngineDataConverter;
 
 import org.junit.jupiter.api.Test;
