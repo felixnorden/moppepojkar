@@ -23,7 +23,7 @@ In practice, it works as follows:
 `git fetch origin development`
 `git rebase origin/development`
 
-- or -  
+    - or -  
 `git checkout development`
 `git pull`
 `git checkout initials/fancy-branch-name`

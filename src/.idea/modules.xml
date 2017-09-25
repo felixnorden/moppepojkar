@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/communication/communication.iml" filepath="$PROJECT_DIR$/communication/communication.iml" />
+      <module fileurl="file://$PROJECT_DIR$/communication/src/communication1.iml" filepath="$PROJECT_DIR$/communication/src/communication1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/WirelessIno/app/src/main/main.iml" filepath="$PROJECT_DIR$/app/WirelessIno/app/src/main/main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/moped/moped.iml" filepath="$PROJECT_DIR$/moped/moped.iml" />
+      <module fileurl="file://$PROJECT_DIR$/moped/src/plugin/plugin.iml" filepath="$PROJECT_DIR$/moped/src/plugin/plugin.iml" />
+    </modules>
+  </component>
+</project>

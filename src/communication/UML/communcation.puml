@@ -1,0 +1,69 @@
+@startuml
+Communicator <-- AbstractCommunicator
+AbstractCommunicator <-- ClientCommunicator
+AbstractCommunicator <-- ServerCommunicator
+Runnable <-- Communicator
+Communicator o- CommunicationListener
+MopedState -o AbstractCommunicator
+MopedState -o Communicator
+MopedDataType -o AbstractCommunicator
+MopedStateType -o MopedState
+
+
+
+interface Runnable {
+    +void run()
+}
+
+interface Communicator {
+    +void addListener(CommunicatorListener)
+    +void start()
+    +void stop()
+    +void setState(MopedState state)
+}
+
+interface CommunicationListener {
+    +void onConnection()
+    +void onStateChange(MopedState)
+}
+
+abstract class AbstractCommunicator {
+    +AbstractCommunicator(int)
+    #void update()
+    #void notifyConnected()
+    #void notifyStateChange(MopedState)
+    #void clearConnection()
+    -void sendQueuedData()
+    -void receiveData()
+    -void handleInput(MopedDataType, int)
+}
+
+class ClientCommunicator {
+    +ClientCommunicator(String, int)
+    -void connectSocket()
+}
+
+class ServerCommunicator {
+    +ServerCommunicator(int)
+    -void connectSocket()
+}
+
+Enum MopedState {
+    MANUAL(MopedStateType.DRIVING_STATE)
+    ACC(MopedStateType.DRIVING_STATE)
+    +int toInt()
+    {static}+MopedDataType parseInt(int)
+    +MopedStateType getStateType()
+}
+
+Enum MopedDataType {
+    MopedState,
+    Velocity
+    +int toInt()
+    {static}+MopedDataType parseInt(int)
+}
+
+Enum MopedStateType {
+    DRIVING_STATE
+}
+@enduml
