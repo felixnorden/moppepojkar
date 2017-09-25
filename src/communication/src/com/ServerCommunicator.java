@@ -23,8 +23,14 @@ public class ServerCommunicator extends AbstractCommunicator {
     @Override
     protected void clearConnection() {
         try {
-            serverSocket.close();
-            socket.close();
+            if (serverSocket != null) {
+                serverSocket.close();
+            }
+
+            if (socket != null) {
+                socket.close();
+            }
+
             serverSocket = null;
             socket = null;
             inputStream = null;

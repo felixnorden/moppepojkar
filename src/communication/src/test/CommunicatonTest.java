@@ -99,7 +99,7 @@ public class CommunicatonTest {
     }
 
     @Test
-    public void testOnDisconnection() {
+    public void testOnServerDisconnection() {
         //Let's test the client first
         Communicator client = new ClientCommunicator("localhost", 8666);
         Communicator server = new ServerCommunicator(8666);
@@ -107,6 +107,7 @@ public class CommunicatonTest {
         CommunicationListener cl = new CommunicationListener() {
             @Override
             public void onConnection() {
+                server.stop();
             }
 
             @Override
@@ -123,30 +124,57 @@ public class CommunicatonTest {
         server.start();
         client.start();
         try {
-            Thread.sleep(50);
-            server.stop();
-            Thread.sleep(50);
+            //Wait up to 5 seconds before failing
+            for (int i = 0; i < 100; i++) {
+                Thread.sleep(50);
+                if (vars.size() == 1) {
+                    break;
+                }
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         //Check if only one item is in the list and if it is the value added in onDisconnection.
         assertTrue(vars.size() == 1 && vars.get(0));
+    }
 
+    @Test
+    public void testOnClientDisconnection() {
+        //Let's test the client first
+        Communicator client = new ClientCommunicator("localhost", 8668);
+        Communicator server = new ServerCommunicator(8668);
+        ArrayList<Boolean> vars = new ArrayList<>();
+        CommunicationListener cl = new CommunicationListener() {
+            @Override
+            public void onConnection() {
+                client.stop();
+            }
 
-        //Now time to check if the server handles it as well
-        client = new ClientCommunicator("localhost", 8667);
-        server = new ServerCommunicator(8667);
+            @Override
+            public void onStateChange(MopedState stateChange) {
+
+            }
+
+            @Override
+            public void onDisconnection() {
+                vars.add(true);
+            }
+        };
         server.addListener(cl);
         server.start();
         client.start();
         try {
-            Thread.sleep(50);
-            client.stop();
-            Thread.sleep(50);
+            //Wait up to 5 seconds before failing
+            for (int i = 0; i < 100; i++) {
+                Thread.sleep(50);
+                if (vars.size() == 1) {
+                    break;
+                }
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         //Check if only one item is in the list and if it is the value added in onDisconnection.
-        assertTrue(vars.size() == 2 && vars.get(1));
+        assertTrue(vars.size() == 1 && vars.get(0));
     }
 }

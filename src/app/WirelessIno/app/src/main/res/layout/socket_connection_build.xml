@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:weightSum="1"
+    >
 
     <TextView
         android:id="@+id/tv_host"
@@ -15,10 +18,10 @@
         android:id="@+id/ed_host"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/default_host_ip" 
-        android:ems="10" >
+        android:ems="10"
+        android:hint="@string/default_host_ip">
 
-        <requestFocus />
+        <requestFocus/>
     </EditText>
 
     <TextView
@@ -32,13 +35,68 @@
         android:id="@+id/ed_port"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/default_host_port" 
-        android:ems="10" />
+        android:ems="10"
+        android:hint="@string/default_host_port"/>
 
     <Button
         android:id="@+id/btn_connect"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/connect" />
+        android:background="@color/background_material_dark"
+        android:fontFamily="sans-serif"
+        android:text="@string/connect"
+        android:textAlignment="center"
+        android:textColor="@color/bright_foreground_inverse_material_light"
+        android:textStyle="bold"
+        android:layout_weight="0.04"/>
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:paddingTop="12dp"
+        android:text="How to Connect:"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.06"
+        android:padding="10dp"
+        android:text="Create a wifi network with the following configurations: "
+        android:textAlignment="viewStart"/>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:text="SSID/Name: JuanDev"
+        android:textAlignment="viewStart"
+        android:textStyle="bold"
+        android:padding="12dp"/>
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:text="Password: 12345678"
+        android:textAlignment="viewStart"
+        android:textStyle="bold"
+        android:padding="12dp"/>/>
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.17"
+        android:padding="10dp"
+        android:text="The raspberry pi on the MOPED will connect to this wifi network. Enter the local ip-address of the raspberry in the field above."
+        android:textAlignment="viewStart"/>
+
 
 </LinearLayout>
