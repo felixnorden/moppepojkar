@@ -7,7 +7,7 @@ import core.behaviour_states.states.BehaviourStateFactory;
 import core.behaviour_states.states.BehaviourStateFactoryImpl;
 
 /**
- *
+ * Controller which controls the different states of the system
  */
 public class StateController implements Runnable {
     private BehaviourStateFactory stateFactory;
@@ -41,9 +41,6 @@ public class StateController implements Runnable {
         this.currentState = newState;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void run() {
         currentState.run();

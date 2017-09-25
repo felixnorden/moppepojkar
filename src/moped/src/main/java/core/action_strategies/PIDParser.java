@@ -1,5 +1,9 @@
 package core.action_strategies;
 
+/**
+ * An {@link ActionStrategy} which parses the sensor data
+ * of a dedicated {@link core.sensors.Sensor}
+ */
 public class PIDParser implements ActionStrategy {
 
     public PIDParser() {
@@ -12,3 +16,4 @@ public class PIDParser implements ActionStrategy {
         return 0;
     }
 }
+

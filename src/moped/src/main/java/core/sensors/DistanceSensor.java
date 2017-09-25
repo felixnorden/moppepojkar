@@ -3,7 +3,7 @@ package core.sensors;
 /**
  * Interface for distancesensors.
  */
-public interface DistanceSensor {
+public interface DistanceSensor extends Sensor{
 
     /**
      * @return The distance in meters.

@@ -8,6 +8,11 @@ import core.car_control.CarControl;
 import core.sensors.DistanceSensor;
 import core.sensors.DistanceSensorImpl;
 
+
+/**
+ * Adaptive Cruise Control {@link BehaviourState} which has an
+ * automated Y-axis control and {@link }
+ */
 class AdaptiveCruiseControl implements BehaviourState {
 
     private static final int EMERGENCY_THRESHOLD = 10;
@@ -22,6 +27,11 @@ class AdaptiveCruiseControl implements BehaviourState {
 
     private CarControl carController;
 
+    /**
+     * Constructs a {@link BehaviourState} which follows the
+     * object in front of the unit
+     * @param carController the mediator to the VCU
+     */
     public AdaptiveCruiseControl(CarControl carController) {
         emergencyCount = 0;
 
