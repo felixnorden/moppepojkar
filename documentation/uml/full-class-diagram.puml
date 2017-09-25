@@ -70,12 +70,12 @@ package moped {
 			}
 
 			interface ActionStrategy {
-				takeAction(double deltaTime) : void
+				takeAction(double deltaTime) : double
 			}
 
 			class ActionStrategyFactoryImpl{
 				- appsocket: ExternalCommunicator
-				- distanceSensor: Sensor
+				- DistanceSensorImpl: Sensor
 			}
 
 			class PidParser {
@@ -84,19 +84,40 @@ package moped {
 				- calcPIDVal(double deltaTime): float
 			}
 			class EmgyStop {
-				- defaultThrottle: int
-				- defaultSteer: int
+				- defaultValue: int
 			}
 			
 			class RemoteController {
 				- appSocket: ExternalCommunicator
-				- steerValue: int
-				- throttleValue: int
+				- filteredValue: int
+
+                + RemoteController(Axis selectedAxis)
 			}
-			
+
+			enum Axis {
+			    AXIS_Y
+			    AXIS_X
+			}
+
+			class BidirectionHandler {
+                - ActionStrategy latitudeStrategy;
+                - ActionStrategy longitudeStrategy;
+
+                + StrategyDualComposite(ActionStrategy latitudeStrategy, ActionStrategy longitudeStrategy)
+
+                + takeLatitudeAction(): double
+                + takeLongitudeAction(): double
+			}
+
+                RemoteController --+ Axis
+
+			    BidirectionHandler --> ActionStrategy
 				PidParser --|> ActionStrategy
 				EmgyStop --|> ActionStrategy
 				RemoteController --|> ActionStrategy
+
+                ActionStrategyFactoryImpl --> ActionStrategy
+                ActionStrategyFactoryImpl --|> ActionStrategyFactory
 
 			note top of PidParser
 				DI sensor data reference
@@ -127,9 +148,50 @@ package moped {
 			CarControlImpl --|> CarControl
 
 		}
-		
+
+		package sensors {
+
+            interface DistanceSensor {
+                getCurrentValue()
+            }
+
+		    class DistanceSensorImpl {
+		        + getCurrentValue() : int
+
+		    }
+
+		}
+
+		package process_runner {
+
+		    class ProcessFactory {
+
+		    }
+
+		    class ProcessRunnerImpl {
+
+		    }
+
+		    interface ProcessRunner
+
+		    interface InputSubscriber {
+
+		    }
+
+		    class StreamReader {
+
+		    }
+
+            StreamReader --> InputSubscriber
+            ProcessRunnerImpl --|> ProcessRunner
+		    ProcessFactory --> ProcessRunner
+		}
+
 		Main ..> states
-		
+
+        action_strategies --> sensors
+        sensors --> process_runner
+		car_control --> process_runner
 		states --> action_strategies
 		states --> car_control
 	}
@@ -183,14 +245,10 @@ package moped {
 	
 	}
 
-	PidParser --> PID
+    action_strategies --> pid
 	app --> communication_protocols
-	StateController --> communication_protocols
+	behaviour_states --> communication_protocols
 	core --> com_io	
-	RemoteController --|> DataReceiver
-	StateController --|> DataReceiver
-	
-	
 }
 
 package app {
