@@ -39,7 +39,7 @@ public class Main extends Activity implements CommunicationListener {
     private boolean isACCenabled = false;
     private boolean isConnected = false;
 
-    private Communicator communicator;
+    static private Communicator communicator;
 
     public static final String TAG = "WirelessIno";
     public static Socket socket = null;
@@ -58,9 +58,13 @@ public class Main extends Activity implements CommunicationListener {
         speedBar = (SeekBar) findViewById(R.id.speedBar);
         steeringBar = (SeekBar) findViewById(R.id.SteeringBar);
 
-        communicator = new ClientCommunicator("192.168.137.1", 9000);
-        communicator.addListener(this);
-        communicator.start();
+        if (communicator != null) {
+
+            communicator.addListener(this);
+            communicator.start();
+
+        }
+
 
         /*Listener for change in SeekBars (Sliders) */
 
@@ -142,20 +146,26 @@ public class Main extends Activity implements CommunicationListener {
 
     protected void onResume() {
         /* Disable the disconnect option if no connection has been established */
-        communicator.start();
+        if (communicator != null) {
+            communicator.start();
+        }
         updateMenuVisibility();
         super.onResume();
     }
 
     @Override
-    protected void onRestart(){
-        communicator.start();
+    protected void onRestart() {
+        if (communicator != null) {
+            communicator.start();
+        }
         super.onRestart();
     }
 
     @Override
     protected void onStop() {
-        communicator.stop();
+        if (communicator != null) {
+            communicator.stop();
+        }
         super.onStop();
     }
 
@@ -234,7 +244,7 @@ public class Main extends Activity implements CommunicationListener {
         menu.add(0, EXIT_INDEX, EXIT_INDEX, R.string.exit);
         menu.add(0, DISCONNECT_INDEX, DISCONNECT_INDEX, R.string.disconnect);
         menu.add(0, CONFIG_INDEX, CONFIG_INDEX, R.string.wifiConfig);
-		
+
 		/* To start with, disable the disconnect option if no connection has been established */
         updateMenuVisibility();
 
@@ -273,8 +283,11 @@ public class Main extends Activity implements CommunicationListener {
      * Initialize the output stream for the socket.
      */
 
-    public static void init(Socket socket) {
+    public static void init(Socket socket, ClientCommunicator communicator) {
+        Main.communicator = communicator;
         Main.socket = socket;
+
+
         try {
             out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
                     socket.getOutputStream())), true);

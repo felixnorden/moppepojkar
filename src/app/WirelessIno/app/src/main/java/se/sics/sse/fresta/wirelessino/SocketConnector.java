@@ -16,6 +16,8 @@ import android.widget.EditText;
 
 import android.os.StrictMode;
 
+import com.ClientCommunicator;
+
 /**
  * This is the activity for connecting to the MOPED where the user has
  * to input an IP adress and a port to connect to, it also contains
@@ -26,9 +28,11 @@ public class SocketConnector extends Activity {
     private final static int CONNECTION_TIMEOUT = 3000;
 	
 	private EditText ed_host = null;
-	private EditText ed_port = null;
+	private EditText ed_portmoped = null;
+	private EditText ed_portcommunicator = null;
 	private Button   btn_connect = null;
 	private Socket   socket = null;
+	private ClientCommunicator communicator = null;
 
 	protected void onCreate(Bundle savedInstanceState) {
 	    
@@ -40,7 +44,8 @@ public class SocketConnector extends Activity {
 
 		setContentView(R.layout.socket_connection_build);
 		ed_host = (EditText) findViewById(R.id.ed_host);
-		ed_port = (EditText) findViewById(R.id.ed_port);
+		ed_portmoped = (EditText) findViewById(R.id.ed_portmoped);
+		ed_portcommunicator = (EditText) findViewById(R.id.ed_portcommunicator);
 		btn_connect = (Button) findViewById(R.id.btn_connect);
 		
 		/* Fetch earlier defined host ip and port numbers and write them as default 
@@ -49,9 +54,12 @@ public class SocketConnector extends Activity {
 		String oldHost = mSharedPreferences.getString("host", null); 
 		if (oldHost != null)
 			ed_host.setText(oldHost);
-		String oldPort = mSharedPreferences.getString("port",null);
-		if (oldPort != null)
-			ed_port.setText(oldPort);
+		String oldPortMoped = mSharedPreferences.getString("portmoped",null);
+		if (oldPortMoped != null)
+			ed_portmoped.setText(oldPortMoped);
+		String oldPortCommunicator = mSharedPreferences.getString("portcommunicator",null);
+		if (oldPortCommunicator != null)
+			ed_portmoped.setText(oldPortCommunicator);
 		
 		/** Setup the "connect"-button. On click, new host ip and port numbers should
 		 * be stored and a socket connection created (this is done as a background task). 
@@ -59,14 +67,16 @@ public class SocketConnector extends Activity {
 		btn_connect.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
 				String str_host = ed_host.getText().toString().trim();
-				String str_port = ed_port.getText().toString().trim();
+				String str_port1 = ed_portmoped.getText().toString().trim();
+				String str_port2 = ed_portcommunicator.getText().toString().trim();
 				
 				SharedPreferences mSharedPreferences = getSharedPreferences("list", MODE_PRIVATE);
 				mSharedPreferences.edit().putString("host",str_host).commit();
-				mSharedPreferences.edit().putString("port",str_port).commit();
+				mSharedPreferences.edit().putString("portmoped",str_port1).commit();
+				mSharedPreferences.edit().putString("portcommunicator",str_port2).commit();
 				
 				/* Create socket connection in a background task */
-				new AsyncConnectionTask().execute(str_host, str_port);
+				new AsyncConnectionTask().execute(str_host, str_port1, str_port2);
 			}
 		});
 	}
@@ -103,7 +113,9 @@ public class SocketConnector extends Activity {
 				 * (for example to prevent double-clicks leading to multiple connections) */
 				if (socket != null && !socket.isClosed())
 					socket.close();
-				
+
+				communicator = new ClientCommunicator(params[0], Integer.parseInt(params[2]));
+
 				socket = new Socket();
 				socket.connect(new InetSocketAddress(params[0],						// host ip 
 													 Integer.parseInt(params[1])), 	// port 
@@ -128,7 +140,7 @@ public class SocketConnector extends Activity {
 		 */
 		protected void onPostExecute(String result) {
 			if (socket != null && socket.isConnected()) {
-				Main.init(socket);
+				Main.init(socket, communicator);
 				finish();
 			}
 			else {
