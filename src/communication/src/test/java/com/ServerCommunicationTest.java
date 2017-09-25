@@ -1,22 +1,22 @@
-package test;
+package com;
 
-import com.CommunicationListener;
-import com.Communicator;
-import com.MopedState;
-import com.ServerCommunicator;
-import org.junit.jupiter.api.Test;
+
+
+
+import org.junit.Test;
 
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertTrue;
 
-class ServerCommunicatorTest {
+
+public class ServerCommunicationTest {
 
     @Test
     public void testOnConnection() {
-        ArrayList<Boolean> vars = new ArrayList();
+        final ArrayList<Boolean> vars = new ArrayList();
 
         CommunicationListener cl = new CommunicationListener() {
             @Override

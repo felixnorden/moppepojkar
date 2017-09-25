@@ -20,6 +20,16 @@ public class ServerCommunicator extends AbstractCommunicator {
         mainThread = new Thread(this);
     }
 
+
+    /**
+     * We do want the server to keep looking for a connection when a disconnect happens.
+     * Therefore, clear previous connection and keep connecting in mainloop.
+     */
+    @Override
+    protected void handleDisconnect() {
+        clearConnection();
+    }
+
     @Override
     protected void clearConnection() {
         try {
@@ -42,6 +52,7 @@ public class ServerCommunicator extends AbstractCommunicator {
 
     protected void connectSocket() {
         try {
+            System.out.println("[SERVER] Looking for connection on port " + port + "...");
             serverSocket = new ServerSocket(port);
             socket = serverSocket.accept();
             this.inputStream = new DataInputStream(socket.getInputStream());

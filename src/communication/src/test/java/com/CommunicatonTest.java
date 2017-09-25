@@ -1,11 +1,13 @@
-package test;
+package com;
 
-import com.*;
-import org.junit.jupiter.api.Test;
+
+
+
+import org.junit.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.assertTrue;
 
 
 /**
@@ -17,9 +19,9 @@ public class CommunicatonTest {
     @Test
     public void testSendFromClient() {
         Communicator client = new ClientCommunicator("localhost", 12939);
-        Communicator server = new ServerCommunicator(12939);
+        final Communicator server = new ServerCommunicator(12939);
 
-        ArrayList<Boolean> vars = new ArrayList<>();
+        final ArrayList<Boolean> vars = new ArrayList<>();
         CommunicationListener cl = new CommunicationListener() {
             @Override
             public void onConnection() {
@@ -58,10 +60,10 @@ public class CommunicatonTest {
 
     @Test
     public void testSendFromServer() {
-        Communicator client = new ClientCommunicator("localhost", 12940);
+        final Communicator client = new ClientCommunicator("localhost", 12940);
         Communicator server = new ServerCommunicator(12940);
 
-        ArrayList<Boolean> vars = new ArrayList<>();
+        final ArrayList<Boolean> vars = new ArrayList<>();
         CommunicationListener cl = new CommunicationListener() {
             @Override
             public void onConnection() {
@@ -102,8 +104,8 @@ public class CommunicatonTest {
     public void testOnServerDisconnection() {
         //Let's test the client first
         Communicator client = new ClientCommunicator("localhost", 8666);
-        Communicator server = new ServerCommunicator(8666);
-        ArrayList<Boolean> vars = new ArrayList<>();
+        final Communicator server = new ServerCommunicator(8666);
+        final ArrayList<Boolean> vars = new ArrayList<>();
         CommunicationListener cl = new CommunicationListener() {
             @Override
             public void onConnection() {
@@ -141,9 +143,9 @@ public class CommunicatonTest {
     @Test
     public void testOnClientDisconnection() {
         //Let's test the client first
-        Communicator client = new ClientCommunicator("localhost", 8668);
+        final Communicator client = new ClientCommunicator("localhost", 8668);
         Communicator server = new ServerCommunicator(8668);
-        ArrayList<Boolean> vars = new ArrayList<>();
+        final ArrayList<Boolean> vars = new ArrayList<>();
         CommunicationListener cl = new CommunicationListener() {
             @Override
             public void onConnection() {

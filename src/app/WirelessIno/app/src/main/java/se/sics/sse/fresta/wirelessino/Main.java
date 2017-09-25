@@ -18,20 +18,28 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
+import com.ClientCommunicator;
+import com.CommunicationListener;
+import com.Communicator;
+import com.MopedState;
+
 /**
  * This is the Main class which is the main activity for the application.
  * All the interactive GUI elements are defined here as well as their
  * corresponding methods and calculations.
  */
 
-public class Main extends Activity {
+public class Main extends Activity implements CommunicationListener {
 
 
     private SeekBar speedBar;
     private SeekBar steeringBar;
     private Button modeButton;
-    private boolean isACCenabled;
+    private Button connectButton;
+    private boolean isACCenabled = false;
+    private boolean isConnected = false;
 
+    static private Communicator communicator;
 
     public static final String TAG = "WirelessIno";
     public static Socket socket = null;
@@ -49,6 +57,14 @@ public class Main extends Activity {
         setContentView(R.layout.activity_main);
         speedBar = (SeekBar) findViewById(R.id.speedBar);
         steeringBar = (SeekBar) findViewById(R.id.SteeringBar);
+
+        if (communicator != null) {
+
+            communicator.addListener(this);
+            communicator.start();
+
+        }
+
 
         /*Listener for change in SeekBars (Sliders) */
 
@@ -100,13 +116,19 @@ public class Main extends Activity {
 
         modeButton = (Button) findViewById(R.id.modeButton);
 
+        connectButton = (Button) findViewById(R.id.connectButton);
+
         modeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (isACCenabled) {
-                    modeButton.setText("ACC enabled");
+                    modeButton.setText("ACC");
+                    communicator.setState(MopedState.ACC);
+                    isACCenabled = !isACCenabled;
                 } else {
-                    modeButton.setText("ACC disabled");
+                    modeButton.setText("MANUAL");
+                    communicator.setState(MopedState.MANUAL);
+                    isACCenabled = !isACCenabled;
                 }
 
             }
@@ -124,8 +146,27 @@ public class Main extends Activity {
 
     protected void onResume() {
         /* Disable the disconnect option if no connection has been established */
+        if (communicator != null) {
+            communicator.start();
+        }
         updateMenuVisibility();
         super.onResume();
+    }
+
+    @Override
+    protected void onRestart() {
+        if (communicator != null) {
+            communicator.start();
+        }
+        super.onRestart();
+    }
+
+    @Override
+    protected void onStop() {
+        if (communicator != null) {
+            communicator.stop();
+        }
+        super.onStop();
     }
 
     /**
@@ -182,7 +223,7 @@ public class Main extends Activity {
         textBottom += Integer.toString(Math.abs(bottomValue));
         String out = textTop + textBottom;
         Log.e("Before Socket", out);
-		/* Send speed and steering values through the socket */
+        /* Send speed and steering values through the socket */
         if (socket != null) {
             send(out);
             Log.e("Test After Socket if", out);
@@ -198,12 +239,12 @@ public class Main extends Activity {
 
     public boolean onCreateOptionsMenu(Menu menu) {
         this.menu = menu;
-	
+
 		/* Add menu bars */
         menu.add(0, EXIT_INDEX, EXIT_INDEX, R.string.exit);
         menu.add(0, DISCONNECT_INDEX, DISCONNECT_INDEX, R.string.disconnect);
         menu.add(0, CONFIG_INDEX, CONFIG_INDEX, R.string.wifiConfig);
-		
+
 		/* To start with, disable the disconnect option if no connection has been established */
         updateMenuVisibility();
 
@@ -242,8 +283,11 @@ public class Main extends Activity {
      * Initialize the output stream for the socket.
      */
 
-    public static void init(Socket socket) {
+    public static void init(Socket socket, ClientCommunicator communicator) {
+        Main.communicator = communicator;
         Main.socket = socket;
+
+
         try {
             out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
                     socket.getOutputStream())), true);
@@ -285,5 +329,46 @@ public class Main extends Activity {
     private String getMoppeToast() {
         String[] strs = new String[]{"Tänk på hur ni kör!", "Hallå moppepojkar, tänk på vad ni gör!", "Sen var de bara nio!"};
         return strs[new Random().nextInt(3)];
+    }
+
+    @Override
+    public void onConnection() {
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getApplicationContext(), "Connected to server", Toast.LENGTH_SHORT).show();
+                isConnected = true;
+                updateModeButton();
+            }
+        });
+    }
+
+    @Override
+    public void onStateChange(final MopedState mopedState) {
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getApplicationContext(), "New state: " + mopedState.name(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void onDisconnection() {
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                isConnected = false;
+                updateModeButton();
+            }
+        });
+    }
+
+    private void updateModeButton() {
+        if (isConnected) {
+            connectButton.setText("Connected");
+        } else {
+            connectButton.setText("Connect");
+        }
     }
 }

@@ -1,6 +1,4 @@
-package test;
-
-import com.*;
+package com;
 
 import java.util.Scanner;
 

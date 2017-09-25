@@ -25,14 +25,28 @@
     </EditText>
 
     <TextView
-        android:id="@+id/tv_port"
+        android:id="@+id/tv_portmoped"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/host_port"
+        android:text="MOPED Port"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <EditText
-        android:id="@+id/ed_port"
+        android:id="@+id/ed_portmoped"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/default_host_port"/>
+
+    <TextView
+        android:id="@+id/tv_portcommunicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Communicator Port"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <EditText
+        android:id="@+id/ed_portcommunicator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"

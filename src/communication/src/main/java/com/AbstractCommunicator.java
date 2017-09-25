@@ -1,7 +1,5 @@
 package com;
 
-import javafx.util.Pair;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -27,8 +25,13 @@ public abstract class AbstractCommunicator implements Communicator {
     protected DataInputStream inputStream;
     protected DataOutputStream outputStream;
     protected Thread mainThread;
-    private Queue<Pair<MopedDataType, Integer>> queue;
+    private Queue<MopedDataPair> queue;
     private final ArrayList<CommunicationListener> listeners;
+    //This variable is true when a disconnect just happened and
+    //it needs to be taken care of in the main loop. The main loop
+    //will set this back to false when it has been handled.
+    private volatile boolean hasDisconnected = false;
+
 
     /**
      * @param port Port for the socket to use.
@@ -48,6 +51,12 @@ public abstract class AbstractCommunicator implements Communicator {
     @Override
     public void run() {
         while (!Thread.interrupted()) {
+            if (hasDisconnected) {
+                handleDisconnect();
+                hasDisconnected = false;
+                continue;
+            }
+
             // If there is no connection or if connection is broken.
             if (socket == null || !socket.isConnected()) {
                 connectSocket();
@@ -84,7 +93,7 @@ public abstract class AbstractCommunicator implements Communicator {
 
     @Override
     public void setState(MopedState state) {
-        Pair<MopedDataType, Integer> p = new Pair(MopedDataType.MopedState, state.toInt());
+        MopedDataPair p = new MopedDataPair(MopedDataType.MopedState, state.toInt());
         queue.add(p);
     }
 
@@ -114,6 +123,8 @@ public abstract class AbstractCommunicator implements Communicator {
         mainThread.interrupt();
     }
 
+    protected abstract void handleDisconnect();
+
     /**
      * Fetches and sends new information from the connected socket.
      */
@@ -134,10 +145,10 @@ public abstract class AbstractCommunicator implements Communicator {
     private void sendQueuedData() throws IOException {
         //Send all queued data
         while (queue.size() > 0) {
-            Pair<MopedDataType, Integer> pair = queue.poll();
+            MopedDataPair mopedDataPair = queue.poll();
 
-            String dataType = String.valueOf(pair.getKey().toInt());
-            String value = String.valueOf(pair.getValue());
+            String dataType = String.valueOf(mopedDataPair.getType().toInt());
+            String value = String.valueOf(mopedDataPair.getValue());
 
             //Format is 'x,y' where
             //  x = MopedDataType integer
@@ -228,7 +239,7 @@ public abstract class AbstractCommunicator implements Communicator {
      */
     private void onDisconnect() {
         notifyDisconnected();
-        mainThread.interrupt();
+        hasDisconnected = true;
     }
 
     /**
