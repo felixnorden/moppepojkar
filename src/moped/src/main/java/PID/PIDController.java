@@ -7,7 +7,7 @@ package distancekeeper;
  * The the controller aims to reach a stable state where the current actual value is as close as possible to the target value.
  * Modifying the constants calibrates the controller and changes it's "strategy" to reach equilibrium.
  */
-public abstract class PIDController {
+public class PIDController {
     private double targetValue;
     private double constantP;
     private double constantIRelation;
