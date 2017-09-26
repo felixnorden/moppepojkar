@@ -5,6 +5,7 @@ package core.behaviour_states;
 import core.behaviour_states.states.BehaviourState;
 import core.behaviour_states.states.BehaviourStateFactory;
 import core.behaviour_states.states.BehaviourStateFactoryImpl;
+import core.behaviour_states.states.InfniteEight;
 
 /**
  * Controller which controls the different states of the system
@@ -17,7 +18,7 @@ public class StateController implements Runnable {
         this.stateFactory = BehaviourStateFactoryImpl.getInstance();
 
         // Possibly change to default safe mode when implemented
-        this.currentState = stateFactory.createManualBehaviour();
+        this.currentState = new InfniteEight();
     }
 
     // Inject anything?
