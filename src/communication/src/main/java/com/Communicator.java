@@ -35,4 +35,11 @@ public interface Communicator extends Runnable {
      * @param state The state to add to the queue.
      */
     void setState(MopedState state);
+
+    /**
+     * Returns if the communicator is still alive.
+     *
+     * @return True if communicator thread is not null and alive, false otherwise.
+     */
+    boolean isAlive();
 }

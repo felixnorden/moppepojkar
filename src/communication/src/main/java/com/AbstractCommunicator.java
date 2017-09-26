@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -59,7 +60,13 @@ public abstract class AbstractCommunicator implements Communicator {
 
             // If there is no connection or if connection is broken.
             if (socket == null || !socket.isConnected()) {
-                connectSocket();
+                //Try to connect to socket on port. If timed out, clear old connection and retry.
+                try {
+                    connectSocket();
+                } catch (SocketTimeoutException e) {
+                    clearConnection();
+                    continue;
+                }
             } else {
                 update();
             }
@@ -75,6 +82,7 @@ public abstract class AbstractCommunicator implements Communicator {
         //Only runs after running has been set to false (aka onDisconnect and stop())
         sendExitCode();
         clearConnection();
+        System.out.println(this.getClass().getName() + ": STOPPED");
     }
 
     /**
@@ -109,17 +117,20 @@ public abstract class AbstractCommunicator implements Communicator {
             mainThread.start();
         } catch (IllegalThreadStateException e) {
             //If this is thrown, thread was already started once before.
+            //First block is if thread is dead, aka it was killed.
+            //Second block is if a start was tried while thread was alive
             if (!mainThread.isAlive()) {
                 mainThread = new Thread(this);
                 mainThread.start();
             } else {
-                System.out.println(this.getClass().getName() + " has already been started once.");
+                System.out.println(this.getClass().getName() + ": is already running.");
             }
         }
     }
 
     @Override
     public void stop() {
+        System.out.println(getClass().getName() + ": Stopping (This can take up to 4 seconds)");
         mainThread.interrupt();
     }
 
@@ -157,6 +168,10 @@ public abstract class AbstractCommunicator implements Communicator {
 
             outputStream.writeUTF(output);
         }
+    }
+
+    public boolean isAlive() {
+        return mainThread != null && mainThread.isAlive();
     }
 
     /**
@@ -246,5 +261,5 @@ public abstract class AbstractCommunicator implements Communicator {
      * Does the necessary setup for the sockets to establish a connection.
      * This is necessary because one communicator needs to act as a server and the other one as a client.
      */
-    protected abstract void connectSocket();
+    protected abstract void connectSocket() throws SocketTimeoutException;
 }
