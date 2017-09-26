@@ -1,6 +1,4 @@
-package PID;
-
-import PID.DistancePIDController;
+package pid;
 
 import org.junit.jupiter.api.Test;
 

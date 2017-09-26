@@ -1,7 +1,5 @@
-package PID;
+package pid;
 
-import PID.PIDController;
-import org.junit.*;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
