@@ -1,4 +1,4 @@
-package moped.src.main.java.utils;
+package utils;
 
 public class Config {
 
