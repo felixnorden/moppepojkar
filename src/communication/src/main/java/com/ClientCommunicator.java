@@ -46,7 +46,7 @@ public class ClientCommunicator extends AbstractCommunicator {
 
     protected void connectSocket() {
         try {
-            System.out.println(getClass().getName() + ": Looking for server on port " + ip + ":" + port + "...");
+            log(getClass().getName() + ": Looking for server on port " + ip + ":" + port + "...");
             socket = new Socket(ip, this.port);
             this.inputStream = new DataInputStream(socket.getInputStream());
             this.outputStream = new DataOutputStream(socket.getOutputStream());

@@ -55,7 +55,7 @@ public class ServerCommunicator extends AbstractCommunicator {
 
     protected void connectSocket() throws SocketTimeoutException {
         try {
-            System.out.println(this.getClass().getName() + ": Looking for connection on port " + port + "...");
+            log(this.getClass().getName() + ": Looking for connection on port " + port + "...");
             serverSocket = new ServerSocket(port);
             serverSocket.setSoTimeout(4000);    //4 second timeout
             socket = serverSocket.accept();

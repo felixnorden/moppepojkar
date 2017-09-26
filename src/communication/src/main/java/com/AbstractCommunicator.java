@@ -21,6 +21,7 @@ public abstract class AbstractCommunicator implements Communicator {
     private static final String SEPARATOR = ",";
     private static final long UPDATE_INTERVAL = 10;//This essentially controls the input lag between app and MOPED
 
+    private boolean loggingEnabled = true;
     protected final int port;
     protected Socket socket;
     protected DataInputStream inputStream;
@@ -82,7 +83,7 @@ public abstract class AbstractCommunicator implements Communicator {
         //Only runs after running has been set to false (aka onDisconnect and stop())
         sendExitCode();
         clearConnection();
-        System.out.println(this.getClass().getName() + ": STOPPED");
+        log(this.getClass().getName() + ": STOPPED");
     }
 
     /**
@@ -123,14 +124,14 @@ public abstract class AbstractCommunicator implements Communicator {
                 mainThread = new Thread(this);
                 mainThread.start();
             } else {
-                System.out.println(this.getClass().getName() + ": is already running.");
+                log(this.getClass().getName() + ": is already running.");
             }
         }
     }
 
     @Override
     public void stop() {
-        System.out.println(getClass().getName() + ": Stopping (This can take up to 4 seconds)");
+        log(getClass().getName() + ": Stopping (This can take up to 4 seconds)");
         mainThread.interrupt();
     }
 
@@ -262,4 +263,27 @@ public abstract class AbstractCommunicator implements Communicator {
      * This is necessary because one communicator needs to act as a server and the other one as a client.
      */
     protected abstract void connectSocket() throws SocketTimeoutException;
+
+    /**
+     * Prints the given object in out.println and adds which thread printed it, but only if logging is enabled;
+     *
+     * @param object
+     */
+    protected void log(Object object) {
+        if (loggingEnabled) {
+            log("[" + Thread.currentThread().getName() + "] " + object.toString());
+        }
+    }
+
+    public boolean isLoggingEnabled() {
+        return loggingEnabled;
+    }
+
+    public void enableLogging() {
+        this.loggingEnabled = true;
+    }
+
+    public void disableLogging(){
+        this.loggingEnabled = false;
+    }
 }
