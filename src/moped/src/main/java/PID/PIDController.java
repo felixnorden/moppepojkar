@@ -1,4 +1,4 @@
-package distancekeeper;
+package moped.src.main.java.PID;
 
 /**
  * Created by Emil Jansson on 2017-09-16.
@@ -89,7 +89,7 @@ public class PIDController {
      */
 
     public double evaluation(double currentValue, double deltaTime){
-        double currentError = (targetValue - currentValue);
+        double currentError = (currentValue - targetValue);
         if (!(lastError.isNaN() || deltaTime == 0)) {
             double P = decideP(currentError);
             double I = decideI(currentError, deltaTime);
