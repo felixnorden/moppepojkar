@@ -201,6 +201,7 @@ public class Main extends Activity implements CommunicationListener {
         } else {
             if (communicator != null) {
                 communicator.stop();
+                Toast.makeText(this, "Connection stopped", Toast.LENGTH_SHORT).show();
             }
             updateModeButton();
         }
@@ -392,6 +393,7 @@ public class Main extends Activity implements CommunicationListener {
             public void run() {
                 isConnected = false;
                 updateModeButton();
+                Toast.makeText(getApplicationContext(), "Connection Lost", Toast.LENGTH_SHORT).show();
             }
         });
     }
