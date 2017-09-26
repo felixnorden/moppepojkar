@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ClientCommunicator;
@@ -37,6 +38,9 @@ public class Main extends Activity implements CommunicationListener {
     private SeekBar steeringBar;
     private Button modeButton;
     private Button connectButton;
+    private TextView turningTextView;
+    private TextView speedTextView;
+
     private boolean isACCenabled = false;
     private boolean isConnected = false;
 
@@ -109,8 +113,13 @@ public class Main extends Activity implements CommunicationListener {
         });
 
         modeButton = (Button) findViewById(R.id.modeButton);
+        turningTextView = (TextView) findViewById(R.id.turningTextView);
+        speedTextView = (TextView) findViewById(R.id.speedTextView);
 
-        connectButton = (Button) findViewById(R.id.connectButton);
+        turningTextView.setText(Integer.toString(0));
+        speedTextView.setText(Integer.toString(0));
+
+        connectButton = (Button) findViewById(R.id.serverButton);
 
         modeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,16 +185,28 @@ public class Main extends Activity implements CommunicationListener {
 
 
     public void serverConnect(View view) {
-        SharedPreferences mSharedPreferences = getSharedPreferences("list", MODE_PRIVATE);
-        String ip = mSharedPreferences.getString("host", null);
-        int port = mSharedPreferences.getInt("portcommunicator", 0);
-        if (ip == null || port == 0) {
-            Toast.makeText(this, "Enter Port and IP in settings", Toast.LENGTH_SHORT).show();
+        Log.e("Buttontext", connectButton.getText().toString());
+        if (connectButton.getText().toString().equals("Connect")) {
+            SharedPreferences mSharedPreferences = getSharedPreferences("list", MODE_PRIVATE);
+            String ip = mSharedPreferences.getString("host", null);
+            int port = mSharedPreferences.getInt("portcommunicator", 0);
+            if (ip == null || port == 0) {
+                Toast.makeText(this, "Enter Port and IP in settings", Toast.LENGTH_SHORT).show();
+            } else {
+                communicator = new ClientCommunicator(ip, port);
+                communicator.addListener(this);
+                communicator.start();
+                Toast.makeText(this, "Waiting for Server Connection", Toast.LENGTH_SHORT).show();
+            }
         } else {
-            communicator = new ClientCommunicator(ip, port);
-            communicator.addListener(this);
-            communicator.start();
+            if (communicator != null) {
+                communicator.stop();
+            }
+            updateModeButton();
         }
+
+
+
     }
 
 
@@ -203,6 +224,8 @@ public class Main extends Activity implements CommunicationListener {
         int topValue = speedBar.getProgress() - 100;
         int bottomValue = steeringBar.getProgress() - 100;
 
+        turningTextView.setText(Integer.toString(topValue));
+        speedTextView.setText(Integer.toString(bottomValue));
 
         /*Check if the value is negative and add prefix*/
         if (topValue > -1) {
@@ -375,7 +398,7 @@ public class Main extends Activity implements CommunicationListener {
 
     private void updateModeButton() {
         if (isConnected) {
-            connectButton.setText("Connected");
+            connectButton.setText("Disconnect");
         } else {
             connectButton.setText("Connect");
         }

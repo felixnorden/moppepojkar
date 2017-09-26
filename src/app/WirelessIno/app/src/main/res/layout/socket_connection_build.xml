@@ -36,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="@string/default_host_port"/>
+        android:hint="8999"/>
 
     <TextView
         android:id="@+id/tv_portcommunicator"
@@ -50,7 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="@string/default_host_port"/>
+        android:hint="@string/default_host_port" />
 
     <Button
         android:id="@+id/btn_connect"
@@ -58,7 +58,7 @@
         android:layout_height="wrap_content"
         android:background="@color/background_material_dark"
         android:fontFamily="sans-serif"
-        android:text="@string/connect"
+        android:text="Save"
         android:textAlignment="center"
         android:textColor="@color/bright_foreground_inverse_material_light"
         android:textStyle="bold"
