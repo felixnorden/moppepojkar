@@ -18,7 +18,7 @@ public class PIDParser implements ActionStrategy {
     public PIDParser() {
         action = 0;
         lastActionTime = System.currentTimeMillis();
-        distanceSensor = new DistanceSensorImpl();
+        distanceSensor = DistanceSensorImpl.getInstance();
         pidController = new DistancePIDController(0.3,10,0,0);
     }
 

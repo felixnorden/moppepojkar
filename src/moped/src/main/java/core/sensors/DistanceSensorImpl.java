@@ -14,16 +14,17 @@ import static java.lang.Double.NaN;
  * Used for reading from the on-board distance sensor.
  */
 public class DistanceSensorImpl implements DistanceSensor, InputSubscriber {
+
     private StringBuilder dynamicPythonInput;
 
     private double lastValue;
     private Thread valueLoop;
-    private boolean valueLoopIsKilled;
 
     private static DistanceSensorImpl ourInstance = new DistanceSensorImpl();
     public static DistanceSensorImpl getInstance() {
         return ourInstance;
     }
+
     @Override
     public double getDistance() {
         return lastValue;
@@ -36,7 +37,7 @@ public class DistanceSensorImpl implements DistanceSensor, InputSubscriber {
 
     @Override
     public void kill() {
-        valueLoopIsKilled = true;
+        valueLoop.interrupt();
     }
 
     @Override
@@ -52,12 +53,7 @@ public class DistanceSensorImpl implements DistanceSensor, InputSubscriber {
         }
     }
 
-    private void processPythonInput(String s) {
-
-    }
-
-    public DistanceSensorImpl() {
-        valueLoopIsKilled = false;
+    private DistanceSensorImpl() {
         dynamicPythonInput = new StringBuilder();
         lastValue = 0.3;
 
@@ -73,7 +69,7 @@ public class DistanceSensorImpl implements DistanceSensor, InputSubscriber {
 
             sensorData.subscribeToInput(this);
 
-            while (!valueLoopIsKilled) {
+            while (!Thread.interrupted()) {
                 try {
                     sensorData.outputToScript("g.can_ultra\n");
                     sensorData.flushOutput();
@@ -83,7 +79,7 @@ public class DistanceSensorImpl implements DistanceSensor, InputSubscriber {
                 }
 
                 try {
-                    Thread.sleep(25);
+                    Thread.sleep(250);
                 } catch (InterruptedException ie) {
                     System.out.println(ie.getMessage());
                 }
