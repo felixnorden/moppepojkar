@@ -4,6 +4,9 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
 
 public class ServerCommunicator extends AbstractCommunicator {
 
@@ -16,8 +19,6 @@ public class ServerCommunicator extends AbstractCommunicator {
      */
     public ServerCommunicator(int port) {
         super(port);
-
-        mainThread = new Thread(this);
     }
 
 
@@ -50,14 +51,18 @@ public class ServerCommunicator extends AbstractCommunicator {
         }
     }
 
-    protected void connectSocket() {
+    protected void connectSocket() throws SocketTimeoutException {
         try {
-            System.out.println("[SERVER] Looking for connection on port " + port + "...");
+            log("Looking for connection on port " + port + "...");
             serverSocket = new ServerSocket(port);
+            serverSocket.setSoTimeout(4000);    //4 second timeout
             socket = serverSocket.accept();
             this.inputStream = new DataInputStream(socket.getInputStream());
             this.outputStream = new DataOutputStream(socket.getOutputStream());
             notifyConnected();
+        } catch (SocketTimeoutException e) {
+            //We need to throw this again because we want the caller to catch this if timeout.
+            throw new SocketTimeoutException(e.getMessage());
         } catch (IOException e) {
             //Runs if port was already bound by another socket (possibly ours)
             e.printStackTrace();

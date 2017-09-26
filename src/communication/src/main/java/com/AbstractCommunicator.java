@@ -4,9 +4,11 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 
 /**
@@ -20,13 +22,14 @@ public abstract class AbstractCommunicator implements Communicator {
     private static final String SEPARATOR = ",";
     private static final long UPDATE_INTERVAL = 10;//This essentially controls the input lag between app and MOPED
 
+    private boolean loggingEnabled = true;
     protected final int port;
     protected Socket socket;
     protected DataInputStream inputStream;
     protected DataOutputStream outputStream;
     protected Thread mainThread;
     private Queue<MopedDataPair> queue;
-    private final ArrayList<CommunicationListener> listeners;
+    private final ConcurrentLinkedQueue<CommunicationListener> listeners;
     //This variable is true when a disconnect just happened and
     //it needs to be taken care of in the main loop. The main loop
     //will set this back to false when it has been handled.
@@ -38,8 +41,10 @@ public abstract class AbstractCommunicator implements Communicator {
      */
     protected AbstractCommunicator(int port) {
         this.port = port;
-        listeners = new ArrayList<>();
+        listeners = new ConcurrentLinkedQueue<>();
         queue = new LinkedList<>();
+
+        mainThread = new Thread(this, getClass().getSimpleName());
     }
 
     /**
@@ -59,7 +64,13 @@ public abstract class AbstractCommunicator implements Communicator {
 
             // If there is no connection or if connection is broken.
             if (socket == null || !socket.isConnected()) {
-                connectSocket();
+                //Try to connect to socket on port. If timed out, clear old connection and retry.
+                try {
+                    connectSocket();
+                } catch (SocketTimeoutException e) {
+                    clearConnection();
+                    continue;
+                }
             } else {
                 update();
             }
@@ -75,6 +86,7 @@ public abstract class AbstractCommunicator implements Communicator {
         //Only runs after running has been set to false (aka onDisconnect and stop())
         sendExitCode();
         clearConnection();
+        log("STOPPED");
     }
 
     /**
@@ -109,17 +121,20 @@ public abstract class AbstractCommunicator implements Communicator {
             mainThread.start();
         } catch (IllegalThreadStateException e) {
             //If this is thrown, thread was already started once before.
+            //First block is if thread is dead, aka it was killed.
+            //Second block is if a start was tried while thread was alive
             if (!mainThread.isAlive()) {
-                mainThread = new Thread(this);
+                mainThread = new Thread(this, getClass().getSimpleName());
                 mainThread.start();
             } else {
-                System.out.println(this.getClass().getName() + " has already been started once.");
+                log("Thread " + mainThread.getName() + " is already running.");
             }
         }
     }
 
     @Override
     public void stop() {
+        log("Stopping " + mainThread.getName() + " (This may take up to 4 seconds)");
         mainThread.interrupt();
     }
 
@@ -157,6 +172,10 @@ public abstract class AbstractCommunicator implements Communicator {
 
             outputStream.writeUTF(output);
         }
+    }
+
+    public boolean isAlive() {
+        return mainThread != null && mainThread.isAlive();
     }
 
     /**
@@ -246,5 +265,28 @@ public abstract class AbstractCommunicator implements Communicator {
      * Does the necessary setup for the sockets to establish a connection.
      * This is necessary because one communicator needs to act as a server and the other one as a client.
      */
-    protected abstract void connectSocket();
+    protected abstract void connectSocket() throws SocketTimeoutException;
+
+    /**
+     * Prints the given object in out.println and adds which thread printed it, but only if logging is enabled;
+     *
+     * @param object
+     */
+    protected void log(Object object) {
+        if (loggingEnabled) {
+            System.out.println("[" + Thread.currentThread().getName() + " Thread] " + object.toString());
+        }
+    }
+
+    public boolean isLoggingEnabled() {
+        return loggingEnabled;
+    }
+
+    public void enableLogging() {
+        this.loggingEnabled = true;
+    }
+
+    public void disableLogging() {
+        this.loggingEnabled = false;
+    }
 }

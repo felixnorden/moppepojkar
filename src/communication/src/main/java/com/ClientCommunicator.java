@@ -16,8 +16,6 @@ public class ClientCommunicator extends AbstractCommunicator {
     public ClientCommunicator(String ip, int port) {
         super(port);
         this.ip = ip;
-
-        mainThread = new Thread(this);
     }
 
     /**
@@ -46,7 +44,7 @@ public class ClientCommunicator extends AbstractCommunicator {
 
     protected void connectSocket() {
         try {
-            System.out.println("[CLIENT] Looking for server on port " + ip + ":" + port + "...");
+            log("Looking for server on port " + ip + ":" + port + "...");
             socket = new Socket(ip, this.port);
             this.inputStream = new DataInputStream(socket.getInputStream());
             this.outputStream = new DataOutputStream(socket.getOutputStream());

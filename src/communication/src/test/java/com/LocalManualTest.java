@@ -1,16 +1,25 @@
 package com;
 
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.Scanner;
 
 /**
  * Created by Zack on 2017-09-20.
+ * Class used to simulate a server/client.
+ * Mopedport: 8999
+ * Communicatorport: 9000
+ * IP: ipconfig /all
+ * Usage: See switch-case below.
  */
 public class LocalManualTest {
     public static void main(String[] args) {
         new LocalManualTest();
     }
 
-    CommunicationListener cl1 = new CommunicationListener() {
+    //Listener which acts as the servers listener.
+    CommunicationListener serverListener = new CommunicationListener() {
         @Override
         public void onConnection() {
             System.out.println("[SERVER] CONNECT");
@@ -27,7 +36,8 @@ public class LocalManualTest {
         }
     };
 
-    CommunicationListener cl2 = new CommunicationListener() {
+    //Listener which acts as the clients listener.
+    CommunicationListener clientListener = new CommunicationListener() {
         @Override
         public void onConnection() {
             System.out.println("[CLIENT] CONNECT");
@@ -45,15 +55,47 @@ public class LocalManualTest {
     };
 
     public LocalManualTest() {
+        //This thread acts as the MOPEDs core server.
+        //Data sent to this thread will not be acted upon and lost.
+        //This means all data sent from WirelessIno that contains speed and steering values.
+        Thread mopedServerThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ServerSocket ss = null;
+                try {
+                    ss = new ServerSocket(8999);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Socket mopedSocketMock;
+
+                while (true) {
+                    try {
+                        mopedSocketMock = ss.accept();
+                        System.out.println("[MOPED MOCK] CONNECTED");
+
+                        Thread.sleep(60);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        mopedServerThread.start();
+
         Communicator server = new ServerCommunicator(9000);
+        //Change localhost to host ip of host isn't this computer.
         Communicator client = new ClientCommunicator("localhost", 9000);
 
-        client.addListener(cl2);
-        server.addListener(cl1);
 
+        client.addListener(clientListener);
+        server.addListener(serverListener);
+
+        //Loop which let you interact with the simulated client/server.
         Scanner in = new Scanner(System.in);
-
-        while(true){
+        while (true) {
             String input = in.nextLine();
 
             switch (input) {
