@@ -3,14 +3,20 @@ package core.sensors;
 import core.process_runner.InputSubscriber;
 import core.process_runner.ProcessFactory;
 import core.process_runner.ProcessRunner;
+import sensordataconversion.SensorDataConverter;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
+import static java.lang.Double.NaN;
 
 /**
  * Used for reading from the on-board distance sensor.
  */
 public class DistanceSensorImpl implements DistanceSensor, InputSubscriber {
+
+    private StringBuilder dynamicPythonInput;
+
     private double lastValue;
     private Thread valueLoop;
 
@@ -18,14 +24,44 @@ public class DistanceSensorImpl implements DistanceSensor, InputSubscriber {
     public static DistanceSensorImpl getInstance() {
         return ourInstance;
     }
+
+    @Override
+    public double getDistance() {
+        return lastValue;
+    }
+
+    @Override
+    public double getValue() {
+        return getDistance();
+    }
+
+    @Override
+    public void kill() {
+        valueLoop.interrupt();
+    }
+
+    @Override
+    public synchronized void outputString(String s) {
+        if (s.contains("\n")) {
+            double temp = new SensorDataConverter().convertDistance(dynamicPythonInput.toString());
+            if (temp != NaN) {
+                lastValue = temp;
+            }
+            dynamicPythonInput = new StringBuilder();
+        } else {
+            dynamicPythonInput.append(s);
+        }
+    }
+
     private DistanceSensorImpl() {
-        lastValue = 100;
+        dynamicPythonInput = new StringBuilder();
+        lastValue = 0.3;
 
         valueLoop = new Thread(() -> {
             ProcessRunner sensorData = null;
             try {
-                // TODO: 20/09/2017 Call the right pythonscript to access distance data
-                sensorData = ProcessFactory.createPythonProcess("");
+                sensorData = ProcessFactory.createPythonProcess("run.py");
+                sensorData.start();
             } catch (FileNotFoundException e) {
                 System.out.println(e.getMessage());
                 System.out.println("Couldn't start sensor script");
@@ -33,33 +69,22 @@ public class DistanceSensorImpl implements DistanceSensor, InputSubscriber {
 
             sensorData.subscribeToInput(this);
 
-            while (true) {
+            while (!Thread.interrupted()) {
                 try {
-                    // TODO: 20/09/2017 Use right command to receive data
-                    sensorData.outputToScript("");
-                } catch (IOException ignored) {
-                    break;
+                    sensorData.outputToScript("g.can_ultra\n");
+                    sensorData.flushOutput();
+                } catch (IOException io) {
+                    System.out.println("WRITE ERROR");
+                    System.out.println("\t" + io.getMessage());
                 }
 
                 try {
-                    Thread.sleep(50);
-                } catch (InterruptedException ignored) {
-                    break;
+                    Thread.sleep(250);
+                } catch (InterruptedException ie) {
+                    System.out.println(ie.getMessage());
                 }
             }
         });
-        //valueLoop.start();
-    }
-
-    @Override
-    public void outputString(String s) {
-        if (s.length() == 3) {
-            lastValue = Integer.valueOf(s);
-        }
-    }
-
-    @Override
-    public double getDistance() {
-        return lastValue;
+        valueLoop.start();
     }
 }

@@ -1,9 +1,8 @@
-package sensordataconversion.sensordataconversiontest;
+package sensordataconversion;
 
-        import static org.junit.jupiter.api.Assertions.assertEquals;
-        import org.junit.jupiter.*;
-        import org.junit.jupiter.api.Test;
-        import sensordataconversion.SensorDataConverter;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Created by elias on 2017-09-12.
