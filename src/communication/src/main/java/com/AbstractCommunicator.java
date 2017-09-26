@@ -29,7 +29,7 @@ public abstract class AbstractCommunicator implements Communicator {
     protected DataOutputStream outputStream;
     protected Thread mainThread;
     private Queue<MopedDataPair> queue;
-    private final ConcurrentLinkedQueue<CommunicationListener> listeners;
+    private final ArrayList<CommunicationListener> listeners;
     //This variable is true when a disconnect just happened and
     //it needs to be taken care of in the main loop. The main loop
     //will set this back to false when it has been handled.
@@ -41,8 +41,8 @@ public abstract class AbstractCommunicator implements Communicator {
      */
     protected AbstractCommunicator(int port) {
         this.port = port;
-        listeners = new ConcurrentLinkedQueue<>();
-        queue = new LinkedList<>();
+        listeners = new ArrayList<>();
+        queue = new ConcurrentLinkedQueue<>();
 
         mainThread = new Thread(this, getClass().getSimpleName());
     }
