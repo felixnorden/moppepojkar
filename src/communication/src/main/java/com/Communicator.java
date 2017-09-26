@@ -42,4 +42,21 @@ public interface Communicator extends Runnable {
      * @return True if communicator thread is not null and alive, false otherwise.
      */
     boolean isAlive();
+
+
+    /**
+     *
+     * @return True if logging is enabled, false otherwise.
+     */
+    boolean isLoggingEnabled();
+
+    /**
+     * Enables logging for the communicator
+     */
+    void enableLogging();
+
+    /**
+     * Disables logging for the communicator
+     */
+    void disableLogging();
 }
