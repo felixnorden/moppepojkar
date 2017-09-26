@@ -18,7 +18,8 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public abstract class AbstractCommunicator implements Communicator {
 
     //Constants
-    private static final String EXIT_CODE = "#EXIT";
+    private static final String PING = "#P";
+    private static final String EXIT_CODE = "#E";
     private static final String SEPARATOR = ",";
     private static final long UPDATE_INTERVAL = 10;//This essentially controls the input lag between app and MOPED
 
@@ -155,6 +156,8 @@ public abstract class AbstractCommunicator implements Communicator {
      */
     private void sendQueuedData() {
         try {
+            //Before sending (eventually) queued data, send a ping to see if the outputstream doesn't give an error
+            outputStream.writeUTF(PING);
             //Send all queued data
             while (queue.size() > 0) {
                 MopedDataPair mopedDataPair = queue.poll();
@@ -193,6 +196,9 @@ public abstract class AbstractCommunicator implements Communicator {
                 if (input.equals(EXIT_CODE)) {
                     onDisconnect();
                     break;
+                } else if (input.equals(PING)) {
+                    //Do nothing if it was a ping received.
+                    continue;
                 }
 
                 String[] args = input.split(SEPARATOR);
