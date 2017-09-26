@@ -19,8 +19,6 @@ public class ServerCommunicator extends AbstractCommunicator {
      */
     public ServerCommunicator(int port) {
         super(port);
-
-        mainThread = new Thread(this, getClass().getSimpleName());
     }
 
 
@@ -55,7 +53,7 @@ public class ServerCommunicator extends AbstractCommunicator {
 
     protected void connectSocket() throws SocketTimeoutException {
         try {
-            log(this.getClass().getName() + ": Looking for connection on port " + port + "...");
+            log("Looking for connection on port " + port + "...");
             serverSocket = new ServerSocket(port);
             serverSocket.setSoTimeout(4000);    //4 second timeout
             socket = serverSocket.accept();

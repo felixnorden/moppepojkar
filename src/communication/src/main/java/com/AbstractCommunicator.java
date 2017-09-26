@@ -42,6 +42,8 @@ public abstract class AbstractCommunicator implements Communicator {
         this.port = port;
         listeners = new ArrayList<>();
         queue = new LinkedList<>();
+
+        mainThread = new Thread(this, getClass().getSimpleName());
     }
 
     /**
@@ -83,7 +85,7 @@ public abstract class AbstractCommunicator implements Communicator {
         //Only runs after running has been set to false (aka onDisconnect and stop())
         sendExitCode();
         clearConnection();
-        log(this.getClass().getName() + ": STOPPED");
+        log("STOPPED");
     }
 
     /**
@@ -121,17 +123,17 @@ public abstract class AbstractCommunicator implements Communicator {
             //First block is if thread is dead, aka it was killed.
             //Second block is if a start was tried while thread was alive
             if (!mainThread.isAlive()) {
-                mainThread = new Thread(this);
+                mainThread = new Thread(this, getClass().getSimpleName());
                 mainThread.start();
             } else {
-                log(this.getClass().getName() + ": is already running.");
+                log("Thread " + mainThread.getName() + " is already running.");
             }
         }
     }
 
     @Override
     public void stop() {
-        log(getClass().getName() + ": Stopping (This can take up to 4 seconds)");
+        log("Stopping " + mainThread.getName() + " (This may take up to 4 seconds)");
         mainThread.interrupt();
     }
 
@@ -271,7 +273,7 @@ public abstract class AbstractCommunicator implements Communicator {
      */
     protected void log(Object object) {
         if (loggingEnabled) {
-            log("[" + Thread.currentThread().getName() + "] " + object.toString());
+            System.out.println("[" + Thread.currentThread().getName() + " Thread] " + object.toString());
         }
     }
 
@@ -283,7 +285,7 @@ public abstract class AbstractCommunicator implements Communicator {
         this.loggingEnabled = true;
     }
 
-    public void disableLogging(){
+    public void disableLogging() {
         this.loggingEnabled = false;
     }
 }
