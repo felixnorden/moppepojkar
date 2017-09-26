@@ -110,6 +110,13 @@ public abstract class AbstractCommunicator implements Communicator {
         queue.add(p);
     }
 
+
+    @Override
+    public void setValue(MopedDataType type, int value) {
+        MopedDataPair p = new MopedDataPair(type, value);
+        queue.add(p);
+    }
+
     @Override
     public void addListener(CommunicationListener cl) {
         listeners.add(cl);
