@@ -213,4 +213,19 @@ public class CommunicatonTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void testLogging() {
+        Communicator server = new ServerCommunicator(5757);
+
+        assertTrue(server.isLoggingEnabled());
+
+        server.disableLogging();
+
+        assertTrue(!server.isLoggingEnabled());
+
+        server.enableLogging();
+
+        assertTrue(server.isLoggingEnabled());
+    }
 }

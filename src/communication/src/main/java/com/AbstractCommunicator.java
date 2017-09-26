@@ -100,7 +100,7 @@ public abstract class AbstractCommunicator implements Communicator {
                 outputStream.writeUTF(EXIT_CODE);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            //Will be thrown if other communicator can't be reached. (Might happen on wifi-loss)
         }
     }
 
@@ -170,7 +170,6 @@ public abstract class AbstractCommunicator implements Communicator {
                 //  y = integer value of specified MopedDataType
                 String output = dataType + SEPARATOR + value;
 
-                System.out.println(output);
                 outputStream.writeUTF(output);
             }
         } catch (IOException e) {

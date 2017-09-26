@@ -75,9 +75,7 @@ public class LocalManualTest {
                         System.out.println("[MOPED MOCK] CONNECTED");
 
                         Thread.sleep(60);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
+                    } catch (IOException | InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
