@@ -27,7 +27,7 @@ public class PIDParser implements ActionStrategy {
         long currentTime = System.currentTimeMillis();
         if (currentTime - lastActionTime > 200) {
             double distance = distanceSensor.getDistance();
-            action = -2* pidController.evaluation(distance,(double) (currentTime- lastActionTime) / (double) 1000);
+            action = 2* pidController.evaluation(distance,(double) (currentTime- lastActionTime) / (double) 1000);
             lastActionTime = currentTime;
         }
         return action;
