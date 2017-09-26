@@ -9,11 +9,11 @@ class CarControlImplTest {
     private static final int STEER_VALUE = 1;
     private static final int THROTTLE_VALUE = 2;
 
-    private CarControlImpl carControl;
+    private CarControl carControl;
 
     @BeforeEach
     void setUp() {
-        carControl = new CarControlImpl("");
+        carControl = new CarControlImpl("run.py");
 
         carControl.setSteerValue(STEER_VALUE);
         carControl.setThrottle(THROTTLE_VALUE);
