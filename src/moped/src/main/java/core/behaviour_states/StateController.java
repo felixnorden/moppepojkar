@@ -20,11 +20,6 @@ public class StateController implements Runnable {
         this.currentState = stateFactory.createAdaptiveCruiseControlBehaviour();
     }
 
-    // Inject anything?
-    public void init() {
-
-    }
-
     /**
      *
      * @return current behaviour of the MOPED
