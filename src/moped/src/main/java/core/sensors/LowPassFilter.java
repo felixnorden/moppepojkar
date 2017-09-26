@@ -10,7 +10,7 @@ public class LowPassFilter {
         this.weight = weight;
     }
 
-    double filterValue(double updatedValue) {
+    public double filterValue(double updatedValue) {
         double difference = updatedValue - currentValue;
         double weightedDifference = difference * weight;
         currentValue += weightedDifference;
