@@ -57,9 +57,9 @@ public class SocketConnector extends Activity {
 		String oldPortMoped = mSharedPreferences.getString("portmoped",null);
 		if (oldPortMoped != null)
 			ed_portmoped.setText(oldPortMoped);
-		String oldPortCommunicator = mSharedPreferences.getString("portcommunicator",null);
-		if (oldPortCommunicator != null)
-			ed_portmoped.setText(oldPortCommunicator);
+		int oldPortCommunicator = mSharedPreferences.getInt("portcommunicator",0);
+		if (oldPortCommunicator != 0)
+			ed_portmoped.setText(Integer.toString(oldPortCommunicator));
 		
 		/** Setup the "connect"-button. On click, new host ip and port numbers should
 		 * be stored and a socket connection created (this is done as a background task). 
@@ -73,7 +73,7 @@ public class SocketConnector extends Activity {
 				SharedPreferences mSharedPreferences = getSharedPreferences("list", MODE_PRIVATE);
 				mSharedPreferences.edit().putString("host",str_host).commit();
 				mSharedPreferences.edit().putString("portmoped",str_port1).commit();
-				mSharedPreferences.edit().putString("portcommunicator",str_port2).commit();
+				mSharedPreferences.edit().putInt("portcommunicator",Integer.parseInt(str_port2)).commit();
 				
 				/* Create socket connection in a background task */
 				new AsyncConnectionTask().execute(str_host, str_port1, str_port2);
@@ -140,7 +140,7 @@ public class SocketConnector extends Activity {
 		 */
 		protected void onPostExecute(String result) {
 			if (socket != null && socket.isConnected()) {
-				Main.init(socket, communicator);
+				Main.init(socket);
 				finish();
 			}
 			else {

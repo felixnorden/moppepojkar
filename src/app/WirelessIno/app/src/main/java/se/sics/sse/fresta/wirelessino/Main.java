@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Random;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -39,7 +40,7 @@ public class Main extends Activity implements CommunicationListener {
     private boolean isACCenabled = false;
     private boolean isConnected = false;
 
-    static private Communicator communicator;
+    private Communicator communicator;
 
     public static final String TAG = "WirelessIno";
     public static Socket socket = null;
@@ -57,13 +58,6 @@ public class Main extends Activity implements CommunicationListener {
         setContentView(R.layout.activity_main);
         speedBar = (SeekBar) findViewById(R.id.speedBar);
         steeringBar = (SeekBar) findViewById(R.id.SteeringBar);
-
-        if (communicator != null) {
-
-            communicator.addListener(this);
-            communicator.start();
-
-        }
 
 
         /*Listener for change in SeekBars (Sliders) */
@@ -180,6 +174,21 @@ public class Main extends Activity implements CommunicationListener {
         startActivity(intent);
     }
 
+
+    public void serverConnect(View view) {
+        SharedPreferences mSharedPreferences = getSharedPreferences("list", MODE_PRIVATE);
+        String ip = mSharedPreferences.getString("host", null);
+        int port = mSharedPreferences.getInt("portcommunicator", 0);
+        if (ip == null || port == 0) {
+            Toast.makeText(this, "Enter Port and IP in settings", Toast.LENGTH_SHORT).show();
+        } else {
+            communicator = new ClientCommunicator(ip, port);
+            communicator.addListener(this);
+            communicator.start();
+        }
+    }
+
+
     /**
      * Method which gets the data from the sliders and formats it in a way that an arduino will understand.
      * Uses the predefined send(Object message) method to notify the MOPED of a change in instructions.
@@ -283,8 +292,8 @@ public class Main extends Activity implements CommunicationListener {
      * Initialize the output stream for the socket.
      */
 
-    public static void init(Socket socket, ClientCommunicator communicator) {
-        Main.communicator = communicator;
+    public static void init(Socket socket) {
+
         Main.socket = socket;
 
 
@@ -371,4 +380,6 @@ public class Main extends Activity implements CommunicationListener {
             connectButton.setText("Connect");
         }
     }
+
+
 }
