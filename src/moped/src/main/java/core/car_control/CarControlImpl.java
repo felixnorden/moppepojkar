@@ -47,7 +47,7 @@ public class CarControlImpl implements CarControl {
                 }
 
                 try {
-                    Thread.sleep(10);
+                    Thread.sleep(50);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -109,6 +109,7 @@ public class CarControlImpl implements CarControl {
     private void writeToPythonScript(String text) {
         if (carControl != null) {
             try {
+                System.out.println("Car write: " + text);
                 carControl.outputToScript(text + "\n");
                 carControl.flushOutput();
             } catch (IOException e) {

@@ -13,7 +13,7 @@ public class Main {
 
                 // Allow for other processes
                 try {
-                    Thread.sleep(10);
+                    Thread.sleep(50);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
