@@ -47,7 +47,7 @@ public class CarControlImpl implements CarControl {
                 }
 
                 try {
-                    Thread.sleep(200);
+                    Thread.sleep(10);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -73,15 +73,14 @@ public class CarControlImpl implements CarControl {
     public synchronized void setThrottle(int value) {
         if (value != currentThrottleValue) {
             currentThrottleValue = constrainInVCURange(value);
-            System.out.println("Throttle: " + currentThrottleValue);
-            sendValuesToCar();
         }
     }
 
     @Override
     public synchronized void setSteerValue(int value) {
-        currentSteerValue = constrainInVCURange(value);
-        sendValuesToCar();
+        if (value != currentSteerValue) {
+            currentSteerValue = constrainInVCURange(value);
+        }
     }
 
     @Override
@@ -98,8 +97,8 @@ public class CarControlImpl implements CarControl {
      * Sends the steering and throttle values to the python script.
      */
     private void sendValuesToCar() {
-        writeToPythonScript("drive(" + currentThrottleValue + ")");
-        writeToPythonScript("steer(" + currentSteerValue + ")");
+        writeToPythonScript("drive(" + currentThrottleValue + ")\n" +
+                                 "steer(" + currentSteerValue + ")");
     }
 
     /**

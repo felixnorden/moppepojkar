@@ -12,7 +12,11 @@ public class Main {
                 sc.run();
 
                 // Allow for other processes
-                Thread.yield();
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
 

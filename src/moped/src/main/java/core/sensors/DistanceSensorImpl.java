@@ -79,7 +79,7 @@ public class DistanceSensorImpl implements DistanceSensor, InputSubscriber {
                 }
 
                 try {
-                    Thread.sleep(250);
+                    Thread.sleep(200);
                 } catch (InterruptedException ie) {
                     System.out.println(ie.getMessage());
                 }
