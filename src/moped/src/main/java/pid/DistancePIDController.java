@@ -1,5 +1,5 @@
 
-package moped.src.main.java.PID;
+package moped.src.main.java.pid;
 
 
 public class DistancePIDController extends PIDController {
