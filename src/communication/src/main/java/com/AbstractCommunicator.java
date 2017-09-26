@@ -144,12 +144,8 @@ public abstract class AbstractCommunicator implements Communicator {
      * Fetches and sends new information from the connected socket.
      */
     private void update() {
-        try {
-            sendQueuedData();
-            receiveData();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        sendQueuedData();
+        receiveData();
     }
 
     /**
@@ -157,20 +153,25 @@ public abstract class AbstractCommunicator implements Communicator {
      *
      * @throws IOException
      */
-    private void sendQueuedData() throws IOException {
-        //Send all queued data
-        while (queue.size() > 0) {
-            MopedDataPair mopedDataPair = queue.poll();
+    private void sendQueuedData() {
+        try {
+            //Send all queued data
+            while (queue.size() > 0) {
+                MopedDataPair mopedDataPair = queue.poll();
 
-            String dataType = String.valueOf(mopedDataPair.getType().toInt());
-            String value = String.valueOf(mopedDataPair.getValue());
+                String dataType = String.valueOf(mopedDataPair.getType().toInt());
+                String value = String.valueOf(mopedDataPair.getValue());
 
-            //Format is 'x,y' where
-            //  x = MopedDataType integer
-            //  y = integer value of specified MopedDataType
-            String output = dataType + SEPARATOR + value;
+                //Format is 'x,y' where
+                //  x = MopedDataType integer
+                //  y = integer value of specified MopedDataType
+                String output = dataType + SEPARATOR + value;
 
-            outputStream.writeUTF(output);
+                System.out.println(output);
+                outputStream.writeUTF(output);
+            }
+        } catch (IOException e) {
+            onDisconnect();
         }
     }
 
@@ -183,23 +184,27 @@ public abstract class AbstractCommunicator implements Communicator {
      *
      * @throws IOException
      */
-    private void receiveData() throws IOException {
-        while (inputStream.available() > 0) {
-            // Input string is formatted as "xxxxx,yyyy" where x is MopedDataType and y is a int value
-            String input = inputStream.readUTF();
+    private void receiveData() {
+        try {
+            while (inputStream.available() > 0) {
+                // Input string is formatted as "xxxxx,yyyy" where x is MopedDataType and y is a int value
+                String input = inputStream.readUTF();
 
-            if (input.equals(EXIT_CODE)) {
-                onDisconnect();
-                break;
+                if (input.equals(EXIT_CODE)) {
+                    onDisconnect();
+                    break;
+                }
+
+                String[] args = input.split(SEPARATOR);
+
+                //Extract data from input.
+                MopedDataType type = MopedDataType.parseInt(Integer.parseInt(args[0]));
+                int value = Integer.parseInt(args[1]);
+
+                handleInput(type, value);
             }
-
-            String[] args = input.split(SEPARATOR);
-
-            //Extract data from input.
-            MopedDataType type = MopedDataType.parseInt(Integer.parseInt(args[0]));
-            int value = Integer.parseInt(args[1]);
-
-            handleInput(type, value);
+        } catch (IOException e) {
+            onDisconnect();
         }
     }
 
