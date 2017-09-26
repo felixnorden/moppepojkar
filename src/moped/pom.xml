@@ -25,7 +25,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>core.MainIntegrationTest</mainClass>
+                            <mainClass>core.Main</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
