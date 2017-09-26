@@ -25,7 +25,7 @@ import com.ClientCommunicator;
  */
 
 public class SocketConnector extends Activity {
-    private final static int CONNECTION_TIMEOUT = 3000;
+
 	
 	private EditText ed_host = null;
 	private EditText ed_portmoped = null;
@@ -75,8 +75,7 @@ public class SocketConnector extends Activity {
 				mSharedPreferences.edit().putString("portmoped",str_port1).apply();
 				mSharedPreferences.edit().putInt("portcommunicator",Integer.parseInt(str_port2)).apply();
 				
-				/* Create socket connection in a background task */
-				new AsyncConnectionTask().execute(str_host, str_port1, str_port2);
+
 			}
 		});
 	}
@@ -96,64 +95,6 @@ public class SocketConnector extends Activity {
 	 * (typically such tasks should not be done from the UI-thread, otherwise a
 	 * NetworkOnMainThreadException exception may be thrown by the Android runtime tools).
 	 */
-	private class AsyncConnectionTask extends AsyncTask<String, Void, String> {
-		private String msg = "def message";
 
-		/**
-		 * Establish a socket connection in the background.
-		 *
-		 * @param params
-		 * @return
-		 */
-		protected String doInBackground(String... params) {
-			try {
-				msg = params[0] + ":" + params[1];
-
-				/* Close any previously used socket 
-				 * (for example to prevent double-clicks leading to multiple connections) */
-				if (socket != null && !socket.isClosed())
-					socket.close();
-
-				communicator = new ClientCommunicator(params[0], Integer.parseInt(params[2]));
-
-				socket = new Socket();
-				socket.connect(new InetSocketAddress(params[0],						// host ip 
-													 Integer.parseInt(params[1])), 	// port 
-							   CONNECTION_TIMEOUT);
-			} catch (NumberFormatException e) {
-				msg = "Invalid port value (" + params[1] + "), type an integer between 0 and 65535";
-			} catch (IllegalArgumentException e) { 
-				msg = "Invalid port value (" + params[1] + "), type an integer between 0 and 65535";
-			} catch (Exception e) {
-				msg = e.getMessage();
-			}
-			
-			return null;
-		}
-
-		/**
-		 *
-		 * Once the background operation is finished, pass the socket reference to the
-		 * Main class and exit from this view. If something went wrong, notify the user.
-		 *
-		 * @param result
-		 */
-		protected void onPostExecute(String result) {
-			if (socket != null && socket.isConnected()) {
-				Main.init(socket);
-				finish();
-			}
-			else {
-				new AlertDialog.Builder(SocketConnector.this)
-				.setTitle("notification")
-				.setMessage(msg + " " + result)
-				.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-					}
-				})
-				.show();
-			}
-		}
-	}
 	
 }

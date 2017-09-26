@@ -4,10 +4,15 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -33,6 +38,7 @@ import com.MopedState;
 
 public class Main extends Activity implements CommunicationListener {
 
+    private final static int CONNECTION_TIMEOUT = 2000;
 
     private SeekBar speedBar;
     private SeekBar steeringBar;
@@ -188,24 +194,57 @@ public class Main extends Activity implements CommunicationListener {
         Log.e("Buttontext", connectButton.getText().toString());
         if (connectButton.getText().toString().equals("Connect")) {
             SharedPreferences mSharedPreferences = getSharedPreferences("list", MODE_PRIVATE);
-            String ip = mSharedPreferences.getString("host", null);
-            int port = mSharedPreferences.getInt("portcommunicator", 0);
+            final String ip = mSharedPreferences.getString("host", null);
+            final int port = mSharedPreferences.getInt("portcommunicator", 0);
+            final String mopedport = mSharedPreferences.getString("portmoped", null);
+
+            /* Create socket connection in a background task */
+
+
             if (ip == null || port == 0) {
-                Toast.makeText(this, "Enter Port and IP in settings", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Enter Ports and IP in settings", Toast.LENGTH_SHORT).show();
             } else {
-                communicator = new ClientCommunicator(ip, port);
-                communicator.addListener(this);
-                communicator.start();
-                Toast.makeText(this, "Waiting for Server Connection", Toast.LENGTH_SHORT).show();
+
+
+                Thread coreConnectThread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            socket = new Socket();
+                            socket.connect(new InetSocketAddress(ip, Integer.parseInt(mopedport)), CONNECTION_TIMEOUT);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+
+                        }
+                    }
+                });
+                coreConnectThread.start();
+                try {
+                    coreConnectThread.join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+
+                if (socket != null && socket.isConnected()) {
+
+                    communicator = new ClientCommunicator(ip, port);
+                    communicator.addListener(this);
+                    communicator.start();
+                    Toast.makeText(this, "Waiting for Server Connection", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    Toast.makeText(this, "Connection to MOPED Core failed", Toast.LENGTH_SHORT).show();
+                }
             }
         } else {
             if (communicator != null) {
                 communicator.stop();
                 Toast.makeText(this, "Connection stopped", Toast.LENGTH_SHORT).show();
+                isConnected = false;
             }
             updateModeButton();
         }
-
 
 
     }
