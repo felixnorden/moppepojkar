@@ -13,7 +13,7 @@ public class ActionStrategyFactoryImpl implements ActionStrategyFactory {
 
     @Override
     public ActionStrategy createPIDController() {
-        return null;
+        return new PIDParser();
     }
 
     @Override

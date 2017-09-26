@@ -62,7 +62,7 @@ public class DistanceSensorImpl implements DistanceSensor, InputSubscriber {
 
     }
 
-    private DistanceSensorImpl() {
+    public DistanceSensorImpl() {
         valueLoopIsKilled = false;
         dynamicPythonInput = new StringBuilder();
         lastValue = 100;
