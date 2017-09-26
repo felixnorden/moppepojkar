@@ -27,8 +27,8 @@ def main():
         image = Image.fromarray(gray)
 
         qrcode = decode(gray, symbols=[ZBarSymbol.QRCODE])
-        if(qrcode):
-            print qrcode
+        if qrcode:
+            print (qrcode)
 
 
 if __name__ == "__main__":
