@@ -37,6 +37,12 @@ def main():
         for decoded in zbar_image:
             print(decoded.data)
             topLeftCorners, bottomLeftCorners, bottomRightCorners, topRightCorners = [item for item in decoded.location]
+            centerPointQR = (bottomLeftCorners[0] + bottomRightCorners)[0] / 2
+            centerPoint = width/2
+            #Postive = left of target
+            distanceFromCenter = centerPoint - centerPointQR
+
+            
             print("Top left xy")
             print(topLeftCorners)
             print("Bottom left xy")
