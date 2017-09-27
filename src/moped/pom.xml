@@ -107,6 +107,12 @@
             <version>${junit.vintage.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.moppepojkar</groupId>
+            <artifactId>communication</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
 
