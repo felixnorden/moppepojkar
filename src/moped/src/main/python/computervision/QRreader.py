@@ -19,7 +19,7 @@ def main():
         ret, frame = capture.read()
 
         # Displays the current frame
-        cv2.imshow('Current', frame)
+        cv2.imshow('MoppeWindow', frame)
 
         # Converts image to grayscale.
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
@@ -36,7 +36,20 @@ def main():
         # Prints data from image.
         for decoded in zbar_image:
             print(decoded.data)
+            topLeftCorners, bottomLeftCorners, bottomRightCorners, topRightCorners = [item for item in decoded.location]
+            print("Top left xy")
+            print(topLeftCorners)
+            print("Bottom left xy")
+            print(bottomLeftCorners)
+            print("Top right xy")
+            print(topRightCorners)
+            print("Bottom right xy")
+            print(bottomRightCorners)
+            
+            
+            
 
-
+    
+        
 if __name__ == "__main__":
     main()
