@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 
@@ -15,7 +16,102 @@ import static org.junit.Assert.assertTrue;
 public class CommunicatonTest {
 
     @Test
-    public void testSendFromClient() {
+    public void testSendValueFromServer() {
+        Communicator client = new ClientCommunicator("localhost", 12942);
+        final Communicator server = new ServerCommunicator(12942);
+
+        final ArrayList<Integer> vars = new ArrayList<>();
+        CommunicationListener cl = new CommunicationListener() {
+            @Override
+            public void onConnection() {
+                server.setValue(MopedDataType.Velocity, 10);
+            }
+
+            @Override
+            public void onStateChange(MopedState stateChange) {
+
+            }
+
+            @Override
+            public void onDisconnection() {
+
+            }
+
+            @Override
+            public void onValueChanged(MopedDataType type, int value) {
+                vars.add(type.toInt());
+                vars.add(value);
+            }
+        };
+
+        client.addListener(cl);
+        server.start();
+        client.start();
+
+        try {
+            //Wait up to 5 seconds before failing
+            for (int i = 0; i < 100; i++) {
+                Thread.sleep(50);
+                if (vars.size() != 0) {
+                    break;
+                }
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertEquals(MopedDataType.parseInt(vars.get(0)), MopedDataType.Velocity);
+        assertEquals((int) vars.get(1), 10);
+    }
+
+    @Test
+    public void testSendValueFromClient() {
+        final Communicator client = new ClientCommunicator("localhost", 12941);
+        Communicator server = new ServerCommunicator(12941);
+
+        final ArrayList<Integer> vars = new ArrayList<>();
+        CommunicationListener cl = new CommunicationListener() {
+            @Override
+            public void onConnection() {
+                client.setValue(MopedDataType.Velocity, 20);
+            }
+
+            @Override
+            public void onStateChange(MopedState stateChange) {
+            }
+
+            @Override
+            public void onDisconnection() {
+
+            }
+
+            @Override
+            public void onValueChanged(MopedDataType type, int value) {
+                vars.add(type.toInt());
+                vars.add(value);
+            }
+        };
+
+        server.addListener(cl);
+        server.start();
+        client.start();
+
+        try {
+            //Wait up to 5 seconds before failing
+            for (int i = 0; i < 100; i++) {
+                Thread.sleep(50);
+                if (vars.size() != 0) {
+                    break;
+                }
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertEquals(MopedDataType.parseInt(vars.get(0)), MopedDataType.Velocity);
+        assertEquals((int) vars.get(1), 20);
+    }
+
+    @Test
+    public void testSendStateFromClient() {
         Communicator client = new ClientCommunicator("localhost", 12939);
         final Communicator server = new ServerCommunicator(12939);
 
@@ -34,6 +130,11 @@ public class CommunicatonTest {
 
             @Override
             public void onDisconnection() {
+
+            }
+
+            @Override
+            public void onValueChanged(MopedDataType type, int value) {
 
             }
         };
@@ -57,7 +158,7 @@ public class CommunicatonTest {
     }
 
     @Test
-    public void testSendFromServer() {
+    public void testSendStateFromServer() {
         final Communicator client = new ClientCommunicator("localhost", 12940);
         Communicator server = new ServerCommunicator(12940);
 
@@ -76,6 +177,11 @@ public class CommunicatonTest {
 
             @Override
             public void onDisconnection() {
+
+            }
+
+            @Override
+            public void onValueChanged(MopedDataType type, int value) {
 
             }
         };
@@ -119,6 +225,11 @@ public class CommunicatonTest {
             public void onDisconnection() {
                 vars.add(true);
             }
+
+            @Override
+            public void onValueChanged(MopedDataType type, int value) {
+
+            }
         };
         client.addListener(cl);
         server.start();
@@ -158,6 +269,11 @@ public class CommunicatonTest {
             @Override
             public void onDisconnection() {
                 vars.add(true);
+            }
+
+            @Override
+            public void onValueChanged(MopedDataType type, int value) {
+
             }
         };
         server.addListener(cl);

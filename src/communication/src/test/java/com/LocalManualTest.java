@@ -34,6 +34,11 @@ public class LocalManualTest {
         public void onDisconnection() {
             System.out.println("[SERVER] DISCONNECT");
         }
+
+        @Override
+        public void onValueChanged(MopedDataType type, int value) {
+            System.out.println("[SERVER] VALUE: " + type.name() + " - " + value);
+        }
     };
 
     //Listener which acts as the clients listener.
@@ -51,6 +56,11 @@ public class LocalManualTest {
         @Override
         public void onDisconnection() {
             System.out.println("[CLIENT] DISCONNECT");
+        }
+
+        @Override
+        public void onValueChanged(MopedDataType type, int value) {
+            System.out.println("[CLIENT] VALUE: " + type.name() + " - " + value);
         }
     };
 

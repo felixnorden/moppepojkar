@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -229,6 +228,12 @@ public abstract class AbstractCommunicator implements Communicator {
         }
     }
 
+    void notifyValueChanged(MopedDataType type, int value) {
+        for (CommunicationListener cl : listeners) {
+            cl.onValueChanged(type, value);
+        }
+    }
+
     /**
      * Notifies all listeners that a state change from the sender has been received.
      */
@@ -265,7 +270,7 @@ public abstract class AbstractCommunicator implements Communicator {
                 //This means a state was changed. Extract new state from value and send to listeners.
                 notifyStateChange(MopedState.parseInt(value));
             default:
-                // TODO: 2017-09-18 Notify value change
+                notifyValueChanged(type, value);
         }
     }
 

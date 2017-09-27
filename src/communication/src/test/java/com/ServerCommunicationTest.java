@@ -33,6 +33,11 @@ public class ServerCommunicationTest {
             public void onDisconnection() {
 
             }
+
+            @Override
+            public void onValueChanged(MopedDataType type, int value) {
+
+            }
         };
 
         Communicator server = new ServerCommunicator(9500);

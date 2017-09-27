@@ -29,6 +29,11 @@ public class ClientCommunicatorTest {
             public void onDisconnection() {
 
             }
+
+            @Override
+            public void onValueChanged(MopedDataType type, int value) {
+
+            }
         };
 
         Communicator client = new ClientCommunicator("localhost", 9501);
