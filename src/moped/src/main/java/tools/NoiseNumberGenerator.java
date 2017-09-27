@@ -1,4 +1,6 @@
-package core.sensors;
+package tools;
+
+import core.sensors.LowPassFilter;
 
 import java.util.Random;
 
@@ -107,18 +109,6 @@ public class NoiseNumberGenerator {
      * Uses {@Link LowPassFilter} to print out all of the values created by different
      * weight values in a LowPassFilter, to the console. The data is based on the rawValues parameter
      * that the LowPassFilter will use.
-     *
-     * Prints in the following format:
-     *
-     *
-     * WEIGHT = x1
-     * data...
-     * data...
-     * data...
-     * ------
-     *
-     * Weight = x2
-     * ...
      *
      * @param filterWeights The different LowPassFilter weights that will be used.
      * @param rawValues Raw values that will be input to the {@link LowPassFilter}.
