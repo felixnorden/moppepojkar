@@ -62,6 +62,7 @@
         android:textAlignment="center"
         android:textColor="@color/bright_foreground_inverse_material_light"
         android:textStyle="bold"
+        android:onClick="goToMain"
         android:layout_weight="0.04"/>
 
     <TextView

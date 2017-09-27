@@ -3,6 +3,7 @@ package se.sics.sse.fresta.wirelessino;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
@@ -61,23 +62,26 @@ public class SocketConnector extends Activity {
 		if (oldPortCommunicator != 0)
 			ed_portcommunicator.setText(Integer.toString(oldPortCommunicator));
 		
-		/** Setup the "connect"-button. On click, new host ip and port numbers should
-		 * be stored and a socket connection created (this is done as a background task). 
-		 */
-		btn_connect.setOnClickListener(new Button.OnClickListener() {
-			public void onClick(View v) {
-				String str_host = ed_host.getText().toString().trim();
-				String str_port1 = ed_portmoped.getText().toString().trim();
-				String str_port2 = ed_portcommunicator.getText().toString().trim();
-				
-				SharedPreferences mSharedPreferences = getSharedPreferences("list", MODE_PRIVATE);
-				mSharedPreferences.edit().putString("host",str_host).apply();
-				mSharedPreferences.edit().putString("portmoped",str_port1).apply();
-				mSharedPreferences.edit().putInt("portcommunicator",Integer.parseInt(str_port2)).apply();
-				
 
-			}
-		});
+
+	}
+
+	/** Setup the "connect"-button. On click, new host ip and port numbers should
+	 * be stored and a socket connection created (this is done as a background task).
+	 */
+
+	public void goToMain(View view){
+		String str_host = ed_host.getText().toString().trim();
+		String str_port1 = ed_portmoped.getText().toString().trim();
+		String str_port2 = ed_portcommunicator.getText().toString().trim();
+
+		SharedPreferences mSharedPreferences = getSharedPreferences("list", MODE_PRIVATE);
+		mSharedPreferences.edit().putString("host",str_host).apply();
+		mSharedPreferences.edit().putString("portmoped",str_port1).apply();
+		mSharedPreferences.edit().putInt("portcommunicator",Integer.parseInt(str_port2)).apply();
+
+		Intent intent = new Intent(this, Main.class);
+		startActivity(intent);
 	}
 
 	public boolean onCreateOptionsMenu(Menu menu) {

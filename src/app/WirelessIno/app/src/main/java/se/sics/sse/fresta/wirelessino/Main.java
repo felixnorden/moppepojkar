@@ -12,6 +12,8 @@ import java.util.concurrent.ExecutionException;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
@@ -39,6 +41,7 @@ import com.MopedState;
 public class Main extends Activity implements CommunicationListener {
 
     private final static int CONNECTION_TIMEOUT = 2000;
+    private final static int SEEKBAR_SNAP_SPEED = 2;
 
     private SeekBar speedBar;
     private SeekBar steeringBar;
@@ -78,19 +81,63 @@ public class Main extends Activity implements CommunicationListener {
 
         speedBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                /* The value 100 turns into "0" in calculations */
-                speedBar.setProgress(100);
-            }
+
+            Thread SpeedBarThread;
+
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                // TODO Auto-generated method stub
+                Log.e("ThreadCheck", "Bar Touched");
+                if (SpeedBarThread != null) {
+                    if (SpeedBarThread.isAlive()) {
+                        SpeedBarThread.interrupt();
+                        Log.e("ThreadCheck", "Thread Interrupted");
+                    }
+                }
+
             }
 
             @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+                SpeedBarThread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (speedBar.getProgress() > 100) {
+                            while (speedBar.getProgress() > 100 && !Thread.interrupted()) {
+                                speedBar.setProgress(speedBar.getProgress() - 1);
+                                try {
+                                    Thread.sleep(SEEKBAR_SNAP_SPEED);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                    break;
+                                }
+                            }
+                        } else if (speedBar.getProgress() < 100) {
+                            while (speedBar.getProgress() < 100 && !Thread.interrupted()) {
+                                speedBar.setProgress(speedBar.getProgress() + 1);
+                                try {
+                                    Thread.sleep(SEEKBAR_SNAP_SPEED);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                });
+
+                SpeedBarThread.start();
+                Log.e("ThreadCheck", "Thread Started");
+
+
+            }
+
+
+            @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+
                 transformPWM();
             }
         });
@@ -101,15 +148,53 @@ public class Main extends Activity implements CommunicationListener {
 
         steeringBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
+            Thread SteeringBarThread;
+
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                /* The value 100 turns into "0" in calculations */
-                steeringBar.setProgress(100);
+
+                SteeringBarThread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (steeringBar.getProgress() > 100) {
+                            while (steeringBar.getProgress() > 100 && !Thread.interrupted()) {
+                                steeringBar.setProgress(steeringBar.getProgress() - 1);
+                                try {
+                                    Thread.sleep(SEEKBAR_SNAP_SPEED);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                    break;
+                                }
+                            }
+                        } else if (steeringBar.getProgress() < 100) {
+                            while (steeringBar.getProgress() < 100 && !Thread.interrupted()) {
+                                steeringBar.setProgress(steeringBar.getProgress() + 1);
+                                try {
+                                    Thread.sleep(SEEKBAR_SNAP_SPEED);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                });
+
+                SteeringBarThread.start();
+                Log.e("ThreadCheck", "Thread Started");
+
+
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                // TODO Auto-generated method stub
+                Log.e("ThreadCheck", "Bar Touched");
+                if (SteeringBarThread != null) {
+                    if (SteeringBarThread.isAlive()) {
+                        SteeringBarThread.interrupt();
+                        Log.e("ThreadCheck", "Thread Interrupted");
+                    }
+                }
             }
 
             @Override
@@ -126,6 +211,7 @@ public class Main extends Activity implements CommunicationListener {
         speedTextView.setText(Integer.toString(0));
 
         connectButton = (Button) findViewById(R.id.serverButton);
+        connectButton.setBackgroundColor(Color.parseColor("#7CFC00"));
 
         modeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -212,6 +298,8 @@ public class Main extends Activity implements CommunicationListener {
                         try {
                             socket = new Socket();
                             socket.connect(new InetSocketAddress(ip, Integer.parseInt(mopedport)), CONNECTION_TIMEOUT);
+
+
                         } catch (IOException e) {
                             e.printStackTrace();
 
@@ -227,6 +315,13 @@ public class Main extends Activity implements CommunicationListener {
 
 
                 if (socket != null && socket.isConnected()) {
+
+                    try {
+                        out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
+                                socket.getOutputStream())), true);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
 
                     communicator = new ClientCommunicator(ip, port);
                     communicator.addListener(this);
@@ -360,12 +455,6 @@ public class Main extends Activity implements CommunicationListener {
         Main.socket = socket;
 
 
-        try {
-            out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
-                    socket.getOutputStream())), true);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -440,8 +529,10 @@ public class Main extends Activity implements CommunicationListener {
     private void updateModeButton() {
         if (isConnected) {
             connectButton.setText("Disconnect");
+            connectButton.setBackgroundColor(Color.parseColor("#FF0000"));
         } else {
             connectButton.setText("Connect");
+            connectButton.setBackgroundColor(Color.parseColor("#7CFC00"));
         }
     }
 
