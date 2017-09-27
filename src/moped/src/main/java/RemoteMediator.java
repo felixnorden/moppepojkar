@@ -1,15 +1,20 @@
 import com.*;
+import com_io.CommunicationsMediator;
 import com_io.DataReceiver;
 import com_io.Direction;
 
 public class RemoteMediator implements DataReceiver, CommunicationListener {
 
     private final Communicator server;
+    private final CommunicationsMediator communicationsMediator;
 
-    public RemoteMediator(int port) {
+    public RemoteMediator(int port, CommunicationsMediator communicationsMediator) {
         server = new ServerCommunicator(port);
         server.addListener(this);
         server.start();
+
+        this.communicationsMediator = communicationsMediator;
+        communicationsMediator.subscribe(Direction.EXTERNAL, this);
     }
 
     @Override
@@ -19,13 +24,7 @@ public class RemoteMediator implements DataReceiver, CommunicationListener {
 
     @Override
     public void onStateChange(MopedState mopedState) {
-        // TODO: 2017-09-27 DO YOUR SHIT HERE PID-SQUAD
-        switch (mopedState) {
-            case ACC:
-                break;
-            case MANUAL:
-                break;
-        }
+        communicationsMediator.transmitData("STATE|" + mopedState.toString(), Direction.INTERNAL);
     }
 
     @Override
@@ -52,6 +51,12 @@ public class RemoteMediator implements DataReceiver, CommunicationListener {
                 break;
             case PID_INTEGRAL_SUM:
                 break;
+            case THROTTLE:
+                communicationsMediator.transmitData("THROTTLE|" + i, Direction.INTERNAL);
+                break;
+            case STEERING:
+                communicationsMediator.transmitData("STEER|" + i, Direction.INTERNAL);
+                break;
             case CUSTOM_1:
                 break;
             case CUSTOM_2:
@@ -63,6 +68,7 @@ public class RemoteMediator implements DataReceiver, CommunicationListener {
 
     /**
      * Sets logging to true or false on the servercommunicator.
+     *
      * @param enable
      */
     public void setDebugLogging(boolean enable) {
@@ -74,7 +80,22 @@ public class RemoteMediator implements DataReceiver, CommunicationListener {
     }
 
     @Override
-    public void dataReceived(String data) {
+    public void dataReceived(String unformattedDataString) {
+        String[] data = unformattedDataString.split("|");
 
+        if (data.length == 2) {
+            if (data[0].equals("STATE")) {
+                try {
+                    MopedState mopedState = MopedState.valueOf(data[1]);
+                    server.setState(mopedState);
+                } catch (IllegalArgumentException iae) {
+                    System.out.println(iae.getMessage());
+                }
+
+            } else {
+                MopedDataType mopedDataType = MopedDataType.valueOf(data[1]);
+                // TODO: 27/09/2017 Do stuff with the data type
+            }
+        }
     }
 }
