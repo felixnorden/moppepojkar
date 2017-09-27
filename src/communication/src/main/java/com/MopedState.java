@@ -24,7 +24,7 @@ public enum MopedState {
      * Convert int to enum
      *
      * @param mopedState int
-     * @return MopedState enum
+     * @return MOPED_STATE enum
      */
     public static MopedState parseInt(int mopedState) {
         if (mopedState <= values.length && mopedState >= 0) {

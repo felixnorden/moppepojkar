@@ -24,7 +24,7 @@ public class CommunicatonTest {
         CommunicationListener cl = new CommunicationListener() {
             @Override
             public void onConnection() {
-                server.setValue(MopedDataType.Velocity, 10);
+                server.setValue(MopedDataType.VELOCITY, 10);
             }
 
             @Override
@@ -59,7 +59,7 @@ public class CommunicatonTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals(MopedDataType.parseInt(vars.get(0)), MopedDataType.Velocity);
+        assertEquals(MopedDataType.parseInt(vars.get(0)), MopedDataType.VELOCITY);
         assertEquals((int) vars.get(1), 10);
     }
 
@@ -72,7 +72,7 @@ public class CommunicatonTest {
         CommunicationListener cl = new CommunicationListener() {
             @Override
             public void onConnection() {
-                client.setValue(MopedDataType.Velocity, 20);
+                client.setValue(MopedDataType.VELOCITY, 20);
             }
 
             @Override
@@ -106,7 +106,7 @@ public class CommunicatonTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals(MopedDataType.parseInt(vars.get(0)), MopedDataType.Velocity);
+        assertEquals(MopedDataType.parseInt(vars.get(0)), MopedDataType.VELOCITY);
         assertEquals((int) vars.get(1), 20);
     }
 

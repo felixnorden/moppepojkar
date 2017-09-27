@@ -41,7 +41,7 @@ public interface Communicator extends Runnable {
      * Will call onValueChanged(MopedDataType type, int Value) on the CommunicationListeners registered to the
      * other communicator
      *
-     * @param type The type of data to be added
+     * @param type  The type of data to be added
      * @param value The value of the data
      */
     void setValue(MopedDataType type, int value);
@@ -54,7 +54,6 @@ public interface Communicator extends Runnable {
     boolean isAlive();
 
     /**
-     *
      * @return True if logging is enabled, false otherwise.
      */
     boolean isLoggingEnabled();

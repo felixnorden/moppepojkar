@@ -9,10 +9,23 @@ import static org.junit.Assert.assertTrue;
  */
 public class MopedDataPairTest {
     @Test
-    public void convert() {
-        MopedState mopedState = MopedState.MANUAL;
-        assertTrue(MopedState.parseInt(mopedState.toInt()) == mopedState);
-        assertTrue(MopedState.parseInt(MopedState.values().length + 1) == null);
-        assertTrue(MopedState.parseInt(-5) == null);
+    public void basicTest() {
+        //Tests basic functionality and hashCode() + equals()
+        MopedDataPair pair = new MopedDataPair(MopedDataType.MOPED_STATE, MopedState.ACC.toInt());
+        MopedDataPair pair1 = new MopedDataPair(MopedDataType.VELOCITY, 100);
+
+        assertTrue(!pair.equals(pair1));
+
+        assertTrue(pair.getType().equals(MopedDataType.MOPED_STATE));
+        assertTrue(pair.getValue().equals(MopedState.ACC.toInt()));
+
+        assertTrue(pair1.getType().equals(MopedDataType.VELOCITY));
+        assertTrue(pair1.getValue() == 100);
+
+        assertTrue(pair.hashCode() != pair1.hashCode());
+
+        MopedDataPair pair2 = new MopedDataPair(MopedDataType.MOPED_STATE, MopedState.ACC.toInt());
+
+        assertTrue(pair.hashCode() == pair2.hashCode());
     }
 }

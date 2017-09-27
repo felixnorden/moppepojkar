@@ -105,7 +105,7 @@ public abstract class AbstractCommunicator implements Communicator {
 
     @Override
     public void setState(MopedState state) {
-        MopedDataPair p = new MopedDataPair(MopedDataType.MopedState, state.toInt());
+        MopedDataPair p = new MopedDataPair(MopedDataType.MOPED_STATE, state.toInt());
         queue.add(p);
     }
 
@@ -266,11 +266,13 @@ public abstract class AbstractCommunicator implements Communicator {
      */
     private void handleInput(MopedDataType type, int value) {
         switch (type) {
-            case MopedState:
+            case MOPED_STATE:
                 //This means a state was changed. Extract new state from value and send to listeners.
                 notifyStateChange(MopedState.parseInt(value));
+                break;
             default:
                 notifyValueChanged(type, value);
+                break;
         }
     }
 
