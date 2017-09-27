@@ -12,6 +12,8 @@ import java.util.concurrent.ExecutionException;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
@@ -126,6 +128,7 @@ public class Main extends Activity implements CommunicationListener {
         speedTextView.setText(Integer.toString(0));
 
         connectButton = (Button) findViewById(R.id.serverButton);
+        connectButton.setBackgroundColor(Color.parseColor("#7CFC00"));
 
         modeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -440,8 +443,10 @@ public class Main extends Activity implements CommunicationListener {
     private void updateModeButton() {
         if (isConnected) {
             connectButton.setText("Disconnect");
+            connectButton.setBackgroundColor(Color.parseColor("#FF0000"));
         } else {
             connectButton.setText("Connect");
+            connectButton.setBackgroundColor(Color.parseColor("#7CFC00"));
         }
     }
 

@@ -56,16 +56,15 @@ android:layout_height="match_parent"
         style="@android:style/Widget.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/connectButton"
+        android:layout_alignBottom="@+id/connectButton"
+        android:layout_marginRight="7dp"
+        android:layout_toStartOf="@+id/connectButton"
         android:background="#4d4d4d"
         android:elevation="0dp"
         android:onClick="serverConnect"
         android:text="Connect"
-        android:textColor="@color/switch_thumb_normal_material_light"
-        android:layout_marginRight="7dp"
-        android:textStyle="bold"
-        android:layout_alignBaseline="@+id/connectButton"
-        android:layout_alignBottom="@+id/connectButton"
-        android:layout_toStartOf="@+id/connectButton" />
+        android:textAppearance="@style/TextAppearance.AppCompat" />
 
     <Button
         android:id="@+id/modeButton"
