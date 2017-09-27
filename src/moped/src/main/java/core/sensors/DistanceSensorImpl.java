@@ -15,12 +15,16 @@ import static java.lang.Double.NaN;
  */
 public class DistanceSensorImpl implements DistanceSensor, InputSubscriber {
 
+    private static final double FILTER_WEIGHT = 0.4;
+
     private StringBuilder dynamicPythonInput;
 
     private double lastValue;
     private Thread valueLoop;
 
     private static DistanceSensorImpl ourInstance = new DistanceSensorImpl();
+    private LowPassFilter filter;
+
     public static DistanceSensorImpl getInstance() {
         return ourInstance;
     }
@@ -45,7 +49,7 @@ public class DistanceSensorImpl implements DistanceSensor, InputSubscriber {
         if (s.contains("\n")) {
             double temp = new SensorDataConverter().convertDistance(dynamicPythonInput.toString());
             if (temp != NaN) {
-                lastValue = temp;
+                normaliseValue(temp);
             }
             dynamicPythonInput = new StringBuilder();
         } else {
@@ -53,7 +57,12 @@ public class DistanceSensorImpl implements DistanceSensor, InputSubscriber {
         }
     }
 
+    private void normaliseValue(double value) {
+        lastValue = filter.filterValue(value);
+    }
+
     private DistanceSensorImpl() {
+        filter = new LowPassFilter(FILTER_WEIGHT);
         dynamicPythonInput = new StringBuilder();
         lastValue = 0.3;
 
