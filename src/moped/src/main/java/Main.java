@@ -1,10 +1,11 @@
+import com_io.CommunicatorFactoryImpl;
 import core.behaviour_states.StateController;
 
 public class Main {
 
     public static void main(String[] args) {
         StateController sc = new StateController();
-        RemoteMediator remoteMediator = new RemoteMediator(9001);
+        RemoteMediator remoteMediator = new RemoteMediator(9001, CommunicatorFactoryImpl.getFactoryInstance().getComInstance());
 
         Thread mainLoop = new Thread(() -> {
             while (true) {
