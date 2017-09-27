@@ -33,19 +33,26 @@ public class RemoteController implements ActionStrategy, DataReceiver {
 
     @Override
     public void dataReceived(String unformattedData) {
-        String[] data = unformattedData.split("|");
+        String[] data = unformattedData.split(",");
 
         if (data[0].equals("THROTTLE")) {
             if (axis == Y) {
-                lastValue = Integer.valueOf(data[1]);
+                updateValue(data[1]);
             }
         } else if (data[0].equals("STEER")) {
             if (axis == X) {
-                lastValue = Integer.valueOf(data[1]);
+                updateValue(data[1]);
             }
         }
     }
 
+    private void updateValue(String s) {
+        try {
+            lastValue = Integer.parseInt(s);
+        } catch (NumberFormatException nfe) {
+            System.out.println(nfe.getMessage());
+        }
+    }
 
     /**
      * The filter used to filter out unwanted data

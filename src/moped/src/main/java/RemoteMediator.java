@@ -24,7 +24,7 @@ public class RemoteMediator implements DataReceiver, CommunicationListener {
 
     @Override
     public void onStateChange(MopedState mopedState) {
-        communicationsMediator.transmitData("STATE|" + mopedState.toString(), Direction.INTERNAL);
+        communicationsMediator.transmitData("STATE," + mopedState.toString(), Direction.INTERNAL);
     }
 
     @Override
@@ -52,10 +52,10 @@ public class RemoteMediator implements DataReceiver, CommunicationListener {
             case PID_INTEGRAL_SUM:
                 break;
             case THROTTLE:
-                communicationsMediator.transmitData("THROTTLE|" + i, Direction.INTERNAL);
+                communicationsMediator.transmitData("THROTTLE," + i, Direction.INTERNAL);
                 break;
             case STEERING:
-                communicationsMediator.transmitData("STEER|" + i, Direction.INTERNAL);
+                communicationsMediator.transmitData("STEER," + i, Direction.INTERNAL);
                 break;
             case CUSTOM_1:
                 break;
@@ -81,7 +81,7 @@ public class RemoteMediator implements DataReceiver, CommunicationListener {
 
     @Override
     public void dataReceived(String unformattedDataString) {
-        String[] data = unformattedDataString.split("|");
+        String[] data = unformattedDataString.split(",");
 
         if (data.length == 2) {
             if (data[0].equals("STATE")) {

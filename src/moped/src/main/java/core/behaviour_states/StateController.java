@@ -2,7 +2,9 @@
 
 package core.behaviour_states;
 
+import com_io.CommunicatorFactoryImpl;
 import com_io.DataReceiver;
+import com_io.Direction;
 import core.behaviour_states.states.BehaviourState;
 import core.behaviour_states.states.BehaviourStateFactory;
 import core.behaviour_states.states.BehaviourStateFactoryImpl;
@@ -20,9 +22,12 @@ public class StateController implements Runnable, DataReceiver{
     public StateController() {
         this.stateFactory = BehaviourStateFactoryImpl.getInstance();
 
+        CommunicatorFactoryImpl.getFactoryInstance().getComInstance().subscribe(Direction.INTERNAL, this);
         // Possibly change to default safe mode when implemented
         this.acc = stateFactory.createAdaptiveCruiseControlBehaviour();
         this.manual = stateFactory.createManualBehaviour();
+
+        this.currentState = manual;
     }
 
     /**
@@ -48,10 +53,13 @@ public class StateController implements Runnable, DataReceiver{
 
     @Override
     public void dataReceived(String unformattedData) {
-        String[] data = unformattedData.split("|");
+        String[] data = unformattedData.split(",");
 
+        System.out.println("Datatype: " + data[0]);
+        System.out.println("MODE: " + data[1]);
         if (data[0].equals("STATE")) {
-            if (data[1].equals("acc")) {
+            if (data[1].equals("ACC")) {
+                System.out.println("ACC ENABLED");
                 currentState = acc;
             } else if (data[1].equals("MANUAL")) {
                 currentState = manual;

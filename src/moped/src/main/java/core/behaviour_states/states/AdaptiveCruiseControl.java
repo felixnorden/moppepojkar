@@ -55,8 +55,7 @@ class AdaptiveCruiseControl implements BehaviourState {
         //this.currentHandler = determineHandler();
 
         carController.setThrottle((int) currentHandler.takeLatitudeAction());
-        carController.setSteerValue(0);
-        //(int) currentHandler.takeLongitudeAction()
+        carController.setSteerValue((int) currentHandler.takeLongitudeAction());
     }
 
     private BidirectionalHandler determineHandler() {

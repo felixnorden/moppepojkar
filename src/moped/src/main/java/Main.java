@@ -5,7 +5,7 @@ public class Main {
 
     public static void main(String[] args) {
         StateController sc = new StateController();
-        RemoteMediator remoteMediator = new RemoteMediator(9001, CommunicatorFactoryImpl.getFactoryInstance().getComInstance());
+        RemoteMediator remoteMediator = new RemoteMediator(9005, CommunicatorFactoryImpl.getFactoryInstance().getComInstance());
 
         Thread mainLoop = new Thread(() -> {
             while (true) {

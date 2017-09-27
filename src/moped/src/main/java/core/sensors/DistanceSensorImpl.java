@@ -15,7 +15,7 @@ import static java.lang.Double.NaN;
  */
 public class DistanceSensorImpl implements DistanceSensor, InputSubscriber {
 
-    private static final double FILTER_WEIGHT = 0.4;
+    private static final double FILTER_WEIGHT = 0.7;
     private static final DistanceSensorImpl INSTANCE = new DistanceSensorImpl();
 
     private LowPassFilter filter;

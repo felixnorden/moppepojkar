@@ -109,7 +109,7 @@ public class CarControlImpl implements CarControl {
     private void writeToPythonScript(String text) {
         if (carControl != null) {
             try {
-                System.out.println("Car write: " + text);
+                //System.out.println("Car write: " + text);
                 carControl.outputToScript(text + "\n");
                 carControl.flushOutput();
             } catch (IOException e) {

@@ -17,9 +17,12 @@ public class LowPassFilter {
      * @return The filtered value.
      */
     public double filterValue(double nextRawValue) {
-        double difference = nextRawValue - currentValue;
-        double weightedDifference = difference * weight;
-        currentValue += weightedDifference;
+        // TODO: 27/09/2017 Fix uaf hack
+        if (nextRawValue > 0) {
+            double difference = nextRawValue - currentValue;
+            double weightedDifference = difference * weight;
+            currentValue += weightedDifference;
+        }
         return currentValue;
     }
 }
