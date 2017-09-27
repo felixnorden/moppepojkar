@@ -3,6 +3,7 @@ package se.sics.sse.fresta.wirelessino;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
@@ -16,6 +17,8 @@ import android.widget.EditText;
 
 import android.os.StrictMode;
 
+import com.ClientCommunicator;
+
 /**
  * This is the activity for connecting to the MOPED where the user has
  * to input an IP adress and a port to connect to, it also contains
@@ -23,12 +26,14 @@ import android.os.StrictMode;
  */
 
 public class SocketConnector extends Activity {
-    private final static int CONNECTION_TIMEOUT = 3000;
+
 	
 	private EditText ed_host = null;
-	private EditText ed_port = null;
+	private EditText ed_portmoped = null;
+	private EditText ed_portcommunicator = null;
 	private Button   btn_connect = null;
 	private Socket   socket = null;
+	private ClientCommunicator communicator = null;
 
 	protected void onCreate(Bundle savedInstanceState) {
 	    
@@ -40,7 +45,8 @@ public class SocketConnector extends Activity {
 
 		setContentView(R.layout.socket_connection_build);
 		ed_host = (EditText) findViewById(R.id.ed_host);
-		ed_port = (EditText) findViewById(R.id.ed_port);
+		ed_portmoped = (EditText) findViewById(R.id.ed_portmoped);
+		ed_portcommunicator = (EditText) findViewById(R.id.ed_portcommunicator);
 		btn_connect = (Button) findViewById(R.id.btn_connect);
 		
 		/* Fetch earlier defined host ip and port numbers and write them as default 
@@ -49,26 +55,33 @@ public class SocketConnector extends Activity {
 		String oldHost = mSharedPreferences.getString("host", null); 
 		if (oldHost != null)
 			ed_host.setText(oldHost);
-		String oldPort = mSharedPreferences.getString("port",null);
-		if (oldPort != null)
-			ed_port.setText(oldPort);
+		String oldPortMoped = mSharedPreferences.getString("portmoped",null);
+		if (oldPortMoped != null)
+			ed_portmoped.setText(oldPortMoped);
+		int oldPortCommunicator = mSharedPreferences.getInt("portcommunicator",0);
+		if (oldPortCommunicator != 0)
+			ed_portcommunicator.setText(Integer.toString(oldPortCommunicator));
 		
-		/** Setup the "connect"-button. On click, new host ip and port numbers should
-		 * be stored and a socket connection created (this is done as a background task). 
-		 */
-		btn_connect.setOnClickListener(new Button.OnClickListener() {
-			public void onClick(View v) {
-				String str_host = ed_host.getText().toString().trim();
-				String str_port = ed_port.getText().toString().trim();
-				
-				SharedPreferences mSharedPreferences = getSharedPreferences("list", MODE_PRIVATE);
-				mSharedPreferences.edit().putString("host",str_host).commit();
-				mSharedPreferences.edit().putString("port",str_port).commit();
-				
-				/* Create socket connection in a background task */
-				new AsyncConnectionTask().execute(str_host, str_port);
-			}
-		});
+
+
+	}
+
+	/** Setup the "connect"-button. On click, new host ip and port numbers should
+	 * be stored and a socket connection created (this is done as a background task).
+	 */
+
+	public void goToMain(View view){
+		String str_host = ed_host.getText().toString().trim();
+		String str_port1 = ed_portmoped.getText().toString().trim();
+		String str_port2 = ed_portcommunicator.getText().toString().trim();
+
+		SharedPreferences mSharedPreferences = getSharedPreferences("list", MODE_PRIVATE);
+		mSharedPreferences.edit().putString("host",str_host).apply();
+		mSharedPreferences.edit().putString("portmoped",str_port1).apply();
+		mSharedPreferences.edit().putInt("portcommunicator",Integer.parseInt(str_port2)).apply();
+
+		Intent intent = new Intent(this, Main.class);
+		startActivity(intent);
 	}
 
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -86,62 +99,6 @@ public class SocketConnector extends Activity {
 	 * (typically such tasks should not be done from the UI-thread, otherwise a
 	 * NetworkOnMainThreadException exception may be thrown by the Android runtime tools).
 	 */
-	private class AsyncConnectionTask extends AsyncTask<String, Void, String> {
-		private String msg = "def message";
 
-		/**
-		 * Establish a socket connection in the background.
-		 *
-		 * @param params
-		 * @return
-		 */
-		protected String doInBackground(String... params) {
-			try {
-				msg = params[0] + ":" + params[1];
-
-				/* Close any previously used socket 
-				 * (for example to prevent double-clicks leading to multiple connections) */
-				if (socket != null && !socket.isClosed())
-					socket.close();
-				
-				socket = new Socket();
-				socket.connect(new InetSocketAddress(params[0],						// host ip 
-													 Integer.parseInt(params[1])), 	// port 
-							   CONNECTION_TIMEOUT);
-			} catch (NumberFormatException e) {
-				msg = "Invalid port value (" + params[1] + "), type an integer between 0 and 65535";
-			} catch (IllegalArgumentException e) { 
-				msg = "Invalid port value (" + params[1] + "), type an integer between 0 and 65535";
-			} catch (Exception e) {
-				msg = e.getMessage();
-			}
-			
-			return null;
-		}
-
-		/**
-		 *
-		 * Once the background operation is finished, pass the socket reference to the
-		 * Main class and exit from this view. If something went wrong, notify the user.
-		 *
-		 * @param result
-		 */
-		protected void onPostExecute(String result) {
-			if (socket != null && socket.isConnected()) {
-				Main.init(socket);
-				finish();
-			}
-			else {
-				new AlertDialog.Builder(SocketConnector.this)
-				.setTitle("notification")
-				.setMessage(msg + " " + result)
-				.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-					}
-				})
-				.show();
-			}
-		}
-	}
 	
 }

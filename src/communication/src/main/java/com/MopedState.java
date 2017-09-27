@@ -6,24 +6,10 @@ package com;
  * Basic states for operation of MOPED
  */
 public enum MopedState {
-    ACC(MopedStateType.DRIVING_STATE),
-    MANUAL(MopedStateType.DRIVING_STATE);
+    ACC,
+    MANUAL;
 
     private static MopedState[] values = MopedState.values();
-    private final MopedStateType stateType;
-
-    MopedState(final MopedStateType stateType) {
-        this.stateType = stateType;
-    }
-
-    /**
-     * Get MopedStateType of MopedState enum
-     *
-     * @return MopedStateType enum
-     */
-    public MopedStateType getStateType() {
-        return this.stateType;
-    }
 
     /**
      * Convert enum to int
@@ -38,7 +24,7 @@ public enum MopedState {
      * Convert int to enum
      *
      * @param mopedState int
-     * @return MopedState enum
+     * @return MOPED_STATE enum
      */
     public static MopedState parseInt(int mopedState) {
         if (mopedState <= values.length && mopedState >= 0) {

@@ -3,35 +3,37 @@ package com;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.ServerSocket;
+import java.net.Socket;
 
-public class ServerCommunicator extends AbstractCommunicator {
+public class ClientCommunicator extends AbstractCommunicator {
 
-    private ServerSocket serverSocket;
+    private final String ip;
 
     /**
-     * Creates a ServerCommunicator acting on the specified port.
-     *
-     * @param port
+     * @param ip   The ip of the server.
+     * @param port The port of the server.
      */
-    public ServerCommunicator(int port) {
+    public ClientCommunicator(String ip, int port) {
         super(port);
+        this.ip = ip;
+    }
 
-        mainThread = new Thread(this);
+    /**
+     * We do not want the client to try to reconnect automagically when disconnected.
+     * Therefore, stop mainthread.
+     */
+    @Override
+    protected void handleDisconnect() {
+        this.stop();
     }
 
     @Override
     protected void clearConnection() {
         try {
-            if (serverSocket != null) {
-                serverSocket.close();
-            }
-
             if (socket != null) {
                 socket.close();
             }
 
-            serverSocket = null;
             socket = null;
             inputStream = null;
             outputStream = null;
@@ -42,14 +44,13 @@ public class ServerCommunicator extends AbstractCommunicator {
 
     protected void connectSocket() {
         try {
-            serverSocket = new ServerSocket(port);
-            socket = serverSocket.accept();
+            log("Looking for server on port " + ip + ":" + port + "...");
+            socket = new Socket(ip, this.port);
             this.inputStream = new DataInputStream(socket.getInputStream());
             this.outputStream = new DataOutputStream(socket.getOutputStream());
             notifyConnected();
         } catch (IOException e) {
-            //Runs if port was already bound by another socket (possibly ours)
-            e.printStackTrace();
+            //This block runs if socket cannot connect.
         }
     }
 }

@@ -1,14 +1,13 @@
 package com;
 
-import javafx.util.Pair;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 
 /**
@@ -18,17 +17,24 @@ import java.util.Queue;
 public abstract class AbstractCommunicator implements Communicator {
 
     //Constants
-    private static final String EXIT_CODE = "#EXIT";
+    private static final String PING = "#P";
+    private static final String EXIT_CODE = "#E";
     private static final String SEPARATOR = ",";
     private static final long UPDATE_INTERVAL = 10;//This essentially controls the input lag between app and MOPED
 
+    private boolean loggingEnabled = true;
     protected final int port;
     protected Socket socket;
     protected DataInputStream inputStream;
     protected DataOutputStream outputStream;
     protected Thread mainThread;
-    private Queue<Pair<MopedDataType, Integer>> queue;
+    private Queue<MopedDataPair> queue;
     private final ArrayList<CommunicationListener> listeners;
+    //This variable is true when a disconnect just happened and
+    //it needs to be taken care of in the main loop. The main loop
+    //will set this back to false when it has been handled.
+    private volatile boolean hasDisconnected = false;
+
 
     /**
      * @param port Port for the socket to use.
@@ -36,7 +42,9 @@ public abstract class AbstractCommunicator implements Communicator {
     protected AbstractCommunicator(int port) {
         this.port = port;
         listeners = new ArrayList<>();
-        queue = new LinkedList<>();
+        queue = new ConcurrentLinkedQueue<>();
+
+        mainThread = new Thread(this, getClass().getSimpleName());
     }
 
     /**
@@ -48,9 +56,21 @@ public abstract class AbstractCommunicator implements Communicator {
     @Override
     public void run() {
         while (!Thread.interrupted()) {
+            if (hasDisconnected) {
+                handleDisconnect();
+                hasDisconnected = false;
+                continue;
+            }
+
             // If there is no connection or if connection is broken.
             if (socket == null || !socket.isConnected()) {
-                connectSocket();
+                //Try to connect to socket on port. If timed out, clear old connection and retry.
+                try {
+                    connectSocket();
+                } catch (SocketTimeoutException e) {
+                    clearConnection();
+                    continue;
+                }
             } else {
                 update();
             }
@@ -66,6 +86,7 @@ public abstract class AbstractCommunicator implements Communicator {
         //Only runs after running has been set to false (aka onDisconnect and stop())
         sendExitCode();
         clearConnection();
+        log("STOPPED");
     }
 
     /**
@@ -78,13 +99,20 @@ public abstract class AbstractCommunicator implements Communicator {
                 outputStream.writeUTF(EXIT_CODE);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            //Will be thrown if other communicator can't be reached. (Might happen on wifi-loss)
         }
     }
 
     @Override
     public void setState(MopedState state) {
-        Pair<MopedDataType, Integer> p = new Pair(MopedDataType.MopedState, state.toInt());
+        MopedDataPair p = new MopedDataPair(MopedDataType.MOPED_STATE, state.toInt());
+        queue.add(p);
+    }
+
+
+    @Override
+    public void setValue(MopedDataType type, int value) {
+        MopedDataPair p = new MopedDataPair(type, value);
         queue.add(p);
     }
 
@@ -100,30 +128,31 @@ public abstract class AbstractCommunicator implements Communicator {
             mainThread.start();
         } catch (IllegalThreadStateException e) {
             //If this is thrown, thread was already started once before.
+            //First block is if thread is dead, aka it was killed.
+            //Second block is if a start was tried while thread was alive
             if (!mainThread.isAlive()) {
-                mainThread = new Thread(this);
+                mainThread = new Thread(this, getClass().getSimpleName());
                 mainThread.start();
             } else {
-                System.out.println(this.getClass().getName() + " has already been started once.");
+                log("Thread " + mainThread.getName() + " is already running.");
             }
         }
     }
 
     @Override
     public void stop() {
+        log("Stopping " + mainThread.getName() + " (This may take up to 4 seconds)");
         mainThread.interrupt();
     }
+
+    protected abstract void handleDisconnect();
 
     /**
      * Fetches and sends new information from the connected socket.
      */
     private void update() {
-        try {
-            sendQueuedData();
-            receiveData();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        sendQueuedData();
+        receiveData();
     }
 
     /**
@@ -131,21 +160,31 @@ public abstract class AbstractCommunicator implements Communicator {
      *
      * @throws IOException
      */
-    private void sendQueuedData() throws IOException {
-        //Send all queued data
-        while (queue.size() > 0) {
-            Pair<MopedDataType, Integer> pair = queue.poll();
+    private void sendQueuedData() {
+        try {
+            //Before sending (eventually) queued data, send a ping to see if the outputstream doesn't give an error
+            outputStream.writeUTF(PING);
+            //Send all queued data
+            while (queue.size() > 0) {
+                MopedDataPair mopedDataPair = queue.poll();
 
-            String dataType = String.valueOf(pair.getKey().toInt());
-            String value = String.valueOf(pair.getValue());
+                String dataType = String.valueOf(mopedDataPair.getType().toInt());
+                String value = String.valueOf(mopedDataPair.getValue());
 
-            //Format is 'x,y' where
-            //  x = MopedDataType integer
-            //  y = integer value of specified MopedDataType
-            String output = dataType + SEPARATOR + value;
+                //Format is 'x,y' where
+                //  x = MopedDataType integer
+                //  y = integer value of specified MopedDataType
+                String output = dataType + SEPARATOR + value;
 
-            outputStream.writeUTF(output);
+                outputStream.writeUTF(output);
+            }
+        } catch (IOException e) {
+            onDisconnect();
         }
+    }
+
+    public boolean isAlive() {
+        return mainThread != null && mainThread.isAlive();
     }
 
     /**
@@ -153,23 +192,30 @@ public abstract class AbstractCommunicator implements Communicator {
      *
      * @throws IOException
      */
-    private void receiveData() throws IOException {
-        while (inputStream.available() > 0) {
-            // Input string is formatted as "xxxxx,yyyy" where x is MopedDataType and y is a int value
-            String input = inputStream.readUTF();
+    private void receiveData() {
+        try {
+            while (inputStream.available() > 0) {
+                // Input string is formatted as "xxxxx,yyyy" where x is MopedDataType and y is a int value
+                String input = inputStream.readUTF();
 
-            if (input.equals(EXIT_CODE)) {
-                onDisconnect();
-                break;
+                if (input.equals(EXIT_CODE)) {
+                    onDisconnect();
+                    break;
+                } else if (input.equals(PING)) {
+                    //Do nothing if it was a ping received.
+                    continue;
+                }
+
+                String[] args = input.split(SEPARATOR);
+
+                //Extract data from input.
+                MopedDataType type = MopedDataType.parseInt(Integer.parseInt(args[0]));
+                int value = Integer.parseInt(args[1]);
+
+                handleInput(type, value);
             }
-
-            String[] args = input.split(SEPARATOR);
-
-            //Extract data from input.
-            MopedDataType type = MopedDataType.parseInt(Integer.parseInt(args[0]));
-            int value = Integer.parseInt(args[1]);
-
-            handleInput(type, value);
+        } catch (IOException e) {
+            onDisconnect();
         }
     }
 
@@ -179,6 +225,12 @@ public abstract class AbstractCommunicator implements Communicator {
     void notifyConnected() {
         for (CommunicationListener cl : listeners) {
             cl.onConnection();
+        }
+    }
+
+    void notifyValueChanged(MopedDataType type, int value) {
+        for (CommunicationListener cl : listeners) {
+            cl.onValueChanged(type, value);
         }
     }
 
@@ -214,11 +266,13 @@ public abstract class AbstractCommunicator implements Communicator {
      */
     private void handleInput(MopedDataType type, int value) {
         switch (type) {
-            case MopedState:
+            case MOPED_STATE:
                 //This means a state was changed. Extract new state from value and send to listeners.
                 notifyStateChange(MopedState.parseInt(value));
+                break;
             default:
-                // TODO: 2017-09-18 Notify value change
+                notifyValueChanged(type, value);
+                break;
         }
     }
 
@@ -228,12 +282,35 @@ public abstract class AbstractCommunicator implements Communicator {
      */
     private void onDisconnect() {
         notifyDisconnected();
-        mainThread.interrupt();
+        hasDisconnected = true;
     }
 
     /**
      * Does the necessary setup for the sockets to establish a connection.
      * This is necessary because one communicator needs to act as a server and the other one as a client.
      */
-    protected abstract void connectSocket();
+    protected abstract void connectSocket() throws SocketTimeoutException;
+
+    /**
+     * Prints the given object in out.println and adds which thread printed it, but only if logging is enabled;
+     *
+     * @param object
+     */
+    protected void log(Object object) {
+        if (loggingEnabled) {
+            System.out.println("[" + Thread.currentThread().getName() + " Thread] " + object.toString());
+        }
+    }
+
+    public boolean isLoggingEnabled() {
+        return loggingEnabled;
+    }
+
+    public void enableLogging() {
+        this.loggingEnabled = true;
+    }
+
+    public void disableLogging() {
+        this.loggingEnabled = false;
+    }
 }
