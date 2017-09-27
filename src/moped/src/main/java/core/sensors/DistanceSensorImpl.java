@@ -15,19 +15,21 @@ import static java.lang.Double.NaN;
  */
 public class DistanceSensorImpl implements DistanceSensor, InputSubscriber {
 
-    private StringBuilder dynamicPythonInput;
+    private static final double FILTER_WEIGHT = 0.4;
+    private static final DistanceSensorImpl INSTANCE = new DistanceSensorImpl();
 
-    private double lastValue;
+    private LowPassFilter filter;
+    private double currentSensorValue;
+    private StringBuilder pythonInput;
     private Thread valueLoop;
 
-    private static DistanceSensorImpl ourInstance = new DistanceSensorImpl();
     public static DistanceSensorImpl getInstance() {
-        return ourInstance;
+        return INSTANCE;
     }
 
     @Override
     public double getDistance() {
-        return lastValue;
+        return currentSensorValue;
     }
 
     @Override
@@ -43,19 +45,24 @@ public class DistanceSensorImpl implements DistanceSensor, InputSubscriber {
     @Override
     public synchronized void outputString(String s) {
         if (s.contains("\n")) {
-            double temp = new SensorDataConverter().convertDistance(dynamicPythonInput.toString());
+            double temp = new SensorDataConverter().convertDistance(pythonInput.toString());
             if (temp != NaN) {
-                lastValue = temp;
+                normaliseValue(temp);
             }
-            dynamicPythonInput = new StringBuilder();
+            pythonInput = new StringBuilder();
         } else {
-            dynamicPythonInput.append(s);
+            pythonInput.append(s);
         }
     }
 
+    private void normaliseValue(double value) {
+        currentSensorValue = filter.filterValue(value);
+    }
+
     private DistanceSensorImpl() {
-        dynamicPythonInput = new StringBuilder();
-        lastValue = 0.3;
+        filter = new LowPassFilter(FILTER_WEIGHT);
+        pythonInput = new StringBuilder();
+        currentSensorValue = 0.3;
 
         valueLoop = new Thread(() -> {
             ProcessRunner sensorData = null;
@@ -66,7 +73,7 @@ public class DistanceSensorImpl implements DistanceSensor, InputSubscriber {
                 System.out.println(e.getMessage());
                 System.out.println("Couldn't start sensor script");
             }
-
+            
             sensorData.subscribeToInput(this);
 
             while (!Thread.interrupted()) {
