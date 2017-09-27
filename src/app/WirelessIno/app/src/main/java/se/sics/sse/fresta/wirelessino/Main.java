@@ -7,14 +7,9 @@ import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.Random;
-import java.util.concurrent.ExecutionException;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -31,6 +26,8 @@ import com.ClientCommunicator;
 import com.CommunicationListener;
 import com.Communicator;
 import com.MopedState;
+
+import static com.MopedState.ACC;
 
 /**
  * This is the Main class which is the main activity for the application.
@@ -204,6 +201,7 @@ public class Main extends Activity implements CommunicationListener {
         });
 
         modeButton = (Button) findViewById(R.id.modeButton);
+        modeButton.setEnabled(false);
         turningTextView = (TextView) findViewById(R.id.turningTextView);
         speedTextView = (TextView) findViewById(R.id.speedTextView);
 
@@ -216,16 +214,7 @@ public class Main extends Activity implements CommunicationListener {
         modeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isACCenabled) {
-                    modeButton.setText("ACC");
-                    communicator.setState(MopedState.ACC);
-                    isACCenabled = !isACCenabled;
-                } else {
-                    modeButton.setText("MANUAL");
-                    communicator.setState(MopedState.MANUAL);
-                    isACCenabled = !isACCenabled;
-                }
-
+                updateModeButton();
             }
         });
 
@@ -338,7 +327,7 @@ public class Main extends Activity implements CommunicationListener {
                 Toast.makeText(this, "Connection stopped", Toast.LENGTH_SHORT).show();
                 isConnected = false;
             }
-            updateModeButton();
+            updateConnectButton();
         }
 
 
@@ -391,7 +380,7 @@ public class Main extends Activity implements CommunicationListener {
         String out = textTop + textBottom;
         Log.e("Before Socket", out);
         /* Send speed and steering values through the socket */
-        if (socket != null) {
+        if (socket != null && socket.isConnected()) {
             send(out);
             Log.e("Test After Socket if", out);
         }
@@ -499,20 +488,36 @@ public class Main extends Activity implements CommunicationListener {
             public void run() {
                 Toast.makeText(getApplicationContext(), "Connected to server", Toast.LENGTH_SHORT).show();
                 isConnected = true;
-                updateModeButton();
+                modeButton.setEnabled(true);
+                updateConnectButton();
             }
         });
     }
 
     @Override
     public void onStateChange(final MopedState mopedState) {
+
+        switch(mopedState){
+
+            case ACC:  isACCenabled = true;
+                break;
+
+            case MANUAL:  isACCenabled = false;
+                break;
+
+        }
+
+
+
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                updateModeButton();
                 Toast.makeText(getApplicationContext(), "New state: " + mopedState.name(), Toast.LENGTH_SHORT).show();
             }
         });
     }
+
 
     @Override
     public void onDisconnection() {
@@ -520,13 +525,27 @@ public class Main extends Activity implements CommunicationListener {
             @Override
             public void run() {
                 isConnected = false;
-                updateModeButton();
+                modeButton.setEnabled(false);
+                updateConnectButton();
                 Toast.makeText(getApplicationContext(), "Connection Lost", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void updateModeButton() {
+    private void updateModeButton(){
+        if (isACCenabled) {
+            modeButton.setText("ACC");
+            communicator.setState(MopedState.ACC);
+            isACCenabled = !isACCenabled;
+        } else {
+            modeButton.setText("MANUAL");
+            communicator.setState(MopedState.MANUAL);
+            isACCenabled = !isACCenabled;
+        }
+    }
+
+
+    private void updateConnectButton() {
         if (isConnected) {
             connectButton.setText("Disconnect");
             connectButton.setBackgroundColor(Color.parseColor("#FF0000"));
