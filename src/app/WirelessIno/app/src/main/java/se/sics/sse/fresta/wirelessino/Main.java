@@ -25,9 +25,8 @@ import android.widget.Toast;
 import com.ClientCommunicator;
 import com.CommunicationListener;
 import com.Communicator;
+import com.MopedDataType;
 import com.MopedState;
-
-import static com.MopedState.ACC;
 
 /**
  * This is the Main class which is the main activity for the application.
@@ -53,10 +52,8 @@ public class Main extends Activity implements CommunicationListener {
     private Communicator communicator;
 
     public static final String TAG = "WirelessIno";
-    public static Socket socket = null;
     public static final boolean D = true; // The debug option
 
-    private static PrintWriter out = null;
     private Menu menu = null;
 
     private static final int EXIT_INDEX = 0;        // Menu bar: exit
@@ -77,17 +74,14 @@ public class Main extends Activity implements CommunicationListener {
          */
 
         speedBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-
-
-            Thread SpeedBarThread;
-
+            Thread speedBarThread;
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
                 Log.e("ThreadCheck", "Bar Touched");
-                if (SpeedBarThread != null) {
-                    if (SpeedBarThread.isAlive()) {
-                        SpeedBarThread.interrupt();
+                if (speedBarThread != null) {
+                    if (speedBarThread.isAlive()) {
+                        speedBarThread.interrupt();
                         Log.e("ThreadCheck", "Thread Interrupted");
                     }
                 }
@@ -97,7 +91,7 @@ public class Main extends Activity implements CommunicationListener {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
 
-                SpeedBarThread = new Thread(new Runnable() {
+                speedBarThread = new Thread(new Runnable() {
                     @Override
                     public void run() {
                         if (speedBar.getProgress() > 100) {
@@ -123,18 +117,13 @@ public class Main extends Activity implements CommunicationListener {
                         }
                     }
                 });
-
-                SpeedBarThread.start();
+                speedBarThread.start();
                 Log.e("ThreadCheck", "Thread Started");
-
-
             }
 
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-
                 transformPWM();
             }
         });
@@ -260,7 +249,7 @@ public class Main extends Activity implements CommunicationListener {
      */
 
     public void goToOptions(View view) {
-        Intent intent = new Intent(this, SocketConnector.class);
+        Intent intent = new Intent(this, Settings.class);
         startActivity(intent);
     }
 
@@ -270,8 +259,7 @@ public class Main extends Activity implements CommunicationListener {
         if (connectButton.getText().toString().equals("Connect")) {
             SharedPreferences mSharedPreferences = getSharedPreferences("list", MODE_PRIVATE);
             final String ip = mSharedPreferences.getString("host", null);
-            final int port = mSharedPreferences.getInt("portcommunicator", 0);
-            final String mopedport = mSharedPreferences.getString("portmoped", null);
+            final int port = mSharedPreferences.getInt("port", 0);
 
             /* Create socket connection in a background task */
 
@@ -279,47 +267,10 @@ public class Main extends Activity implements CommunicationListener {
             if (ip == null || port == 0) {
                 Toast.makeText(this, "Enter Ports and IP in settings", Toast.LENGTH_SHORT).show();
             } else {
-
-
-                Thread coreConnectThread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            socket = new Socket();
-                            socket.connect(new InetSocketAddress(ip, Integer.parseInt(mopedport)), CONNECTION_TIMEOUT);
-
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-
-                        }
-                    }
-                });
-                coreConnectThread.start();
-                try {
-                    coreConnectThread.join();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-
-                if (socket != null && socket.isConnected()) {
-
-                    try {
-                        out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
-                                socket.getOutputStream())), true);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                    communicator = new ClientCommunicator(ip, port);
-                    communicator.addListener(this);
-                    communicator.start();
-                    Toast.makeText(this, "Waiting for Server Connection", Toast.LENGTH_SHORT).show();
-
-                } else {
-                    Toast.makeText(this, "Connection to MOPED Core failed", Toast.LENGTH_SHORT).show();
-                }
+                communicator = new ClientCommunicator(ip, port);
+                communicator.addListener(this);
+                communicator.start();
+                Toast.makeText(this, "Waiting for Server Connection", Toast.LENGTH_SHORT).show();
             }
         } else {
             if (communicator != null) {
@@ -329,8 +280,6 @@ public class Main extends Activity implements CommunicationListener {
             }
             updateConnectButton();
         }
-
-
     }
 
 
@@ -340,49 +289,17 @@ public class Main extends Activity implements CommunicationListener {
      */
 
     public void transformPWM() {
-        /*Here the values are formatted in a way that the arduino will understand */
-        String textTop = "V";
-        String textBottom = "H";
-
          /* Subtract 100 since the bar goes from 0 to 200 and we want values between -100 and 100 */
-        int topValue = speedBar.getProgress() - 100;
-        int bottomValue = steeringBar.getProgress() - 100;
+        int speed = speedBar.getProgress() - 100;
+        int steering = steeringBar.getProgress() - 100;
 
-        turningTextView.setText(Integer.toString(topValue));
-        speedTextView.setText(Integer.toString(bottomValue));
+        turningTextView.setText(Integer.toString(speed));
+        speedTextView.setText(Integer.toString(steering));
 
-        /*Check if the value is negative and add prefix*/
-        if (topValue > -1) {
-            textTop += "0";
-        } else {
-            textTop += "-";
-        }
-        if (bottomValue > -1) {
-            textBottom += "0";
-        } else {
-            textBottom += "-";
-        }
-
-
-        if (topValue < 10 && topValue > -10) {
-            textTop += "00";
-        } else if (topValue < 100 && topValue > -100) {
-            textTop += "0";
-        }
-
-        if (bottomValue < 10 && bottomValue > -10) {
-            textBottom += "00";
-        } else if (bottomValue < 100 && bottomValue > -100) {
-            textBottom += "0";
-        }
-        textTop += Integer.toString(Math.abs(topValue));
-        textBottom += Integer.toString(Math.abs(bottomValue));
-        String out = textTop + textBottom;
-        Log.e("Before Socket", out);
-        /* Send speed and steering values through the socket */
-        if (socket != null && socket.isConnected()) {
-            send(out);
-            Log.e("Test After Socket if", out);
+        if (communicator != null) {
+            // TODO: 2017-09-27 Dont have to send both values each time one of the sliders is updated?? FIX
+            communicator.setValue(MopedDataType.THROTTLE, speed);
+            communicator.setValue(MopedDataType.STEERING, steering);
         }
     }
 
@@ -417,43 +334,13 @@ public class Main extends Activity implements CommunicationListener {
         if (item.getItemId() == EXIT_INDEX) {
             finish();
         } else if (item.getItemId() == DISCONNECT_INDEX) {
-            try {
-                if (socket != null) {
-                    socket.close();
-                    socket = null;
-
-                    menu.getItem(DISCONNECT_INDEX).setVisible(false); // Hide the disconnect option
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            menu.getItem(DISCONNECT_INDEX).setVisible(false); // Hide the disconnect option
         } else if (item.getItemId() == CONFIG_INDEX) {
-            Intent i = new Intent(Main.this, SocketConnector.class);
+            Intent i = new Intent(Main.this, Settings.class);
             startActivity(i);
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * Initialize the output stream for the socket.
-     */
-
-    public static void init(Socket socket) {
-
-        Main.socket = socket;
-
-
-    }
-
-    /**
-     * Send a message through the socket.
-     *
-     * @param message the message that will be sent to the MOPED
-     */
-
-    public static void send(Object message) {
-        out.println(message);
     }
 
     /**
@@ -463,7 +350,8 @@ public class Main extends Activity implements CommunicationListener {
 
     private void updateMenuVisibility() {
         if (menu != null) {
-            if (socket == null || !socket.isConnected())
+            if (false)
+                // TODO: 2017-09-27 Fix this false thing
                 menu.getItem(DISCONNECT_INDEX).setVisible(false);
             else
                 menu.getItem(DISCONNECT_INDEX).setVisible(true);
@@ -496,17 +384,14 @@ public class Main extends Activity implements CommunicationListener {
 
     @Override
     public void onStateChange(final MopedState mopedState) {
-
-        switch(mopedState){
-
-            case ACC:  isACCenabled = true;
+        switch (mopedState) {
+            case ACC:
+                isACCenabled = true;
                 break;
-
-            case MANUAL:  isACCenabled = false;
+            case MANUAL:
+                isACCenabled = false;
                 break;
-
         }
-
 
 
         this.runOnUiThread(new Runnable() {
@@ -532,7 +417,39 @@ public class Main extends Activity implements CommunicationListener {
         });
     }
 
-    private void updateModeButton(){
+    @Override
+    public void onValueChanged(MopedDataType mopedDataType, int i) {
+        switch (mopedDataType) {
+            case MOPED_STATE:
+                break;
+            case VELOCITY:
+                break;
+            case SENSOR_DISTANCE:
+                break;
+            case PID_TARGET_VALUE:
+                break;
+            case PID_P_CONSTANT:
+                break;
+            case PID_Y_CONSTANT:
+                break;
+            case PID_D_CONSTANT:
+                break;
+            case PID_INTEGRAL_SUM:
+                break;
+            case THROTTLE:
+                break;
+            case STEERING:
+                break;
+            case CUSTOM_1:
+                break;
+            case CUSTOM_2:
+                break;
+            case CUSTOM_3:
+                break;
+        }
+    }
+
+    private void updateModeButton() {
         if (isACCenabled) {
             modeButton.setText("ACC");
             communicator.setState(MopedState.ACC);
@@ -554,6 +471,4 @@ public class Main extends Activity implements CommunicationListener {
             connectButton.setBackgroundColor(Color.parseColor("#7CFC00"));
         }
     }
-
-
 }
