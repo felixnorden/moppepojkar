@@ -47,13 +47,6 @@ public interface Communicator extends Runnable {
     void setValue(MopedDataType type, int value);
 
     /**
-     * Returns if the communicator is still alive.
-     *
-     * @return True if communicator thread is not null and alive, false otherwise.
-     */
-    boolean isAlive();
-
-    /**
      * @return True if logging is enabled, false otherwise.
      */
     boolean isLoggingEnabled();

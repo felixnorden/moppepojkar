@@ -26,7 +26,7 @@
         android:theme="@style/AppTheme">
         <activity
 
-            android:name=".SocketConnector"
+            android:name=".Settings"
             android:label="Target Server Setting"></activity>
         <activity android:name=".Main"
                   android:screenOrientation="landscape">

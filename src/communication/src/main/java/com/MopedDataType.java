@@ -10,6 +10,8 @@ public enum MopedDataType {
     PID_Y_CONSTANT,
     PID_D_CONSTANT,
     PID_INTEGRAL_SUM,
+    THROTTLE,
+    STEERING,
     CUSTOM_1,
     CUSTOM_2,
     CUSTOM_3;
