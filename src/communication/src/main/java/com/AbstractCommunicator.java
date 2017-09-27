@@ -183,10 +183,6 @@ public abstract class AbstractCommunicator implements Communicator {
         }
     }
 
-    public boolean isAlive() {
-        return mainThread != null && mainThread.isAlive();
-    }
-
     /**
      * Read and interpret data from socket link.
      *
@@ -222,13 +218,13 @@ public abstract class AbstractCommunicator implements Communicator {
     /**
      * Notifies all listeners that a connection has been established.
      */
-    void notifyConnected() {
+    protected void notifyConnected() {
         for (CommunicationListener cl : listeners) {
             cl.onConnection();
         }
     }
 
-    void notifyValueChanged(MopedDataType type, int value) {
+    private void notifyValueChanged(MopedDataType type, int value) {
         for (CommunicationListener cl : listeners) {
             cl.onValueChanged(type, value);
         }
