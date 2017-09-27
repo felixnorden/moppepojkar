@@ -91,6 +91,18 @@ public class NoiseNumberGenerator {
         return noiseCurve;
     }
 
+    public double[] generateNoisySinusCurve(double lowestValue, double highestValue, int sinusPeriod, int size) {
+        double[] noisyCurve = new double[size];
+
+        for (int i = 0; i < size; i++) {
+            double normalValue = ((highestValue - lowestValue)/2) * Math.sin((2*Math.PI / sinusPeriod) * i) + (lowestValue + highestValue) / 2;
+            double noisyValue = generateNoisedValue(normalValue);
+            noisyCurve[i] = noisyValue;
+        }
+
+        return noisyCurve;
+    }
+
     /**
      * Uses {@Link LowPassFilter} to print out all of the values created by different
      * weight values in a LowPassFilter, to the console. The data is based on the rawValues parameter
@@ -144,11 +156,16 @@ public class NoiseNumberGenerator {
 
 
     public static void main(String[] args) {
-        NoiseNumberGenerator nGen = new NoiseNumberGenerator(0.1, 0.05, 15);
-//        double[] rawValues = nGen.generateNoisyArray(0.3, 300, 15);
-        double[] rawValues = nGen.generateNormalNoiseCurve(0.1, 0.8, 350);
+        NoiseNumberGenerator nGen = new NoiseNumberGenerator(0.05, 0.09, 8);
+        double[] rawValues = nGen.generateNoisySinusCurve(0.3, 0.8, 5 * 10, 250);
+        double[] weightValues = {0.1, 0.2, 0.4};
 
-        double[] weightValues = {0.1, 0.25, 0.5};
-        outputFilteredValues(weightValues, rawValues);
+        outputFilteredValues(weightValues,rawValues);
+
+
+        System.out.println("\n\n\n");
+        for (int i = 0; i < 250; i++) {
+            System.out.println((double) i/ (double) 10);
+        }
     }
 }
