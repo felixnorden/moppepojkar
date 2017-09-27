@@ -74,7 +74,7 @@ public class RemoteMediator implements DataReceiver, CommunicationListener {
     }
 
     @Override
-    public void dataReceived(int[] data, Direction direction) {
-        
+    public void dataReceived(String data) {
+
     }
 }

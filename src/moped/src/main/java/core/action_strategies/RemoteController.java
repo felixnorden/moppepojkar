@@ -21,7 +21,7 @@ public class RemoteController implements ActionStrategy, DataReceiver {
      */
     public RemoteController(Axis axis, CommunicationsMediator comIO) {
         this.axis = axis;
-        comIO.subscribe(this, Direction.INTERNAL);
+        comIO.subscribe(Direction.INTERNAL, this);
     }
 
     @Override
@@ -30,8 +30,8 @@ public class RemoteController implements ActionStrategy, DataReceiver {
     }
 
     @Override
-    public synchronized void dataReceived(int[] data, Direction direction) {
-        
+    public void dataReceived(String data) {
+
     }
 
 
