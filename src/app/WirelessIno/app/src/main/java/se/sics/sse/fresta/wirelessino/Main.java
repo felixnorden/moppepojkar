@@ -288,18 +288,25 @@ public class Main extends Activity implements CommunicationListener {
      * Uses the predefined send(Object message) method to notify the MOPED of a change in instructions.
      */
 
+    int lastSpeed;
+    int lastSteering;
     public void transformPWM() {
          /* Subtract 100 since the bar goes from 0 to 200 and we want values between -100 and 100 */
         int speed = speedBar.getProgress() - 100;
         int steering = steeringBar.getProgress() - 100;
 
-        turningTextView.setText(Integer.toString(speed));
-        speedTextView.setText(Integer.toString(steering));
 
         if (communicator != null) {
-            // TODO: 2017-09-27 Dont have to send both values each time one of the sliders is updated?? FIX
-            communicator.setValue(MopedDataType.THROTTLE, speed);
-            communicator.setValue(MopedDataType.STEERING, steering);
+            if(speed != lastSpeed) {
+                communicator.setValue(MopedDataType.THROTTLE, speed);
+                turningTextView.setText(Integer.toString(speed));
+                lastSpeed = speed;
+            }
+            if(steering != lastSteering) {
+                communicator.setValue(MopedDataType.STEERING, steering);
+                speedTextView.setText(Integer.toString(steering));
+                lastSteering = steering;
+            }
         }
     }
 
