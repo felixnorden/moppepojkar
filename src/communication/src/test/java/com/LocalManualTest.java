@@ -119,6 +119,13 @@ public class LocalManualTest {
                 case "sstate MANUAL":
                     server.setState(MopedState.MANUAL);
                     break;
+                case "slog":
+                    if (server.isLoggingEnabled()) {
+                        server.disableLogging();
+                    } else {
+                        server.enableLogging();
+                    }
+                    break;
                 case "cstart":
                     client.start();
                     break;
