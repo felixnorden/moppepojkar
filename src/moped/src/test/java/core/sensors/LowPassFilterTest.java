@@ -23,6 +23,7 @@ class LowPassFilterTest {
     }
 
     @Test
+    @DisplayName("should return positive values")
     void positiveFilterValue() {
         // Arrange
         final double updatedValue = 10;
@@ -37,6 +38,7 @@ class LowPassFilterTest {
     }
 
     @Test
+    @DisplayName("should return negative values")
     void negativeFilterValue() {
         // Arrange
         filter.filterValue(100);
@@ -49,6 +51,7 @@ class LowPassFilterTest {
     }
 
     @Test
+    @DisplayName("should return values with a set error span")
     void valueTesting() {
         // Arrange
         for (int i = 0; i < 100; i++) {
@@ -68,6 +71,7 @@ class LowPassFilterTest {
     }
 
     @Test
+    @DisplayName("should handle noise spikes")
     void extremeValueTesting() {
         // Arrange
         for (int i = 0; i < 100; i++) {
@@ -83,6 +87,7 @@ class LowPassFilterTest {
     }
 
     @Test
+    @DisplayName("should balance incoming stream of noise")
     void noiseControl() {
         // Arrange
         double[] arr = {0.3,
