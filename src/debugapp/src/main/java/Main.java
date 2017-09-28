@@ -153,6 +153,7 @@ public class Main implements ActionListener, CommunicationListener {
         if (client != null) {
             client.stop();
             statusLabel.setText("Stopped");
+            connectButton.setText("Connect");
         }
     }
 
@@ -170,6 +171,8 @@ public class Main implements ActionListener, CommunicationListener {
 
     public void onConnection() {
         statusLabel.setText("Connected");
+        connectButton.setText("Disconnect");
+        resetLabels();
     }
 
     public void onStateChange(MopedState mopedState) {
@@ -185,7 +188,6 @@ public class Main implements ActionListener, CommunicationListener {
 
     public void onDisconnection() {
         statusLabel.setText("Disconnected");
-        resetLabels();
     }
 
     public void onValueChanged(MopedDataType mopedDataType, int i) {
