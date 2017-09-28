@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+android:orientation="horizontal" android:layout_width="match_parent"
+android:layout_height="match_parent"
+                android:background="#8cb4ff">
+
+
+    <SeekBar
+        android:id="@+id/speedBar"
+        style="@android:style/Widget.SeekBar"
+        android:layout_width="750px"
+        android:layout_height="300px"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/SteeringBar"
+        android:layout_marginRight="27dp"
+        android:max="200"
+        android:progress="100"
+        android:rotation="270"
+        tools:style="@android:style/Widget.Material.SeekBar" />
+
+    <SeekBar
+        android:id="@+id/SteeringBar"
+        style="@android:style/Widget.SeekBar"
+        android:layout_width="750px"
+        android:layout_height="300px"
+        android:layout_alignEnd="@+id/connectButton"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="27dp"
+        android:layout_marginRight="27dp"
+        android:max="200"
+        android:progress="100"
+        tools:style="@android:style/Widget.Material.SeekBar" />
+
+    <Button
+        android:id="@+id/connectButton"
+        style="@android:style/Widget.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/modeButton"
+        android:background="#4d4d4d"
+        android:elevation="0dp"
+        android:onClick="goToOptions"
+        android:text="Settings"
+        android:textColor="@color/switch_thumb_normal_material_light"
+        android:layout_marginRight="7dp"
+        android:layout_marginTop="7dp"
+        android:textStyle="bold"/>
+
+    <Button
+        android:id="@+id/serverButton"
+        style="@android:style/Widget.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/connectButton"
+        android:layout_alignBottom="@+id/connectButton"
+        android:layout_marginRight="7dp"
+        android:layout_toStartOf="@+id/connectButton"
+        android:background="#4d4d4d"
+        android:elevation="0dp"
+        android:onClick="serverConnect"
+        android:text="Connect"
+        android:textAppearance="@style/TextAppearance.AppCompat" />
+
+    <Button
+        android:id="@+id/modeButton"
+        style="@android:style/Widget.Material.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="7dp"
+        android:layout_marginRight="7dp"
+        android:background="#4d4d4d"
+        android:text="Manual"
+        android:textAlignment="center"
+        android:textColor="@color/background_material_light"
+        android:textSize="12sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/speedTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/modeButton"
+        android:text="0"
+        android:layout_alignStart="@+id/serverButton" />
+
+    <TextView
+        android:id="@+id/turningTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/modeButton"
+        android:layout_alignBottom="@+id/modeButton"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="119dp"
+        android:text="0" />
+
+
+</RelativeLayout>

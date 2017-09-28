@@ -70,12 +70,12 @@ package moped {
 			}
 
 			interface ActionStrategy {
-				takeAction(double deltaTime) : void
+				takeAction(double deltaTime) : double
 			}
 
 			class ActionStrategyFactoryImpl{
 				- appsocket: ExternalCommunicator
-				- distanceSensor: Sensor
+				- DistanceSensorImpl: Sensor
 			}
 
 			class PidParser {
@@ -84,20 +84,40 @@ package moped {
 				- calcPIDVal(double deltaTime): float
 			}
 			class EmgyStop {
-				- defaultThrottle: int
-				- defaultSteer: int
+				- defaultValue: int
 			}
 			
 			class RemoteController {
 				- appSocket: ExternalCommunicator
-				- steerValue: int
-				- throttleValue: int
+				- filteredValue: int
+
+                + RemoteController(Axis selectedAxis)
 			}
-			
+
+			enum Axis {
+			    AXIS_Y
+			    AXIS_X
+			}
+
+			class BidirectionHandler {
+                - ActionStrategy latitudeStrategy;
+                - ActionStrategy longitudeStrategy;
+
+                + StrategyDualComposite(ActionStrategy latitudeStrategy, ActionStrategy longitudeStrategy)
+
+                + takeLatitudeAction(): double
+                + takeLongitudeAction(): double
+			}
+
+                RemoteController --+ Axis
+
+			    BidirectionHandler --> ActionStrategy
 				PidParser --|> ActionStrategy
 				EmgyStop --|> ActionStrategy
 				RemoteController --|> ActionStrategy
-				RemoteController --|> InputReceiver
+
+                ActionStrategyFactoryImpl --> ActionStrategy
+                ActionStrategyFactoryImpl --|> ActionStrategyFactory
 
 			note top of PidParser
 				DI sensor data reference
@@ -128,59 +148,90 @@ package moped {
 			CarControlImpl --|> CarControl
 
 		}
-		
+
+		package sensors {
+
+            interface DistanceSensor {
+                getCurrentValue()
+            }
+
+		    class DistanceSensorImpl {
+		        + getCurrentValue() : int
+
+		    }
+
+		}
+
+		package process_runner {
+
+		    class ProcessFactory {
+
+		    }
+
+		    class ProcessRunnerImpl {
+
+		    }
+
+		    interface ProcessRunner
+
+		    interface InputSubscriber {
+
+		    }
+
+		    class StreamReader {
+
+		    }
+
+            StreamReader --> InputSubscriber
+            ProcessRunnerImpl --|> ProcessRunner
+		    ProcessFactory --> ProcessRunner
+		}
+
 		Main ..> states
-		
+
+        action_strategies --> sensors
+        sensors --> process_runner
+		car_control --> process_runner
 		states --> action_strategies
-		action_strategies --> car_control
+		states --> car_control
 	}
 	
 	package com_io {
 
-		package ext_com {
-			
-			interface Observer {
-			
-			}
-			
-			interface ExternalCommunicator {
-				
-			}
-			
-			interface InputReceiver {
-				externalDataRecieved(inputData: ComProtocol)
-			}
-			
-			interface OutputObserver {
-				
-			}
-			
-			class CommunicatorFactory {
-				- extComInstance: ExternalCommunicator
+		enum Direction {
+			Internal
+			External
+		}
+		
+		interface DataReceiver {
+			dataRecieved(int[] data, Direction direction): void
+		}
 
-				.. Getters ..
-				+getExtComInstance():  ExternalCommunicator
-			}
-			
-			class ExternalCommunications {
-				- 
-			}
-			
-			ExternalCommunications --> Observer
-			ExternalCommunications --|> ExternalCommunicator
-			
-			ExternalCommunications --> OutputObserver
-			ExternalCommunications --|> InputReceiver
-			
-			CommunicatorFactory ..> ExternalCommunicator
-			CommunicatorFactory ..> ExternalCommunications
-			
+		interface CommunicationsMediator {
+			transmitData(int[] data, Direction direction): void
+			subscribe(InputReceiver receiver, Direction direction): void
+			unsubscribe(InputReceiver receiver): void
 		}
 		
-		package int_com {
-		
+		class CommunicatorFactory {
+			- comInstance: CommunicationsMediator
+
+			.. Getters ..
+			+getComInstance():  ExternalCommunicator
 		}
-	
+		
+		class CommunicationsMediatorImpl {
+			- Map<DataReceiver> subscribers
+			- directPacket(int[] data, Direction direction)
+		}
+		
+		CommunicationsMediator --> DataReceiver
+		
+
+		CommunicatorFactory ..> CommunicationsMediator
+		CommunicatorFactory ..> CommunicationsMediatorImpl
+		
+		
 	}
 
 	package pid {
@@ -193,12 +244,11 @@ package moped {
 	package communication_protocols {
 	
 	}
-	
+
+    action_strategies --> pid
 	app --> communication_protocols
-	StateController --> communication_protocols
-	core --> com_io
-	
-	
+	behaviour_states --> communication_protocols
+	core --> com_io	
 }
 
 package app {
