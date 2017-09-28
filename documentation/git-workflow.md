@@ -16,7 +16,7 @@ In practice, it works as follows:
 `git checkout -b initials/fancy-branch-name`  
 *Note: LP convention: Your branch name should start with your initials and then a description of your feature (as above).*
 
-1. Do work in your feature branch, committing early and often:  
+1. Do work in your feature branch, committing early and often, following [the Seven rules of a great Git commit message](#the-seven-rules-of-a-great-git-commit-message):
 `git commit -m "Comment about the commit"`
 
 1. Rebase frequently to incorporate upstream changes:  
@@ -41,7 +41,7 @@ In practice, it works as follows:
 Your code must be reviewed by **at least one** other developer, preferably two,  and receive +1s from each of them, in order to be eligible for a Merge.
 
 1. Create a Pull Request in github between your feature branch and development.
-1. Standards for Code Review can be found here [INSERT LINK TO Code Review](#LINK).
+1. Standards for Code Review can be found here [Code Review](./code-review.md).
 1. After your code passes Code Review, merge your code into **Development Branch** via the GitHub interface. Delete your branch after merging.
 
 ## PRODUCTION HOTFIX
@@ -86,6 +86,16 @@ This includes everything on the development branch. If this is NOT what you want
 1. When you have sign off from Dev, merge this PR
 1. This will kickoff the master build, which can be monitored in CI.
 1. From here, follow appropriate steps to complete the release.
+
+### The seven rules of a great Git commit message
+
+1. Separate subject from body with a blank line
+1. Limit the subject line to 50 characters
+1. Capitalize the subject line
+1. Do not end the subject line with a period
+1. Use the imperative mood in the subject line
+1. Wrap the body at 72 characters
+1. Use the body to explain what and why vs. how
 
 ### References
 

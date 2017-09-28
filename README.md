@@ -19,10 +19,10 @@ The following links can be used for navigation throughout the repo:
 | Edvin Meijer |edvinme@student.chalmers.se | Sk8eddie    |
 | Hampus Carlsson| champus@student.chalmers.se | isZumpo   |
 | Jesper Blidkvist | jesbli@student.chalmers.se | konglobemeralt |
-| Anton Kimfors|                           |               |
+| Anton Kimfors| kimfors@student.chalmers.se | Kimpan |
 | Marcus Lindvärn| marcuols@student.chalmers.se | Murk     |
 | Kevin Solovjov| solovjov@student.chalmers.se | Nightingale1997 |
 | Anthony Kalcic| kalcic@student.chalmers.se | NinjaWazzzabi |
 | Emil Jansson | jaemil@student.chalmers.se | EmiljanQ3 |
 | Elias Burström|   eliasbu@student.chalmers.se| Landsfadern |
-| Hugo Ekelund |                           |               |
+| Hugo Ekelund | ehugo@student.chalmers.se| Hugormen  |
