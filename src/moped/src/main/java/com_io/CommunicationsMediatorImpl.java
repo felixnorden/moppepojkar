@@ -1,25 +1,48 @@
 package com_io;
 
-import java.util.Map;
+import java.util.*;
 
 class CommunicationsMediatorImpl implements CommunicationsMediator{
 
-    private Map<Direction, DataReceiver> subscribers;
+    private Map<Direction, List<DataReceiver>> subscribers;
 
-    private void directPacket(int[] data, Direction direction){}
+    public CommunicationsMediatorImpl() {
+        this.subscribers = new HashMap<>();
 
-    @Override
-    public void transmitData(int[] data, Direction direction) {
-
+        this.subscribers.put(Direction.INTERNAL, new ArrayList<>());
+        this.subscribers.put(Direction.EXTERNAL, new ArrayList<>());
     }
 
     @Override
-    public void subscribe(DataReceiver receiver, Direction direction) {
-
+    public void transmitData(String data, Direction direction) {
+        for (DataReceiver dataReceiver : this.subscribers.get(direction)) {
+            dataReceiver.dataReceived(data);
+        }
     }
 
     @Override
-    public void unsubscribe(DataReceiver receiver) {
+    public void subscribe(Direction direction, DataReceiver receiver) {
+        List<DataReceiver> dataReceivers = this.subscribers.get(direction);
 
+        if(!dataReceivers.contains(receiver)) {
+            dataReceivers.add(receiver);
+        }
+    }
+
+    @Override
+    public void unsubscribe(Direction direction, DataReceiver receiver) {
+        int index = -1;
+
+        List<DataReceiver> receivers = this.subscribers.get(direction);
+        for (int i = 0; i < receivers.size(); i++) {
+            DataReceiver dataReceiver = receivers.get(i);
+            if (dataReceiver == receiver) {
+                index = i;
+            }
+        }
+
+        if(index != -1) {
+            receivers.remove(index);
+        }
     }
 }

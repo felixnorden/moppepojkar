@@ -1,4 +1,4 @@
-package distancekeeper;
+package pid;
 
 /**
  * Created by Emil Jansson on 2017-09-16.
@@ -20,7 +20,7 @@ public class PIDController {
 
     /**
      * This is the PIDController constructor. It creates a new PIDController with custom constants which affect the controllers behavior.
-     * @param targetValue The target value the PID strives to minimize error for.
+     * @param targetValue The target value the pid strives to minimize error for.
      * @param constantP The proportional constant. A bigger constant means greater reaction effect.
      * @param constantIRelation The relation between the proportional and integral constant where: constantP * constantIRelation = constantI.
      *                          A higher value gives the integral part of the controller more weight which creates a more rapid climb to the target value but might cause overshoot.
@@ -89,7 +89,7 @@ public class PIDController {
      */
 
     public double evaluation(double currentValue, double deltaTime){
-        double currentError = (targetValue - currentValue);
+        double currentError = (currentValue - targetValue);
         if (!(lastError.isNaN() || deltaTime == 0)) {
             double P = decideP(currentError);
             double I = decideI(currentError, deltaTime);

@@ -96,8 +96,8 @@ public class LocalManualTest {
         mopedServerThread.start();
 
         Communicator server = new ServerCommunicator(9000);
-        //Change localhost to host ip of host isn't this computer.
-        Communicator client = new ClientCommunicator("localhost", 9000);
+        //Change localhost to host ip if host isn't this computer.
+        Communicator client = new ClientCommunicator("192.168.137.95", 9005);
 
 
         client.addListener(clientListener);
@@ -109,6 +109,7 @@ public class LocalManualTest {
             String input = in.nextLine();
 
             switch (input) {
+                //Server commands
                 case "sstart":
                     server.start();
                     break;
@@ -128,18 +129,33 @@ public class LocalManualTest {
                         server.enableLogging();
                     }
                     break;
-                case "cstart":
+
+                //Client commands
+                case "c start":
                     client.start();
                     break;
-                case "cstop":
+                case "c stop":
                     client.stop();
                     break;
-                case "cstate ACC":
+                case "c ACC":
                     client.setState(MopedState.ACC);
                     break;
-                case "cstate MANUAL":
+                case "c MANUAL":
                     client.setState(MopedState.MANUAL);
                     break;
+            }
+
+            //Client handling throttling
+            if (input.startsWith("c t ")) {
+                String[] arg = input.split(" ");
+                int t;
+                t = Integer.parseInt(arg[2]);
+                client.setValue(MopedDataType.THROTTLE, t);
+            } else if (input.startsWith("c s ")) {
+                String[] arg = input.split(" ");
+                int t;
+                t = Integer.parseInt(arg[2]);
+                client.setValue(MopedDataType.STEERING, t);
             }
         }
     }

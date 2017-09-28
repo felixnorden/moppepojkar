@@ -10,13 +10,20 @@ public class InfniteEight implements BehaviourState {
 
     private CarControl cc = new CarControlImpl("run.py");
 
+    private int steer = 100;
+
     public InfniteEight(){
-        cc.setSteerValue(100);
-        cc.setThrottle(10);
+        System.out.println("Running in circles!");
     }
 
     @Override
     public void run() {
-        System.out.println("Running in circles!");
+        cc.setSteerValue(steer *= -1);
+        cc.setThrottle(25);
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

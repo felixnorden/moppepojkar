@@ -1,8 +1,5 @@
 package core.behaviour_states.states;
 
-import com_io.CommunicationsMediator;
-import com_io.CommunicatorFactory;
-import com_io.CommunicatorFactoryImpl;
 import core.action_strategies.*;
 import core.car_control.CarControl;
 import core.sensors.DistanceSensor;
@@ -35,8 +32,8 @@ class AdaptiveCruiseControl implements BehaviourState {
     public AdaptiveCruiseControl(CarControl carController) {
         emergencyCount = 0;
 
-        CommunicatorFactory comFactory = CommunicatorFactoryImpl.getFactoryInstance();
-        CommunicationsMediator comIO = comFactory.getComInstance();
+        //CommunicatorFactory comFactory = CommunicatorFactoryImpl.getFactoryInstance();
+        //CommunicationsMediator comIO = comFactory.getComInstance();
 
         ActionStrategyFactory actionFactory = ActionStrategyFactoryImpl.getInstance();
 
@@ -49,11 +46,13 @@ class AdaptiveCruiseControl implements BehaviourState {
 
         this.distanceSensor = DistanceSensorImpl.getInstance();
         this.carController = carController;
+
+        this.currentHandler = this.accHandler;
     }
 
     @Override
     public void run() {
-        this.currentHandler = determineHandler();
+        //this.currentHandler = determineHandler();
 
         carController.setThrottle((int) currentHandler.takeLatitudeAction());
         carController.setSteerValue((int) currentHandler.takeLongitudeAction());

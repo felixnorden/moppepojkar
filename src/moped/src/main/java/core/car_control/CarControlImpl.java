@@ -8,15 +8,14 @@ import java.io.IOException;
 
 /**
  * Used for controlling a MOPED through a python script found on the device.
- *
+ * <p>
  * Python commands used are:
- *      drive(value)
- *      steer(value)
+ * drive(value)
+ * steer(value)
  */
 public class CarControlImpl implements CarControl {
-
-    private int lastThrottleValue;
-    private int lastSteerValue;
+    private int currentThrottleValue;
+    private int currentSteerValue;
 
     private ProcessRunner carControl;
 
@@ -32,57 +31,85 @@ public class CarControlImpl implements CarControl {
             e.printStackTrace();
         }
 
+        currentThrottleValue = 0;
+        currentSteerValue = 0;
+
+        Thread vcuLimiter = new Thread(() -> {
+            double lastWrittenThrottleValue = currentThrottleValue;
+            double lastWrittenSteerValue = currentSteerValue;
+
+            while (true) {
+                if (currentThrottleValue != lastWrittenThrottleValue ||
+                        currentSteerValue != lastWrittenSteerValue) {
+                    sendValuesToCar();
+                    lastWrittenThrottleValue = currentThrottleValue;
+                    lastWrittenSteerValue = currentSteerValue;
+                }
+
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        vcuLimiter.start();
 
         writeToPythonScript("g.limitspeed=None");
     }
 
     @Override
     public int getLastThrottle() {
-        return lastThrottleValue;
+        return currentThrottleValue;
     }
 
     @Override
     public int getLastSteer() {
-        return lastSteerValue;
+        return currentSteerValue;
     }
 
     @Override
-    public void setThrottle(int value) {
-        lastThrottleValue = constrainInVCURange(value);
-        sendValuesToCar();
+    public synchronized void setThrottle(int value) {
+        if (value != currentThrottleValue) {
+            currentThrottleValue = constrainInVCURange(value);
+        }
     }
 
     @Override
-    public void setSteerValue(int value) {
-        lastSteerValue = constrainInVCURange(value);
-        sendValuesToCar();
+    public synchronized void setSteerValue(int value) {
+        if (value != currentSteerValue) {
+            currentSteerValue = constrainInVCURange(value);
+        }
     }
 
     @Override
-    public void addThrottle(int value) {
-        setThrottle(lastThrottleValue + value);
+    public synchronized void addThrottle(int value) {
+        setThrottle(currentThrottleValue + value);
     }
 
     @Override
-    public void addSteer(int value) {
-        setSteerValue(lastSteerValue + value);
+    public synchronized void addSteer(int value) {
+        setSteerValue(currentSteerValue + value);
     }
 
     /**
      * Sends the steering and throttle values to the python script.
      */
     private void sendValuesToCar() {
-        writeToPythonScript("drive(" + lastThrottleValue + ")");
-        writeToPythonScript("steer(" + lastSteerValue + ")");
+        writeToPythonScript("drive(" + currentThrottleValue + ")\n" +
+                                 "steer(" + currentSteerValue + ")");
     }
 
     /**
      * Writes the String text to the python script.
+     *
      * @param text text to be sent.
      */
     private void writeToPythonScript(String text) {
         if (carControl != null) {
             try {
+                //System.out.println("Car write: " + text);
                 carControl.outputToScript(text + "\n");
                 carControl.flushOutput();
             } catch (IOException e) {
@@ -93,6 +120,7 @@ public class CarControlImpl implements CarControl {
 
     /**
      * Constrains a value to the range used by the VCU. [-100,100]
+     *
      * @param value value to be constrained
      * @return the constrained value.
      */
@@ -102,16 +130,16 @@ public class CarControlImpl implements CarControl {
 
     /**
      * Constrains a value to the selected range.
+     *
      * @param value Value to be constrained.
-     * @param min Minimum allowed value.
-     * @param max Maximum allowed value.
+     * @param min   Minimum allowed value.
+     * @param max   Maximum allowed value.
      * @return The constrained value.
      */
     private int constrainInRange(int value, int min, int max) {
         if (value < min) {
             value = min;
-        }
-        else if (value > max) {
+        } else if (value > max) {
             value = max;
         }
 
