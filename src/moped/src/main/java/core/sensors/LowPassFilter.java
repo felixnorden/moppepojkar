@@ -1,5 +1,7 @@
 package core.sensors;
 
+import static java.lang.Double.*;
+
 /**
  * Filters raw data values to dampen value spikes and smooth out transitions between values.
  */
@@ -17,12 +19,23 @@ public class LowPassFilter {
      * @return The filtered value.
      */
     public double filterValue(double nextRawValue) {
-        // TODO: 27/09/2017 Fix uaf hack
-        if (nextRawValue > 0) {
-            double difference = nextRawValue - currentValue;
-            double weightedDifference = difference * weight;
-            currentValue += weightedDifference;
-        }
-        return currentValue;
+        double calibratedValue;
+
+        calibratedValue =   Double.isNaN(nextRawValue) ?
+                            currentValue :
+                            calibrateValue(nextRawValue);
+
+        currentValue = calibratedValue;
+        return calibratedValue;
     }
+
+    private double calibrateValue(double nextRawValue) {
+
+        double difference = nextRawValue - currentValue;
+        double weightedDifference = difference * weight;
+
+        return currentValue + weightedDifference;
+    }
+
+
 }

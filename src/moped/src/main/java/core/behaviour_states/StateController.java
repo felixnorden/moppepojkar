@@ -30,21 +30,21 @@ public class StateController implements Runnable, DataReceiver{
         this.currentState = manual;
     }
 
-    /**
-     *
-     * @return current behaviour of the MOPED
-     */
-    public BehaviourState getCurrentState() {
-        return this.currentState;
-    }
-
-    /**
-     *
-     * @param newState the new current state for the MOPED
-     */
-    public void setNewState(BehaviourState newState) {
-        this.currentState = newState;
-    }
+//    /**
+//     *
+//     * @return current behaviour of the MOPED
+//     */
+//    public BehaviourState getCurrentState() {
+//        return this.currentState;
+//    }
+//
+//    /**
+//     *
+//     * @param newState the new current state for the MOPED
+//     */
+//    public void setNewState(BehaviourState newState) {
+//        this.currentState = newState;
+//    }
 
     @Override
     public void run() {

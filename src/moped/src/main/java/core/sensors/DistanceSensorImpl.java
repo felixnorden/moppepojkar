@@ -3,7 +3,7 @@ package core.sensors;
 import core.process_runner.InputSubscriber;
 import core.process_runner.ProcessFactory;
 import core.process_runner.ProcessRunner;
-import sensordataconversion.SensorDataConverter;
+import sensor_data_conversion.SensorDataConverter;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

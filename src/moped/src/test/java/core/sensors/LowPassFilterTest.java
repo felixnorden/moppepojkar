@@ -1,8 +1,13 @@
 package core.sensors;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
+
+import static java.lang.Double.NaN;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
@@ -45,45 +50,86 @@ class LowPassFilterTest {
 
     @Test
     void valueTesting() {
+        // Arrange
         for (int i = 0; i < 100; i++) {
             filter.filterValue(0.3);
         }
-
         filter.filterValue(0.7);
 
+        // Act
         for (int i = 0; i < 4; i++) {
             filter.filterValue(0.3);
         }
 
         double value = filter.filterValue(0.3);
 
+        // Assert
         assertEquals(0.3,value,0.05);
     }
 
     @Test
     void extremeValueTesting() {
+        // Arrange
         for (int i = 0; i < 100; i++) {
             filter.filterValue(0.3);
         }
-
         filter.filterValue(0.7);
 
-
+        // Act
         double value = filter.filterValue(0.3);
 
+        // Assert
         assertEquals(0.3,value,0.05);
     }
 
     @Test
     void noiseControl() {
-
-        double[] arr = { 0.3, 0.35, 0.32, 0.28, 0.77, 0.3, 0.28, 0.34, 0.7};
+        // Arrange
+        double[] arr = {0.3,
+                        0.35,
+                        0.32,
+                        0.28,
+                        0.77,
+                        0.3,
+                        0.28,
+                        0.34,
+                        0.7};
 
         double temp = 0;
+
+        // Act
         for (double v : arr) {
             temp = filter.filterValue(v);
         }
 
+        // Assert
         assertEquals(0.3, temp, 0.05);
+    }
+
+    @Test
+    @DisplayName("should handle NaN values without fail")
+    void errorProneSensorValue() {
+        // Arrange
+        double arr[] =  {
+                            NaN,
+                            0.3,
+                            0.56,
+                            0.34,
+                            0.78,
+                            0.28,
+                            NaN,
+                            0.35,
+                            NaN
+                        };
+
+        double value = filter.filterValue(0.37);
+
+        // Act
+        for (double reading : arr) {
+            value = filter.filterValue(reading);
+        }
+
+        // Assert
+        assertThat(value, not(NaN));
     }
 }
