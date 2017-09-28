@@ -8,6 +8,8 @@ import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 public class Main implements ActionListener, CommunicationListener {
@@ -20,19 +22,22 @@ public class Main implements ActionListener, CommunicationListener {
     private JTextField ipTextField;
     private JTextField portTextField;
 
-    JLabel stateLabel;
-    JLabel velocityLabel;
-    JLabel sensorDistanceLabel;
-    JLabel PID_TARGET_VALUELabel;
-    JLabel PID_P_CONSTANTLabel;
-    JLabel PID_Y_CONSTANTLabel;
-    JLabel PID_D_CONSTANTLabel;
-    JLabel PID_INTEGRAL_SUMLabel;
-    JLabel THROTTLEabel;
-    JLabel STEERINGLabel;
-    JLabel CUSTOM_1Label;
-    JLabel CUSTOM_2Label;
-    JLabel CUSTOM_3Label;
+    ArrayList<Value> valuePanels = new ArrayList<Value>();
+
+    Value state = new Value("State");
+    Value velocity = new Value("Velocity");
+    Value sensorDistance = new Value("Sensor Distance");
+    Value throttle = new Value("Throttle");
+    Value steering = new Value("Steering");
+    Value pidIntegral = new Value("PID Integral Sum");
+    Value pidTarget = new Value("PID Target");
+    Value pidP = new Value("PID P");
+    Value pidY = new Value("PID Y");
+    Value pidD = new Value("PID D");
+    Value custom1 = new Value("Custom1");
+    Value custom2 = new Value("Custom2");
+    Value custom3 = new Value("Custom3");
+
 
     /**
      * Create the GUI and show it.  For thread safety,
@@ -41,86 +46,127 @@ public class Main implements ActionListener, CommunicationListener {
      */
     private void createAndShowGUI() {
         //Create and set up the window.
-        frame = new JFrame("MOPED Debug (Moppepojkar)");
+        frame = new JFrame("MOPED Debug");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setPreferredSize(new Dimension(600, 500));
         frame.setMinimumSize(new Dimension(600, 500));
         frame.setLayout(new BorderLayout());
 
-        // create the status bar panel and shove it down the bottom of the frame
-        JPanel statusPanel = new JPanel();
-        statusPanel.setBorder(new BevelBorder(BevelBorder.LOWERED));
-        frame.add(statusPanel, BorderLayout.SOUTH);
-        statusPanel.setPreferredSize(new Dimension(frame.getWidth(), 32));
-        statusPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
-
-        //Add things to statusPanel
-        statusLabel = new JLabel("Disconnected");
-        statusPanel.add(statusLabel);
-
-        statusPanel.add(Box.createHorizontalStrut(80));
-
-        connectButton = new JButton("Connect");
-        connectButton.addActionListener(this);
-
-        ipTextField = new JTextField();
-        ipTextField.setMaximumSize(new Dimension(120, 30));
-        ipTextField.setPreferredSize(new Dimension(130, 30));
-
-        portTextField = new JTextField();
-        portTextField.setMinimumSize(new Dimension(50, 30));
-        portTextField.setPreferredSize(new Dimension(60, 30));
-
-        statusPanel.add(ipTextField);
-
-        statusPanel.add(portTextField);
-
-        statusPanel.add(Box.createHorizontalStrut(80));
-        statusPanel.add(connectButton);
-
-        //Add values to main panel
-        JPanel valuePanel = new JPanel();
-        valuePanel.setPreferredSize(new Dimension(frame.getWidth(), frame.getHeight() - 50));
-        valuePanel.setMaximumSize(new Dimension(frame.getWidth(), frame.getHeight() - 50));
-        valuePanel.setBorder(new BevelBorder(BevelBorder.LOWERED));
-        frame.add(valuePanel, BorderLayout.NORTH);
-        valuePanel.setLayout(new GridLayout(5, 3, 5, 5));
-
-        stateLabel = new JLabel("State: ");
-        velocityLabel = new JLabel("Velocity: ");
-        sensorDistanceLabel = new JLabel("Sensor distance: ");
-        PID_TARGET_VALUELabel = new JLabel("PID Target value: ");
-        PID_P_CONSTANTLabel = new JLabel("PID P Constant: ");
-        PID_Y_CONSTANTLabel = new JLabel("PID Y Constant: ");
-        PID_D_CONSTANTLabel = new JLabel("PID D Constant: ");
-        PID_INTEGRAL_SUMLabel = new JLabel("PID IntegralSum: ");
-        THROTTLEabel = new JLabel("Throttle: ");
-        STEERINGLabel = new JLabel("Steering: ");
-        CUSTOM_1Label = new JLabel("Custom1: ");
-        CUSTOM_2Label = new JLabel("Custom2: ");
-        CUSTOM_3Label = new JLabel("Custom3: ");
-
-
-        valuePanel.add(stateLabel);
-        valuePanel.add(velocityLabel);
-        valuePanel.add(sensorDistanceLabel);
-        valuePanel.add(THROTTLEabel);
-        valuePanel.add(STEERINGLabel);
-        valuePanel.add(PID_D_CONSTANTLabel);
-        valuePanel.add(PID_P_CONSTANTLabel);
-        valuePanel.add(PID_Y_CONSTANTLabel);
-        valuePanel.add(PID_TARGET_VALUELabel);
-        valuePanel.add(PID_INTEGRAL_SUMLabel);
-        valuePanel.add(CUSTOM_1Label);
-        valuePanel.add(CUSTOM_2Label);
-        valuePanel.add(CUSTOM_3Label);
+        //Create sub-panels
+        createStatusPanel();
+        createConnectPanel();
+        createValuePanel();
 
 
         //Display the window.
         frame.pack();
         frame.setVisible(true);
         frame.invalidate();
+    }
+
+    private void createValuePanel() {
+        JPanel valuePanel = new JPanel();
+        valuePanel.setBorder(new BevelBorder(BevelBorder.LOWERED));
+        frame.add(valuePanel, BorderLayout.CENTER);
+        valuePanel.setLayout(new GridLayout(5, 3, 2, 2));
+
+        valuePanels.add(state);
+        valuePanels.add(velocity);
+        valuePanels.add(sensorDistance);
+        valuePanels.add(throttle);
+        valuePanels.add(steering);
+        valuePanels.add(pidD);
+        valuePanels.add(pidP);
+        valuePanels.add(pidY);
+        valuePanels.add(pidTarget);
+        valuePanels.add(pidIntegral);
+        valuePanels.add(custom1);
+        valuePanels.add(custom2);
+        valuePanels.add(custom3);
+
+        for (final Value value : valuePanels) {
+            valuePanel.add(value);
+            value.addMouseListener(new MouseListener() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    value.showChart();
+                }
+
+                @Override
+                public void mousePressed(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+
+                }
+            });
+        }
+    }
+
+    private void createConnectPanel() {
+        // create the connect bar panel and shove it down the bottom of the frame
+        JPanel connectPanel = new JPanel();
+        connectPanel.setBorder(new BevelBorder(BevelBorder.RAISED));
+        connectPanel.setLayout(new BorderLayout());
+        connectPanel.setPreferredSize(new Dimension(frame.getWidth(), 32));
+        frame.add(connectPanel, BorderLayout.SOUTH);
+
+        Box box = Box.createHorizontalBox();
+        box.setAlignmentX(Component.LEFT_ALIGNMENT);
+        box.add(Box.createRigidArea(new Dimension(2, 0)));
+
+        ipTextField = new JTextField();
+        ipTextField.setAlignmentX(Component.LEFT_ALIGNMENT);
+        ipTextField.setMaximumSize(new Dimension(130, 24));
+        ipTextField.setPreferredSize(new Dimension(130, 24));
+        box.add(ipTextField);
+        box.add(Box.createRigidArea(new Dimension(5, 0)));
+
+        portTextField = new JTextField();
+        ipTextField.setAlignmentX(Component.LEFT_ALIGNMENT);
+        portTextField.setMaximumSize(new Dimension(60, 24));
+        portTextField.setPreferredSize(new Dimension(60, 24));
+        box.add(portTextField);
+
+        connectButton = new JButton("Connect");
+        connectButton.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        connectButton.setMaximumSize(new Dimension(100, 24));
+        connectButton.addActionListener(this);
+
+
+        connectPanel.add(box, BorderLayout.WEST);
+        connectPanel.add(connectButton, BorderLayout.EAST);
+    }
+
+    private void createStatusPanel() {
+        // create the status bar panel and shove it down the bottom of the frame
+        JPanel statusPanel = new JPanel();
+        statusPanel.setBorder(new BevelBorder(BevelBorder.RAISED));
+        frame.add(statusPanel, BorderLayout.NORTH);
+        statusPanel.setPreferredSize(new Dimension(frame.getWidth(), 32));
+        statusPanel.setLayout(new BorderLayout(0, 0));
+
+        //Add things to statusPanel
+        statusLabel = new JLabel();
+        statusPanel.add(statusLabel, BorderLayout.WEST);
+        setStatusLabel("Disconnected");
+    }
+
+    private void setStatusLabel(String status) {
+        statusLabel.setText("Status: " + status);
     }
 
     public Main() {
@@ -138,12 +184,14 @@ public class Main implements ActionListener, CommunicationListener {
     }
 
     public void actionPerformed(ActionEvent e) {
+
         if (e.getSource() instanceof JButton) {
             JButton button = (JButton) e.getSource();
-
             if (button.getText().equals("Connect")) {
+                //Connect button was clicked
                 onConnectButtonClicked();
             } else if (button.getText().equals("Disconnect")) {
+                //Disconnect button was clicked
                 onDisconnectButtonClicked();
             }
         }
@@ -152,7 +200,7 @@ public class Main implements ActionListener, CommunicationListener {
     private void onDisconnectButtonClicked() {
         if (client != null) {
             client.stop();
-            statusLabel.setText("Stopped");
+            setStatusLabel("Stopped");
             connectButton.setText("Connect");
         }
     }
@@ -162,90 +210,74 @@ public class Main implements ActionListener, CommunicationListener {
         if (!ipTextField.getText().isEmpty() || !portTextField.getText().isEmpty()) {
             client = new ClientCommunicator(ipTextField.getText(), Integer.parseInt(portTextField.getText()));
             client.addListener(this);
-            statusLabel.setText("Connecting...");
+            setStatusLabel("Disconnect");
+            connectButton.setText("Disconnect");
             client.start();
         } else {
-            statusLabel.setText("Enter info first");
+            setStatusLabel("Enter ip and port before connecting");
+            state.showChart();
         }
     }
 
     public void onConnection() {
-        statusLabel.setText("Connected");
+        setStatusLabel("Connected");
         connectButton.setText("Disconnect");
-        resetLabels();
     }
 
     public void onStateChange(MopedState mopedState) {
         switch (mopedState) {
             case ACC:
-                stateLabel.setText("State: ACC");
+                state.setValue("ACC");
                 break;
             case MANUAL:
-                stateLabel.setText("State: Manual");
+                state.setValue("Manual");
                 break;
         }
     }
 
     public void onDisconnection() {
-        statusLabel.setText("Disconnected");
+        setStatusLabel("Disconnected");
+        connectButton.setText("Connect");
     }
 
     public void onValueChanged(MopedDataType mopedDataType, int i) {
         switch (mopedDataType) {
             case VELOCITY:
-                velocityLabel.setText("Velocity: " + i);
+                velocity.setValue(i);
                 break;
             case SENSOR_DISTANCE:
-                sensorDistanceLabel.setText("Sensor distance: " + i);
+                sensorDistance.setValue(i);
                 break;
             case PID_TARGET_VALUE:
-                PID_TARGET_VALUELabel.setText("PID Target Value: " + i);
+                pidTarget.setValue(i);
                 break;
             case PID_P_CONSTANT:
-                PID_P_CONSTANTLabel.setText("PID P Constant: " + i);
+                pidP.setValue(i);
                 break;
             case PID_Y_CONSTANT:
-                PID_Y_CONSTANTLabel.setText("PID Y Constant: " + i);
+                pidY.setValue(i);
                 break;
             case PID_D_CONSTANT:
-                PID_D_CONSTANTLabel.setText("PID D Constant: " + i);
+                pidD.setValue(i);
                 break;
             case PID_INTEGRAL_SUM:
-                PID_INTEGRAL_SUMLabel.setText("PID IntegralSum: " + i);
+                pidIntegral.setValue(i);
                 break;
             case THROTTLE:
-                THROTTLEabel.setText("Throttle: " + i);
+                throttle.setValue(i);
                 break;
             case STEERING:
-                STEERINGLabel.setText("Steering: " + i);
+                steering.setValue(i);
                 break;
             case CUSTOM_1:
-                CUSTOM_1Label.setText("Custom1: " + i);
+                custom1.setValue(i);
                 break;
             case CUSTOM_2:
-                CUSTOM_2Label.setText("Custom2: " + i);
+                custom2.setValue(i);
                 break;
             case CUSTOM_3:
-                CUSTOM_3Label.setText("Custom3: " + i);
+                custom3.setValue(i);
                 break;
         }
-    }
-
-    private void resetLabels() {
-        stateLabel = new JLabel("State: ");
-        velocityLabel = new JLabel("Velocity: ");
-        sensorDistanceLabel = new JLabel("Sensor distance: ");
-        PID_TARGET_VALUELabel = new JLabel("PID Target value: ");
-        PID_P_CONSTANTLabel = new JLabel("PID P Constant: ");
-        PID_Y_CONSTANTLabel = new JLabel("PID Y Constant: ");
-        PID_D_CONSTANTLabel = new JLabel("PID D Constant: ");
-        PID_INTEGRAL_SUMLabel = new JLabel("PID IntegralSum: ");
-        THROTTLEabel = new JLabel("Throttle: ");
-        STEERINGLabel = new JLabel("Steering: ");
-        CUSTOM_1Label = new JLabel("Custom1: ");
-        CUSTOM_2Label = new JLabel("Custom2: ");
-        CUSTOM_3Label = new JLabel("Custom3: ");
-
-        frame.invalidate();
     }
 }

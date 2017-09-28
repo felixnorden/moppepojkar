@@ -1,8 +1,5 @@
 package com;
 
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.Scanner;
 
 /**
@@ -92,25 +89,28 @@ public class LocalManualTest {
                 case "sstate MANUAL":
                     server.setState(MopedState.MANUAL);
                     break;
-                case "slog":
-                    if (server.isLoggingEnabled()) {
-                        server.disableLogging();
-                    } else {
-                        server.enableLogging();
+                case "ssim":
+                    for (int i = 0; i < 10000; i++) {
+                        server.setValue(MopedDataType.VELOCITY, (int) (Math.sin(i) * 10));
+                        try {
+                            Thread.sleep(50);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                     break;
 
                 //Client commands
-                case "c start":
+                case "cstart":
                     client.start();
                     break;
-                case "c stop":
+                case "cstop":
                     client.stop();
                     break;
-                case "c ACC":
+                case "cstate ACC":
                     client.setState(MopedState.ACC);
                     break;
-                case "c MANUAL":
+                case "cstate MANUAL":
                     client.setState(MopedState.MANUAL);
                     break;
             }
