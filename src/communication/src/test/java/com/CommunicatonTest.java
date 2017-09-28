@@ -295,7 +295,6 @@ public class CommunicatonTest {
     }
 
     @Test
-<<<<<<< HEAD
     public void testLogging() {
         Communicator server = new ServerCommunicator(5757);
 
@@ -308,40 +307,5 @@ public class CommunicatonTest {
         server.enableLogging();
 
         assertTrue(server.isLoggingEnabled());
-=======
-    public void testIsAlive() {
-        ServerCommunicator server = new ServerCommunicator(11113);
-
-        try {
-            //Test start when already started.
-            server.start();
-            Thread.sleep(10);
-            server.start();
-            Thread.sleep(10);
-
-            assertTrue(server.isAlive());
-
-            //Test restart
-            server.stop();
-            try {
-                //Wait up to 5 seconds before failing
-                for (int i = 0; i < 100; i++) {
-                    Thread.sleep(50);
-                    if (!server.isAlive()) {
-                        break;
-                    }
-                }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            assertTrue(!server.isAlive());
-
-
-            server.start();
-            assertTrue(server.isAlive());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
->>>>>>> 4ed26406e8376a40282fc921d464530163ab7d42
     }
 }

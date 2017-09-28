@@ -65,36 +65,6 @@ public class LocalManualTest {
     };
 
     public LocalManualTest() {
-        //This thread acts as the MOPEDs core server.
-        //Data sent to this thread will not be acted upon and lost.
-        //This means all data sent from WirelessIno that contains speed and steering values.
-        Thread mopedServerThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                ServerSocket ss = null;
-                try {
-                    ss = new ServerSocket(8999);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                Socket mopedSocketMock;
-
-                while (true) {
-                    try {
-                        mopedSocketMock = ss.accept();
-                        System.out.println("[MOPED MOCK] CONNECTED");
-
-                        Thread.sleep(60);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-        mopedServerThread.start();
-
         Communicator server = new ServerCommunicator(9000);
         //Change localhost to host ip if host isn't this computer.
         Communicator client = new ClientCommunicator("192.168.137.95", 9005);
