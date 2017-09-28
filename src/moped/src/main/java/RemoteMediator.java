@@ -67,7 +67,7 @@ public class RemoteMediator implements DataReceiver, CommunicationListener {
     }
 
     /**
-     * Sets logging to true or false on the servercommunicator.
+     * Sets logging to true or false on the server communicator.
      *
      * @param enable
      */

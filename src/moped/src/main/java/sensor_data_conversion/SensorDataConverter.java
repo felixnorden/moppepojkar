@@ -1,4 +1,4 @@
-package sensordataconversion;
+package sensor_data_conversion;
 
 import static java.lang.Double.NaN;
 
