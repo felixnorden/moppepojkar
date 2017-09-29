@@ -1,14 +1,13 @@
 package com;
 
 
-
-
 import org.junit.Test;
 
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 
@@ -61,5 +60,47 @@ public class ServerCommunicationTest {
 
         assertTrue(vars.size() == 1);
         assertTrue(vars.get(0));
+    }
+
+    @Test
+    public void testConnectSocket() {
+        final ArrayList<Boolean> passed = new ArrayList();
+
+        Communicator server = new ServerCommunicator(12346);
+        Communicator client = new ClientCommunicator("localhost", 12346);
+        server.addListener(new CommunicationListener() {
+            @Override
+            public void onConnection() {
+                passed.add(true);
+            }
+
+            @Override
+            public void onStateChange(MopedState stateChange) {
+
+            }
+
+            @Override
+            public void onDisconnection() {
+
+            }
+
+            @Override
+            public void onValueChanged(MopedDataType type, int value) {
+
+            }
+        });
+        server.start();
+
+        //Sleep for 2 timeout-cycles.
+        try {
+            Thread.sleep(8000);
+            client.start();
+            Thread.sleep(200);   //Let them have time to connect
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        assertEquals(passed.size(), 1);
+        assertEquals(passed.get(0), true);
     }
 }
