@@ -56,6 +56,7 @@ public abstract class AbstractCommunicator implements Communicator {
      */
     @Override
     public void run() {
+        log("Started");
         while (!Thread.interrupted()) {
             if (hasDisconnected) {
                 handleDisconnect();
@@ -87,7 +88,7 @@ public abstract class AbstractCommunicator implements Communicator {
         //Only runs after running has been set to false (aka onDisconnect and stop())
         sendExitCode();
         clearConnection();
-        log("STOPPED");
+        log("Stopped");
     }
 
     /**
@@ -184,10 +185,6 @@ public abstract class AbstractCommunicator implements Communicator {
         }
     }
 
-    public boolean isAlive() {
-        return mainThread != null && mainThread.isAlive();
-    }
-
     /**
      * Read and interpret data from socket link.
      *
@@ -224,6 +221,7 @@ public abstract class AbstractCommunicator implements Communicator {
      * Notifies all listeners that a connection has been established.
      */
     protected void notifyConnected() {
+        log("Connected");
         for (CommunicationListener cl : listeners) {
             cl.onConnection();
         }
@@ -248,6 +246,7 @@ public abstract class AbstractCommunicator implements Communicator {
      * Notifies all listeners that a disconnection has occurred.
      */
     private void notifyDisconnected() {
+        log("Disconnected");
         for (CommunicationListener cl : listeners) {
             cl.onDisconnection();
         }
