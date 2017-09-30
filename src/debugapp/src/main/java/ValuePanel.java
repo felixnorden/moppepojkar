@@ -18,6 +18,8 @@ class ValuePanel extends JPanel {
 
     //Dataset containing X and Y values for the graph. Gets reset every time a new graph is created.
     private volatile XYSeries dataset;
+    private volatile JFreeChart chart;
+    private volatile ChartPanel chartPanel;
 
     //UI elements
     private JLabel nameLabel;
@@ -49,7 +51,6 @@ class ValuePanel extends JPanel {
         valueLabel.setFont(new Font("Arial", Font.PLAIN, 32));
         valueLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        upperBox.add(Box.createRigidArea(new Dimension(0, 2)));
         upperBox.add(nameLabel);
         upperBox.add(Box.createRigidArea(new Dimension(0, 2)));
         upperBox.add(valueLabel);
@@ -58,6 +59,7 @@ class ValuePanel extends JPanel {
         //Set up lower area
         JPanel lowerPanel = new JPanel();
         lowerPanel.setLayout(new BorderLayout());
+        lowerPanel.setBorder(BorderFactory.createEmptyBorder(0, 5, 5, 5));
 
         minValueLabel = new JLabel();
         minValueLabel.setFont(new Font("Arial", Font.PLAIN, 12));
@@ -79,7 +81,7 @@ class ValuePanel extends JPanel {
      * @param value
      */
     private void setMaxValueLabel(int value) {
-        maxValueLabel.setText(String.valueOf(value));
+        maxValueLabel.setText("Max: " + String.valueOf(value));
     }
 
     /**
@@ -88,7 +90,7 @@ class ValuePanel extends JPanel {
      * @param value
      */
     private void setMinValueLabel(int value) {
-        minValueLabel.setText(String.valueOf(value));
+        minValueLabel.setText("Min: " + String.valueOf(value));
     }
 
     /**
@@ -108,10 +110,11 @@ class ValuePanel extends JPanel {
         valueLabel.setText(String.valueOf(value));
         setMaxValueLabel(maxInt);
         setMinValueLabel(minInt);
-        
+
         if (dataset != null) {
-            if (dataset.getItemCount() > 8000) {
-                dataset.clear();
+            if (dataset.getItemCount() > 50000) {   //At 50 000 values, it starts getting real slow, therefore reset.
+                dataset = new XYSeries(name);
+                chart.getXYPlot().setDataset(new XYSeriesCollection(dataset));
             }
             dataset.add(dataset.getItemCount() + 1, value);
         }
@@ -145,16 +148,19 @@ class ValuePanel extends JPanel {
                 //Reset current dataset
                 dataset = new XYSeries(name);
                 //Create chart with dataset
-                JFreeChart chart = ChartFactory.createXYLineChart(
+                chart = ChartFactory.createXYLineChart(
                         name,
-                        name,
+                        "Index",
                         "Value",
                         new XYSeriesCollection(dataset),
                         PlotOrientation.VERTICAL,
                         true, false, false);
 
+                chart.getXYPlot().getDomainAxis().setAutoRange(true);
+                chart.getXYPlot().getDomainAxis().setFixedAutoRange(1000);
+
                 //Setup new chartpanel
-                ChartPanel chartPanel = new ChartPanel(chart);
+                chartPanel = new ChartPanel(chart);
                 chartPanel.setPreferredSize(new Dimension(560, 370));
                 f.setContentPane(chartPanel);
                 f.pack();
