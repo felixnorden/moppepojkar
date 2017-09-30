@@ -16,28 +16,30 @@ public class Main implements ActionListener, CommunicationListener {
 
     private ClientCommunicator client;
 
+    //UI Elements
     private JFrame frame;
     private JButton connectButton;
     private JLabel statusLabel;
     private JTextField ipTextField;
     private JTextField portTextField;
 
-    ArrayList<Value> valuePanels = new ArrayList<Value>();
+    //List containing all of the below ValuePanels
+    private ArrayList<ValuePanel> valuePanels = new ArrayList<ValuePanel>();
 
-    Value state = new Value("State");
-    Value velocity = new Value("Velocity");
-    Value sensorDistance = new Value("Sensor Distance");
-    Value throttle = new Value("Throttle");
-    Value steering = new Value("Steering");
-    Value pidIntegral = new Value("PID Integral Sum");
-    Value pidTarget = new Value("PID Target");
-    Value pidP = new Value("PID P");
-    Value pidY = new Value("PID Y");
-    Value pidD = new Value("PID D");
-    Value custom1 = new Value("Custom1");
-    Value custom2 = new Value("Custom2");
-    Value custom3 = new Value("Custom3");
-
+    //All the different ValuePanels. Not very good looking but works
+    private ValuePanel state = new ValuePanel("State");
+    private ValuePanel velocity = new ValuePanel("Velocity");
+    private ValuePanel sensorDistance = new ValuePanel("Sensor Distance");
+    private ValuePanel throttle = new ValuePanel("Throttle");
+    private ValuePanel steering = new ValuePanel("Steering");
+    private ValuePanel pidIntegral = new ValuePanel("PID Integral Sum");
+    private ValuePanel pidTarget = new ValuePanel("PID Target");
+    private ValuePanel pidP = new ValuePanel("PID P");
+    private ValuePanel pidY = new ValuePanel("PID Y");
+    private ValuePanel pidD = new ValuePanel("PID D");
+    private ValuePanel custom1 = new ValuePanel("Custom1");
+    private ValuePanel custom2 = new ValuePanel("Custom2");
+    private ValuePanel custom3 = new ValuePanel("Custom3");
 
     /**
      * Create the GUI and show it.  For thread safety,
@@ -58,13 +60,15 @@ public class Main implements ActionListener, CommunicationListener {
         createConnectPanel();
         createValuePanel();
 
-
         //Display the window.
         frame.pack();
         frame.setVisible(true);
         frame.invalidate();
     }
 
+    /**
+     * Creates the middle panel and adds it to the main frame.
+     */
     private void createValuePanel() {
         JPanel valuePanel = new JPanel();
         valuePanel.setBorder(new BevelBorder(BevelBorder.LOWERED));
@@ -85,7 +89,7 @@ public class Main implements ActionListener, CommunicationListener {
         valuePanels.add(custom2);
         valuePanels.add(custom3);
 
-        for (final Value value : valuePanels) {
+        for (final ValuePanel value : valuePanels) {
             valuePanel.add(value);
             value.addMouseListener(new MouseListener() {
                 @Override
@@ -116,6 +120,9 @@ public class Main implements ActionListener, CommunicationListener {
         }
     }
 
+    /**
+     * Creates the lower bar and adds it to the main frame.
+     */
     private void createConnectPanel() {
         // create the connect bar panel and shove it down the bottom of the frame
         JPanel connectPanel = new JPanel();
@@ -151,6 +158,9 @@ public class Main implements ActionListener, CommunicationListener {
         connectPanel.add(connectButton, BorderLayout.EAST);
     }
 
+    /**
+     * Creates the upper status panel and adds it the the main frame.
+     */
     private void createStatusPanel() {
         // create the status bar panel and shove it down the bottom of the frame
         JPanel statusPanel = new JPanel();
@@ -165,11 +175,15 @@ public class Main implements ActionListener, CommunicationListener {
         setStatusLabel("Disconnected");
     }
 
+    /**
+     *  Sets the status label to the given string. Also add "Status: " before the string.
+     * @param status
+     */
     private void setStatusLabel(String status) {
         statusLabel.setText("Status: " + status);
     }
 
-    public Main() {
+    private Main() {
         createAndShowGUI();
     }
 
@@ -184,9 +198,11 @@ public class Main implements ActionListener, CommunicationListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-
+        //Check if it was a button which was pressed
         if (e.getSource() instanceof JButton) {
             JButton button = (JButton) e.getSource();
+
+            //Get which button was pressed
             if (button.getText().equals("Connect")) {
                 //Connect button was clicked
                 onConnectButtonClicked();
@@ -197,6 +213,9 @@ public class Main implements ActionListener, CommunicationListener {
         }
     }
 
+    /**
+     * If a clientcommunicator has been created, stops it and updates the UI to reflect it.
+     */
     private void onDisconnectButtonClicked() {
         if (client != null) {
             client.stop();
@@ -205,8 +224,12 @@ public class Main implements ActionListener, CommunicationListener {
         }
     }
 
+    /**
+     * Creates a clientcommunicator with the entered args and starts it.
+     * Updates the UI to reflect that a clientcommunicator has been created.
+     */
     private void onConnectButtonClicked() {
-        //Check for input
+        //Check that input has been entered
         if (!ipTextField.getText().isEmpty() || !portTextField.getText().isEmpty()) {
             client = new ClientCommunicator(ipTextField.getText(), Integer.parseInt(portTextField.getText()));
             client.addListener(this);
@@ -215,9 +238,10 @@ public class Main implements ActionListener, CommunicationListener {
             client.start();
         } else {
             setStatusLabel("Enter ip and port before connecting");
-            state.showChart();
         }
     }
+
+    //Below are all the events that might be dispatched by the ClientCommunicator.
 
     public void onConnection() {
         setStatusLabel("Connected");

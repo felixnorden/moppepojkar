@@ -2,7 +2,6 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
@@ -11,25 +10,35 @@ import javax.swing.border.EtchedBorder;
 import java.awt.*;
 
 
-class Value extends JPanel {
+class ValuePanel extends JPanel {
 
     private final String name;
-    private int maxInt = 0; //Highest int recorded
-    private int minInt = 0; //Lowest int recorded
+    private int maxInt = 0; //Highest value recorded
+    private int minInt = 0; //Lowest value recorded
 
+    //Dataset containing X and Y values for the graph. Gets reset every time a new graph is created.
     private volatile XYSeries dataset;
 
-    private final JLabel nameLabel;
-    private final JLabel valueLabel;
-    private final JLabel maxValueLabel;
-    private final JLabel minValueLabel;
+    //UI elements
+    private JLabel nameLabel;
+    private JLabel valueLabel;
+    private JLabel maxValueLabel;
+    private JLabel minValueLabel;
 
-    Value(String name) {
+    ValuePanel(String name) {
         this.name = name;
 
+        setupPanel();
+    }
+
+    /**
+     * Does the required setup for the valuepanel.
+     */
+    private void setupPanel() {
+        //Set layout
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        //Set up upperBox
+        //Set up upper area
         Box upperBox = Box.createVerticalBox();
 
         nameLabel = new JLabel(name);
@@ -40,30 +49,56 @@ class Value extends JPanel {
         valueLabel.setFont(new Font("Arial", Font.PLAIN, 32));
         valueLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-
         upperBox.add(Box.createRigidArea(new Dimension(0, 2)));
         upperBox.add(nameLabel);
         upperBox.add(Box.createRigidArea(new Dimension(0, 2)));
         upperBox.add(valueLabel);
         add(upperBox);
 
+        //Set up lower area
         JPanel lowerPanel = new JPanel();
         lowerPanel.setLayout(new BorderLayout());
 
-        minValueLabel = new JLabel("Min:");
+        minValueLabel = new JLabel();
         minValueLabel.setFont(new Font("Arial", Font.PLAIN, 12));
-        lowerPanel.add(minValueLabel, BorderLayout.WEST);
 
-        maxValueLabel = new JLabel("Max:");
+        maxValueLabel = new JLabel();
         maxValueLabel.setFont(new Font("Arial", Font.PLAIN, 12));
-        lowerPanel.add(maxValueLabel, BorderLayout.EAST);
 
+        lowerPanel.add(minValueLabel, BorderLayout.WEST);
+        lowerPanel.add(maxValueLabel, BorderLayout.EAST);
         add(lowerPanel);
 
         //Set up border
         setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
     }
 
+    /**
+     * Sets the max value label to the given int.
+     *
+     * @param value
+     */
+    private void setMaxValueLabel(int value) {
+        maxValueLabel.setText(String.valueOf(value));
+    }
+
+    /**
+     * Sets the min value label to the given int.
+     *
+     * @param value
+     */
+    private void setMinValueLabel(int value) {
+        minValueLabel.setText(String.valueOf(value));
+    }
+
+    /**
+     * Sets the value to a int.
+     * Checks if given value is a new min/max value
+     * Updates labels with new information.
+     * Adds the new value to the dataset
+     *
+     * @param value
+     */
     public void setValue(int value) {
         if (value > maxInt)
             maxInt = value;
@@ -71,10 +106,11 @@ class Value extends JPanel {
             minInt = value;
 
         valueLabel.setText(String.valueOf(value));
-        maxValueLabel.setText(String.valueOf(maxInt));
-        minValueLabel.setText(String.valueOf(minInt));
+        setMaxValueLabel(maxInt);
+        setMinValueLabel(minInt);
+        
         if (dataset != null) {
-            if(dataset.getItemCount() > 8000){
+            if (dataset.getItemCount() > 8000) {
                 dataset.clear();
             }
             dataset.add(dataset.getItemCount() + 1, value);
@@ -83,12 +119,21 @@ class Value extends JPanel {
         repaint();
     }
 
+    /**
+     * Sets the value to a string. Also hides max/min labels because they become redundant when the value is a string
+     *
+     * @param value
+     */
     public void setValue(String value) {
         valueLabel.setText(value);
+        maxValueLabel.setVisible(false);
+        minValueLabel.setVisible(false);
         repaint();
     }
 
-
+    /**
+     * Creates the chart and the frame that displays it to the user in a new thread.
+     */
     public void showChart() {
         Thread t = new Thread(new Runnable() {
             @Override
@@ -117,16 +162,5 @@ class Value extends JPanel {
             }
         });
         t.start();
-    }
-
-    private JFreeChart createChart(final XYDataset dataset) {
-        return ChartFactory.createTimeSeriesChart(
-                name,
-                "Seconds",
-                "Value",
-                dataset,
-                false,
-                false,
-                false);
     }
 }
