@@ -8,6 +8,7 @@ The following links can be used for navigation throughout the repo:
 - [Social Contract](./documentation/social-contract.md)
 - [KPIs](./documentation/kpis.md)
 - [Learnings from LEGO-exercise](./documentation/scrum-learnings/)
+- [Half-time reflection](./documentation/half-way-reflection.md)
 
 
 ## Team members
