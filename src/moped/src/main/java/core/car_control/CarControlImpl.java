@@ -1,9 +1,5 @@
 package core.car_control;
 
-import core.process_runner.ProcessFactory;
-import core.process_runner.ProcessRunner;
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
@@ -17,20 +13,10 @@ public class CarControlImpl implements CarControl {
     private int currentThrottleValue;
     private int currentSteerValue;
 
-    private ProcessRunner carControl;
-
     /**
      * @param pathToPythonScript Absolute or relative path to the python script used for controlling the car.
      */
     public CarControlImpl(String pathToPythonScript) {
-        try {
-            carControl = ProcessFactory.createPythonProcess(pathToPythonScript);
-            carControl.start();
-            Thread.sleep(3000);     //Waits for process to start
-        } catch (FileNotFoundException | InterruptedException e) {
-            e.printStackTrace();
-        }
-
         currentThrottleValue = 0;
         currentSteerValue = 0;
 
@@ -55,8 +41,6 @@ public class CarControlImpl implements CarControl {
         });
 
         vcuLimiter.start();
-
-        writeToPythonScript("g.limitspeed=None");
     }
 
     @Override
@@ -97,24 +81,16 @@ public class CarControlImpl implements CarControl {
      * Sends the steering and throttle values to the python script.
      */
     private void sendValuesToCar() {
-        writeToPythonScript("drive(" + currentThrottleValue + ")\n" +
-                                 "steer(" + currentSteerValue + ")");
-    }
+        String formattedSteering = String.format("%02x", currentSteerValue);
+        String formattedThrottle = String.format("%02x", currentThrottleValue);
 
-    /**
-     * Writes the String text to the python script.
-     *
-     * @param text text to be sent.
-     */
-    private void writeToPythonScript(String text) {
-        if (carControl != null) {
-            try {
-                //System.out.println("Car write: " + text);
-                carControl.outputToScript(text + "\n");
-                carControl.flushOutput();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        String command = "/home/pi/can-utils/cansend can0 '101#" + formattedThrottle + formattedSteering+"'";
+
+        try {
+            Runtime.getRuntime().exec(command);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            System.out.println("Couldn't send values to can bus to control throttle and steering!");
         }
     }
 
