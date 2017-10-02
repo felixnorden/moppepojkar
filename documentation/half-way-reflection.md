@@ -22,3 +22,4 @@ According to [Scrum Guides' sprint planning](http://www.scrumguides.org/scrum-gu
 
 ## Daily Stand-ups
 
+Daily stand-ups have been difficult to do because we have not established a routine for it. The problem seems to be the fact that we are not gathered enough and that the groups do not prioritize them enough.
