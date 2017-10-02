@@ -22,4 +22,9 @@ According to [Scrum Guides' sprint planning](http://www.scrumguides.org/scrum-gu
 
 ## Daily Stand-ups
 
-Daily stand-ups have been difficult to do because we have not established a routine for it. The problem seems to be the fact that we are not gathered enough and that the groups do not prioritize them enough.
+Daily stand-ups have been difficult to do because we have not established a routine for it. The problem seems to be the fact that we are not gathered enough and that the groups do not prioritize them enough. The members come and go in their different teams, and when they are finally gathered, tasks are instead prioritized. This is probably because of the fact that we do not have any full workdays to dedicate to the project. Partly due to us having lectures and partly because of some team members are working part-time. We have noticed that having these stand-ups more frequently would make the communication in and between teams easier. Therefore, this has been set as one of our three improvements of change for this week's sprint.
+
+Another aspect for the lack of stand-ups is that some teams have mainly worked in pairs doing pair programming in the same location. This has led to all members having a better understanding of the overall state of the sprint. This is not a reason to skip the stand-ups. The important aspect of holding the meetings daily is not to only update each other, but to confirm that everybody is on the same page.
+
+## Retrospectives
+
