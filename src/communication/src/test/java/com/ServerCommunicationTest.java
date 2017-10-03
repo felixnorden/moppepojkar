@@ -93,14 +93,20 @@ public class ServerCommunicationTest {
 
         //Sleep for 2 timeout-cycles.
         try {
-            Thread.sleep(8000);
+            Thread.sleep(8500);
             client.start();
-            Thread.sleep(200);   //Let them have time to connect
+            //Wait up to 5 seconds before failing
+            for (int i = 0; i < 100; i++) {
+                Thread.sleep(50);
+                if (passed.size() == 1) {
+                    break;
+                }
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        assertEquals(passed.size(), 1);
-        assertEquals(passed.get(0), true);
+        assertEquals(1, passed.size());
+        assertEquals(true, passed.get(0));
     }
 }
