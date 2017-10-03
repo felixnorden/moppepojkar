@@ -26,15 +26,7 @@ public class CarControlImpl implements CarControl {
      * @param pathToPythonScript Absolute or relative path to the python script used for controlling the car.
      */
     public CarControlImpl(String pathToPythonScript) {
-        arduinoCommunicator = new ArduinoCommunicator();
-
-        List<String> portNames = arduinoCommunicator.getAllPortNames();
-
-        try {
-            arduinoCommunicator.connect(portNames.get(0));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        arduinoCommunicator = ArduinoCommunicator.getInstance();
 
         currentThrottleValue = 0;
         currentSteerValue = 100;

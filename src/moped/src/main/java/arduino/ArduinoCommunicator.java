@@ -9,16 +9,26 @@ import java.util.List;
 public class ArduinoCommunicator implements SerialPortEventListener {
 
     private final List<ArduinoListener> arduinoListeners;
-    private boolean arduinoReady;
-    private boolean textReceiveMode;
-    private StringBuilder currentTransmissionString;
     private SerialPort serialPort;
 
+    private static ArduinoCommunicator instance;
+    public static ArduinoCommunicator getInstance() {
+        if (instance == null) {
+            instance = new ArduinoCommunicator();
 
-    public ArduinoCommunicator() {
-        textReceiveMode = false;
-        arduinoReady = true;
-        currentTransmissionString = new StringBuilder();
+            List<String> portNames = instance.getAllPortNames();
+
+            try {
+                instance.connect(portNames.get(0));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return instance;
+    }
+
+    private ArduinoCommunicator() {
         arduinoListeners = new ArrayList();
     }
 
@@ -56,7 +66,6 @@ public class ArduinoCommunicator implements SerialPortEventListener {
         if(event.isRXCHAR() && event.getEventValue() > 0) {
             try {
                 String receivedData = serialPort.readString(event.getEventValue());
-                System.out.println("Received response: " + receivedData);
                 alertArduinoListeners(receivedData);
             }
             catch (SerialPortException ex) {
@@ -80,7 +89,7 @@ public class ArduinoCommunicator implements SerialPortEventListener {
         }
     }
 
-    public void write(byte data)  {
+    public synchronized void write(byte data)  {
         try {
             serialPort.writeByte(data);
         } catch (SerialPortException e) {
@@ -88,7 +97,7 @@ public class ArduinoCommunicator implements SerialPortEventListener {
         }
     }
 
-    public void write(byte[] data) {
+    public synchronized void write(byte[] data) {
         try {
             serialPort.writeBytes(data);
         } catch (SerialPortException e) {
