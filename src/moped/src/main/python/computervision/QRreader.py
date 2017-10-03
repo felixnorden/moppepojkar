@@ -1,8 +1,11 @@
 import zbar
+import pydoc
 
 from PIL import Image
 import cv2
 
+"""This script reads a QRcode from a camera and outputs a relative ofset position
+from the center of the screen."""
 
 def main():
     centerPoint = 200
