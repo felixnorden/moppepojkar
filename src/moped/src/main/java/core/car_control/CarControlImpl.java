@@ -1,12 +1,7 @@
 package core.car_control;
 
 import arduino.ArduinoCommunicator;
-import core.process_runner.ProcessFactory;
 import core.process_runner.ProcessRunner;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.List;
 
 /**
  * Used for controlling a MOPED through a python script found on the device.
@@ -36,20 +31,15 @@ public class CarControlImpl implements CarControl {
             double lastWrittenSteerValue = currentSteerValue;
 
             while (true) {
-/*
                 if (currentThrottleValue != lastWrittenThrottleValue ||
                         currentSteerValue != lastWrittenSteerValue) {
                     sendValuesToCar();
                     lastWrittenThrottleValue = currentThrottleValue;
                     lastWrittenSteerValue = currentSteerValue;
                 }
-*/
-
                 sendValuesToCar();
-
-
                 try {
-                    Thread.sleep(50);
+                    Thread.sleep(100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -97,9 +87,9 @@ public class CarControlImpl implements CarControl {
      * Sends the steering and throttle values to the python script.
      */
     private void sendValuesToCar() {
-        arduinoCommunicator.write((byte) -128);
+        arduinoCommunicator.write((byte) 0);
         arduinoCommunicator.write((byte) (128 + currentSteerValue));
-        arduinoCommunicator.write((byte) -127);
+        arduinoCommunicator.write((byte) 1);
         arduinoCommunicator.write((byte) (128 + currentThrottleValue));
     }
 
