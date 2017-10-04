@@ -30,6 +30,7 @@ def calculatecenter():
         distanceFromCenter = centerPoint - centerPointQR
         #Prints the difference between center of the image and the center of the QR code
         print ("centerPoint :" + str(centerPoint) + "centerPointQR: " + str(centerPointQR))
-        assert distanceFromCenter == -55
+        print("Distance from center: " + str(distanceFromCenter))
+        assert distanceFromCenter == 95
 
 calculatecenter()
