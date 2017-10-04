@@ -66,6 +66,7 @@ public class ArduinoCommunicator implements SerialPortEventListener {
         if(event.isRXCHAR() && event.getEventValue() > 0) {
             try {
                 String receivedData = serialPort.readString(event.getEventValue());
+                //System.out.print(receivedData);
                 alertArduinoListeners(receivedData);
             }
             catch (SerialPortException ex) {
