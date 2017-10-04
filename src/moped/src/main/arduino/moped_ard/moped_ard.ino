@@ -7,7 +7,8 @@ int TOP = 2000;
 int BOTTOM = 1000;
 bool steerMode;
 
-long pulseTime;
+unsigned long pulseTime;
+unsigned long lastSendTime;
 
 void setup() {
   Serial.begin(9600);
@@ -17,6 +18,8 @@ void setup() {
 
   pinMode(12, OUTPUT);
   pinMode(13, INPUT);
+
+  lastSendTime = 0;
 }
 
 void loop() {
@@ -55,7 +58,8 @@ void sensorValue() {
 
   double distance = (340 / 2) * ((double)pulseTime / 1000000);
 
-  if (pulseTime != 0) {
+  if (pulseTime != 0 && micros() - lastSendTime >= 50000) {
+    lastSendTime = micros();
     Serial.println(distance);
     Serial.flush();
   }
