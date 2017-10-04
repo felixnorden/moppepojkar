@@ -7,11 +7,11 @@ from PIL import Image
 def calculatecenter():
     centerPoint = 200
     gray = cv2.imread('testQR.jpg', cv2.IMREAD_GRAYSCALE)
-    cv2.imshow('TestWindow', gray)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    #cv2.imshow('TestWindow', gray)
+    #cv2.waitKey(0)
+    #cv2.destroyAllWindows()
     img = Image.fromarray(gray)
-    width, height = img.shape
+    width, height = img.size
     zbar_image = zbar.Image(width, height, 'Y800', img.tobytes())
     scanner = zbar.ImageScanner()
     scanner.scan(zbar_image)
