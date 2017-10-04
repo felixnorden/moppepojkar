@@ -2,16 +2,17 @@ import unittest
 import cv2
 import zbar
 
-
-
 def calculatecenter():
     centerPoint = 200
     img = cv2.imread('testQR.jpg', cv2.IMREAD_GRAYSCALE)
-    width, height = img.size
+    print(img)
+    cv2.imshow('TestWindow', img)
+    cv2.waitKey(100)
+    cv2.destroyAllWindows()
+    width, height = img.shape
     zbar_image = zbar.Image(width, height, 'Y800', img.tobytes())
     scanner = zbar.ImageScanner()
     scanner.scan(zbar_image)
-
     # Prints data from image.
     for decoded in zbar_image:
         #saves The corners of the read QR-Code
@@ -25,5 +26,4 @@ def calculatecenter():
 
         print ("centerPoint :" + centerPoint + "centerPointQR: " + centerPointQR)
         assert distanceFromCenter == -55
-
 calculatecenter()
