@@ -4,21 +4,19 @@ import zbar
 
 from PIL import Image
 
-def decodeZbarData(zbar_image, trueDistanceFromCenter, imageCenter):
-
+def decodeZbarData(zbar_image, trueDistanceFromCenter, xCenter):
+    centerPoint = xCenter
     # Prints data from image.
     if zbar_image is not None:
         for decoded in zbar_image:
-            print(zbar_image)
             #saves The corners of the read QR-Code
             topLeftCorners, bottomLeftCorners, bottomRightCorners, topRightCorners = [item for item in decoded.location]
             #calculatesthe center fro m2 given xCoordinates
-            centerPointQR = (bottomRightCorners[0] - bottomLeftCorners[0]) / 2
+            centerPointQR = (bottomRightCorners[0] + bottomLeftCorners[0]) / 2
             #distanceFromCenter saves the distance given in pixels from the centerof the picture to the cetner of the QR-Code Postive = left of target
-            distanceFromCenter =  centerPointQR - imageCenter
+            distanceFromCenter = centerPoint - centerPointQR
             #Prints the difference between center of the image and the center of the QR code
-            print ("centerPoint :" + str(imageCenter) + ", centerPointQR: " + str(centerPointQR))
-            print ("distance from center: " +str(distanceFromCenter))
+            #print ("bottomRightCorners :" + str(bottomRightCorners[0]) + ", bottomLeftCorners: " + str(bottomLeftCorners[0]))
             assert trueDistanceFromCenter == distanceFromCenter
             print(trueDistanceFromCenter == distanceFromCenter)
     else:
@@ -37,9 +35,9 @@ def calculatecenter(filename, trueDistanceFromCenter):
     scanner = zbar.ImageScanner()
     scanner.scan(zbar_image)
 
-    imageCenter = width/2
-    decodeZbarData(zbar_image, trueDistanceFromCenter, imageCenter)
+    xCenter = width/2
+    decodeZbarData(zbar_image, trueDistanceFromCenter, xCenter)
 
-calculatecenter('testQR1.jpg', -129)
+calculatecenter('testQR1.jpg', 89)
 calculatecenter('testQR2.jpg', None)
-calculatecenter('testQR3.jpg', -129)
+calculatecenter('testQR3.jpg', -127)
