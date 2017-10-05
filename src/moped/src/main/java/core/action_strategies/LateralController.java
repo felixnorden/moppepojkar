@@ -9,6 +9,8 @@ import sensor_data_conversion.SensorDataConverter;
 
 import java.io.FileNotFoundException;
 
+import static utils.Config.*;
+
 public class LateralController implements ActionStrategy, InputSubscriber {
 
     private ProcessRunner imageRecognition;
@@ -21,7 +23,7 @@ public class LateralController implements ActionStrategy, InputSubscriber {
         lastActionTime = System.currentTimeMillis();
         currentRotationalOffset = 0;
         lastAction = 0;
-        lateralPid = new LateralPIDController(0, 10,0,0);
+        lateralPid = new LateralPIDController(LAT_TGT_POS, LAT_P,LAT_I,LAT_D);
 
         try {
             imageRecognition = ProcessFactory.createPythonProcess(imageRecognitionPath);
@@ -37,7 +39,7 @@ public class LateralController implements ActionStrategy, InputSubscriber {
     public double takeAction() {
         long currentTime = System.currentTimeMillis();
         int deltaTime = (int) (currentTime - lastActionTime);
-        if (deltaTime > 100) {
+        if (deltaTime > LAT_UPDATE_DELAY) {
             lastAction = lateralPid.evaluation(currentRotationalOffset, deltaTime * 1000);
         }
 
