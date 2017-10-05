@@ -8,7 +8,6 @@ import cv2
 from the center of the screen."""
 
 def main():
-    centerPoint = 200
     # Begin capturing video. You can modify what video source to use with VideoCapture's argument. It's currently set
     # to be your webcam.
 
@@ -37,7 +36,7 @@ def main():
         # Scans the zbar image.
         scanner = zbar.ImageScanner()
         scanner.scan(zbar_image)
-
+	centerPoint = width/2
         # Prints data from image.
         for decoded in zbar_image:
 
