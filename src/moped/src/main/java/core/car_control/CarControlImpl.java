@@ -1,7 +1,6 @@
 package core.car_control;
 
 import arduino.ArduinoCommunicator;
-import core.process_runner.ProcessRunner;
 
 /**
  * Used for controlling a MOPED through a python script found on the device.
@@ -14,13 +13,9 @@ public class CarControlImpl implements CarControl {
     private int currentThrottleValue;
     private int currentSteerValue;
 
-    private ProcessRunner carControl;
     private ArduinoCommunicator arduinoCommunicator;
 
-    /**
-     * @param pathToPythonScript Absolute or relative path to the python script used for controlling the car.
-     */
-    public CarControlImpl(String pathToPythonScript) {
+    public CarControlImpl() {
         arduinoCommunicator = ArduinoCommunicator.getInstance();
 
         currentThrottleValue = 0;

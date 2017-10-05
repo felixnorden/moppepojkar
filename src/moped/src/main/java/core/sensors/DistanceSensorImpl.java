@@ -2,12 +2,7 @@ package core.sensors;
 
 import arduino.ArduinoCommunicator;
 import core.process_runner.InputSubscriber;
-import core.process_runner.ProcessFactory;
-import core.process_runner.ProcessRunner;
 import sensor_data_conversion.SensorDataConverter;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 import static java.lang.Double.NaN;
 
