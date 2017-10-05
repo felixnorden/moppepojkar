@@ -18,5 +18,7 @@ public interface BehaviourStateFactory {
      */
     BehaviourState createAdaptiveCruiseControlBehaviour();
 
+    BehaviourState createPlatooningBehaviour();
+
 
 }

@@ -7,4 +7,5 @@ public interface ActionStrategyFactory {
     ActionStrategy createSteerController();
     ActionStrategy createVelocityController();
     ActionStrategy createRemoteController();
+    ActionStrategy createLateralController();
 }
