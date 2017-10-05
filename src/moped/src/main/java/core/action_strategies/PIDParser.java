@@ -4,6 +4,8 @@ import core.sensors.DistanceSensor;
 import core.sensors.DistanceSensorImpl;
 import pid.DistancePIDController;
 
+import static utils.Config.*;
+
 /**
  * An {@link ActionStrategy} which parses the sensor data
  * of a dedicated {@link core.sensors.Sensor}
@@ -19,13 +21,13 @@ public class PIDParser implements ActionStrategy {
         action = 0;
         lastActionTime = System.currentTimeMillis();
         distanceSensor = DistanceSensorImpl.getInstance();
-        pidController = new DistancePIDController(0.3,30,0,2);
+        pidController = new DistancePIDController(ACC_TGT_DIST,ACC_P,ACC_I,ACC_D);
     }
 
     @Override
     public double takeAction() {
         long currentTime = System.currentTimeMillis();
-        if (currentTime - lastActionTime > 100) {
+        if (currentTime - lastActionTime > ACC_UPDATE_DELAY) {
             double distance = distanceSensor.getDistance();
 
             // TODO: 05/10/2017 Verify that the input should be in seconds
