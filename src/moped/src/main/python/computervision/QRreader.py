@@ -46,7 +46,7 @@ def main():
             #saves The corners of the read QR-Code
             topLeftCorners, bottomLeftCorners, bottomRightCorners, topRightCorners = [item for item in decoded.location]
             #calculatesthe center fro m2 given xCoordinates
-            centerPointQR = (bottomLeftCorners[0] + bottomRightCorners)[0] / 2
+            centerPointQR = (bottomLeftCorners[0] + bottomRightCorners[0]) / 2
             #distanceFromCenter saves the distance given in pixels from the centerof the picture to the cetner of the QR-Code Postive = left of target
             distanceFromCenter = centerPoint - centerPointQR
             #Prints the difference between center of the image and the center of the QR code
