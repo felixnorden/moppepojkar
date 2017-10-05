@@ -1,5 +1,8 @@
 package core.action_strategies;
 
+/**
+ * Handler class for handling control in X-axis and Y-axis
+ */
 public class BidirectionalHandlerImpl implements BidirectionalHandler {
     private ActionStrategy latitudeStrategy;
     private ActionStrategy longitudeStrategy;

@@ -2,7 +2,6 @@ package core.behaviour_states.states;
 
 import core.car_control.CarControl;
 import core.car_control.CarControlImpl;
-import core.car_control.Platooning;
 
 /**
  * Factory for instantiating the different {@link BehaviourState} that

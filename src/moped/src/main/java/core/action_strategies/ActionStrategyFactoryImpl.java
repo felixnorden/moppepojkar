@@ -2,6 +2,9 @@ package core.action_strategies;
 
 import com_io.CommunicatorFactoryImpl;
 
+/**
+ * Factory for creating different {@link ActionStrategy} instances
+ */
 public class ActionStrategyFactoryImpl implements ActionStrategyFactory {
     private static final ActionStrategyFactory INSTANCE = new ActionStrategyFactoryImpl();
 

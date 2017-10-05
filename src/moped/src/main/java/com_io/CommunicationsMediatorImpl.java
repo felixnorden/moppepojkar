@@ -2,6 +2,11 @@ package com_io;
 
 import java.util.*;
 
+/**
+ * Mediator implementation of {@link CommunicationsMediator} for handling
+ * subscribing {@link DataReceiver} instances and mediating data
+ * between them
+ */
 class CommunicationsMediatorImpl implements CommunicationsMediator{
 
     private Map<Direction, List<DataReceiver>> subscribers;

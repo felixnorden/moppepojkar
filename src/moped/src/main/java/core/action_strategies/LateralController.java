@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 
 import static utils.Config.*;
 
+// TODO: 2017-10-05 Refactor with PIDParser class to find some common base class
 public class LateralController implements ActionStrategy, InputSubscriber {
 
     private ProcessRunner imageRecognition;

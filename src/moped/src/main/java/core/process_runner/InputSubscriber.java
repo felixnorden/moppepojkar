@@ -1,7 +1,8 @@
 package core.process_runner;
 
 /**
- * Created by Virtuality.
+ * Subscriber interface for subscribers using data
+ * from {@link ProcessRunner}
  */
 public interface InputSubscriber {
 

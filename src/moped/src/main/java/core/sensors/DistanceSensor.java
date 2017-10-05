@@ -1,7 +1,7 @@
 package core.sensors;
 
 /**
- * Interface for distancesensors.
+ * Interface for distance sensors.
  */
 public interface DistanceSensor extends Sensor{
 

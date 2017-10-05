@@ -1,8 +1,13 @@
-package core.car_control;
+package core.behaviour_states.states;
 
 import core.action_strategies.*;
 import core.behaviour_states.states.BehaviourState;
+import core.car_control.CarControl;
 
+/**
+ * State for handling platooning,
+ * i.e both lateral and longitudinal automation.
+ */
 public class Platooning implements BehaviourState {
 
     private CarControl carControl;
