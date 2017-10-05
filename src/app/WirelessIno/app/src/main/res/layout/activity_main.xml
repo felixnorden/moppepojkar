@@ -13,26 +13,28 @@ android:layout_height="match_parent"
         style="@android:style/Widget.SeekBar"
         android:layout_width="750px"
         android:layout_height="300px"
-        android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/SteeringBar"
         android:layout_marginRight="27dp"
         android:max="200"
         android:progress="100"
         android:rotation="270"
-        tools:style="@android:style/Widget.Material.SeekBar" />
+        tools:style="@android:style/Widget.Material.SeekBar"
+        android:layout_below="@+id/pidDLabel"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/velocityLabel"
+        android:layout_above="@+id/turningTextView" />
 
     <SeekBar
         android:id="@+id/SteeringBar"
         style="@android:style/Widget.SeekBar"
         android:layout_width="750px"
         android:layout_height="300px"
-        android:layout_alignEnd="@+id/connectButton"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="27dp"
         android:layout_marginRight="27dp"
         android:max="200"
         android:progress="100"
-        tools:style="@android:style/Widget.Material.SeekBar" />
+        tools:style="@android:style/Widget.Material.SeekBar"
+        android:layout_below="@+id/pidDLabel"
+        android:layout_alignEnd="@+id/connectButton"
+        android:layout_marginEnd="15dp" />
 
     <Button
         android:id="@+id/connectButton"
@@ -83,22 +85,156 @@ android:layout_height="match_parent"
         android:textStyle="bold"/>
 
     <TextView
-        android:id="@+id/speedTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/modeButton"
-        android:text="0"
-        android:layout_alignStart="@+id/serverButton" />
-
-    <TextView
         android:id="@+id/turningTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/SteeringBar"
+        android:layout_alignStart="@+id/velocityTextView"
+        android:text="0" />
+
+    <TextView
+        android:id="@+id/speedTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/ThrottleLabel"
+        android:layout_alignBottom="@+id/ThrottleLabel"
+        android:layout_marginEnd="38dp"
+        android:layout_toStartOf="@+id/velocityLabel"
+        android:text="0" />
+
+    <TextView
+        android:id="@+id/velocityLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Velocity: "
+        android:layout_marginStart="29dp"
+        android:layout_above="@+id/sensorLabel"
+        android:layout_alignStart="@+id/SteeringBar" />
+
+    <TextView
+        android:id="@+id/velocityTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="N/A"
+        android:layout_above="@+id/sensorLabel"
+        android:layout_alignStart="@+id/pidSumTextView" />
+
+    <TextView
+        android:id="@+id/sensorLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sensor Distance:"
         android:layout_alignBaseline="@+id/modeButton"
         android:layout_alignBottom="@+id/modeButton"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="119dp"
-        android:text="0" />
+        android:layout_alignStart="@+id/velocityLabel" />
+
+    <TextView
+        android:id="@+id/sensorTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="N/A"
+        android:layout_below="@+id/velocityTextView"
+        android:layout_alignStart="@+id/velocityTextView" />
+
+    <TextView
+        android:id="@+id/pidTargetLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/velocityLabel"
+        android:text="PID Target:" />
+
+    <TextView
+        android:id="@+id/pidTargetTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="N/A"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@+id/serverButton"
+        android:layout_marginEnd="26dp" />
+
+    <TextView
+        android:id="@+id/pidPLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PID P Constant:"
+        android:layout_below="@+id/pidTargetLabel"
+        android:layout_alignStart="@+id/pidTargetLabel" />
+
+    <TextView
+        android:id="@+id/pidPTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="N/A"
+        android:layout_alignBaseline="@+id/pidPLabel"
+        android:layout_alignBottom="@+id/pidPLabel"
+        android:layout_alignStart="@+id/pidTargetTextView" />
+
+    <TextView
+        android:id="@+id/pidYLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/pidPLabel"
+        android:layout_below="@+id/pidPLabel"
+        android:text="PID Y Constant:" />
+
+    <TextView
+        android:id="@+id/pidYTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/pidPTextView"
+        android:layout_below="@+id/pidPTextView"
+        android:text="N/A" />
+
+    <TextView
+        android:id="@+id/pidDLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/pidYLabel"
+        android:layout_below="@+id/pidYLabel"
+        android:text="PID D Constant:" />
+
+    <TextView
+        android:id="@+id/pidDTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/pidYTextView"
+        android:layout_below="@+id/pidYTextView"
+        android:text="N/A" />
+
+    <TextView
+        android:id="@+id/pidSumLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/pidDLabel"
+        android:layout_below="@+id/pidDLabel"
+        android:text="PID Integral Sum:" />
+
+    <TextView
+        android:id="@+id/pidSumTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="N/A"
+        android:layout_below="@+id/pidDTextView"
+        android:layout_alignStart="@+id/pidDTextView" />
+
+    <TextView
+        android:id="@+id/ThrottleLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Throttle:"
+        android:layout_marginEnd="34dp"
+        android:layout_alignBaseline="@+id/sensorLabel"
+        android:layout_alignBottom="@+id/sensorLabel"
+        android:layout_alignEnd="@+id/speedTextView" />
+
+    <TextView
+        android:id="@+id/textView21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/turningTextView"
+        android:layout_toEndOf="@+id/pidYLabel"
+        android:text="Turning:" />
 
 
 </RelativeLayout>

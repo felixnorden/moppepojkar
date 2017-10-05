@@ -1,11 +1,5 @@
 package se.sics.sse.fresta.wirelessino;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.net.InetSocketAddress;
-import java.net.Socket;
 import java.util.Random;
 
 import android.content.SharedPreferences;
@@ -38,6 +32,16 @@ public class Main extends Activity implements CommunicationListener {
 
     private final static int CONNECTION_TIMEOUT = 2000;
     private final static int SEEKBAR_SNAP_SPEED = 2;
+
+    private TextView velocityTextView;
+    private TextView sensorTextView;
+
+    private TextView pidTargetTextView;
+    private TextView pidPTextView;
+    private TextView pidYTextView;
+    private TextView pidDTextView;
+    private TextView pidSumTextView;
+
 
     private SeekBar speedBar;
     private SeekBar steeringBar;
@@ -189,6 +193,16 @@ public class Main extends Activity implements CommunicationListener {
             }
         });
 
+
+
+        velocityTextView = (TextView) findViewById(R.id.velocityTextView);
+        sensorTextView = (TextView) findViewById(R.id.sensorTextView);
+        pidTargetTextView = (TextView) findViewById(R.id.pidTargetTextView);
+        pidPTextView = (TextView) findViewById(R.id. pidPTextView);
+        pidYTextView = (TextView) findViewById(R.id.pidYTextView);
+        pidDTextView = (TextView) findViewById(R.id.pidDTextView);
+        pidSumTextView = (TextView) findViewById(R.id.pidSumTextView);
+
         modeButton = (Button) findViewById(R.id.modeButton);
         modeButton.setEnabled(false);
         turningTextView = (TextView) findViewById(R.id.turningTextView);
@@ -299,12 +313,12 @@ public class Main extends Activity implements CommunicationListener {
         if (communicator != null) {
             if(speed != lastSpeed) {
                 communicator.setValue(MopedDataType.THROTTLE, speed);
-                turningTextView.setText(Integer.toString(speed));
+                speedTextView.setText(Integer.toString(speed));
                 lastSpeed = speed;
             }
             if(steering != lastSteering) {
                 communicator.setValue(MopedDataType.STEERING, steering);
-                speedTextView.setText(Integer.toString(steering));
+                turningTextView.setText(Integer.toString(steering));
                 lastSteering = steering;
             }
         }
