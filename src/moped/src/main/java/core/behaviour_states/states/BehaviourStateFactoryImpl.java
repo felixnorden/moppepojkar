@@ -10,7 +10,7 @@ import core.car_control.CarControlImpl;
 public class BehaviourStateFactoryImpl implements BehaviourStateFactory{
 
     private static final BehaviourStateFactory INSTANCE = new BehaviourStateFactoryImpl();
-    private static final CarControl carController = new CarControlImpl("run.py");
+    private static final CarControl carController = new CarControlImpl();
 
     /**
      *

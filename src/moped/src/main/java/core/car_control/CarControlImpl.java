@@ -1,10 +1,6 @@
 package core.car_control;
 
-import core.process_runner.ProcessFactory;
-import core.process_runner.ProcessRunner;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import arduino.ArduinoCommunicator;
 
 /**
  * Used for controlling a MOPED through a python script found on the device.
@@ -17,22 +13,13 @@ public class CarControlImpl implements CarControl {
     private int currentThrottleValue;
     private int currentSteerValue;
 
-    private ProcessRunner carControl;
+    private ArduinoCommunicator arduinoCommunicator;
 
-    /**
-     * @param pathToPythonScript Absolute or relative path to the python script used for controlling the car.
-     */
-    public CarControlImpl(String pathToPythonScript) {
-        try {
-            carControl = ProcessFactory.createPythonProcess(pathToPythonScript);
-            carControl.start();
-            Thread.sleep(3000);     //Waits for process to start
-        } catch (FileNotFoundException | InterruptedException e) {
-            e.printStackTrace();
-        }
+    public CarControlImpl() {
+        arduinoCommunicator = ArduinoCommunicator.getInstance();
 
         currentThrottleValue = 0;
-        currentSteerValue = 0;
+        currentSteerValue = 100;
 
         Thread vcuLimiter = new Thread(() -> {
             double lastWrittenThrottleValue = currentThrottleValue;
@@ -45,9 +32,9 @@ public class CarControlImpl implements CarControl {
                     lastWrittenThrottleValue = currentThrottleValue;
                     lastWrittenSteerValue = currentSteerValue;
                 }
-
+                sendValuesToCar();
                 try {
-                    Thread.sleep(50);
+                    Thread.sleep(100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -55,8 +42,6 @@ public class CarControlImpl implements CarControl {
         });
 
         vcuLimiter.start();
-
-        writeToPythonScript("g.limitspeed=None");
     }
 
     @Override
@@ -97,25 +82,10 @@ public class CarControlImpl implements CarControl {
      * Sends the steering and throttle values to the python script.
      */
     private void sendValuesToCar() {
-        writeToPythonScript("drive(" + currentThrottleValue + ")\n" +
-                                 "steer(" + currentSteerValue + ")");
-    }
-
-    /**
-     * Writes the String text to the python script.
-     *
-     * @param text text to be sent.
-     */
-    private void writeToPythonScript(String text) {
-        if (carControl != null) {
-            try {
-                //System.out.println("Car write: " + text);
-                carControl.outputToScript(text + "\n");
-                carControl.flushOutput();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        arduinoCommunicator.write((byte) 0);
+        arduinoCommunicator.write((byte) (128 + currentSteerValue));
+        arduinoCommunicator.write((byte) 1);
+        arduinoCommunicator.write((byte) (128 + currentThrottleValue));
     }
 
     /**

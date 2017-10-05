@@ -13,7 +13,7 @@ class CarControlImplTest {
 
     @BeforeEach
     void setUp() {
-        carControl = new CarControlImpl("run.py");
+        carControl = new CarControlImpl();
 
         carControl.setSteerValue(STEER_VALUE);
         carControl.setThrottle(THROTTLE_VALUE);
