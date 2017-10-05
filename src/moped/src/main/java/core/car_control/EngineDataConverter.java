@@ -1,11 +1,13 @@
 package core.car_control;
 
+import java.util.Arrays;
+
 public class EngineDataConverter {
     private int[] validMotorValues;
 
     //This class constructor takes in an array of values, one of which we want another value to approximate to.
     public EngineDataConverter(int[] validMotorValues) {
-        this.validMotorValues = validMotorValues;
+        this.validMotorValues = Arrays.copyOf(validMotorValues, validMotorValues.length);
     }
 
     /**

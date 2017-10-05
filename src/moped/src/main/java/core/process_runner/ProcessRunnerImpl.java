@@ -1,6 +1,9 @@
 package core.process_runner;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +45,7 @@ public class ProcessRunnerImpl extends Thread implements ProcessRunner {
         StreamReader reader = new StreamReader(p.getInputStream());
         reader.setOnInputRead(this::alertObservers);
         reader.start();
-        writer = new BufferedWriter(new OutputStreamWriter(p.getOutputStream()));
+        writer = new BufferedWriter(new OutputStreamWriter(p.getOutputStream(), StandardCharsets.UTF_8));
     }
 
     @Override

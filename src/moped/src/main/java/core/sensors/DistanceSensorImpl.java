@@ -4,8 +4,6 @@ import arduino.ArduinoCommunicator;
 import core.process_runner.InputSubscriber;
 import sensor_data_conversion.SensorDataConverter;
 
-import static java.lang.Double.NaN;
-
 /**
  * Used for reading from the on-board distance sensor.
  */
@@ -42,7 +40,7 @@ public class DistanceSensorImpl implements DistanceSensor, InputSubscriber {
     public synchronized void outputString(String s) {
         if (s.contains("\n")) {
             double temp = new SensorDataConverter().convertDistance(arduinoInput.toString());
-            if (temp != NaN) {
+            if (!Double.isNaN(temp)) {
                 normaliseValue(temp);
             }
             arduinoInput = new StringBuilder();

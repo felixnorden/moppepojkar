@@ -46,7 +46,7 @@ public class RemoteController implements ActionStrategy, DataReceiver {
         }
     }
 
-    private void updateValue(String s) {
+    private synchronized void updateValue(String s) {
         try {
             lastValue = Integer.parseInt(s);
         } catch (NumberFormatException nfe) {

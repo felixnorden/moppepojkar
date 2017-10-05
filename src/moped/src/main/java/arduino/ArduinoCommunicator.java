@@ -12,7 +12,7 @@ public class ArduinoCommunicator implements SerialPortEventListener {
     private SerialPort serialPort;
 
     private static ArduinoCommunicator instance;
-    public static ArduinoCommunicator getInstance() {
+    public synchronized static ArduinoCommunicator getInstance() {
         if (instance == null) {
             instance = new ArduinoCommunicator();
 

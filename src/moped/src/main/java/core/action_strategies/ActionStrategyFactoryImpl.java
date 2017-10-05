@@ -1,13 +1,9 @@
 package core.action_strategies;
 
 import com_io.CommunicatorFactoryImpl;
-import core.sensors.Sensor;
 
 public class ActionStrategyFactoryImpl implements ActionStrategyFactory {
     private static final ActionStrategyFactory INSTANCE = new ActionStrategyFactoryImpl();
-
-    private Sensor DistanceSensorImpt;
-
 
     @Override
     public ActionStrategy createPIDController() {

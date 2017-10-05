@@ -22,7 +22,7 @@ public class DistancePIDController extends PIDController {
     public double evaluation(double currentValue, double deltaTime){
 
         //Checking if the sensor data is valid (invalid sensor data is represented with NaN)
-        if (currentValue != Double.NaN && currentValue > 0) {
+        if (!Double.isNaN(currentValue) && currentValue > 0) {
             return super.evaluation(currentValue,deltaTime);
         } else {
             return 0;

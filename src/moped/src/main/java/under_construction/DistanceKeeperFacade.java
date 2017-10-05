@@ -1,7 +1,6 @@
 package under_construction;
 
 import pid.DistancePIDController;
-import sensor_data_conversion.SensorDataConverter;
 
 /**
  * Created by Elias and Marcus
@@ -10,7 +9,6 @@ import sensor_data_conversion.SensorDataConverter;
  */
 public class DistanceKeeperFacade {
     private DistancePIDController distancePIDController;
-    private SensorDataConverter sensorDataConverter = new SensorDataConverter();
 
     public DistanceKeeperFacade(double targetValue, double constantP, double constantIRelation, double constantDRelation){
         distancePIDController = new DistancePIDController(targetValue, constantP, constantIRelation, constantDRelation);
