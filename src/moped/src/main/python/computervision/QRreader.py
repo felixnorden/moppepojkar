@@ -36,10 +36,12 @@ def main():
         # Scans the zbar image.
         scanner = zbar.ImageScanner()
         scanner.scan(zbar_image)
-	centerPoint = width/2
+
+        #Get center point from image width
+        centerPoint = width / 2
+	
         # Prints data from image.
         for decoded in zbar_image:
-
             #print(decoded.data)
 
             #saves The corners of the read QR-Code
@@ -49,7 +51,7 @@ def main():
             #distanceFromCenter saves the distance given in pixels from the centerof the picture to the cetner of the QR-Code Postive = left of target
             distanceFromCenter = centerPoint - centerPointQR
             #Prints the difference between center of the image and the center of the QR code
-            print(distanceFromCenter)
+            print(-distanceFromCenter)
             '''   testkod nedan.
             print("Top left xy")
             print(topLeftCorners)
