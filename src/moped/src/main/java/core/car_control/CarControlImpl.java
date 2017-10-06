@@ -19,7 +19,7 @@ public class CarControlImpl implements CarControl {
         arduinoCommunicator = ArduinoCommunicator.getInstance();
 
         currentThrottleValue = 0;
-        currentSteerValue = 100;
+        currentSteerValue = 0;
 
         Thread vcuLimiter = new Thread(() -> {
             double lastWrittenThrottleValue = currentThrottleValue;
@@ -33,6 +33,8 @@ public class CarControlImpl implements CarControl {
                     lastWrittenSteerValue = currentSteerValue;
                 }
                 sendValuesToCar();
+                System.out.println("ST: " + currentSteerValue);
+                System.out.println("TH: " + currentThrottleValue);
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {

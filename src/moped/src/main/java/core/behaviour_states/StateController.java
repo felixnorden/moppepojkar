@@ -24,7 +24,7 @@ public class StateController implements Runnable, DataReceiver{
 
         CommunicatorFactoryImpl.getFactoryInstance().getComInstance().subscribe(Direction.INTERNAL, this);
         // Possibly change to default safe mode when implemented
-        this.acc = stateFactory.createAdaptiveCruiseControlBehaviour();
+        this.acc = stateFactory.createPlatooningBehaviour();
         this.manual = stateFactory.createManualBehaviour();
 
         this.currentState = manual;
@@ -55,8 +55,8 @@ public class StateController implements Runnable, DataReceiver{
     public void dataReceived(String unformattedData) {
         String[] data = unformattedData.split(",");
 
-        System.out.println("Data type: " + data[0]);
-        System.out.println("MODE: " + data[1]);
+
+
         if (data[0].equals("STATE")) {
             if (data[1].equals("ACC")) {
                 System.out.println("ACC ENABLED");
