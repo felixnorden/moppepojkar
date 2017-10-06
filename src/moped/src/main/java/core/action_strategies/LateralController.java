@@ -5,7 +5,6 @@ import core.process_runner.ProcessFactory;
 import core.process_runner.ProcessRunner;
 import pid.LateralPIDController;
 import pid.PIDController;
-import sensor_data_conversion.SensorDataConverter;
 
 import java.io.FileNotFoundException;
 
@@ -20,7 +19,10 @@ public class LateralController implements ActionStrategy, InputSubscriber {
     private long lastActionTime;
     private double lastAction;
 
+    private StringBuilder receivedString;
+
     LateralController(String imageRecognitionPath) {
+        receivedString = new StringBuilder();
         lastActionTime = System.currentTimeMillis();
         currentRotationalOffset = 0;
         lastAction = 0;
@@ -49,10 +51,15 @@ public class LateralController implements ActionStrategy, InputSubscriber {
 
     @Override
     public void outputString(String s) {
-        double imageRotationValue = new SensorDataConverter().convertDistance(s);
-
-        if (!Double.isNaN(imageRotationValue)) {
-            currentRotationalOffset = imageRotationValue;
+        if (!s.equals("\n")) {
+            receivedString.append(s);
+        } else {
+            double imageRotationValue = Double.valueOf(receivedString.toString());
+            System.out.println("Camera Value: " + imageRotationValue);
+            if (!Double.isNaN(imageRotationValue)) {
+                currentRotationalOffset = imageRotationValue;
+            }
+            receivedString = new StringBuilder();
         }
     }
 }
