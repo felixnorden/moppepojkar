@@ -58,7 +58,7 @@ void sensorValue() {
 
   double distance = (340 / 2) * ((double)pulseTime / 1000000);
 
-  if (pulseTime != 0 && micros() - lastSendTime >= 50000) {
+  if (pulseTime != 0 && micros() - lastSendTime >= 25000) {
     lastSendTime = micros();
     Serial.println(distance);
     Serial.flush();
