@@ -38,19 +38,21 @@ public class DistanceSensorImpl implements DistanceSensor, InputSubscriber {
 
     @Override
     public synchronized void outputString(String s) {
-        if (s.contains("\n")) {
-            double temp = new SensorDataConverter().convertDistance(arduinoInput.toString());
-            if (!Double.isNaN(temp)) {
-                normaliseValue(temp);
+        for (char c : s.toCharArray()) {
+            if (c != 10 && c != 13) {
+                arduinoInput.append(c);
+            } else {
+                setAsDistanceValue(arduinoInput.toString());
+                arduinoInput = new StringBuilder();
             }
-            arduinoInput = new StringBuilder();
-        } else {
-            arduinoInput.append(s);
         }
     }
 
-    private void normaliseValue(double value) {
-        currentSensorValue = filter.filterValue(value);
+    private void setAsDistanceValue(String text) {
+        double value = new SensorDataConverter().convertDistance(text);
+        if (!Double.isNaN(value)) {
+            currentSensorValue = filter.filterValue(value);
+        }
     }
 
     private DistanceSensorImpl() {
