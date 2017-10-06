@@ -55,7 +55,6 @@ public class LateralController implements ActionStrategy, InputSubscriber {
             receivedString.append(s);
         } else {
             double imageRotationValue = Double.valueOf(receivedString.toString());
-            System.out.println("Camera Value: " + imageRotationValue);
             if (!Double.isNaN(imageRotationValue)) {
                 currentRotationalOffset = imageRotationValue;
             }

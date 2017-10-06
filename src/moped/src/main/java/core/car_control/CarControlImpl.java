@@ -33,8 +33,6 @@ public class CarControlImpl implements CarControl {
                     lastWrittenSteerValue = currentSteerValue;
                 }
                 sendValuesToCar();
-                System.out.println("ST: " + currentSteerValue);
-                System.out.println("TH: " + currentThrottleValue);
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
