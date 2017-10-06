@@ -38,7 +38,7 @@ public class Config {
 
     // The proportional constant of the PID controller for the lateral navigation. A higher value means that the moped will return higher
     // values to the servo which will result in a greater turning speed.
-    public static final double LAT_P = 10;
+    public static final double LAT_P = 1;
 
     // The relation between the proportional constant and the integral constant of the PID controller for the lateral navigation. A higher
     // value means that the integral sum will grow faster resulting in the target position being reached more quickly but with a greater
