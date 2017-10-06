@@ -35,7 +35,7 @@ public class ActionStrategyFactoryImpl implements ActionStrategyFactory {
 
     @Override
     public ActionStrategy createLateralController() {
-        return new LateralController("QReader.py");
+        return new LateralController("QRreader.py");
     }
 
     public static ActionStrategyFactory getInstance() {
