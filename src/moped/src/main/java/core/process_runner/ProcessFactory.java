@@ -21,7 +21,7 @@ public class ProcessFactory {
         }
 
         return new ProcessRunnerImpl(new ProcessBuilder(
-                "python3", "-u", "-i", pythonScriptPath
+                "python", "-u", "-i", pythonScriptPath
         ));
     }
 
