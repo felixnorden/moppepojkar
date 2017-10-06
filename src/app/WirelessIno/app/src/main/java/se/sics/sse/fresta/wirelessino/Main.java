@@ -45,12 +45,15 @@ public class Main extends Activity implements CommunicationListener {
 
     private SeekBar speedBar;
     private SeekBar steeringBar;
-    private Button modeButton;
+    private Button manualButton;
+    private Button accButton;
+    private Button platooningButton;
+
     private Button connectButton;
     private TextView turningTextView;
     private TextView speedTextView;
 
-    private boolean isACCenabled = false;
+
     private boolean isConnected = false;
 
     private Communicator communicator;
@@ -203,8 +206,17 @@ public class Main extends Activity implements CommunicationListener {
         pidDTextView = (TextView) findViewById(R.id.pidDTextView);
         pidSumTextView = (TextView) findViewById(R.id.pidSumTextView);
 
-        modeButton = (Button) findViewById(R.id.modeButton);
-        modeButton.setEnabled(false);
+        manualButton = (Button) findViewById(R.id.manualButton);
+        manualButton.setEnabled(false);
+        accButton = (Button) findViewById(R.id.accButton);
+        accButton.setEnabled(false);
+        platooningButton = (Button) findViewById(R.id.platooningButton);
+        platooningButton.setEnabled(false);
+
+        accButton.setBackgroundColor(Color.parseColor("#FF0000"));
+        manualButton.setBackgroundColor(Color.parseColor("#FF0000"));
+        platooningButton.setBackgroundColor(Color.parseColor("#FF0000"));
+
         turningTextView = (TextView) findViewById(R.id.turningTextView);
         speedTextView = (TextView) findViewById(R.id.speedTextView);
 
@@ -214,12 +226,7 @@ public class Main extends Activity implements CommunicationListener {
         connectButton = (Button) findViewById(R.id.serverButton);
         connectButton.setBackgroundColor(Color.parseColor("#7CFC00"));
 
-        modeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateModeButton();
-            }
-        });
+
 
 
         Toast.makeText(getApplicationContext(), getMoppeToast(), Toast.LENGTH_SHORT).show();
@@ -397,29 +404,10 @@ public class Main extends Activity implements CommunicationListener {
             public void run() {
                 Toast.makeText(getApplicationContext(), "Connected to server", Toast.LENGTH_SHORT).show();
                 isConnected = true;
-                modeButton.setEnabled(true);
+                accButton.setEnabled(true);
+                platooningButton.setEnabled(true);
+                manualButton.setEnabled(true);
                 updateConnectButton();
-            }
-        });
-    }
-
-    @Override
-    public void onStateChange(final MopedState mopedState) {
-        switch (mopedState) {
-            case ACC:
-                isACCenabled = true;
-                break;
-            case MANUAL:
-                isACCenabled = false;
-                break;
-        }
-
-
-        this.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                updateModeButton();
-                Toast.makeText(getApplicationContext(), "New state: " + mopedState.name(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -431,7 +419,12 @@ public class Main extends Activity implements CommunicationListener {
             @Override
             public void run() {
                 isConnected = false;
-                modeButton.setEnabled(false);
+                accButton.setEnabled(false);
+                platooningButton.setEnabled(false);
+                manualButton.setEnabled(false);
+                accButton.setBackgroundColor(Color.parseColor("#FF0000"));
+                manualButton.setBackgroundColor(Color.parseColor("##FF0000"));
+                platooningButton.setBackgroundColor(Color.parseColor("#FF0000"));
                 updateConnectButton();
                 Toast.makeText(getApplicationContext(), "Connection Lost", Toast.LENGTH_SHORT).show();
             }
@@ -470,16 +463,53 @@ public class Main extends Activity implements CommunicationListener {
         }
     }
 
-    private void updateModeButton() {
-        if (isACCenabled) {
-            modeButton.setText("ACC");
-            communicator.setState(MopedState.ACC);
-            isACCenabled = !isACCenabled;
-        } else {
-            modeButton.setText("MANUAL");
-            communicator.setState(MopedState.MANUAL);
-            isACCenabled = !isACCenabled;
+
+    @Override
+    public void onStateChange(MopedState mopedState) {
+        switch(mopedState){
+            case ACC:
+                accButtonEnable();
+                break;
+            case PLATOONING:
+                platooningButtonEnable();
+                break;
+            case MANUAL:
+                manualButtonEnable();
+                break;
         }
+    }
+
+    public void accButtonPress(View view){
+        accButtonEnable();
+   }
+
+    private void accButtonEnable(){
+        accButton.setBackgroundColor(Color.parseColor("#7CFC00"));
+        manualButton.setBackgroundColor(Color.parseColor("#FF0000"));
+        platooningButton.setBackgroundColor(Color.parseColor("#FF0000"));
+        communicator.setState(MopedState.ACC);
+    }
+
+    public void platooningButtonPress(View view){
+        platooningButtonEnable();
+    }
+
+    private void platooningButtonEnable(){
+        accButton.setBackgroundColor(Color.parseColor("#FF0000"));
+        manualButton.setBackgroundColor(Color.parseColor("#FF0000"));
+        platooningButton.setBackgroundColor(Color.parseColor("#7CFC00"));
+        communicator.setState(MopedState.PLATOONING);
+    }
+
+    public void manualButtonPress(View view){
+        manualButtonEnable();
+    }
+
+    private void manualButtonEnable(){
+        accButton.setBackgroundColor(Color.parseColor("#FF0000"));
+        manualButton.setBackgroundColor(Color.parseColor("#7CFC00"));
+        platooningButton.setBackgroundColor(Color.parseColor("#FF0000"));
+        communicator.setState(MopedState.MANUAL);
     }
 
 

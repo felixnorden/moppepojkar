@@ -7,7 +7,8 @@ package com;
  */
 public enum MopedState {
     ACC,
-    MANUAL;
+    MANUAL,
+	PLATOONING;
 
     private static MopedState[] values = MopedState.values();
 
