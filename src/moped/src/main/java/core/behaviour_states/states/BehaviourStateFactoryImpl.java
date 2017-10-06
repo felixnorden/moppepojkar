@@ -35,6 +35,11 @@ public class BehaviourStateFactoryImpl implements BehaviourStateFactory{
         return new Platooning(carController);
     }
 
+    @Override
+    public BehaviourState createSafeModeBehaviour() {
+        return new SafeModeBehaviour(carController);
+    }
+
 
     private BehaviourStateFactoryImpl() {}
 

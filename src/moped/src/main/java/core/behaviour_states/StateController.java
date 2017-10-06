@@ -17,8 +17,9 @@ public class StateController implements Runnable, DataReceiver{
     private BehaviourState currentState;
 
     private final BehaviourState manual;
-    private BehaviourState acc;
+    private final BehaviourState acc;
     private final BehaviourState platooning;
+    private final BehaviourState safeMode;
 
     public StateController() {
         this.stateFactory = BehaviourStateFactoryImpl.getInstance();
@@ -28,8 +29,9 @@ public class StateController implements Runnable, DataReceiver{
         this.manual = stateFactory.createManualBehaviour();
         this.acc = stateFactory.createAdaptiveCruiseControlBehaviour();
         this.platooning = stateFactory.createPlatooningBehaviour();
+        this.safeMode = stateFactory.createSafeModeBehaviour();
 
-        this.currentState = manual;
+        this.currentState = safeMode;
     }
 
     @Override

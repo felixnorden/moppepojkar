@@ -21,4 +21,5 @@ public interface BehaviourStateFactory {
     BehaviourState createPlatooningBehaviour();
 
 
+    BehaviourState createSafeModeBehaviour();
 }
