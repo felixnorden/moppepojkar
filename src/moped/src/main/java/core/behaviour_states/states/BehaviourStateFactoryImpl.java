@@ -40,6 +40,11 @@ public class BehaviourStateFactoryImpl implements BehaviourStateFactory{
         return new SafeModeBehaviour(carController);
     }
 
+    @Override
+    public BehaviourState createEmergencyStop() {
+        return new EmergencyStopBehaviour(carController);
+    }
+
 
     private BehaviourStateFactoryImpl() {}
 

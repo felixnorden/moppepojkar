@@ -22,4 +22,6 @@ public interface BehaviourStateFactory {
 
 
     BehaviourState createSafeModeBehaviour();
+
+    BehaviourState createEmergencyStop();
 }
