@@ -4,6 +4,10 @@ import arduino.ArduinoCommunicator;
 import core.process_runner.InputSubscriber;
 import sensor_data_conversion.SensorDataConverter;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
+
 /**
  * Used for reading from the on-board distance sensor.
  */
@@ -17,6 +21,8 @@ public class DistanceSensorImpl implements DistanceSensor, InputSubscriber {
     private double currentSensorValue;
     private StringBuilder arduinoInput;
 
+    private List<Consumer<Double>> dataConsumers;
+
     public static DistanceSensorImpl getInstance() {
         return INSTANCE;
     }
@@ -29,6 +35,14 @@ public class DistanceSensorImpl implements DistanceSensor, InputSubscriber {
     @Override
     public double getValue() {
         return getDistance();
+    }
+
+    public void subscribe(Consumer<Double> dataConsumer) {
+        dataConsumers.add(dataConsumer);
+    }
+
+    public void unsubscribe(Consumer<Double> dataConsumer) {
+        dataConsumers.remove(dataConsumer);
     }
 
     @Override
@@ -52,10 +66,12 @@ public class DistanceSensorImpl implements DistanceSensor, InputSubscriber {
         double value = new SensorDataConverter().convertDistance(text);
         if (!Double.isNaN(value)) {
             currentSensorValue = filter.filterValue(value);
+            dataConsumers.forEach(doubleConsumer -> doubleConsumer.accept(currentSensorValue));
         }
     }
 
     private DistanceSensorImpl() {
+        dataConsumers = new ArrayList<>();
         filter = new LowPassFilter(FILTER_WEIGHT);
         arduinoInput = new StringBuilder();
         currentSensorValue = 0.3;
