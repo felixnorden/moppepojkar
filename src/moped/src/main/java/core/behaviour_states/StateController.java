@@ -24,7 +24,7 @@ public class StateController implements Runnable, DataReceiver{
 
         CommunicatorFactoryImpl.getFactoryInstance().getComInstance().subscribe(Direction.INTERNAL, this);
         // Possibly change to default safe mode when implemented
-        this.acc = stateFactory.createPlatooningBehaviour();
+        this.acc = stateFactory.createAdaptiveCruiseControlBehaviour();
         this.manual = stateFactory.createManualBehaviour();
 
         this.currentState = manual;
