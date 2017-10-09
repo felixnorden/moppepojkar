@@ -423,7 +423,7 @@ public class Main extends Activity implements CommunicationListener {
                 platooningButton.setEnabled(false);
                 manualButton.setEnabled(false);
                 accButton.setBackgroundColor(Color.parseColor("#FF0000"));
-                manualButton.setBackgroundColor(Color.parseColor("##FF0000"));
+                manualButton.setBackgroundColor(Color.parseColor("#FF0000"));
                 platooningButton.setBackgroundColor(Color.parseColor("#FF0000"));
                 updateConnectButton();
                 Toast.makeText(getApplicationContext(), "Connection Lost", Toast.LENGTH_SHORT).show();
