@@ -3,6 +3,8 @@ package core.behaviour_states.states;
 import core.car_control.CarControl;
 import core.car_control.CarControlImpl;
 
+import java.util.function.Consumer;
+
 /**
  * Factory for instantiating the different {@link BehaviourState} that
  * the system supports
@@ -41,8 +43,10 @@ public class BehaviourStateFactoryImpl implements BehaviourStateFactory{
     }
 
     @Override
-    public BehaviourState createEmergencyStop() {
-        return new EmergencyStopBehaviour(carController);
+    public BehaviourState createEmergencyStop(Consumer<BehaviourState> stateConsumer) {
+        EmergencyStopBehaviour emergencyStopBehaviour = new EmergencyStopBehaviour(carController);
+        emergencyStopBehaviour.setOnCollision(stateConsumer);
+        return emergencyStopBehaviour;
     }
 
 

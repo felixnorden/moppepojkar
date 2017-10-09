@@ -24,25 +24,29 @@ public class StateController implements Runnable, DataReceiver{
 
     public StateController() {
         this.stateFactory = BehaviourStateFactoryImpl.getInstance();
-
         CommunicatorFactoryImpl.getFactoryInstance().getComInstance().subscribe(Direction.INTERNAL, this);
-        // Possibly change to default safe mode when implemented
+
         this.manual = stateFactory.createManualBehaviour();
         this.acc = stateFactory.createAdaptiveCruiseControlBehaviour();
         this.platooning = stateFactory.createPlatooningBehaviour();
+
         this.safeMode = stateFactory.createSafeModeBehaviour();
-        this.emergencyStop = stateFactory.createEmergencyStop();
+        this.emergencyStop = stateFactory.createEmergencyStop(this::setState);
 
         this.currentState = safeMode;
     }
 
     @Override
-    public void run() {
+    public synchronized void run() {
         currentState.run();
     }
 
+    private synchronized void setState(BehaviourState state) {
+        currentState = state;
+    }
+
     @Override
-    public void dataReceived(String unformattedData) {
+    public synchronized void dataReceived(String unformattedData) {
         String[] data = unformattedData.split(",");
 
         if (data[0].equals("STATE")) {

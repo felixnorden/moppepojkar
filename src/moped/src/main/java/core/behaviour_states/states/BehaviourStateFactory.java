@@ -1,5 +1,7 @@
 package core.behaviour_states.states;
 
+import java.util.function.Consumer;
+
 /**
  * Factory interface for instantiating the different {@link BehaviourState}
  * that the implementing system
@@ -23,5 +25,5 @@ public interface BehaviourStateFactory {
 
     BehaviourState createSafeModeBehaviour();
 
-    BehaviourState createEmergencyStop();
+    BehaviourState createEmergencyStop(Consumer<BehaviourState> consumer);
 }
