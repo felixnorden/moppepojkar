@@ -22,6 +22,8 @@ import com.Communicator;
 import com.MopedDataType;
 import com.MopedState;
 
+import static com.MopedState.parseInt;
+
 /**
  * This is the Main class which is the main activity for the application.
  * All the interactive GUI elements are defined here as well as their
@@ -435,24 +437,34 @@ public class Main extends Activity implements CommunicationListener {
     public void onValueChanged(MopedDataType mopedDataType, int i) {
         switch (mopedDataType) {
             case MOPED_STATE:
+                onStateChange(parseInt(i));
                 break;
             case VELOCITY:
+                velocityTextView.setText(String.valueOf(i));
                 break;
             case SENSOR_DISTANCE:
+                sensorTextView.setText(String.valueOf(i));
                 break;
             case PID_TARGET_VALUE:
+                pidTargetTextView.setText(String.valueOf(i));
                 break;
             case PID_P_CONSTANT:
+                pidPTextView.setText(String.valueOf(i));
                 break;
             case PID_Y_CONSTANT:
+                pidYTextView.setText(String.valueOf(i));
                 break;
             case PID_D_CONSTANT:
+                pidDTextView.setText(String.valueOf(i));
                 break;
             case PID_INTEGRAL_SUM:
+                pidSumTextView.setText(String.valueOf(i));
                 break;
             case THROTTLE:
+                speedTextView.setText(String.valueOf(i));
                 break;
             case STEERING:
+                turningTextView.setText(String.valueOf(i));
                 break;
             case CUSTOM_1:
                 break;
