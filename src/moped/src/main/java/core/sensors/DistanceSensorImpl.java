@@ -51,13 +51,13 @@ public class DistanceSensorImpl implements DistanceSensor, InputSubscriber {
             if (c != 10 && c != 13) {
                 arduinoInput.append(c);
             } else {
-                setAsDistanceValue(arduinoInput.toString());
+                setCurrentSensorValue(arduinoInput.toString());
                 arduinoInput = new StringBuilder();
             }
         }
     }
 
-    private void setAsDistanceValue(String text) {
+    private void setCurrentSensorValue(String text) {
         double value = new SensorDataConverter().convertDistance(text);
         if (!Double.isNaN(value)) {
             currentSensorValue = filter.filterValue(value);
