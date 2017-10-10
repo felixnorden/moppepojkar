@@ -1,7 +1,10 @@
 import com.*;
 import com_io.CommunicationsMediator;
 import com_io.DataReceiver;
-import com_io.Direction;
+
+import static com_io.Direction.EXTERNAL;
+import static com_io.Direction.INTERNAL;
+import static utils.Config.*;
 
 public class RemoteMediator implements DataReceiver, CommunicationListener {
 
@@ -14,22 +17,24 @@ public class RemoteMediator implements DataReceiver, CommunicationListener {
         server.start();
 
         this.communicationsMediator = communicationsMediator;
-        communicationsMediator.subscribe(Direction.EXTERNAL, this);
+        communicationsMediator.subscribe(EXTERNAL, this);
     }
 
     @Override
     public void onConnection() {
-        // TODO: 2017-09-27 UPDATE APP WITH CURRENT VALUES PLS DO
+        System.out.println("Phone connected!");
+        communicationsMediator.transmitData(CONNECTION + REGEX + ON, INTERNAL);
     }
 
     @Override
     public void onStateChange(MopedState mopedState) {
-        communicationsMediator.transmitData("STATE," + mopedState.toString(), Direction.INTERNAL);
+        communicationsMediator.transmitData(STATE + REGEX + mopedState.toString(), INTERNAL);
     }
 
     @Override
     public void onDisconnection() {
-        // TODO: 2017-09-27 STOPCAR STOPCAR
+        System.out.println("Connection lost!");
+        communicationsMediator.transmitData(CONNECTION + REGEX + OFF, INTERNAL);
     }
 
     @Override
@@ -37,31 +42,11 @@ public class RemoteMediator implements DataReceiver, CommunicationListener {
         //Nothing more will most likely be added here as these values are meant to be sent to the app for display
         //and not the other way around
         switch (mopedDataType) {
-            case VELOCITY:
-                break;
-            case SENSOR_DISTANCE:
-                break;
-            case PID_TARGET_VALUE:
-                break;
-            case PID_P_CONSTANT:
-                break;
-            case PID_Y_CONSTANT:
-                break;
-            case PID_D_CONSTANT:
-                break;
-            case PID_INTEGRAL_SUM:
-                break;
             case THROTTLE:
-                communicationsMediator.transmitData("THROTTLE," + i, Direction.INTERNAL);
+                communicationsMediator.transmitData(THROTTLE + REGEX + i, INTERNAL);
                 break;
             case STEERING:
-                communicationsMediator.transmitData("STEER," + i, Direction.INTERNAL);
-                break;
-            case CUSTOM_1:
-                break;
-            case CUSTOM_2:
-                break;
-            case CUSTOM_3:
+                communicationsMediator.transmitData(STEER + REGEX + i, INTERNAL);
                 break;
         }
     }
@@ -81,10 +66,10 @@ public class RemoteMediator implements DataReceiver, CommunicationListener {
 
     @Override
     public void dataReceived(String unformattedDataString) {
-        String[] data = unformattedDataString.split(",");
+        String[] data = unformattedDataString.split(REGEX);
 
         if (data.length == 2) {
-            if (data[0].equals("STATE")) {
+            if (data[0].equals(STATE)) {
                 try {
                     MopedState mopedState = MopedState.valueOf(data[1]);
                     server.setState(mopedState);
@@ -93,8 +78,9 @@ public class RemoteMediator implements DataReceiver, CommunicationListener {
                 }
 
             } else {
-                MopedDataType mopedDataType = MopedDataType.valueOf(data[1]);
-                // TODO: 27/09/2017 Do stuff with the data type
+                MopedDataType mopedDataType = MopedDataType.valueOf(data[0]);
+                int value = Integer.valueOf(data[1]);
+                server.setValue(mopedDataType, value);
             }
         }
     }

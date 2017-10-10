@@ -9,10 +9,12 @@ import core.behaviour_states.states.BehaviourState;
 import core.behaviour_states.states.BehaviourStateFactory;
 import core.behaviour_states.states.BehaviourStateFactoryImpl;
 
+import static utils.Config.*;
+
 /**
  * Controller which controls the different states of the system
  */
-public class StateController implements Runnable, DataReceiver{
+public class StateController implements Runnable, DataReceiver {
     private BehaviourStateFactory stateFactory;
     private BehaviourState currentState;
 
@@ -20,7 +22,6 @@ public class StateController implements Runnable, DataReceiver{
     private final BehaviourState acc;
     private final BehaviourState platooning;
     private final BehaviourState safeMode;
-    private final BehaviourState emergencyStop;
 
     public StateController() {
         this.stateFactory = BehaviourStateFactoryImpl.getInstance();
@@ -31,7 +32,7 @@ public class StateController implements Runnable, DataReceiver{
         this.platooning = stateFactory.createPlatooningBehaviour();
 
         this.safeMode = stateFactory.createSafeModeBehaviour();
-        this.emergencyStop = stateFactory.createEmergencyStop(this::setState);
+        stateFactory.createEmergencyStop(this::setState);
 
         this.currentState = safeMode;
     }
@@ -47,9 +48,9 @@ public class StateController implements Runnable, DataReceiver{
 
     @Override
     public synchronized void dataReceived(String unformattedData) {
-        String[] data = unformattedData.split(",");
+        String[] data = unformattedData.split(REGEX);
 
-        if (data[0].equals("STATE")) {
+        if (data[0].equals(STATE)) {
             switch (data[1]) {
                 case "ACC":
                     currentState = acc;
@@ -60,6 +61,10 @@ public class StateController implements Runnable, DataReceiver{
                 case "PLATOONING":
                     currentState = platooning;
                     break;
+            }
+        } else if (data[0].equals(CONNECTION)) {
+            if (data[1].equals(OFF)) {
+                currentState = safeMode;
             }
         }
     }

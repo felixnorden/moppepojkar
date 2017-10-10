@@ -1,6 +1,7 @@
 package core.action_strategies;
 
 import com_io.CommunicatorFactoryImpl;
+import utils.Config;
 
 /**
  * Factory for creating different {@link ActionStrategy} instances
@@ -29,13 +30,8 @@ public class ActionStrategyFactoryImpl implements ActionStrategyFactory {
     }
 
     @Override
-    public ActionStrategy createRemoteController() {
-        return null;
-    }
-
-    @Override
     public ActionStrategy createLateralController() {
-        return new LateralController("QRreader.py");
+        return new LateralController(Config.QR_PATH);
     }
 
     public static ActionStrategyFactory getInstance() {

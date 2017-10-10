@@ -2,8 +2,18 @@ package utils;
 
 public class Config {
 
-    public static final String QR_PATH = "QReader.py";
-    
+    public static final String QR_PATH = "QRreader.py";
+
+    public static final String REGEX = ",";
+    public static final String STATE = "STATE";
+
+    public static final String THROTTLE = "THROTTLE";
+    public static final String STEER = "STEER";
+
+    public static final String CONNECTION = "CONNECTION";
+    public static final String OFF = "OFF";
+    public static final String ON = "ON";
+
 
     // Values used by the PIDController for the ACC
 
