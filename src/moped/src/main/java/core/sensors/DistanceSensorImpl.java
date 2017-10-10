@@ -3,27 +3,30 @@ package core.sensors;
 import arduino.ArduinoCommunicator;
 import com_io.CommunicationsMediator;
 import com_io.Direction;
-import core.process_runner.InputSubscriber;
 import sensor_data_conversion.SensorDataConverter;
+import utils.Config;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
+import static utils.Config.CAM_TGT_DIST;
 import static utils.Config.DIST_SENSOR;
 import static utils.Config.REGEX;
 
 /**
  * Used for reading from the on-board distance sensor.
  */
-public class DistanceSensorImpl implements DistanceSensor, InputSubscriber {
+public class DistanceSensorImpl implements DistanceSensor {
 
     private static final double FILTER_WEIGHT = 0.7;
+    private static final double MAX_VALUE_OFFSET = 0.25;
     private final ArduinoCommunicator arduinoCommunicator;
 
     private LowPassFilter filter;
     private double currentSensorValue;
     private StringBuilder arduinoInput;
+    private StringBuilder cvInput;
 
     private List<Consumer<Double>> dataConsumers;
 
@@ -45,21 +48,20 @@ public class DistanceSensorImpl implements DistanceSensor, InputSubscriber {
         dataConsumers.remove(dataConsumer);
     }
 
-    @Override
-    public synchronized void receivedString(String string) {
+    synchronized void receivedString(String string, StringBuilder sb) {
         for (char c : string.toCharArray()) {
             if (c != 10 && c != 13) {
-                arduinoInput.append(c);
+                sb.append(c);
             } else {
-                setCurrentSensorValue(arduinoInput.toString());
-                arduinoInput = new StringBuilder();
+                setCurrentSensorValue(sb.toString());
+                sb.delete(0, sb.length());
             }
         }
     }
 
     private void setCurrentSensorValue(String text) {
         double value = new SensorDataConverter().convertDistance(text);
-        if (!Double.isNaN(value)) {
+        if (!Double.isNaN(value) && Math.abs(value - currentSensorValue) < MAX_VALUE_OFFSET) {
             currentSensorValue = filter.filterValue(value);
             dataConsumers.forEach(doubleConsumer -> doubleConsumer.accept(currentSensorValue));
         }
@@ -69,11 +71,19 @@ public class DistanceSensorImpl implements DistanceSensor, InputSubscriber {
         dataConsumers = new ArrayList<>();
         filter = new LowPassFilter(FILTER_WEIGHT);
         arduinoInput = new StringBuilder();
+        cvInput = new StringBuilder();
         currentSensorValue = 0.3;
 
         this.subscribe(sensorValue -> communicationsMediator.transmitData(DIST_SENSOR + REGEX + sensorValue.toString(), Direction.EXTERNAL));
 
+        communicationsMediator.subscribe(Direction.INTERNAL, data -> {
+            String[] formattedData = data.split(Config.REGEX);
+            if (formattedData.length == 2 && formattedData[0].equals(CAM_TGT_DIST)) {
+                receivedString(formattedData[1], cvInput);
+            }
+        });
+
         this.arduinoCommunicator = arduinoCommunicator;
-        this.arduinoCommunicator.addArduinoListener(this::receivedString);
+        this.arduinoCommunicator.addArduinoListener(string -> receivedString(string, arduinoInput));
     }
 }
