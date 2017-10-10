@@ -16,21 +16,21 @@ public class EmergencyStopBehaviour implements BehaviourState {
 
     public EmergencyStopBehaviour(CarControl carController) {
         carControl = carController;
-        DistanceSensorImpl.getInstance().subscribe(this::calculateCollisionRisk);
+        DistanceSensorImpl.getInstance().subscribe(this::determineCollision);
     }
 
-    private void calculateCollisionRisk(double distance) {
+    private void determineCollision(double distance) {
         int lastThrottle = carControl.getLastThrottle();
         double brakeLength = getBrakeLength(lastThrottle);
 
-        if (brakeLength < distance) {
+        if (brakeLength > distance + SAFE_BRAKE_MARGIN) {
             onCollisionDetected.accept(this);
         }
     }
 
+    //Equation provided by the team at https://github.com/petrosdeb/Group-Stierna
     private double getBrakeLength(double speed) {
-        // TODO: 06/10/2017 Implement method
-        return 0.7;
+        return 0.06 * Math.pow(speed,1.6);
     }
 
     @Override
