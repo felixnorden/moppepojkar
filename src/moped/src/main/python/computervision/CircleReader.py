@@ -71,8 +71,9 @@ class PiVideoStream:
 vs = PiVideoStream().start()
 time.sleep(2.0)
 
-greenLower = (29, 86, 20)
-greenUpper = (64, 255, 200)
+greenLower = (29, 86, 6)
+# greenLower = (77, 100, 87)
+greenUpper = (64, 255, 255)
 while(1):
     frame = vs.read()
     # width=400
@@ -85,15 +86,14 @@ while(1):
     # a series of dilations and erosions to remove any small
     # blobs left in the mask
     mask = cv2.inRange(hsv, greenLower, greenUpper)
-    mask = cv2.erode(mask, None, iterations=2)
-    mask = cv2.dilate(mask, None, iterations=2)
+    mask = cv2.erode(mask, None, iterations=7)
+    mask = cv2.dilate(mask, None, iterations=7)
 
     # find contours in the mask and initialize the current
     # (x, y) center of the ball
     cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL,
                             cv2.CHAIN_APPROX_SIMPLE)[-2]
     center = None
-
     if len(cnts) > 0:
         # find the largest contour in the mask, then use
         # it to compute the minimum enclosing circle and
@@ -104,13 +104,13 @@ while(1):
         center = (int(M["m10"] / M["m00"]), int(M["m01"] / M["m00"]))
 
         # only proceed if the radius meets a minimum size
-        if radius > 25:
-            print(str(center[0] - 480/2) + "  RADIUS: " + str(radius) + "  Distance: " + str((4*radius-450)))
+        if radius > 7:
+            print(str(center[0] - 480/2) + "  RADIUS: " + str(radius) + "  Distance: " + str(856.0/radius))
             # draw the circle and centroid on the frame,
             # then update the list of tracked points
-            # cv2.circle(frame, (int(x), int(y)), int(radius),
-            #            (0, 255, 255), 2)
-            # cv2.circle(frame, center, 5, (0, 0, 255), -1)
+            cv2.circle(frame, (int(x), int(y)), int(radius),
+                       (0, 255, 255), 2)
+            cv2.circle(frame, center, 5, (0, 0, 255), -1)
             # pts.appendleft(center)
 
 
@@ -120,5 +120,11 @@ while(1):
             # # ensure at least some circles were found
             # if circles is not None:
             #     print(circles[0][0][0] - 480/2)
+    cv2.imshow("Frame", frame)
+    key = cv2.waitKey(1) & 0xFF
+
+    # if the 'q' key is pressed, stop the loop
+    if key == ord("q"):
+        break
 cv2.destroyAllWindows()
 vs.stop()
