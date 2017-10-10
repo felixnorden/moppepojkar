@@ -30,7 +30,6 @@ public class PIDParser implements ActionStrategy {
         if (currentTime - lastActionTime > ACC_UPDATE_DELAY) {
             double distance = distanceSensor.getDistance();
 
-            // TODO: 05/10/2017 Verify that the input should be in seconds
             action = pidController.evaluation(distance,(double) (currentTime- lastActionTime) * 1000);
             lastActionTime = currentTime;
         }

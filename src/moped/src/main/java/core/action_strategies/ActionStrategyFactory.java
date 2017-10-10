@@ -34,14 +34,6 @@ public interface ActionStrategyFactory {
      */
     ActionStrategy createVelocityController();
 
-    // TODO: 2017-10-05 Remove this, think its unused?
-    /**
-     * Creates a generic {@link RemoteController}
-     * instance for remote control
-     * @return a Remote controller {@link ActionStrategy}
-     */
-    ActionStrategy createRemoteController();
-
     // TODO: 2017-10-05 Should this really be here as a specific method? Thinking about PIDParser method above ^
     /**
      * Creates a configured {@link LateralController}
