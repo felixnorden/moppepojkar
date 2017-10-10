@@ -67,7 +67,7 @@ class PiVideoStream:
 
 # created a *threaded *video stream, allow the camera sensor to warmup,
 # and start the FPS counter
-print("[INFO] sampling THREADED frames from `picamera` module...")
+# print("[INFO] sampling THREADED frames from `picamera` module...")
 vs = PiVideoStream().start()
 time.sleep(2.0)
 
@@ -104,8 +104,8 @@ while(1):
         center = (int(M["m10"] / M["m00"]), int(M["m01"] / M["m00"]))
 
         # only proceed if the radius meets a minimum size
-        if radius > 70:
-            print(str(center[0] - 480/2) +  "::: " + str(radius))
+        if radius > 25:
+            print(str(center[0] - 480/2) + "  RADIUS: " + str(radius) + "  Distance: " + str((4*radius-450)))
             # draw the circle and centroid on the frame,
             # then update the list of tracked points
             # cv2.circle(frame, (int(x), int(y)), int(radius),
@@ -115,10 +115,10 @@ while(1):
 
 
 
-    # circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, 1.2, 100)
-    #
-    # # ensure at least some circles were found
-    # if circles is not None:
-    #     print(circles[0][0][0] - 480/2)
+            # circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, 1.2, 100)
+            #
+            # # ensure at least some circles were found
+            # if circles is not None:
+            #     print(circles[0][0][0] - 480/2)
 cv2.destroyAllWindows()
 vs.stop()
