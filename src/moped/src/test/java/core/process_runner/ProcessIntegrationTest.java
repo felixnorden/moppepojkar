@@ -203,9 +203,9 @@ class ProcessIntegrationTest {
         }
 
         @Override
-        public void outputString(String s) {
+        public void receivedString(String string) {
             synchronized (buffer) {
-                buffer.add(s);
+                buffer.add(string);
             }
         }
 

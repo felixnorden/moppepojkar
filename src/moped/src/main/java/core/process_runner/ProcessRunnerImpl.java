@@ -84,7 +84,7 @@ public class ProcessRunnerImpl extends Thread implements ProcessRunner {
      */
     private void alertObservers(String s) {
         for (InputSubscriber inputSubscriber : inputSubscribers) {
-            inputSubscriber.outputString(s);
+            inputSubscriber.receivedString(s);
         }
     }
 }

@@ -24,7 +24,7 @@ class DistanceSensorImplTest {
 
     @Test
     void outputString() {
-        sensorInstance.outputString("100");
+        sensorInstance.receivedString("100");
         assert sensorInstance.getDistance() == 100;
     }
 

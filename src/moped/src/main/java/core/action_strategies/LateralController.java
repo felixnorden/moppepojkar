@@ -50,9 +50,9 @@ public class LateralController implements ActionStrategy, InputSubscriber {
     }
 
     @Override
-    public void outputString(String s) {
-        if (!s.equals("\n")) {
-            receivedString.append(s);
+    public void receivedString(String string) {
+        if (!string.equals("\n")) {
+            receivedString.append(string);
         } else {
             double imageRotationValue = Double.valueOf(receivedString.toString());
             if (!Double.isNaN(imageRotationValue)) {

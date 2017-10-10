@@ -51,8 +51,8 @@ public class DistanceSensorImpl implements DistanceSensor, InputSubscriber {
     }
 
     @Override
-    public synchronized void outputString(String s) {
-        for (char c : s.toCharArray()) {
+    public synchronized void receivedString(String string) {
+        for (char c : string.toCharArray()) {
             if (c != 10 && c != 13) {
                 arduinoInput.append(c);
             } else {
@@ -77,6 +77,6 @@ public class DistanceSensorImpl implements DistanceSensor, InputSubscriber {
         currentSensorValue = 0.3;
 
         arduinoCommunicator = ArduinoCommunicator.getInstance();
-        arduinoCommunicator.addArduinoListener(this::outputString);
+        arduinoCommunicator.addArduinoListener(this::receivedString);
     }
 }

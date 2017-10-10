@@ -6,6 +6,6 @@ package core.process_runner;
  */
 public interface InputSubscriber {
 
-    void outputString(String s);
+    void receivedString(String string);
 
 }
