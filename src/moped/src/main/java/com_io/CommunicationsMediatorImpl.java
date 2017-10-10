@@ -7,15 +7,15 @@ import java.util.*;
  * subscribing {@link DataReceiver} instances and mediating data
  * between them
  */
-class CommunicationsMediatorImpl implements CommunicationsMediator{
-
-    private Map<Direction, List<DataReceiver>> subscribers;
+final class CommunicationsMediatorImpl implements CommunicationsMediator {
+    private final Map<Direction, List<DataReceiver>> subscribers;
 
     public CommunicationsMediatorImpl() {
         this.subscribers = new HashMap<>();
 
-        this.subscribers.put(Direction.INTERNAL, new ArrayList<>());
-        this.subscribers.put(Direction.EXTERNAL, new ArrayList<>());
+        for (Direction direction : Direction.values()) {
+            this.subscribers.put(direction, new ArrayList<>());
+        }
     }
 
     @Override
@@ -29,7 +29,7 @@ class CommunicationsMediatorImpl implements CommunicationsMediator{
     public void subscribe(Direction direction, DataReceiver receiver) {
         List<DataReceiver> dataReceivers = this.subscribers.get(direction);
 
-        if(!dataReceivers.contains(receiver)) {
+        if (!dataReceivers.contains(receiver)) {
             dataReceivers.add(receiver);
         }
     }
@@ -46,7 +46,7 @@ class CommunicationsMediatorImpl implements CommunicationsMediator{
             }
         }
 
-        if(index != -1) {
+        if (index != -1) {
             receivers.remove(index);
         }
     }
