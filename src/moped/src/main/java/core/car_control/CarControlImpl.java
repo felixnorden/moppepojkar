@@ -16,6 +16,7 @@ public class CarControlImpl implements CarControl {
     private ArduinoCommunicator arduinoCommunicator;
 
     public CarControlImpl() {
+        // TODO: 10/10/2017 Inject interface for ArduinoCommunicator
         arduinoCommunicator = ArduinoCommunicator.getInstance();
 
         currentThrottleValue = 0;

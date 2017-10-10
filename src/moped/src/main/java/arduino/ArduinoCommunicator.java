@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 // TODO: 2017-10-05 Document and refactor intro com_io package to avoid unnecessary Singleton.
+// TODO: 10/10/2017 Add interface for class
 public class ArduinoCommunicator implements SerialPortEventListener {
 
     private final List<ArduinoListener> arduinoListeners;
