@@ -14,6 +14,7 @@ public class Config {
     public static final String OFF = "OFF";
     public static final String ON = "ON";
 
+    public static final String DIST_SENSOR = "DIST_SENSOR";
 
     // Values used by the PIDController for the ACC
 

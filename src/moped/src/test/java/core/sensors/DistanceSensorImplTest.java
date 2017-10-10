@@ -5,11 +5,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class DistanceSensorImplTest {
-    private DistanceSensorImpl sensorInstance;
+    private DistanceSensor sensorInstance;
 
     @BeforeEach
     void setUp() {
-        sensorInstance = DistanceSensorImpl.getInstance();
+        sensorInstance = SensorRepository.getDistanceSensor();
 
     }
 
@@ -20,12 +20,6 @@ class DistanceSensorImplTest {
     @Test
     void getInstance() {
         assert sensorInstance != null;
-    }
-
-    @Test
-    void outputString() {
-        sensorInstance.receivedString("100");
-        assert sensorInstance.getDistance() == 100;
     }
 
 }

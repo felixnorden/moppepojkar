@@ -14,7 +14,7 @@ class CommunicationsMediatorImplTest {
     @BeforeEach
     void initMediator() {
 
-        comInstance = CommunicatorFactoryImpl.getFactoryInstance().getComInstance();
+        comInstance = CommunicatorFactory.getComInstance();
     }
 
     @Test

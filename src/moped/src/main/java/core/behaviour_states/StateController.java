@@ -2,7 +2,7 @@
 
 package core.behaviour_states;
 
-import com_io.CommunicatorFactoryImpl;
+import com_io.CommunicatorFactory;
 import com_io.DataReceiver;
 import com_io.Direction;
 import core.behaviour_states.states.BehaviourState;
@@ -25,7 +25,7 @@ public class StateController implements Runnable, DataReceiver {
 
     public StateController() {
         this.stateFactory = BehaviourStateFactoryImpl.getInstance();
-        CommunicatorFactoryImpl.getFactoryInstance().getComInstance().subscribe(Direction.INTERNAL, this);
+        CommunicatorFactory.getComInstance().subscribe(Direction.INTERNAL, this);
 
         this.manual = stateFactory.createManualBehaviour();
         this.acc = stateFactory.createAdaptiveCruiseControlBehaviour();

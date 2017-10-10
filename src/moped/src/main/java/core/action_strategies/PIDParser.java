@@ -1,7 +1,7 @@
 package core.action_strategies;
 
 import core.sensors.DistanceSensor;
-import core.sensors.DistanceSensorImpl;
+import core.sensors.SensorRepository;
 import pid.DistancePIDController;
 
 import static utils.Config.*;
@@ -20,7 +20,7 @@ public class PIDParser implements ActionStrategy {
     public PIDParser() {
         action = 0;
         lastActionTime = System.currentTimeMillis();
-        distanceSensor = DistanceSensorImpl.getInstance();
+        distanceSensor = SensorRepository.getDistanceSensor();
         pidController = new DistancePIDController(ACC_TGT_DIST,ACC_P,ACC_I,ACC_D);
     }
 

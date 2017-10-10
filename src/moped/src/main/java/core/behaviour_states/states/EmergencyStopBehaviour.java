@@ -1,7 +1,7 @@
 package core.behaviour_states.states;
 
 import core.car_control.CarControl;
-import core.sensors.DistanceSensorImpl;
+import core.sensors.SensorRepository;
 
 import java.util.function.Consumer;
 
@@ -16,7 +16,7 @@ public class EmergencyStopBehaviour implements BehaviourState {
 
     public EmergencyStopBehaviour(CarControl carController) {
         carControl = carController;
-        DistanceSensorImpl.getInstance().subscribe(this::determineCollision);
+        SensorRepository.getDistanceSensor().subscribe(this::determineCollision);
     }
 
     private void determineCollision(double distance) {

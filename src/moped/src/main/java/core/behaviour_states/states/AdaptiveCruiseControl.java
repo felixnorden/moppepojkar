@@ -3,7 +3,7 @@ package core.behaviour_states.states;
 import core.action_strategies.*;
 import core.car_control.CarControl;
 import core.sensors.DistanceSensor;
-import core.sensors.DistanceSensorImpl;
+import core.sensors.SensorRepository;
 
 
 /**
@@ -32,7 +32,7 @@ class AdaptiveCruiseControl implements BehaviourState {
     public AdaptiveCruiseControl(CarControl carController) {
         emergencyCount = 0;
 
-        //CommunicatorFactory comFactory = CommunicatorFactoryImpl.getFactoryInstance();
+        //CommunicatorFactory comFactory = CommunicatorFactory.getFactoryInstance();
         //CommunicationsMediator comIO = comFactory.getComInstance();
 
         ActionStrategyFactory actionFactory = ActionStrategyFactoryImpl.getInstance();
@@ -44,7 +44,7 @@ class AdaptiveCruiseControl implements BehaviourState {
         ActionStrategy emergencyController = actionFactory.createEmgyController();
         this.emergencyHandler = new BidirectionalHandlerImpl(emergencyController, emergencyController);
 
-        this.distanceSensor = DistanceSensorImpl.getInstance();
+        this.distanceSensor = SensorRepository.getDistanceSensor();
         this.carController = carController;
 
         this.currentHandler = this.accHandler;

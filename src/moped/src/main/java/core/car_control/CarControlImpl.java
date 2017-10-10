@@ -1,6 +1,6 @@
 package core.car_control;
 
-import arduino.ArduinoCommunicator;
+import arduino.ArduinoCommunicatorImpl;
 
 /**
  * Used for controlling a MOPED through a python script found on the device.
@@ -13,11 +13,11 @@ public class CarControlImpl implements CarControl {
     private int currentThrottleValue;
     private int currentSteerValue;
 
-    private ArduinoCommunicator arduinoCommunicator;
+    private ArduinoCommunicatorImpl arduinoCommunicatorImpl;
 
     public CarControlImpl() {
-        // TODO: 10/10/2017 Inject interface for ArduinoCommunicator
-        arduinoCommunicator = ArduinoCommunicator.getInstance();
+        // TODO: 10/10/2017 Inject interface for ArduinoCommunicatorImpl
+        arduinoCommunicatorImpl = ArduinoCommunicatorImpl.getInstance();
 
         currentThrottleValue = 0;
         currentSteerValue = 0;
@@ -83,10 +83,10 @@ public class CarControlImpl implements CarControl {
      * Sends the steering and throttle values to the python script.
      */
     private void sendValuesToCar() {
-        arduinoCommunicator.write((byte) 0);
-        arduinoCommunicator.write((byte) (128 + currentSteerValue));
-        arduinoCommunicator.write((byte) 1);
-        arduinoCommunicator.write((byte) (128 + currentThrottleValue));
+        arduinoCommunicatorImpl.write((byte) 0);
+        arduinoCommunicatorImpl.write((byte) (128 + currentSteerValue));
+        arduinoCommunicatorImpl.write((byte) 1);
+        arduinoCommunicatorImpl.write((byte) (128 + currentThrottleValue));
     }
 
     /**
