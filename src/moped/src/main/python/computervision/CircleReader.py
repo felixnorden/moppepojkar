@@ -105,7 +105,7 @@ while(1):
         # only proceed if the radius meets a minimum size
         if radius > 7:
             # print(str(center[0] - 480/2) + "  RADIUS: " + str(radius) + "  Distance: " + str(856.0/radius))
-            print(str(center[0] - 480/2))
+            print(str(center[0] - 480/2) + "," + str(856.0/radius/100))
             # draw the circle and centroid on the frame,
             # then update the list of tracked points
             # cv2.circle(frame, (int(x), int(y)), int(radius),
