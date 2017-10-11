@@ -3,7 +3,7 @@ package core.sensors;
 import arduino.ArduinoCommunicator;
 import com_io.CommunicationsMediator;
 import com_io.Direction;
-import sensor_data_conversion.SensorDataConverter;
+import utils.StrToDoubleConverter;
 import utils.Config;
 
 import java.util.ArrayList;
@@ -60,7 +60,7 @@ public class DistanceSensorImpl implements DistanceSensor {
     }
 
     private void setCurrentSensorValue(String text) {
-        double value = new SensorDataConverter().convertDistance(text);
+        double value = new StrToDoubleConverter().convertStringToDouble(text);
         if (!Double.isNaN(value) && Math.abs(value - currentSensorValue) < MAX_VALUE_OFFSET) {
             currentSensorValue = filter.filterValue(value);
             dataConsumers.forEach(doubleConsumer -> doubleConsumer.accept(currentSensorValue));
