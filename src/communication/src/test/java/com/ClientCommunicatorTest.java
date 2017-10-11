@@ -14,54 +14,6 @@ import static org.junit.Assert.assertTrue;
 public class ClientCommunicatorTest {
 
     @Test
-    public void testPortAlreadyBound() {
-        Communicator server = new ServerCommunicator(55545);
-        final Communicator client = new ClientCommunicator("localhost", 55545);
-        final Communicator client2 = new ClientCommunicator("localhost", 55545);
-
-        CommunicationListener cl = new CommunicationListener() {
-            @Override
-            public void onConnection() {
-                client2.start();
-            }
-
-            @Override
-            public void onStateChange(MopedState stateChange) {
-
-            }
-
-            @Override
-            public void onDisconnection() {
-
-            }
-
-            @Override
-            public void onValueChanged(MopedDataType type, int value) {
-
-            }
-        };
-
-        client.addListener(cl);
-
-        server.start();
-        client.start();
-
-        try {
-            //Wait up to 5 seconds before failing
-            for (int i = 0; i < 100; i++) {
-                Thread.sleep(50);
-                if (!client2.isRunning()) {
-                    break;
-                }
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        assertEquals(false, client2.isRunning());
-    }
-
-    @Test
     public void testOnConnection() {
         final ArrayList<Boolean> vars = new ArrayList<>();
 
