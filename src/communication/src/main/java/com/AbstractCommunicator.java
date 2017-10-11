@@ -227,6 +227,10 @@ public abstract class AbstractCommunicator implements Communicator {
         }
     }
 
+    public boolean isRunning() {
+        return mainThread.isAlive();
+    }
+
     private void notifyValueChanged(MopedDataType type, int value) {
         for (CommunicationListener cl : listeners) {
             cl.onValueChanged(type, value);

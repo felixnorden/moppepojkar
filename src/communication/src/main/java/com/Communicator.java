@@ -5,6 +5,12 @@ package com;
  * Interface for interacting with a Communicator.
  */
 public interface Communicator extends Runnable {
+
+    /**
+     * Returns if the mainThread is still running or not
+     * @return boolean
+     */
+    boolean isRunning();
     /**
      * Adds a CommunicationListener to the list of listeners.
      *
