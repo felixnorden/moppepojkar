@@ -71,9 +71,8 @@ class PiVideoStream:
 vs = PiVideoStream().start()
 time.sleep(2.0)
 
-greenLower = (29, 86, 6)
-# greenLower = (77, 100, 87)
-greenUpper = (64, 255, 255)
+greenLower = (0.11*256, 0.60*256, 0.20*256)
+greenUpper = (0.14*256, 1.00*256, 1.00*256)
 while(1):
     frame = vs.read()
     # width=400
@@ -105,12 +104,13 @@ while(1):
 
         # only proceed if the radius meets a minimum size
         if radius > 7:
-            print(str(center[0] - 480/2) + "  RADIUS: " + str(radius) + "  Distance: " + str(856.0/radius))
+            # print(str(center[0] - 480/2) + "  RADIUS: " + str(radius) + "  Distance: " + str(856.0/radius))
+            print(str(center[0] - 480/2))
             # draw the circle and centroid on the frame,
             # then update the list of tracked points
-            cv2.circle(frame, (int(x), int(y)), int(radius),
-                       (0, 255, 255), 2)
-            cv2.circle(frame, center, 5, (0, 0, 255), -1)
+            # cv2.circle(frame, (int(x), int(y)), int(radius),
+            #            (0, 255, 255), 2)
+            # cv2.circle(frame, center, 5, (0, 0, 255), -1)
             # pts.appendleft(center)
 
 
@@ -120,7 +120,7 @@ while(1):
             # # ensure at least some circles were found
             # if circles is not None:
             #     print(circles[0][0][0] - 480/2)
-    cv2.imshow("Frame", frame)
+    # cv2.imshow("Frame", frame)
     key = cv2.waitKey(1) & 0xFF
 
     # if the 'q' key is pressed, stop the loop
