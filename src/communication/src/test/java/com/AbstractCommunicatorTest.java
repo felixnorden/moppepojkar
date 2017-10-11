@@ -58,12 +58,22 @@ public class AbstractCommunicatorTest {
             server.start();
             client.start();
             //Let them connect
-            Thread.sleep(200);
+            for (int i = 0; i < 1000; i++) {
+                if (passed.size() == 1) {
+                    break;
+                }
+                Thread.sleep(50);
+            }
 
             client.stop();
-            Thread.sleep(100);
+            Thread.sleep(300);
             client.start();
-            Thread.sleep(200);
+            for (int i = 0; i < 1000; i++) {
+                if (passed.size() == 2) {
+                    break;
+                }
+                Thread.sleep(50);
+            }
 
             assertEquals(passed.size(), 2);
         } catch (InterruptedException e) {
@@ -103,13 +113,23 @@ public class AbstractCommunicatorTest {
             server.start();
             client.start();
             //Let them connect
-            Thread.sleep(200);
+            for (int i = 0; i < 1000; i++) {
+                if (passed.size() == 1) {
+                    break;
+                }
+                Thread.sleep(50);
+            }
 
             server.stop();
             Thread.sleep(100);
             server.start();
             client.start(); //Client also needs to be restarted
-            Thread.sleep(200);
+            for (int i = 0; i < 1000; i++) {
+                if (passed.size() == 2) {
+                    break;
+                }
+                Thread.sleep(50);
+            }
 
             assertEquals(passed.size(), 2);
         } catch (InterruptedException e) {
