@@ -61,7 +61,7 @@ public class DistanceSensorImpl implements DistanceSensor {
 
     private void setCurrentSensorValue(String text) {
         double value = new StrToDoubleConverter().convertStringToDouble(text);
-        if (!Double.isNaN(value) && Math.abs(value - currentSensorValue) < MAX_VALUE_OFFSET) {
+        if (!Double.isNaN(value)) {
             currentSensorValue = filter.filterValue(value);
             dataConsumers.forEach(doubleConsumer -> doubleConsumer.accept(currentSensorValue));
         }
@@ -74,7 +74,7 @@ public class DistanceSensorImpl implements DistanceSensor {
         cvInput = new StringBuilder();
         currentSensorValue = 0.3;
 
-        this.subscribe(sensorValue -> communicationsMediator.transmitData(DIST_SENSOR + REGEX + sensorValue.toString(), Direction.EXTERNAL));
+        dataConsumers.add(sensorValue -> communicationsMediator.transmitData(DIST_SENSOR + REGEX + sensorValue.toString(), Direction.EXTERNAL));
 
         communicationsMediator.subscribe(Direction.INTERNAL, data -> {
             String[] formattedData = data.split(Config.REGEX);
