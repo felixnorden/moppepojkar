@@ -61,6 +61,7 @@ public class StateController implements Runnable, DataReceiver {
                 case "PLATOONING":
                     currentState = platooning;
                     break;
+                default:
             }
         } else if (data[0].equals(CONNECTION)) {
             if (data[1].equals(OFF)) {

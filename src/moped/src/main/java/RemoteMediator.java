@@ -48,6 +48,7 @@ public class RemoteMediator implements DataReceiver, CommunicationListener {
             case STEERING:
                 communicationsMediator.transmitData(STEER + REGEX + i, INTERNAL);
                 break;
+            default:
         }
     }
 
@@ -66,7 +67,7 @@ public class RemoteMediator implements DataReceiver, CommunicationListener {
 
     @Override
     public void dataReceived(String unformattedDataString) {
-        // TODO: 12/10/2017 Fix string to enum issue 
+        // TODO: 12/10/2017 Fix string to enum issue
         if (true) {
             return;
         }
