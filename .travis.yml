@@ -5,7 +5,7 @@ script:
 - cd ..
 - cd ..
 - cd ./src/moped/ -Dmaven.javadoc.skip=true -B
-- mvn test
+- mvn test -Dmaven.javadoc.skip=true -B
 
 notifications:
     slack: moppepojkar:nC9dOhmtdPoSgbW3Awqm9p92
