@@ -1,41 +1,29 @@
 package core.action_strategies;
 
-import core.process_runner.InputSubscriber;
-import core.process_runner.ProcessFactory;
-import core.process_runner.ProcessRunner;
+import com_io.CommunicationsMediator;
+import com_io.DataReceiver;
+import com_io.Direction;
 import pid.LateralPIDController;
 import pid.PIDController;
-
-import java.io.FileNotFoundException;
+import utils.Config;
 
 import static utils.Config.*;
 
 // TODO: 2017-10-05 Refactor with PIDParser class to find some common base class
-public class LateralController implements ActionStrategy, InputSubscriber {
+public class LateralController implements ActionStrategy, DataReceiver {
 
-    private ProcessRunner imageRecognition;
-    private double currentRotationalOffset;
+    private double currentCircleOffset;
     private PIDController lateralPid;
     private long lastActionTime;
     private double lastAction;
 
-    private StringBuilder receivedString;
 
-    LateralController(String imageRecognitionPath) {
-        receivedString = new StringBuilder();
+    LateralController(CommunicationsMediator communicationsMediator) {
+        communicationsMediator.subscribe(Direction.INTERNAL, this);
         lastActionTime = System.currentTimeMillis();
-        currentRotationalOffset = 0;
+        currentCircleOffset = 0;
         lastAction = 0;
         lateralPid = new LateralPIDController(LAT_TGT_POS, LAT_P,LAT_I,LAT_D);
-
-        try {
-            imageRecognition = ProcessFactory.createPythonProcess(imageRecognitionPath);
-            imageRecognition.start();
-            imageRecognition.subscribeToInput(this);
-        } catch (FileNotFoundException e) {
-            System.out.println("ERROR: Couldn't start LateralController python script!!!");
-            System.out.println(e.getMessage());
-        }
     }
 
     @Override
@@ -43,22 +31,20 @@ public class LateralController implements ActionStrategy, InputSubscriber {
         long currentTime = System.currentTimeMillis();
         int deltaTime = (int) (currentTime - lastActionTime);
         if (deltaTime > LAT_UPDATE_DELAY) {
-            lastAction = lateralPid.evaluation(currentRotationalOffset, deltaTime * 1000);
+            lastAction = lateralPid.evaluation(currentCircleOffset, deltaTime * 1000);
         }
 
         return lastAction;
     }
 
     @Override
-    public void receivedString(String string) {
-        if (!string.equals("\n")) {
-            receivedString.append(string);
-        } else {
-            double imageRotationValue = Double.valueOf(receivedString.toString());
-            if (!Double.isNaN(imageRotationValue)) {
-                currentRotationalOffset = imageRotationValue;
+    public void dataReceived(String string) {
+        String[] formattedData = string.split(Config.REGEX);
+        if (formattedData.length == 2 && formattedData[0].equals(Config.CAM_TGT_OFFSET)) {
+            double circleOffset = Double.valueOf(formattedData[1]);
+            if (!Double.isNaN(circleOffset)) {
+                currentCircleOffset = circleOffset;
             }
-            receivedString = new StringBuilder();
         }
     }
 }
