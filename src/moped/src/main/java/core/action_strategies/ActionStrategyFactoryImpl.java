@@ -1,7 +1,6 @@
 package core.action_strategies;
 
 import com_io.CommunicatorFactory;
-import utils.Config;
 
 /**
  * Factory for creating different {@link ActionStrategy} instances
@@ -31,7 +30,7 @@ public class ActionStrategyFactoryImpl implements ActionStrategyFactory {
 
     @Override
     public ActionStrategy createLateralController() {
-        return new LateralController(Config.QR_PATH);
+        return new LateralController(CommunicatorFactory.getComInstance());
     }
 
     public static ActionStrategyFactory getInstance() {
