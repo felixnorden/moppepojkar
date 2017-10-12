@@ -3,8 +3,6 @@ import com_io.Direction;
 import core.process_runner.ProcessRunner;
 import utils.Config;
 
-import java.util.Arrays;
-
 class CameraTrackingMediator {
 
     private final ProcessRunner processRunner;
@@ -20,7 +18,7 @@ class CameraTrackingMediator {
         processRunner.start();
     }
 
-    void stringReceived(String string) {
+    synchronized void stringReceived(String string) {
         for (char c : string.toCharArray()) {
             if (c != 10 && c != 13) {
                 stringBuilder.append(c);
