@@ -14,7 +14,7 @@ public class Main {
 
         CameraTrackingMediator cameraTracking = null;
         try {
-            ProcessRunner cReader = ProcessFactory.createPythonProcess(Config.QR_PATH);
+            ProcessRunner cReader = ProcessFactory.createPythonProcess(Config.C_READER);
             cameraTracking = new CameraTrackingMediator(CommunicatorFactory.getComInstance(), cReader);
         } catch (FileNotFoundException e) {
             e.printStackTrace();

@@ -2,7 +2,7 @@ package utils;
 
 public class Config {
 
-    public static final String QR_PATH = "QRreader.py";
+    public static final String C_READER = "CircleReader.py";
 
     public static final String REGEX = ",";
     public static final String STATE = "STATE";
