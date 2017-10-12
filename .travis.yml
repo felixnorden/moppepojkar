@@ -1,10 +1,10 @@
 language: java
 script:
 - cd ./src/communication
-- mvn install
+- mvn install -Dmaven.javadoc.skip=true -B
 - cd ..
 - cd ..
-- cd ./src/moped/
+- cd ./src/moped/ -Dmaven.javadoc.skip=true -B
 - mvn test
 
 notifications:
