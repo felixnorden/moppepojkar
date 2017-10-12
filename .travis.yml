@@ -1,5 +1,9 @@
 language: java
 script:
+- cd ./src/communication
+- mvn install
+- cd ..
+- cd ..
 - cd ./src/moped/
 - mvn test
 
