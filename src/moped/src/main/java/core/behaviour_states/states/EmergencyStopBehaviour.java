@@ -24,7 +24,7 @@ public class EmergencyStopBehaviour implements BehaviourState {
         double brakeLength = getBrakeLength(lastThrottle);
 
         if (brakeLength > distance + SAFE_BRAKE_MARGIN) {
-            onCollisionDetected.accept(this);
+            //onCollisionDetected.accept(this);
         }
     }
 
