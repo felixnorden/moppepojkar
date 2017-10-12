@@ -66,6 +66,11 @@ public class RemoteMediator implements DataReceiver, CommunicationListener {
 
     @Override
     public void dataReceived(String unformattedDataString) {
+        // TODO: 12/10/2017 Fix string to enum issue 
+        if (true) {
+            return;
+        }
+
         String[] data = unformattedDataString.split(REGEX);
 
         if (data.length == 2) {
