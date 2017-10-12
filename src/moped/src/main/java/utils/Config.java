@@ -20,6 +20,8 @@ public class Config {
     public static final String CAM_TGT_OFFSET = "CAM_TGT_OFFSET";
     public static final String CAM_TGT_DIST = "CAM_TGT_DIST";
 
+    public static final int MAX_INTERMISSION_TIME = 250;
+
     // Values used by the PIDController for the ACC
 
     // The delay in milliseconds before calling the ACC module. A higher value means slower updating of the motor values based on sensor values.
