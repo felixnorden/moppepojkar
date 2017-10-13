@@ -2,6 +2,7 @@ language: java
 script:
 - cd ./src/communication
 - mvn test
+- mvn install
 - cd ../moped/
 - mvn test
 

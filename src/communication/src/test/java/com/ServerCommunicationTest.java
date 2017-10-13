@@ -3,8 +3,6 @@ package com;
 
 import org.junit.Test;
 
-import java.io.IOException;
-import java.net.Socket;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
@@ -17,7 +15,7 @@ public class ServerCommunicationTest {
     public void testPortAlreadyBound() {
         final Communicator server = new ServerCommunicator(55546);
         final Communicator server2 = new ServerCommunicator(55546);
-        final Communicator client = new ClientCommunicator("localhost", 55546);
+        final Communicator client = new ClientCommunicator("0.0.0.0", 55546);
 
         CommunicationListener cl = new CommunicationListener() {
             @Override
@@ -88,13 +86,12 @@ public class ServerCommunicationTest {
         };
 
         Communicator server = new ServerCommunicator(9508);
+        Communicator client = new ClientCommunicator("0.0.0.0", 9508);
         server.addListener(cl);
         server.start();
-
+        client.start();
 
         try {
-            Socket socket = new Socket("0.0.0.0", 9508);
-
             //Wait up to 5 seconds before failing
             for (int i = 0; i < 100; i++) {
                 Thread.sleep(50);
@@ -102,12 +99,11 @@ public class ServerCommunicationTest {
                     break;
                 }
             }
-        } catch (InterruptedException | IOException e) {
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        assertTrue(vars.size() == 1);
-        assertTrue(vars.get(0));
+        assertEquals(1, vars.size());
     }
 
     @Test
@@ -115,7 +111,7 @@ public class ServerCommunicationTest {
         final ArrayList<Boolean> passed = new ArrayList();
 
         Communicator server = new ServerCommunicator(12346);
-        Communicator client = new ClientCommunicator("localhost", 12346);
+        Communicator client = new ClientCommunicator("0.0.0.0", 12346);
         server.addListener(new CommunicationListener() {
             @Override
             public void onConnection() {

@@ -63,7 +63,7 @@ public class LocalManualTest {
 
     public LocalManualTest() {
         Communicator server = new ServerCommunicator(9000);
-        //Change localhost to host ip if host isn't this computer.
+        //Change 0.0.0.0 to host ip if host isn't this computer.
         Communicator client = new ClientCommunicator("192.168.137.95", 9005);
 
 
