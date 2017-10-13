@@ -1,5 +1,7 @@
 language: java
 script:
+- cd ./src/communication
+- mvn test
 - cd ./src/moped/
 - mvn test
 
