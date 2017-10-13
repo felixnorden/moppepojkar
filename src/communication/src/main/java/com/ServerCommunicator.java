@@ -72,7 +72,6 @@ public class ServerCommunicator extends AbstractCommunicator {
             //Runs if port was already bound by another socket (possibly ours)
             log("It looks like port " + this.port + " is already bound," +
                     " possibly caused by two identical instances of this or another program");
-            e.printStackTrace();
             stop();
         }
     }

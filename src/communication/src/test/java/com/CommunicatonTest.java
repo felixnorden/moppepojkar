@@ -17,7 +17,7 @@ public class CommunicatonTest {
 
     @Test
     public void testSendValueFromServer() {
-        Communicator client = new ClientCommunicator("localhost", 12942);
+        Communicator client = new ClientCommunicator("0.0.0.0", 12942);
         final Communicator server = new ServerCommunicator(12942);
 
         final ArrayList<Integer> vars = new ArrayList<>();
@@ -65,7 +65,7 @@ public class CommunicatonTest {
 
     @Test
     public void testSendValueFromClient() {
-        final Communicator client = new ClientCommunicator("localhost", 12941);
+        final Communicator client = new ClientCommunicator("0.0.0.0", 12941);
         Communicator server = new ServerCommunicator(12941);
 
         final ArrayList<Integer> vars = new ArrayList<>();
@@ -112,7 +112,7 @@ public class CommunicatonTest {
 
     @Test
     public void testSendStateFromClient() {
-        Communicator client = new ClientCommunicator("localhost", 12939);
+        Communicator client = new ClientCommunicator("0.0.0.0", 12939);
         final Communicator server = new ServerCommunicator(12939);
 
         final ArrayList<Boolean> vars = new ArrayList<>();
@@ -159,7 +159,7 @@ public class CommunicatonTest {
 
     @Test
     public void testSendStateFromServer() {
-        final Communicator client = new ClientCommunicator("localhost", 12940);
+        final Communicator client = new ClientCommunicator("0.0.0.0", 12940);
         Communicator server = new ServerCommunicator(12940);
 
         final ArrayList<Boolean> vars = new ArrayList<>();
@@ -207,7 +207,7 @@ public class CommunicatonTest {
     @Test
     public void testOnServerDisconnection() {
         //Let's test the client first
-        Communicator client = new ClientCommunicator("localhost", 8666);
+        Communicator client = new ClientCommunicator("0.0.0.0", 8666);
         final Communicator server = new ServerCommunicator(8666);
         final ArrayList<Boolean> vars = new ArrayList<>();
         CommunicationListener cl = new CommunicationListener() {
@@ -252,7 +252,7 @@ public class CommunicatonTest {
     @Test
     public void testOnClientDisconnection() {
         //Let's test the client first
-        final Communicator client = new ClientCommunicator("localhost", 8668);
+        final Communicator client = new ClientCommunicator("0.0.0.0", 8668);
         Communicator server = new ServerCommunicator(8668);
         final ArrayList<Boolean> vars = new ArrayList<>();
         CommunicationListener cl = new CommunicationListener() {

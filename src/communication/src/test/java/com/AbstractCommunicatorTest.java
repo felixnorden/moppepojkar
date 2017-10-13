@@ -11,7 +11,7 @@ public class AbstractCommunicatorTest {
     public void testMultipleStarts() {
         try {
             Communicator server = new ServerCommunicator(45756);
-            Communicator client = new ClientCommunicator("localhost", 45756);
+            Communicator client = new ClientCommunicator("0.0.0.0", 45756);
             server.start();
             server.start();
 
@@ -31,7 +31,7 @@ public class AbstractCommunicatorTest {
         try {
             final ArrayList<Boolean> passed = new ArrayList<>();
             Communicator server = new ServerCommunicator(45757);
-            Communicator client = new ClientCommunicator("localhost", 45757);
+            Communicator client = new ClientCommunicator("0.0.0.0", 45757);
 
             server.addListener(new CommunicationListener() {
                 @Override
@@ -86,7 +86,7 @@ public class AbstractCommunicatorTest {
         try {
             final ArrayList<Boolean> passed = new ArrayList<>();
             Communicator server = new ServerCommunicator(45758);
-            Communicator client = new ClientCommunicator("localhost", 45758);
+            Communicator client = new ClientCommunicator("0.0.0.0", 45758);
 
             client.addListener(new CommunicationListener() {
                 @Override
