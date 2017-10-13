@@ -87,13 +87,13 @@ public class ServerCommunicationTest {
             }
         };
 
-        Communicator server = new ServerCommunicator(9500);
+        Communicator server = new ServerCommunicator(9508);
         server.addListener(cl);
         server.start();
 
 
         try {
-            Socket socket = new Socket("localhost", 9500);
+            Socket socket = new Socket("0.0.0.0", 9508);
 
             //Wait up to 5 seconds before failing
             for (int i = 0; i < 100; i++) {
