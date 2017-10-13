@@ -1,6 +1,9 @@
 language: java
 script:
-- cd ./src/moped/
+- cd ./src/communication
+- mvn test
+- mvn install
+- cd ../moped/
 - mvn test
 
 notifications:
