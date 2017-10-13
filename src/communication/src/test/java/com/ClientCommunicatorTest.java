@@ -39,7 +39,7 @@ public class ClientCommunicatorTest {
             }
         };
 
-        Communicator client = new ClientCommunicator("localhost", 9501);
+        Communicator client = new ClientCommunicator("0.0.0.0", 9501);
         client.addListener(cl);
         client.start();
 
@@ -94,7 +94,7 @@ public class ClientCommunicatorTest {
                 }
             };
 
-            Communicator client = new ClientCommunicator("localhost", 1111);
+            Communicator client = new ClientCommunicator("0.0.0.0", 1111);
             client.start();
             Thread.sleep(500);
             client.stop();
