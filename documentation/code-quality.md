@@ -6,7 +6,10 @@ Each methodology has been chosen with a rationale of what the team can manage to
 
 Key values that the group has in mind are:
 
-- Readability - Code is meant for humans to read, not machines to interpret **TODO - Principles**
+- Readability - Code is meant for humans to read, not machines to interpret. Principles that are kept in mind are:
+    - [Law of demeter](https://en.wikipedia.org/wiki/Law_of_Demeter)
+    - [Refactoring Code](https://en.wikipedia.org/wiki/Code_refactoring)
+    - [Naming conventions](https://en.wikipedia.org/wiki/Naming_convention_(programming))
 - Modularity - Code separated into modules mean that they can be switched out for other modules in the future. Principles that are kept in mind are:
     - [Separation of Concerns](https://en.wikipedia.org/wiki/Separation_of_concerns)
     - [Single Responsibility Principle](https://en.wikipedia.org/wiki/Single_responsibility_principle)
@@ -15,7 +18,14 @@ Key values that the group has in mind are:
 - Extensibility - Code should be independent enough so that it functions on its own, but is still open for extensions and further development, without breaking the previous implementations. Principles that are kept in mind are:
     - [Open Closed Principle](https://en.wikipedia.org/wiki/Open/closed_principle)
     - [Single Responsibility Principle](https://en.wikipedia.org/wiki/Single_responsibility_principle)
-- Reusability **TODO - Principles**
+- Reusability - Code should be reusable and context-independent, which leads to less lines of code and fewer bugs. Principles that are kept in mind are:
+    - [Composition over Inheritance](https://en.wikipedia.org/wiki/Composition_over_inheritance)
+    - [High cohesion](https://en.wikipedia.org/wiki/Cohesion_(computer_science))
+    - [Low coupling](https://en.wikipedia.org/wiki/Coupling_(computer_programming))
+    - [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself)
+- Testability - Code that is testable is also more modular and extensible, which means that testable code is SOLID code in many aspects. Principles that are kept in mind are:
+    - [Inversion of Control](https://en.wikipedia.org/wiki/Inversion_of_control)
+    - [Composition over Inheritance](https://en.wikipedia.org/wiki/Composition_over_inheritance)
 
 ## Group workflow
 
