@@ -89,6 +89,20 @@ Additionally, having your code reviewed entails you being subject to constructiv
 
 ### Git Workflow
 
+To have a structured, or rather, less jumbled version control history, we have come up with a git workflow for managing feature development, hotfixes and development to production deployment.
+
+#### Benefits
+
+This workflow is primarily useful out of the **readability** aspect, because by having a structured deployment history allows for easy regression if a component would malfunction at a later stage.
+
+Also, by having these guidelines, a consistent version history will be easier to maintain, as long as everybody follows them. 
+
+Maintaining the **testability** of the code is also enforced, as to ensure that the code that is deployed is functional.
+
+#### Trade-offs
+
+A major trade-off for having a large and structured workflow for git is that it takes a bit of time to learn it. Due to this learning process, errors are prone to happen in the beginning and some bad habits may come out of these errors if repeated. This entails the loss of the sought after structure already in the beginning, which indicates that having a too difficult workflow is equal to shooting yourself in the foot.
+
 ---
 
 ### Continuous integration
