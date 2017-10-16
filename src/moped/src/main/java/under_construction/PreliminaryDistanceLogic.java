@@ -1,3 +1,5 @@
+package under_construction;
+
 /**
  * Created by Emil Jansson and Hugo Ekelund on 2017-09-12.
  */
@@ -47,38 +49,38 @@ public class PreliminaryDistanceLogic {
 
     //Determines desired speed by comparing actual distance to target with the optimal distance
 
-    private float determineDesiredSpeed(float distanceToTarget){
+    private float determineDesiredSpeed(float distanceToTarget) {
 
-        return ( distanceToTarget - optimalDistance) * offsetToSpeedRelation;
+        return (distanceToTarget - optimalDistance) * offsetToSpeedRelation;
     }
 
     //Determines the change in time since the last loop and converts it to seconds
 
-    private  float determineDeltaTime(){
-            long currentSystemTime = System.currentTimeMillis();
-            float deltaTime = ((float)(currentSystemTime-lastSystemTime)/1000); //milliseconds to seconds
-            lastSystemTime = currentSystemTime;
+    private float determineDeltaTime() {
+        long currentSystemTime = System.currentTimeMillis();
+        float deltaTime = ((float) (currentSystemTime - lastSystemTime) / 1000); //milliseconds to seconds
+        lastSystemTime = currentSystemTime;
 
-            return deltaTime;
+        return deltaTime;
     }
 
     //Determines which relative speed the target has had compared to the car since the last loop
 
-    private  float determineRelativeSpeed(float deltaTime, float distanceToTarget){
-        return (lastDistanceToTarget - distanceToTarget)/deltaTime;
+    private float determineRelativeSpeed(float deltaTime, float distanceToTarget) {
+        return (lastDistanceToTarget - distanceToTarget) / deltaTime;
     }
 
     //Updates values which is needed for the next loop
-    private void updateValues(float distanceToTarget){
-        lastDistanceToTarget=distanceToTarget;
+    private void updateValues(float distanceToTarget) {
+        lastDistanceToTarget = distanceToTarget;
 
     }
 
     //This determines which speed of the array is to be used by changing the current powerIndex to the index of the desired speed
-    private void setPowerIndex(float relativeSpeed, float desiredSpeed){
-        if(relativeSpeed>(desiredSpeed+velocityErrorMargin)){// TODO limit to size of list
+    private void setPowerIndex(float relativeSpeed, float desiredSpeed) {
+        if (relativeSpeed > (desiredSpeed + velocityErrorMargin)) {// TODO limit to size of list
             powerIndex--;
-        }else if(relativeSpeed<(desiredSpeed-velocityErrorMargin)){// TODO limit to size of list
+        } else if (relativeSpeed < (desiredSpeed - velocityErrorMargin)) {// TODO limit to size of list
             powerIndex++;
         }
     }

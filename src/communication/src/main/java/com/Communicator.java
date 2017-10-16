@@ -5,6 +5,12 @@ package com;
  * Interface for interacting with a Communicator.
  */
 public interface Communicator extends Runnable {
+
+    /**
+     * Returns if the mainThread is still running or not
+     * @return boolean
+     */
+    boolean isRunning();
     /**
      * Adds a CommunicationListener to the list of listeners.
      *
@@ -37,7 +43,6 @@ public interface Communicator extends Runnable {
     void setState(MopedState state);
 
     /**
-<<<<<<< HEAD
      * Adds a new value of given type to the queue of data to be sent to another communicator.
      * Will call onValueChanged(MopedDataType type, int Value) on the CommunicationListeners registered to the
      * other communicator
@@ -48,17 +53,6 @@ public interface Communicator extends Runnable {
     void setValue(MopedDataType type, int value);
 
     /**
-=======
-     * Returns if the communicator is still alive.
-     *
-     * @return True if communicator thread is not null and alive, false otherwise.
-     */
-    boolean isAlive();
-
-
-    /**
-     *
->>>>>>> 4ed26406e8376a40282fc921d464530163ab7d42
      * @return True if logging is enabled, false otherwise.
      */
     boolean isLoggingEnabled();

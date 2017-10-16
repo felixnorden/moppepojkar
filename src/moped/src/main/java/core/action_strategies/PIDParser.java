@@ -1,8 +1,10 @@
 package core.action_strategies;
 
 import core.sensors.DistanceSensor;
-import core.sensors.DistanceSensorImpl;
+import core.sensors.SensorRepository;
 import pid.DistancePIDController;
+
+import static utils.Config.*;
 
 /**
  * An {@link ActionStrategy} which parses the sensor data
@@ -18,16 +20,17 @@ public class PIDParser implements ActionStrategy {
     public PIDParser() {
         action = 0;
         lastActionTime = System.currentTimeMillis();
-        distanceSensor = DistanceSensorImpl.getInstance();
-        pidController = new DistancePIDController(0.3,40,0,0);
+        distanceSensor = SensorRepository.getDistanceSensor();
+        pidController = new DistancePIDController(ACC_TGT_DIST,ACC_P,ACC_I,ACC_D);
     }
 
     @Override
     public double takeAction() {
         long currentTime = System.currentTimeMillis();
-        if (currentTime - lastActionTime > 200) {
+        if (currentTime - lastActionTime > ACC_UPDATE_DELAY) {
             double distance = distanceSensor.getDistance();
-            action = 2* pidController.evaluation(distance,(double) (currentTime- lastActionTime) / (double) 1000);
+
+            action = pidController.evaluation(distance,(double) (currentTime- lastActionTime) * 1000);
             lastActionTime = currentTime;
         }
         return action;

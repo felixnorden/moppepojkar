@@ -1,9 +1,13 @@
 package com_io;
 
-public interface CommunicatorFactory {
+/**
+ * Factory class for creating communication-related objects
+ */
+public class CommunicatorFactory {
 
+    private static final CommunicationsMediator comInstance = new CommunicationsMediatorImpl();
 
-
-    CommunicationsMediator getComInstance();
-
+    public static CommunicationsMediator getComInstance() {
+         return comInstance;
+     }
 }

@@ -1,8 +1,5 @@
 package com_io;
 
-import com.sun.org.glassfish.gmbal.Description;
-import org.junit.Before;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,7 +14,7 @@ class CommunicationsMediatorImplTest {
     @BeforeEach
     void initMediator() {
 
-        comInstance = CommunicatorFactoryImpl.getFactoryInstance().getComInstance();
+        comInstance = CommunicatorFactory.getComInstance();
     }
 
     @Test

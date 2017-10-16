@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -29,7 +30,7 @@ public abstract class AbstractCommunicator implements Communicator {
     protected DataOutputStream outputStream;
     protected Thread mainThread;
     private Queue<MopedDataPair> queue;
-    private final ConcurrentLinkedQueue<CommunicationListener> listeners;
+    private final List<CommunicationListener> listeners;
     //This variable is true when a disconnect just happened and
     //it needs to be taken care of in the main loop. The main loop
     //will set this back to false when it has been handled.
@@ -41,13 +42,8 @@ public abstract class AbstractCommunicator implements Communicator {
      */
     protected AbstractCommunicator(int port) {
         this.port = port;
-<<<<<<< HEAD
         listeners = new ArrayList<>();
         queue = new ConcurrentLinkedQueue<>();
-=======
-        listeners = new ConcurrentLinkedQueue<>();
-        queue = new LinkedList<>();
->>>>>>> 4ed26406e8376a40282fc921d464530163ab7d42
 
         mainThread = new Thread(this, getClass().getSimpleName());
     }
@@ -60,6 +56,7 @@ public abstract class AbstractCommunicator implements Communicator {
      */
     @Override
     public void run() {
+        log("Started");
         while (!Thread.interrupted()) {
             if (hasDisconnected) {
                 handleDisconnect();
@@ -91,7 +88,7 @@ public abstract class AbstractCommunicator implements Communicator {
         //Only runs after running has been set to false (aka onDisconnect and stop())
         sendExitCode();
         clearConnection();
-        log("STOPPED");
+        log("Stopped");
     }
 
     /**
@@ -188,10 +185,6 @@ public abstract class AbstractCommunicator implements Communicator {
         }
     }
 
-    public boolean isAlive() {
-        return mainThread != null && mainThread.isAlive();
-    }
-
     /**
      * Read and interpret data from socket link.
      *
@@ -228,9 +221,14 @@ public abstract class AbstractCommunicator implements Communicator {
      * Notifies all listeners that a connection has been established.
      */
     protected void notifyConnected() {
+        log("Connected");
         for (CommunicationListener cl : listeners) {
             cl.onConnection();
         }
+    }
+
+    public boolean isRunning() {
+        return mainThread.isAlive();
     }
 
     private void notifyValueChanged(MopedDataType type, int value) {
@@ -252,6 +250,7 @@ public abstract class AbstractCommunicator implements Communicator {
      * Notifies all listeners that a disconnection has occurred.
      */
     private void notifyDisconnected() {
+        log("Disconnected");
         for (CommunicationListener cl : listeners) {
             cl.onDisconnection();
         }

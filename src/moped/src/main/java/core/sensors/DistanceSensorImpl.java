@@ -1,31 +1,34 @@
 package core.sensors;
 
-import core.process_runner.InputSubscriber;
-import core.process_runner.ProcessFactory;
-import core.process_runner.ProcessRunner;
-import sensor_data_conversion.SensorDataConverter;
+import arduino.ArduinoCommunicator;
+import com_io.CommunicationsMediator;
+import com_io.Direction;
+import utils.StrToDoubleConverter;
+import utils.Config;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
 
-import static java.lang.Double.NaN;
+import static utils.Config.CAM_TGT_DIST;
+import static utils.Config.DIST_SENSOR;
+import static utils.Config.REGEX;
 
 /**
  * Used for reading from the on-board distance sensor.
  */
-public class DistanceSensorImpl implements DistanceSensor, InputSubscriber {
+public class DistanceSensorImpl implements DistanceSensor {
 
     private static final double FILTER_WEIGHT = 0.7;
-    private static final DistanceSensorImpl INSTANCE = new DistanceSensorImpl();
+    private static final double MAX_VALUE_OFFSET = 0.25;
+    private final ArduinoCommunicator arduinoCommunicator;
 
     private LowPassFilter filter;
     private double currentSensorValue;
-    private StringBuilder pythonInput;
-    private Thread valueLoop;
+    private StringBuilder arduinoInput;
+    private StringBuilder cvInput;
 
-    public static DistanceSensorImpl getInstance() {
-        return INSTANCE;
-    }
+    private List<Consumer<Double>> dataConsumers;
 
     @Override
     public double getDistance() {
@@ -37,61 +40,50 @@ public class DistanceSensorImpl implements DistanceSensor, InputSubscriber {
         return getDistance();
     }
 
-    @Override
-    public void kill() {
-        valueLoop.interrupt();
+    public void subscribe(Consumer<Double> dataConsumer) {
+        dataConsumers.add(dataConsumer);
     }
 
-    @Override
-    public synchronized void outputString(String s) {
-        if (s.contains("\n")) {
-            double temp = new SensorDataConverter().convertDistance(pythonInput.toString());
-            if (temp != NaN) {
-                normaliseValue(temp);
+    public void unsubscribe(Consumer<Double> dataConsumer) {
+        dataConsumers.remove(dataConsumer);
+    }
+
+    synchronized void receivedString(String string, StringBuilder sb) {
+        for (char c : string.toCharArray()) {
+            if (c != 10 && c != 13) {
+                sb.append(c);
+            } else {
+                setCurrentSensorValue(sb.toString());
+                sb.delete(0, sb.length());
             }
-            pythonInput = new StringBuilder();
-        } else {
-            pythonInput.append(s);
         }
     }
 
-    private void normaliseValue(double value) {
-        currentSensorValue = filter.filterValue(value);
+    private void setCurrentSensorValue(String text) {
+        double value = new StrToDoubleConverter().convertStringToDouble(text);
+        if (!Double.isNaN(value)) {
+            currentSensorValue = filter.filterValue(value);
+            dataConsumers.forEach(doubleConsumer -> doubleConsumer.accept(currentSensorValue));
+        }
     }
 
-    private DistanceSensorImpl() {
+    DistanceSensorImpl(CommunicationsMediator communicationsMediator, ArduinoCommunicator arduinoCommunicator) {
+        dataConsumers = new ArrayList<>();
         filter = new LowPassFilter(FILTER_WEIGHT);
-        pythonInput = new StringBuilder();
+        arduinoInput = new StringBuilder();
+        cvInput = new StringBuilder();
         currentSensorValue = 0.3;
 
-        valueLoop = new Thread(() -> {
-            ProcessRunner sensorData = null;
-            try {
-                sensorData = ProcessFactory.createPythonProcess("run.py");
-                sensorData.start();
-            } catch (FileNotFoundException e) {
-                System.out.println(e.getMessage());
-                System.out.println("Couldn't start sensor script");
-            }
-            
-            sensorData.subscribeToInput(this);
+        dataConsumers.add(sensorValue -> communicationsMediator.transmitData(DIST_SENSOR + REGEX + sensorValue.toString(), Direction.EXTERNAL));
 
-            while (!Thread.interrupted()) {
-                try {
-                    sensorData.outputToScript("g.can_ultra\n");
-                    sensorData.flushOutput();
-                } catch (IOException io) {
-                    System.out.println("WRITE ERROR");
-                    System.out.println("\t" + io.getMessage());
-                }
-
-                try {
-                    Thread.sleep(200);
-                } catch (InterruptedException ie) {
-                    System.out.println(ie.getMessage());
-                }
+        communicationsMediator.subscribe(Direction.INTERNAL, data -> {
+            String[] formattedData = data.split(Config.REGEX);
+            if (formattedData.length == 2 && formattedData[0].equals(CAM_TGT_DIST)) {
+                receivedString(formattedData[1], cvInput);
             }
         });
-        valueLoop.start();
+
+        this.arduinoCommunicator = arduinoCommunicator;
+        this.arduinoCommunicator.addArduinoListener(string -> receivedString(string, arduinoInput));
     }
 }

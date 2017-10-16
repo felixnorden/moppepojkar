@@ -38,6 +38,8 @@ public class ClientCommunicator extends AbstractCommunicator {
             inputStream = null;
             outputStream = null;
         } catch (IOException e) {
+            log("IOException occurred when trying to clear connection." +
+                    "This should literally never happen and if it does next round of beer is on me :)");
             e.printStackTrace();
         }
     }

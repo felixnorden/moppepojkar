@@ -1,8 +1,5 @@
 package com;
 
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.Scanner;
 
 /**
@@ -65,38 +62,8 @@ public class LocalManualTest {
     };
 
     public LocalManualTest() {
-        //This thread acts as the MOPEDs core server.
-        //Data sent to this thread will not be acted upon and lost.
-        //This means all data sent from WirelessIno that contains speed and steering values.
-        Thread mopedServerThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                ServerSocket ss = null;
-                try {
-                    ss = new ServerSocket(8999);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                Socket mopedSocketMock;
-
-                while (true) {
-                    try {
-                        mopedSocketMock = ss.accept();
-                        System.out.println("[MOPED MOCK] CONNECTED");
-
-                        Thread.sleep(60);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-        mopedServerThread.start();
-
         Communicator server = new ServerCommunicator(9000);
-        //Change localhost to host ip if host isn't this computer.
+        //Change 0.0.0.0 to host ip if host isn't this computer.
         Communicator client = new ClientCommunicator("192.168.137.95", 9005);
 
 
@@ -122,25 +89,28 @@ public class LocalManualTest {
                 case "sstate MANUAL":
                     server.setState(MopedState.MANUAL);
                     break;
-                case "slog":
-                    if (server.isLoggingEnabled()) {
-                        server.disableLogging();
-                    } else {
-                        server.enableLogging();
+                case "ssim":
+                    for (int i = 0; i < 10000; i++) {
+                        server.setValue(MopedDataType.VELOCITY, (int) (Math.sin(i) * 10));
+                        try {
+                            Thread.sleep(50);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                     break;
 
                 //Client commands
-                case "c start":
+                case "cstart":
                     client.start();
                     break;
-                case "c stop":
+                case "cstop":
                     client.stop();
                     break;
-                case "c ACC":
+                case "cstate ACC":
                     client.setState(MopedState.ACC);
                     break;
-                case "c MANUAL":
+                case "cstate MANUAL":
                     client.setState(MopedState.MANUAL);
                     break;
             }

@@ -1,6 +1,7 @@
 package core.process_runner;
 
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.BufferedWriter;
@@ -13,9 +14,11 @@ import java.util.List;
 /**
  * Created by Virtuality.
  */
+
 class ProcessIntegrationTest {
 
     @Test
+    @Disabled
     void cmdReadTest() {
         // 1. Create process
         ProcessBuilder pb = new ProcessBuilder("cmd");
@@ -46,6 +49,7 @@ class ProcessIntegrationTest {
     }
 
     @Test
+    @Disabled
     void cmdWriteTest() {
         // 1. Create cmd process
         ProcessBuilder pb = new ProcessBuilder("cmd");
@@ -96,6 +100,7 @@ class ProcessIntegrationTest {
     }
 
     @Test
+    @Disabled
     void pythonReadTest() throws IOException, InterruptedException {
         // 1. Create temporary Python file
         File pyScript = new File("pythonTemp.py");
@@ -142,6 +147,7 @@ class ProcessIntegrationTest {
     }
 
     @Test
+    @Disabled
     void pythonWriteTest() throws IOException, InterruptedException {
         // 1. Create temporary Python file
         File pyScript = new File("pythonTemp.py");
@@ -203,9 +209,9 @@ class ProcessIntegrationTest {
         }
 
         @Override
-        public void outputString(String s) {
+        public void receivedString(String string) {
             synchronized (buffer) {
-                buffer.add(s);
+                buffer.add(string);
             }
         }
 

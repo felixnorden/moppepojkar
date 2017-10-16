@@ -8,6 +8,8 @@
 
 package core.sensors;
 
+import java.util.function.Consumer;
+
 public interface Sensor {
 
     /**
@@ -17,7 +19,14 @@ public interface Sensor {
     double getValue();
 
     /**
-     * Kills any active thread running in the class.
+     * Subscribes to the sensor data flow
+     * @param dataConsumer to be subscribed
      */
-    void kill();
+    void subscribe(Consumer<Double> dataConsumer);
+
+    /**
+     * Unsubscribes to the sensor data flow
+     * @param dataConsumer to be unsubscribed
+     */
+    void unsubscribe(Consumer<Double> dataConsumer);
 }

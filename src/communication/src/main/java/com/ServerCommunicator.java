@@ -47,6 +47,8 @@ public class ServerCommunicator extends AbstractCommunicator {
             inputStream = null;
             outputStream = null;
         } catch (IOException e) {
+            log("IOException occurred when trying to clear connection." +
+                    "This should literally never happen and if it does next round of beer is on me :)");
             e.printStackTrace();
         }
     }
@@ -61,11 +63,16 @@ public class ServerCommunicator extends AbstractCommunicator {
             this.outputStream = new DataOutputStream(socket.getOutputStream());
             notifyConnected();
         } catch (SocketTimeoutException e) {
-            //We need to throw this again because we want the caller to catch this if timeout.
+            //We actually do need to catch this even though the method signature declares it will be thrown
+            //This is because SocketTimeOutException is a IOException, which means it will get caught in the last
+            //catch block.
+            //We need to throw it again because we want the caller to be notified if timeout occurs.
             throw new SocketTimeoutException(e.getMessage());
         } catch (IOException e) {
             //Runs if port was already bound by another socket (possibly ours)
-            e.printStackTrace();
+            log("It looks like port " + this.port + " is already bound," +
+                    " possibly caused by two identical instances of this or another program");
+            stop();
         }
     }
 }
