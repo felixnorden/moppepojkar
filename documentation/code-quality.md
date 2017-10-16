@@ -107,6 +107,18 @@ A major trade-off for having a large and structured workflow for git is that it 
 
 ### Continuous integration
 
+Being able to continuously deploy new features are crucial when working agile. Therefore, we decided on trying out a continuous integration tool to make the process easier. We decided on [Travis CI](https://travis-ci.org/) as it is free for students to use. The setup has been a bit of a hassle, as the project consists of multiple modules and some are dependent on each other to function. Therefore, the integration process had to be configured accordingly and the tools fails the testing process if one module isn't functioning.
+
+#### Benefits
+
+When an environment for continuous integration has been set up, the deployment process becomes extremely streamlined. If the supplied tests for Travis fails when a Pull Request has been submitted, then that PR will automatically be declined until all tests pass. Thanks to this, the important and cumbersome step of manually running the test suite, as to confirm that the code functions, is removed from the individual and instead automated.
+
+In return, the code only needs to be reviewed and then accepted for merging, which can save a lot of time in the long run.
+
+#### Trade-offs
+
+As time can be saved during deployment after implementing continuous integration, the path to successfully configuring the process can take quite some time without any experience. Therefore, it is important to gauge wether spending the time setting up a continuous integration environment is outweighed by the saved time in the future. 
+
 ---
 
 ### Test-driven Development
