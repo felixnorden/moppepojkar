@@ -1,10 +1,9 @@
 language: java
 script:
 - cd ./src/communication
-- mvn test
-- mvn install
+- mvn install -Dmaven.javadoc.skip=true -B
 - cd ../moped/
-- mvn test
+- mvn test -Dmaven.javadoc.skip=true -B
 
 notifications:
     slack: moppepojkar:nC9dOhmtdPoSgbW3Awqm9p92
