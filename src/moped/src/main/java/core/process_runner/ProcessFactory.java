@@ -16,8 +16,9 @@ public class ProcessFactory {
      * @return The {@link ProcessRunner} object.
      */
     public static ProcessRunner createPythonProcess(String pythonScriptPath) throws FileNotFoundException {
-        if (!new File(pythonScriptPath).exists()) {
-            throw new FileNotFoundException("Path to python script is not valid!");
+        File script = new File(pythonScriptPath);
+        if (!script.exists()) {
+            throw new FileNotFoundException(script.getAbsolutePath() + " does not exist!");
         }
 
         return new ProcessRunnerImpl(new ProcessBuilder(
