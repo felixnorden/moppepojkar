@@ -86,7 +86,8 @@ Disclaimer: The listed user stories are not in the order that they were implemen
 
 ### Adaptive Cruise Control
 
-As a user, I want the driven vehicle to automatically keep a safe distance from the vehicle in front, as to allow me to focus less on 
+1. As a user, I want the driven vehicle to automatically keep a safe distance from the vehicle in front, as to allow me to focus more on the vehicle's lateral positioning
+
 
 ### Platooning
 
