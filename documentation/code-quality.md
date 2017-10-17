@@ -1,5 +1,17 @@
 # Code quality
 
+[Back to top](../README.md)
+
+- [Code quality](#code-quality)
+    - [Group workflow](#group-workflow)
+        - [Pair Programming](#pair-programming)
+        - [Code Reviews](#code-reviews)
+        - [Git Workflow](#git-workflow)
+        - [Continuous integration](#continuous-integration)
+        - [Test-driven Development](#test-driven-development)
+        - [Behaviour-driven Development](#behaviour-driven-development)
+        - [Software Versioning](#software-versioning)
+
 This document describes the strategies and methodologies that the team has chosen to adhere to with the intention of maintaining a higher standard of quality for the main product.
 
 Each methodology has been chosen with a rationale of what the team can manage to adhere to, even though there are more strategies available to reach an even higher standard of code quality.
@@ -41,7 +53,7 @@ The list below shortly summarizes the different strategies and how they will be 
     - Modules will be checked using Integration tests
     - Components will be checked using System tests
 - BDD will be used **if** it is necessary
-- Sequenced versioning, i.e A.B.C
+- Software versioning, i.e A.B.C
     - A is a breaking release
     - B is a major release
     - C is patches and bug fixes.
@@ -139,8 +151,28 @@ Secondly, if a feature's implementation is not thoroughly planned out beforehand
 
 ---
 
-### Behavior-driven Development
+### Behaviour-driven Development
+
+Making sure that the implemented features correlate with the PO's requests in the [product backlog](./product-backlog.md) is very important in order to produce something of value. This is where BDD shines through. With its *"stakeholder first"* mindset, producing value is as good as inevitable.
+
+#### Benefits
+
+Firstly, by basing the use cases and tasks off of the different user stories in the backlog, and conforming the produced code to be readable by outsourced individuals, the possibility of quality feedback greatly increases. By writing tests that conform to these requirements, it is possible to directly ask the stakeholder to read the tests and say whether their requests have been met. In return, the feedback loop gets a bit tighter and more streamlined.
+
+Secondly, implementing BDD means that the vocabulary is adapted in order to keep a common language between the stakeholder and the development team. This common language then facilitates the communication between the PO and the team, which lessens the risk of loss in communication.
+
+#### Trade-offs
+
+The main negative side to BDD is that it requires quite a bit of resources in order to streamline the process, which means time and effort is taken from the actual development process. This mainly comes in the form of  administrative work, which means more files to maintain. In return, this leads to a smaller **maintainability rate**.
+
+Also, adapting code such as tests to be read by outsourced people requires more verbose and long test code, which also requires more resources, like time and effort. As long as all user stories are well defined, spending these resources on new feature development could, in theory, mean more produced value. Therefore, for shorter projects using BDD needs to be thoroughly discussed to weigh the benefits against the trade-offs.
 
 ---
 
-### Sequenced Versioning
+### Software Versioning
+
+Versioning of a product is something that is important in order to quickly identify wether the user has the latest version or not. Therefore, this project follows the standard [Software Versioning](https://en.wikipedia.org/wiki/Software_versioning) with a three-stage-sequence, A.B.C, where A is major changes, B is minor changes and C is hotfixes.
+
+#### Benefits
+
+There are not really any major benefits nor setbacks to which versioning is used. However, one benefit of using this standard is that it is well recognized by other people and therefore leads to less misinterpretation. 
