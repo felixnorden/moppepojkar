@@ -6,7 +6,10 @@ Each methodology has been chosen with a rationale of what the team can manage to
 
 Key values that the group has in mind are:
 
-- Readability - Code is meant for humans to read, not machines to interpret **TODO - Principles**
+- Readability - Code is meant for humans to read, not machines to interpret. Principles that are kept in mind are:
+    - [Law of demeter](https://en.wikipedia.org/wiki/Law_of_Demeter)
+    - [Refactoring Code](https://en.wikipedia.org/wiki/Code_refactoring)
+    - [Naming conventions](https://en.wikipedia.org/wiki/Naming_convention_(programming))
 - Modularity - Code separated into modules mean that they can be switched out for other modules in the future. Principles that are kept in mind are:
     - [Separation of Concerns](https://en.wikipedia.org/wiki/Separation_of_concerns)
     - [Single Responsibility Principle](https://en.wikipedia.org/wiki/Single_responsibility_principle)
@@ -15,7 +18,14 @@ Key values that the group has in mind are:
 - Extensibility - Code should be independent enough so that it functions on its own, but is still open for extensions and further development, without breaking the previous implementations. Principles that are kept in mind are:
     - [Open Closed Principle](https://en.wikipedia.org/wiki/Open/closed_principle)
     - [Single Responsibility Principle](https://en.wikipedia.org/wiki/Single_responsibility_principle)
-- Reusability **TODO - Principles**
+- Reusability - Code should be reusable and context-independent, which leads to less lines of code and fewer bugs. Principles that are kept in mind are:
+    - [Composition over Inheritance](https://en.wikipedia.org/wiki/Composition_over_inheritance)
+    - [High cohesion](https://en.wikipedia.org/wiki/Cohesion_(computer_science))
+    - [Low coupling](https://en.wikipedia.org/wiki/Coupling_(computer_programming))
+    - [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself)
+- Testability - Code that is testable is also more modular and extensible, which means that testable code is SOLID code in many aspects. Principles that are kept in mind are:
+    - [Inversion of Control](https://en.wikipedia.org/wiki/Inversion_of_control)
+    - [Composition over Inheritance](https://en.wikipedia.org/wiki/Composition_over_inheritance)
 
 ## Group workflow
 
@@ -79,9 +89,35 @@ Additionally, having your code reviewed entails you being subject to constructiv
 
 ### Git Workflow
 
+To have a structured, or rather, less jumbled version control history, we have come up with a git workflow for managing feature development, hotfixes and development to production deployment.
+
+#### Benefits
+
+This workflow is primarily useful out of the **readability** aspect, because by having a structured deployment history allows for easy regression if a component would malfunction at a later stage.
+
+Also, by having these guidelines, a consistent version history will be easier to maintain, as long as everybody follows them. 
+
+Maintaining the **testability** of the code is also enforced, as to ensure that the code that is deployed is functional.
+
+#### Trade-offs
+
+A major trade-off for having a large and structured workflow for git is that it takes a bit of time to learn it. Due to this learning process, errors are prone to happen in the beginning and some bad habits may come out of these errors if repeated. This entails the loss of the sought after structure already in the beginning, which indicates that having a too difficult workflow is equal to shooting yourself in the foot.
+
 ---
 
 ### Continuous integration
+
+Being able to continuously deploy new features are crucial when working agile. Therefore, we decided on trying out a continuous integration tool to make the process easier. We decided on [Travis CI](https://travis-ci.org/) as it is free for students to use. The setup has been a bit of a hassle, as the project consists of multiple modules and some are dependent on each other to function. Therefore, the integration process had to be configured accordingly and the tools fails the testing process if one module isn't functioning.
+
+#### Benefits
+
+When an environment for continuous integration has been set up, the deployment process becomes extremely streamlined. If the supplied tests for Travis fails when a Pull Request has been submitted, then that PR will automatically be declined until all tests pass. Thanks to this, the important and cumbersome step of manually running the test suite, as to confirm that the code functions, is removed from the individual and instead automated.
+
+In return, the code only needs to be reviewed and then accepted for merging, which can save a lot of time in the long run.
+
+#### Trade-offs
+
+As time can be saved during deployment after implementing continuous integration, the path to successfully configuring the process can take quite some time without any experience. Therefore, it is important to gauge wether spending the time setting up a continuous integration environment is outweighed by the saved time in the future. 
 
 ---
 

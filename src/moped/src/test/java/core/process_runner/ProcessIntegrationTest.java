@@ -1,9 +1,11 @@
 package core.process_runner;
 
 
+
 import com.sun.org.apache.xpath.internal.SourceTree;
 import org.junit.After;
 import org.junit.jupiter.api.AfterAll;
+
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
@@ -20,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 /**
  * Created by Virtuality.
  */
+
 class ProcessIntegrationTest {
 
     @AfterAll
@@ -27,6 +30,7 @@ class ProcessIntegrationTest {
         File processReadTest = new File("Test.java");
         if (processReadTest.exists()) {
             processReadTest.delete();
+
         }
 
         File processReadCompile = new File("Test.class");
@@ -49,6 +53,7 @@ class ProcessIntegrationTest {
         compilerProcess.start().waitFor();
 
         ProcessBuilder pb = new ProcessBuilder("java", "Test");
+
         ProcessRunner process = ProcessFactory.createCustomProcess(pb);
 
         InputSubscriberImpl receiver = new InputSubscriberImpl();
@@ -70,6 +75,7 @@ class ProcessIntegrationTest {
         // The first word read should be "test"
         assertEquals("Test", sb.toString());
     }
+
 
     class InputSubscriberImpl implements InputSubscriber {
 

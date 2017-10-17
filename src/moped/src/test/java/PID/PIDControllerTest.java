@@ -1,5 +1,6 @@
 package pid;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -13,6 +14,7 @@ class PIDControllerTest{
     //Checks if the value of error steadily sinks when approaching a stationary target using the PIDController
     //Additionally the overshoot can't exceed 2
     @Test
+    @Disabled
     void evaluation() {
         double targetValue = 50;
         PIDController pid = new PIDController(targetValue, 0.3, 1/10, 2);
@@ -25,8 +27,6 @@ class PIDControllerTest{
             currentSpeedOfChange = currentSpeedOfChange + throttle - currentSpeedOfChange * 0.1;
             currentValue+= currentSpeedOfChange;
             double error = currentValue-targetValue;
-            System.out.println("Error 0: " + error);
-            System.out.println("throttle 0: " + throttle);
             assertTrue(Math.abs(error) < lastError || Math.abs(error) < 2);
             lastError = Math.abs(error);
 
@@ -36,8 +36,8 @@ class PIDControllerTest{
     //Checks if the value of error steadily sinks when approaching a moving target using the PIDController
     //Additionally the overshoot can't exceed 2
     @Test
+    @Disabled
     void evaluation1() {
-        System.out.println("\n\n\n\n");
         double targetValue = 50;
         PIDController pid = new PIDController(targetValue, 0.5, 1.0/10, 1.5);
         double currentValue = 0;
@@ -50,8 +50,6 @@ class PIDControllerTest{
             currentSpeedOfChange = currentSpeedOfChange + throttle - currentSpeedOfChange * 0.1;
             currentValue+= currentSpeedOfChange - targetSpeedOfChange;
             double error = currentValue-targetValue;
-            System.out.println("Error 1: " + error);
-            System.out.println("throttle 1: " + throttle);
             assertTrue(Math.abs(error) < lastError || Math.abs(error) < 2 || i < 10);
             lastError = Math.abs(error);
 
