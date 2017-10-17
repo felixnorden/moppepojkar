@@ -1,8 +1,9 @@
 # Team Social Contract
 
+[Back to top](../README.md)
+
 - [Team Social Contract](#team-social-contract)
     - [Whole group culture](#whole-group-culture)
-    - [Group workflow](#group-workflow)
     - [Meetings](#meetings)
     - [Smaller group requirements](#smaller-group-requirements)
     - [References](#references)

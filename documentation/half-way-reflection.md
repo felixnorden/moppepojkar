@@ -1,5 +1,7 @@
 # Half-time reflection of the project and application of SCRUM
 
+[Back to top](../README.md)
+
 During these past 4 weeks, we as a team have actively tried to apply SCRUM methodology and incorporate its different processes into our each stage of our workflow. Initially, we chose to split our main group into three smaller teams, each team consisting of four members. We then worked with establishing the teams' different problem domains to effectively kickstart the project. Every team had the vision of holding sprint planning and retrospectives weekly, but also daily stand-ups to keep all team members on track.
 
 So far, the sprint reviews have been mainly handled by one of the teams, where the SM and PM have been stationed, while the rest have been working on their backlog as they saw fit.
@@ -28,7 +30,7 @@ Another aspect for the lack of stand-ups is that some teams have mainly worked i
 
 ## Retrospectives
 
-Retrospectives quickly developed a good structure early on and we feel like this part of SCRUM is the part that is showing best results. The methodology emerged within the group in a natural fashion, which implies that all members of the group has the same appreciation of having retrospectives. A lot of good topics about the atmosphere in the group have been brought up, which has cascaded into a lot of discussion and reflection regarding the communication in and between the smaller teams.
+Retrospectives developed a good structure early on and we feel like this part of SCRUM is the part that is showing the best results. The methodology emerged within the group in a natural fashion, which implies that all members of the group has the same appreciation of having retrospectives. A lot of good topics about the atmosphere in the group have been brought up, which has cascaded into a lot of discussion and reflection regarding the communication in and between the smaller teams.
 
 ### The grand conflict
 

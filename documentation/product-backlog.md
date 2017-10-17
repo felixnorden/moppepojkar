@@ -1,22 +1,39 @@
 # Product Backlog
 
-This document describes the key features that the Product Owner has in mind, in conjunction with the Teams.
+[Back to top](../README.md)
 
-**Check product spec on github repo**
+- [Product Backlog](#product-backlog)
+    - [Epics](#epics)
+    - [Themes](#themes)
+    - [Elicited requirements](#elicited-requirements)
+        - [Adaptive cruise control](#adaptive-cruise-control)
+        - [Platooning](#platooning)
+        - [GUI](#gui)
+        - [Safety](#safety)
+    - [User Stories](#user-stories)
+        - [Adaptive Cruise Control](#adaptive-cruise-control)
+        - [Platooning](#platooning)
+        - [GUI](#gui)
+        - [Safety](#safety)
+    - [End Product](#end-product)
+        - [Check later on](#check-later-on)
+
+This document describes the key features that the Product Owner has in mind, in conjunction with the Teams.
 
 ## Epics
 
-- Adaptive cruise control (longitudinal management)
-- Platooning feature (longitudinal & lateral management)
+- Make the MOPED act without user input
+- Implement Adaptive cruise control (longitudinal management)
+- Implement Platooning feature (longitudinal & lateral management)
 
 ## Themes
 
 - Autonomy
 - Maneuverability
-- MOPEDs should be able to work together, individual functionality isn't in scope
-- Keep a common distance between each other.
+- Cooperation
+- Safety
 
-## User Stories
+## Elicited requirements
 
 ### Adaptive cruise control
 
@@ -46,6 +63,34 @@ This document describes the key features that the Product Owner has in mind, in 
 - Change GUI for more UX
 - Armed state on startup
 
+### Safety
+
+## User Stories
+
+This section splits the elicited requirements into smaller and more refined user stories that are used in the sprint backlogs.
+
+The sub list of each listed item is the list of tasks that the user story has then been split into.
+
+### Adaptive Cruise Control
+
+1. As a development team, we want to research the legacy code base to see what tools already exist
+    - Research what SQUAWK's role is on the MOPED
+    - Test how to use the python scripts in the MOPED from Java
+    - 
+2. As a development team, we want to create a system architecture to structure the project
+    - Plan 
+    - Create a project structure for the different modules
+    - Add the project structure to GitHub
+    - 
+
+### Platooning
+
+### GUI
+
+### Safety
+
+---
+
 ## End Product
 
 The end goal is to produce column based driving demo, where one main vehicle is driven manually and the rest follow in line.
@@ -54,7 +99,7 @@ This solution will help with sustainability and human safety for the future.
 
 Cars will converse with each other in SoS, but have to be functioning independently and can make decisions on their own. The demonstration will be made using all the different MOPEDs, that each utilize their own software, but can cooperate together.
 
-## Check later on
+### Check later on
 
 - Preferred distance between MOPEDs, based on sensors
 - Absolute start position using coordinates or something

@@ -3,10 +3,25 @@ The software project for maneuvering a MOPED
 
 ## Useful links
 
-The following links can be used for navigation throughout the repo:
+The following links can be used for navigation throughout the repository:
+
+### Prototype links
 
 - [Social Contract](./documentation/social-contract.md)
 - [KPIs](./documentation/kpis.md)
+- [Roles](./documentation/roles.md)
+- [Product Backlog & User Stories](./documentation/product-backlog.md)
+- [Code Quality](./documentation/code-quality.md)
+- [Definition of Done](./documentation/definition-of-done.md)
+
+#### Guidelines & Templates
+
+- [Code Review](./documentation/code-review.md)
+- [Git workflow](./documentation/git-workflow.md)
+- [SCRUM Templates](./documentation/templates)
+
+### Reflection links
+
 - [Learnings from LEGO-exercise](./documentation/scrum-learnings/)
 - [Half-time reflection](./documentation/half-way-reflection.md)
 
