@@ -1,5 +1,7 @@
 # Definition of Done
 
+[Back to top](../README.md)
+
 This document serves to help the group know when they can consider a part of the project done.
 
 ## Tasks

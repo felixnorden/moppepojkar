@@ -1,5 +1,7 @@
 # Git workflow
 
+[Back to top](../README.md)
+
 We utilize the [Git Feature Branch workflow](https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow)
 
 In practice, it works as follows:

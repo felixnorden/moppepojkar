@@ -1,5 +1,7 @@
 # Sprint Planning
 
+[Back to top](../README.md)
+
 This document works as a basic template for the weekly Sprint Planning, and holds a few guidelines as to make the Planning go more smoothly and to facilitate the estimations of a reasonably set Sprint Goal.
 
 The plan is created by the collaborative work of the **entire Scrum Team**.
