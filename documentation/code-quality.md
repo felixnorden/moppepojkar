@@ -95,7 +95,7 @@ To have a structured, or rather, less jumbled version control history, we have c
 
 This workflow is primarily useful out of the **readability** aspect, because by having a structured deployment history allows for easy regression if a component would malfunction at a later stage.
 
-Also, by having these guidelines, a consistent version history will be easier to maintain, as long as everybody follows them. 
+Also, by having these guidelines, a consistent version history will be easier to maintain, as long as everybody follows them.
 
 Maintaining the **testability** of the code is also enforced, as to ensure that the code that is deployed is functional.
 
@@ -111,17 +111,35 @@ Being able to continuously deploy new features are crucial when working agile. T
 
 #### Benefits
 
-When an environment for continuous integration has been set up, the deployment process becomes extremely streamlined. If the supplied tests for Travis fails when a Pull Request has been submitted, then that PR will automatically be declined until all tests pass. Thanks to this, the important and cumbersome step of manually running the test suite, as to confirm that the code functions, is removed from the individual and instead automated.
+When an environment for continuous integration has been set up, the deployment process becomes extremely streamlined. If the supplied tests for Travis fails when a pull request has been submitted, then that PR will automatically be declined until all tests pass. Thanks to this, the important and cumbersome step of manually running the test suite, as to confirm that the code functions, is removed from the individual and instead automated. In return, the code only needs to be reviewed and then accepted for merging, which can save a lot of time in the long run.
 
-In return, the code only needs to be reviewed and then accepted for merging, which can save a lot of time in the long run.
+Also, with having less of an overhead when deploying and taking a good test coverage into account, more resources can be spent to make the code quality higher through refactoring and additional development. In return, the code then becomes more **readable**, **maintainable** and **extensible**
 
 #### Trade-offs
 
-As time can be saved during deployment after implementing continuous integration, the path to successfully configuring the process can take quite some time without any experience. Therefore, it is important to gauge wether spending the time setting up a continuous integration environment is outweighed by the saved time in the future. 
+As time can be saved during deployment after implementing continuous integration, the path to successfully configuring the process can take quite some time without any experience. Therefore, it is important to gauge wether spending the time setting up a continuous integration environment is outweighed by the saved time in the future.
+
+Additionally, in order to use continuous integration, the code needs to be **testable** as much as possible, as to keep the **maintainability** and **extensibility** levels high so that more features can be developed with the same ease.
 
 ---
 
 ### Test-driven Development
+
+In conjunction with having continuous integration, having tests are a necessity in order to validate that the newly deployed code does not break anything that already works. Therefore, the decision on using TDD became clear as this form of development style automatically produces tests in along with the produced code, which is exactly what is needed as Travis run the test suite on every new PR.
+
+#### Benefits
+
+There is an array of different benefits to using TDD. Firstly, the code coverage automatically goes up as no code is developed without passing a previous failing test, creating a better safety net for testing new features and making sure that nothing of the already existing code breaks. This entails that the **testability** of the code greatly increases.
+
+Secondly, by only producing code that passes a single assertion, the code that is produced is meant to only solve the problem that the test needs to pass. This entails a less error-prone code base and fewer bugs to find and resolve. The benefit of having less bugs is that the code base becomes more **maintainable**. Having less bugs means that new code that is dependent on the code base becomes less error-prone, which entails an increase in **extensibility**.
+
+Thirdly, as the main workflow of TDD is *fail a test*, *pass the test* and *refactor the code **(including the test)***, there will be less of a **maintainability issue**. This is due to the code being revised as soon as it is passing its test, creating less of an overhead for future development.
+
+#### Trade-offs
+
+Even if TDD has a lot of different benefits, there are some negative aspects to it as well. Firstly, writing tests for every piece of code means that the lines of code is about doubled. More code means a higher risk of bugs, which makes both **extensibility** and **maintainability** harder as the code base grows larger. This also means that if the test has bugs, then the code probably has them as well. As the code covers the test case, the code functions according to the the test. However, if the test case is dysfunctional and does not cover all outcomes, then the code will malfunction in production.
+
+Secondly, if a feature's implementation is not thoroughly planned out beforehand, writing a sufficient test to begin with becomes very difficult. Therefore, sometimes a lot of time can be spent banging your head against the wall until you reach the conclusion to go back to the drawing board or to just smack up a solution without any tests. This means that a lot of unnecessary time can be spent trying to write tests that might not even come to exist. Additionally, not having tests entail a lowered **reusability rate**, as code that does not have covering tests are not safe to reuse in other implementations. Also, quite a bit of time needs to be spent on the actual planning of a feature. However, this is seen as a prerequisite for successful development and therefore is not taken into account.
 
 ---
 
