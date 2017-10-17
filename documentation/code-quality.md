@@ -93,11 +93,7 @@ To have a structured, or rather, less jumbled version control history, we have c
 
 #### Benefits
 
-This workflow is primarily useful out of the **readability** aspect, because by having a structured deployment history allows for easy regression if a component would malfunction at a later stage.
-
-Also, by having these guidelines, a consistent version history will be easier to maintain, as long as everybody follows them.
-
-Maintaining the **testability** of the code is also enforced, as to ensure that the code that is deployed is functional.
+This workflow is primarily useful out of the **readability** aspect, because by having a structured deployment history allows for easy regression if a component would malfunction at a later stage. Also, by having these guidelines, a consistent version history will be easier to maintain, as long as everybody follows them. Maintaining the **testability** of the code is also enforced, as to ensure that the code that is deployed is functional.
 
 #### Trade-offs
 
