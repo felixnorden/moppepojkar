@@ -1,6 +1,6 @@
 # Moppepojkar
 
-[![Build Status](https://travis-ci.org/felixnorden/moppepojkar.svg?branch=prod-vision)](https://travis-ci.org/felixnorden/moppepojkar)
+[![Build Status](https://travis-ci.org/felixnorden/moppepojkar.svg?branch=master)](https://travis-ci.org/felixnorden/moppepojkar)
 
 The software project for maneuvering a MOPED
 
