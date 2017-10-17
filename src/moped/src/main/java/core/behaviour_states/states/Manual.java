@@ -9,7 +9,7 @@ import core.car_control.CarControl;
  */
 class Manual implements BehaviourState {
 
-    private final BidirectionalHandler handler;
+    private final BidirectionalHandler manualHandler;
     private final CarControl carController;
 
     /**
@@ -24,12 +24,12 @@ class Manual implements BehaviourState {
         ActionStrategy steerController = strategyFactory.createSteerController();
         ActionStrategy velocityController = strategyFactory.createVelocityController();
 
-        this.handler = new BidirectionalHandlerImpl(velocityController, steerController);
+        this.manualHandler = new BidirectionalHandlerImpl(velocityController, steerController);
     }
 
     @Override
     public void run() {
-        carController.setThrottle((int) handler.takeLatitudeAction());
-        carController.setSteerValue((int) handler.takeLongitudeAction());
+        carController.setThrottle((int) manualHandler.takeLatitudeAction());
+        carController.setSteerValue((int) manualHandler.takeLongitudeAction());
     }
 }

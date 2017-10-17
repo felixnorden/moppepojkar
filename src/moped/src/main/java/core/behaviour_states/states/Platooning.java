@@ -6,12 +6,12 @@ import core.car_control.CarControl;
 import static utils.Config.MIN_INTERMISSION_TIME;
 
 /**
- * State for handling platooning,
+ * State for handling platooningHandler,
  * i.e both lateral and longitudinal automation.
  */
 public class Platooning implements BehaviourState {
     private CarControl carControl;
-    private BidirectionalHandler platooning;
+    private BidirectionalHandler platooningHandler;
     private long lastRunTime;
 
     public Platooning(CarControl carController) {
@@ -24,7 +24,7 @@ public class Platooning implements BehaviourState {
         ActionStrategy acc = actionFactory.createPIDController();
         ActionStrategy lateral = actionFactory.createLateralController();
 
-        platooning = new BidirectionalHandlerImpl(lateral,acc);
+        platooningHandler = new BidirectionalHandlerImpl(lateral,acc);
     }
 
     @Override
@@ -37,11 +37,11 @@ public class Platooning implements BehaviourState {
             ActionStrategy acc = actionFactory.createPIDController();
             ActionStrategy lateral = actionFactory.createLateralController();
 
-            platooning = new BidirectionalHandlerImpl(lateral,acc);
+            platooningHandler = new BidirectionalHandlerImpl(lateral,acc);
         }
 
-        carControl.setSteerValue((int) platooning.takeLatitudeAction());
-        carControl.setThrottle((int) platooning.takeLongitudeAction());
+        carControl.setSteerValue((int) platooningHandler.takeLatitudeAction());
+        carControl.setThrottle((int) platooningHandler.takeLongitudeAction());
         lastRunTime = System.currentTimeMillis();
     }
 }
