@@ -20,7 +20,7 @@ public class Config {
     public static final String CAM_TGT_OFFSET = "CAM_TGT_OFFSET";
     public static final String CAM_TGT_DIST = "CAM_TGT_DIST";
 
-    public static final int MAX_INTERMISSION_TIME = 250;
+    public static final int MIN_INTERMISSION_TIME = 250;
 
     // Values used by the PIDController for the ACC
 

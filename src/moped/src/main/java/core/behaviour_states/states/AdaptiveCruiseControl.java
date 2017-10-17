@@ -3,7 +3,7 @@ package core.behaviour_states.states;
 import core.action_strategies.*;
 import core.car_control.CarControl;
 
-import static utils.Config.MAX_INTERMISSION_TIME;
+import static utils.Config.MIN_INTERMISSION_TIME;
 
 
 /**
@@ -41,9 +41,10 @@ class AdaptiveCruiseControl implements BehaviourState {
     @Override
     public void run() {
         // TODO: 12/10/2017 Add reset methods to actions strategies
-        if (System.currentTimeMillis() - lastRunTime > MAX_INTERMISSION_TIME) {
+        if (System.currentTimeMillis() - lastRunTime > MIN_INTERMISSION_TIME) {
             ActionStrategyFactory actionFactory = ActionStrategyFactoryImpl.getInstance();
 
+            // TODO: 2017-10-17 Ask arch if this is really necessary
             ActionStrategy pidController = actionFactory.createPIDController();
             ActionStrategy steerController = actionFactory.createSteerController();
             this.accHandler = new BidirectionalHandlerImpl(pidController, steerController);
