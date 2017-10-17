@@ -1,5 +1,7 @@
 # Key performance indicators
 
+[Back to top](../README.md)
+
 - [Key performance indicators](#key-performance-indicators)
     - [Individual velocity](#individual-velocity)
     - [Produced velocity](#produced-velocity)

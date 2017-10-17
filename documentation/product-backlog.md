@@ -63,23 +63,42 @@ This section splits the elicited requirements into smaller and more refined user
 
 The sub list of each listed item is the list of tasks that the user story has then been split into.
 
-### Adaptive Cruise Control
+Disclaimer: The listed user stories are not in the order that they were implemented. Instead, they have been categorized in their corresponding epic feature. However, the user stories in each category is in a somewhat chronological order.
+
+### Base platform
 
 1. As a development team, we want to research the legacy code base to see what tools already exist
     - Research what SQUAWK's role is on the MOPED
     - Test how to use the python scripts in the MOPED from Java
-    - 
-2. As a development team, we want to create a system architecture to structure the project
-    - Plan 
+1. As a development team, we want to create a project structure to manage all different modules
+    - Plan UML Module structure of components
     - Create a project structure for the different modules
     - Add the project structure to GitHub
-    - 
+1. As a development team, we want a functioning system architecture to act as the core of the MOPED platform with a single entry point for external communication
+    - Plan UML Core Domain
+    - Add the Core Domain boilerplate
+    - Implement the Core Domain
+    - Implement CommunicationsMediator
+1. As a development team, we want to make our platform handle requests from the mobile app, without the need of unnecessary extra features
+    - Implement RemoteCommunicator
+    - Handle received data from the app
+    - Integrate updated app
+
+### Adaptive Cruise Control
+
+As a user, I want the driven vehicle to automatically keep a safe distance from the vehicle in front, as to allow me to focus less on 
 
 ### Platooning
 
 ### GUI
 
 ### Safety
+
+1. As a user, I want to be given necessary information about the vehicle to make critical decisions regarding safety
+    - Determine useful data to send from MOPED
+    - Store useful data for the app
+    - Send useful data to the app
+    - 
 
 ---
 
