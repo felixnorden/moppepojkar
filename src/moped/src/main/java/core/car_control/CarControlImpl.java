@@ -37,7 +37,7 @@ public class CarControlImpl implements CarControl {
                 }
                 sendValuesToCar();
                 try {
-                    Thread.sleep(10);
+                    Thread.sleep(150);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
