@@ -13,11 +13,12 @@ import java.util.function.Consumer;
  */
 public class DistanceSensorImpl implements DistanceSensor {
 
-    private static final double FILTER_WEIGHT = 0.7;
+    private static final int DEQUE_SIZE = 4;
     private static final double MAX_VALUE_OFFSET = 0.25;
     private final ArduinoCommunicator arduinoCommunicator;
 
-    private QuickChangeFilter filter;
+
+    private Filter filter;
     private double currentSensorValue;
     private StringBuilder arduinoInput;
     private StringBuilder cvInput;
@@ -34,10 +35,12 @@ public class DistanceSensorImpl implements DistanceSensor {
         return getDistance();
     }
 
+    @Override
     public void subscribe(Consumer<Double> dataConsumer) {
         dataConsumers.add(dataConsumer);
     }
 
+    @Override
     public void unsubscribe(Consumer<Double> dataConsumer) {
         dataConsumers.remove(dataConsumer);
     }
@@ -63,7 +66,8 @@ public class DistanceSensorImpl implements DistanceSensor {
 
     DistanceSensorImpl(CommunicationsMediator communicationsMediator, ArduinoCommunicator arduinoCommunicator) {
         dataConsumers = new ArrayList<>();
-        filter = new QuickChangeFilter(0.25, 4);
+        filter = new QuickChangeFilter(MAX_VALUE_OFFSET, DEQUE_SIZE);
+
         arduinoInput = new StringBuilder();
         cvInput = new StringBuilder();
         currentSensorValue = 0.3;

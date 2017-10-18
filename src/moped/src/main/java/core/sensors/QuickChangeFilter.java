@@ -9,7 +9,7 @@ import java.util.Deque;
  * This class serves to remove spiky values in a stream of numbers. It does this by not allowing
  * values that differ to much from previousInputs to pass through the filter.
  */
-public class QuickChangeFilter {
+public class QuickChangeFilter implements Filter{
     private double acceptedChange;
     private double lastReturn;
     private int maxQueueSize;
