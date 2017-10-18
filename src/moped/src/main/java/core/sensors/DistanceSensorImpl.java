@@ -2,17 +2,11 @@ package core.sensors;
 
 import arduino.ArduinoCommunicator;
 import com_io.CommunicationsMediator;
-import com_io.Direction;
 import utils.StrToDoubleConverter;
-import utils.Config;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
-
-import static utils.Config.CAM_TGT_DIST;
-import static utils.Config.DIST_SENSOR;
-import static utils.Config.REGEX;
 
 /**
  * Used for reading from the on-board distance sensor.
@@ -23,7 +17,7 @@ public class DistanceSensorImpl implements DistanceSensor {
     private static final double MAX_VALUE_OFFSET = 0.25;
     private final ArduinoCommunicator arduinoCommunicator;
 
-    private LowPassFilter filter;
+    private QuickChangeFilter filter;
     private double currentSensorValue;
     private StringBuilder arduinoInput;
     private StringBuilder cvInput;
@@ -69,20 +63,20 @@ public class DistanceSensorImpl implements DistanceSensor {
 
     DistanceSensorImpl(CommunicationsMediator communicationsMediator, ArduinoCommunicator arduinoCommunicator) {
         dataConsumers = new ArrayList<>();
-        filter = new LowPassFilter(FILTER_WEIGHT);
+        filter = new QuickChangeFilter(0.15, 20);
         arduinoInput = new StringBuilder();
         cvInput = new StringBuilder();
         currentSensorValue = 0.3;
 
-        dataConsumers.add(sensorValue -> communicationsMediator.transmitData(DIST_SENSOR + REGEX + sensorValue.toString(), Direction.EXTERNAL));
+        //dataConsumers.add(sensorValue -> communicationsMediator.transmitData(DIST_SENSOR + REGEX + sensorValue.toString(), Direction.EXTERNAL));
 
-        communicationsMediator.subscribe(Direction.INTERNAL, data -> {
+        /*communicationsMediator.subscribe(Direction.INTERNAL, data -> {
             String[] formattedData = data.split(Config.REGEX);
             if (formattedData.length == 2 && formattedData[0].equals(CAM_TGT_DIST)) {
                 receivedString(formattedData[1], cvInput);
             }
         });
-
+*/
         this.arduinoCommunicator = arduinoCommunicator;
         this.arduinoCommunicator.addArduinoListener(string -> receivedString(string, arduinoInput));
     }
