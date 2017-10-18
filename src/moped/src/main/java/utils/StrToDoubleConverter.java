@@ -14,7 +14,7 @@ public class StrToDoubleConverter {
      * @param input String containing only numbers and sign
      * @return The value in the form of a double
      */
-    public double convertStringToDouble(String input) {
+    public static double convertStringToDouble(String input) {
         if (input.matches("[0-9.-]+")) {
             double convertedDistance = Double.valueOf(input);
                 return convertedDistance;
