@@ -5,6 +5,9 @@ Servo steer;
 
 int TOP = 2000;
 int BOTTOM = 1000;
+
+int throttleValue;
+int steerValue;
 bool steerMode;
 
 unsigned long pulseTime;
@@ -14,6 +17,9 @@ void setup() {
   Serial.begin(9600);
   throttle.attach(9);
   steer.attach(10);
+
+  throttleValue = 1500;
+  steerValue = 1500;
   steerMode = true;
 
   pinMode(12, OUTPUT);
@@ -38,12 +44,15 @@ void usbCarControl() {
       steerMode = false;
     } else if (value >= -100 && value <= 100) {
       if (steerMode) {
-        steer.write(map(value, -100, 100, BOTTOM, TOP));
+        steerValue = map(value, -100, 100, BOTTOM, TOP);
       } else {
-        throttle.write(map(value, -100, 100, BOTTOM, TOP));
+        throttleValue = map(value, -100, 100, BOTTOM, TOP);
       }
     }
   }
+
+  throttle.write(throttleValue);
+  steer.write(steerValue);
 }
 
 void sensorValue() {
