@@ -1,0 +1,48 @@
+@startuml
+
+node MOPED {
+    node Core {
+        node Behaviour
+
+        node Action
+
+        node "Car Control" as CC
+
+        node Sensors
+
+        node PID
+
+        Behaviour --> Action : takes an
+        Action --> CC : influences 
+        Action --> Sensors : requests data from
+        Action --> PID : parses data through
+    }
+
+    
+    node Communication
+
+    node Server 
+
+    Core --> Communication : sends data to
+    Communication <-> Server : mediates data
+
+
+
+    note right of Communication 
+        Works as the single
+        entry point for data 
+        coming and leaving the Core
+    end note
+}
+
+node App {
+    node Client
+    node "Legacy App" as LA
+
+    Client <-> LA : mediates data
+}
+
+Server <-> Client : communicates with
+
+
+@enduml
