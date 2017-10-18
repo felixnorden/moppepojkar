@@ -7,7 +7,7 @@ import core.sensors.SensorRepository;
 import static utils.Config.MAX_INTERMISSION_TIME;
 
 /**
- * State for handling platooningHandler,
+ * State for handling platooning,
  * i.e both lateral and longitudinal automation.
  */
 public class Platooning implements BehaviourState {
