@@ -1,5 +1,6 @@
 package core.car_control;
 
+import com_io.CommunicatorFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +16,7 @@ class CarControlImplTest {
 
     @BeforeEach
     void setUp() {
-        carControl = new CarControlImpl();
+        carControl = new CarControlImpl(CommunicatorFactory.getComInstance());
 
         carControl.setSteerValue(STEER_VALUE);
         carControl.setThrottle(THROTTLE_VALUE);

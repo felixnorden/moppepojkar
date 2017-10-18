@@ -14,8 +14,18 @@ public class Config {
     public static final String OFF = "OFF";
     public static final String ON = "ON";
 
+    // Server Protocol Values
     public static final String DIST_SENSOR = "SENSOR_DISTANCE";
-
+    public static final String ACC_TARGET_VALUE = "ACC_TARGET_VALUE";
+    public static final String ACC_P_CONSTANT = "ACC_P_CONSTANT";
+    public static final String ACC_I_CONSTANT = "ACC_I_CONSTANT";
+    public static final String ACC_D_CONSTANT = "ACC_D_CONSTANT";
+    public static final String ACC_INTEGRAL_SUM = "ACC_INTEGRAL_SUM";
+    public static final String LAT_TARGET_VALUE = "LAT_TARGET_VALUE";
+    public static final String LAT_P_CONSTANT = "LAT_P_CONSTANT";
+    public static final String LAT_I_CONSTANT = "LAT_I_CONSTANT";
+    public static final String LAT_D_CONSTANT = "LAT_D_CONSTANT";
+    public static final String LAT_INTEGRAL_SUM = "LAT_INTEGRAL_SUM";
 
     public static final String CAM_TGT_OFFSET = "CAM_TGT_OFFSET";
     public static final String CAM_TGT_DIST = "CAM_TGT_DIST";
