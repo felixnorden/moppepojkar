@@ -67,11 +67,6 @@ public class RemoteMediator implements DataReceiver, CommunicationListener {
 
     @Override
     public void dataReceived(String unformattedDataString) {
-        // TODO: 12/10/2017 Fix string to enum issue
-        if (true) {
-            return;
-        }
-
         String[] data = unformattedDataString.split(REGEX);
 
         if (data.length == 2) {
@@ -79,14 +74,18 @@ public class RemoteMediator implements DataReceiver, CommunicationListener {
                 try {
                     MopedState mopedState = MopedState.valueOf(data[1]);
                     server.setState(mopedState);
-                } catch (IllegalArgumentException iae) {
+                } catch (IllegalArgumentException | NullPointerException iae) {
                     System.out.println(iae.getMessage());
                 }
 
             } else {
-                MopedDataType mopedDataType = MopedDataType.valueOf(data[0]);
-                int value = Integer.valueOf(data[1]);
-                server.setValue(mopedDataType, value);
+                try {
+                    MopedDataType mopedDataType = MopedDataType.valueOf(data[0]);
+                    int value = Integer.valueOf(data[1]);
+                    server.setValue(mopedDataType, value);
+                } catch (IllegalArgumentException | NullPointerException iae) {
+                    System.out.println(iae.getMessage());
+                }
             }
         }
     }
