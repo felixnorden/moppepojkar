@@ -14,13 +14,19 @@ public class Config {
     public static final String OFF = "OFF";
     public static final String ON = "ON";
 
-    public static final String DIST_SENSOR = "DIST_SENSOR";
+    public static final String DIST_SENSOR = "SENSOR_DISTANCE";
 
 
     public static final String CAM_TGT_OFFSET = "CAM_TGT_OFFSET";
     public static final String CAM_TGT_DIST = "CAM_TGT_DIST";
 
-    public static final int MAX_INTERMISSION_TIME = 250;
+    public static final int MAX_INTERMISSION_TIME = 1000;
+
+    public static final int MAX_SPEED = 40;
+    public static final int MIN_SPEED = -40;
+
+    public static final int MAX_STEER = 100;
+    public static final int MIN_STEER = -100;
 
     // Values used by the PIDController for the ACC
 
@@ -46,7 +52,7 @@ public class Config {
     // Values used by the PIDController for the lateral navigation
 
     // The delay in milliseconds before calling the ACC module. A higher value means slower updating of the motor values based on sensor values.
-    public static final int LAT_UPDATE_DELAY = 100; // milliseconds
+    public static final int LAT_UPDATE_DELAY = 50; // milliseconds
 
     // The offset in pixels from the center off the cameras perspective to the target that the moped aims to keep. A Positive value means that
     // the moped aims to keep the target to the right in the cameras perspective. There is no reason for this value to ever be changed from 0
