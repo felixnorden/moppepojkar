@@ -1,6 +1,8 @@
 package core.car_control;
 
 import arduino.ArduinoCommunicatorImpl;
+import com_io.CommunicationsMediator;
+import com_io.Direction;
 
 import static utils.Config.*;
 
@@ -14,12 +16,15 @@ import static utils.Config.*;
 public class CarControlImpl implements CarControl {
     private int currentThrottleValue;
     private int currentSteerValue;
+    private final CommunicationsMediator communicationsMediator;
 
     private ArduinoCommunicatorImpl arduinoCommunicatorImpl;
 
-    public CarControlImpl() {
+    public CarControlImpl(CommunicationsMediator communicationsMediator) {
         // TODO: 10/10/2017 Inject interface for ArduinoCommunicatorImpl
         arduinoCommunicatorImpl = ArduinoCommunicatorImpl.getInstance();
+
+        this.communicationsMediator = communicationsMediator;
 
         currentThrottleValue = 0;
         currentSteerValue = 0;
@@ -36,8 +41,9 @@ public class CarControlImpl implements CarControl {
                     lastWrittenSteerValue = currentSteerValue;
                 }
                 sendValuesToCar();
+                transmitValuesToSubscribers();
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(150);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -117,5 +123,16 @@ public class CarControlImpl implements CarControl {
         }
 
         return value;
+    }
+
+    /**
+     * Transmits the throttle and steering values
+     * to all subscribers in {@link CommunicationsMediator}
+     */
+    private void transmitValuesToSubscribers() {
+        String throttle = THROTTLE + REGEX + currentThrottleValue;
+        String steer = STEER + REGEX + currentSteerValue;
+        communicationsMediator.transmitData(throttle, Direction.EXTERNAL);
+        communicationsMediator.transmitData(steer, Direction.EXTERNAL);
     }
 }

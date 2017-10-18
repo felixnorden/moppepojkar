@@ -20,14 +20,13 @@ public class Main {
             e.printStackTrace();
         }
 
-
         Thread mainLoop = new Thread(() -> {
             while (true) {
                 sc.run();
 
                 // Allow for other processes
                 try {
-                    Thread.sleep(50);
+                    Thread.sleep(25);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

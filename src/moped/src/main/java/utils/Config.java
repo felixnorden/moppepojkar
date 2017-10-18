@@ -14,16 +14,26 @@ public class Config {
     public static final String OFF = "OFF";
     public static final String ON = "ON";
 
+    // Server Protocol Values
     public static final String DIST_SENSOR = "SENSOR_DISTANCE";
-
+    public static final String ACC_TARGET_VALUE = "ACC_TARGET_VALUE";
+    public static final String ACC_P_CONSTANT = "ACC_P_CONSTANT";
+    public static final String ACC_I_CONSTANT = "ACC_I_CONSTANT";
+    public static final String ACC_D_CONSTANT = "ACC_D_CONSTANT";
+    public static final String ACC_INTEGRAL_SUM = "ACC_INTEGRAL_SUM";
+    public static final String LAT_TARGET_VALUE = "LAT_TARGET_VALUE";
+    public static final String LAT_P_CONSTANT = "LAT_P_CONSTANT";
+    public static final String LAT_I_CONSTANT = "LAT_I_CONSTANT";
+    public static final String LAT_D_CONSTANT = "LAT_D_CONSTANT";
+    public static final String LAT_INTEGRAL_SUM = "LAT_INTEGRAL_SUM";
 
     public static final String CAM_TGT_OFFSET = "CAM_TGT_OFFSET";
     public static final String CAM_TGT_DIST = "CAM_TGT_DIST";
 
 
     // Throttle values
-    public static final int MAX_SPEED = 40;
-    public static final int MIN_SPEED = -40;
+    public static final int MAX_SPEED = 60;
+    public static final int MIN_SPEED = -100;
 
     // Steering values
     public static final int MAX_STEER = 100;
@@ -65,7 +75,7 @@ public class Config {
 
     // The proportional constant of the PID controller for the lateral navigation. A higher value means that the moped will return higher
     // values to the servo which will result in a greater turning speed.
-    public static final double LAT_P = 1;
+    public static final double LAT_P = 2.2;
 
     // The relation between the proportional constant and the integral constant of the PID controller for the lateral navigation. A higher
     // value means that the integral sum will grow faster resulting in the target position being reached more quickly but with a greater
