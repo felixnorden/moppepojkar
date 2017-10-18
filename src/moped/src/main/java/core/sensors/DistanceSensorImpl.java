@@ -72,7 +72,7 @@ public class DistanceSensorImpl implements DistanceSensor {
         filter = new LowPassFilter(FILTER_WEIGHT);
         arduinoInput = new StringBuilder();
         cvInput = new StringBuilder();
-        currentSensorValue = 0.3;
+        //currentSensorValue = 0.3;
 
         dataConsumers.add(sensorValue -> communicationsMediator.transmitData(DIST_SENSOR + REGEX + sensorValue.toString(), Direction.EXTERNAL));
 
