@@ -27,18 +27,16 @@ public class LateralController implements ActionStrategy, DataReceiver {
     }
 
     @Override
-    public double takeAction() {
+    public synchronized double takeAction() {
         long currentTime = System.currentTimeMillis();
         int deltaTime = (int) (currentTime - lastActionTime);
-        if (deltaTime > LAT_UPDATE_DELAY) {
-            lastAction = lateralPid.evaluation(currentCircleOffset, deltaTime * 1000);
-        }
+        lastAction = lateralPid.evaluation(currentCircleOffset, deltaTime * 1000);
 
         return lastAction;
     }
 
     @Override
-    public void dataReceived(String string) {
+    public synchronized void dataReceived(String string) {
         String[] formattedData = string.split(Config.REGEX);
         if (formattedData.length == 2 && formattedData[0].equals(Config.CAM_TGT_OFFSET)) {
             double circleOffset = Double.valueOf(formattedData[1]);
