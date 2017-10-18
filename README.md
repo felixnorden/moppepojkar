@@ -1,4 +1,4 @@
-# Moppepojkar
+# Moppepojkar [![Build Status](https://travis-ci.org/felixnorden/moppepojkar.svg?branch=development)](https://travis-ci.org/felixnorden/moppepojkar)
 The software project for maneuvering a MOPED
 
 ## Useful links
