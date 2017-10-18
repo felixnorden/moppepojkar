@@ -38,11 +38,17 @@ public class Main extends Activity implements CommunicationListener {
     private TextView velocityTextView;
     private TextView sensorTextView;
 
-    private TextView pidTargetTextView;
-    private TextView pidPTextView;
-    private TextView pidYTextView;
-    private TextView pidDTextView;
-    private TextView pidSumTextView;
+    private TextView AccPidTargetTextView;
+    private TextView AccPidPTextView;
+    private TextView AccPidITextView;
+    private TextView AccPidDTextView;
+    private TextView AccPidSumTextView;
+
+    private TextView latPidTargetTextView;
+    private TextView latPidPTextView;
+    private TextView latPidITextView;
+    private TextView latPidDTextView;
+    private TextView latPidSumTextView;
 
 
     private SeekBar speedBar;
@@ -202,11 +208,17 @@ public class Main extends Activity implements CommunicationListener {
 
         velocityTextView = (TextView) findViewById(R.id.velocityTextView);
         sensorTextView = (TextView) findViewById(R.id.sensorTextView);
-        pidTargetTextView = (TextView) findViewById(R.id.pidTargetTextView);
-        pidPTextView = (TextView) findViewById(R.id. pidPTextView);
-        pidYTextView = (TextView) findViewById(R.id.pidYTextView);
-        pidDTextView = (TextView) findViewById(R.id.pidDTextView);
-        pidSumTextView = (TextView) findViewById(R.id.pidSumTextView);
+        AccPidTargetTextView = (TextView) findViewById(R.id.pidTargetTextView);
+        AccPidPTextView = (TextView) findViewById(R.id. pidPTextView);
+        AccPidITextView = (TextView) findViewById(R.id.pidYTextView);
+        AccPidDTextView = (TextView) findViewById(R.id.pidDTextView);
+        AccPidSumTextView = (TextView) findViewById(R.id.pidSumTextView);
+
+        latPidTargetTextView = (TextView) findViewById(R.id.LatPidTargetTextView);
+        latPidPTextView = (TextView) findViewById(R.id. LatPidPTextView);
+        latPidITextView = (TextView) findViewById(R.id.LatPidITextView);
+        latPidDTextView = (TextView) findViewById(R.id.LatPidDTextView);
+        latPidSumTextView = (TextView) findViewById(R.id.LatPidSumTextView);
 
         manualButton = (Button) findViewById(R.id.manualButton);
         manualButton.setEnabled(false);
@@ -445,21 +457,37 @@ public class Main extends Activity implements CommunicationListener {
             case SENSOR_DISTANCE:
                 sensorTextView.setText(String.valueOf(i));
                 break;
-            case PID_TARGET_VALUE:
-                pidTargetTextView.setText(String.valueOf(i));
+            case ACC_TARGET_VALUE:
+                AccPidTargetTextView.setText(String.valueOf(i));
                 break;
-            case PID_P_CONSTANT:
-                pidPTextView.setText(String.valueOf(i));
+            case ACC_P_CONSTANT:
+                AccPidPTextView.setText(String.valueOf(i));
                 break;
-            case PID_Y_CONSTANT:
-                pidYTextView.setText(String.valueOf(i));
+            case ACC_I_CONSTANT:
+                AccPidITextView.setText(String.valueOf(i));
                 break;
-            case PID_D_CONSTANT:
-                pidDTextView.setText(String.valueOf(i));
+            case ACC_D_CONSTANT:
+                AccPidDTextView.setText(String.valueOf(i));
                 break;
-            case PID_INTEGRAL_SUM:
-                pidSumTextView.setText(String.valueOf(i));
+            case ACC_INTEGRAL_SUM:
+                AccPidSumTextView.setText(String.valueOf(i));
                 break;
+            case LAT_TARGET_VALUE:
+                latPidTargetTextView.setText(String.valueOf(i));
+                break;
+            case LAT_P_CONSTANT:
+                latPidPTextView.setText(String.valueOf(i));
+                break;
+            case LAT_I_CONSTANT:
+                latPidITextView.setText(String.valueOf(i));
+                break;
+            case LAT_D_CONSTANT:
+                latPidDTextView.setText(String.valueOf(i));
+                break;
+            case LAT_INTEGRAL_SUM:
+                latPidSumTextView.setText(String.valueOf(i));
+                break;
+
             case THROTTLE:
                 speedTextView.setText(String.valueOf(i));
                 break;

@@ -1,6 +1,10 @@
 package core.car_control;
 
 import arduino.ArduinoCommunicatorImpl;
+import com_io.CommunicationsMediator;
+import com_io.Direction;
+
+import static utils.Config.*;
 
 /**
  * Used for controlling a MOPED through a python script found on the device.
@@ -12,12 +16,15 @@ import arduino.ArduinoCommunicatorImpl;
 public class CarControlImpl implements CarControl {
     private int currentThrottleValue;
     private int currentSteerValue;
+    private final CommunicationsMediator communicationsMediator;
 
     private ArduinoCommunicatorImpl arduinoCommunicatorImpl;
 
-    public CarControlImpl() {
+    public CarControlImpl(CommunicationsMediator communicationsMediator) {
         // TODO: 10/10/2017 Inject interface for ArduinoCommunicatorImpl
         arduinoCommunicatorImpl = ArduinoCommunicatorImpl.getInstance();
+
+        this.communicationsMediator = communicationsMediator;
 
         currentThrottleValue = 0;
         currentSteerValue = 0;
@@ -34,8 +41,9 @@ public class CarControlImpl implements CarControl {
                     lastWrittenSteerValue = currentSteerValue;
                 }
                 sendValuesToCar();
+                transmitValuesToSubscribers();
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(150);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -58,14 +66,14 @@ public class CarControlImpl implements CarControl {
     @Override
     public synchronized void setThrottle(int value) {
         if (value != currentThrottleValue) {
-            currentThrottleValue = constrainInVCURange(value);
+            currentThrottleValue = constrainInRange(value, MIN_SPEED, MAX_SPEED);
         }
     }
 
     @Override
     public synchronized void setSteerValue(int value) {
         if (value != currentSteerValue) {
-            currentSteerValue = constrainInVCURange(value);
+            currentSteerValue = constrainInRange(value,MIN_STEER,MAX_STEER);
         }
     }
 
@@ -115,5 +123,16 @@ public class CarControlImpl implements CarControl {
         }
 
         return value;
+    }
+
+    /**
+     * Transmits the throttle and steering values
+     * to all subscribers in {@link CommunicationsMediator}
+     */
+    private void transmitValuesToSubscribers() {
+        String throttle = THROTTLE + REGEX + currentThrottleValue;
+        String steer = STEER + REGEX + currentSteerValue;
+        communicationsMediator.transmitData(throttle, Direction.EXTERNAL);
+        communicationsMediator.transmitData(steer, Direction.EXTERNAL);
     }
 }

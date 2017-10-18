@@ -14,13 +14,32 @@ public class Config {
     public static final String OFF = "OFF";
     public static final String ON = "ON";
 
-    public static final String DIST_SENSOR = "DIST_SENSOR";
-
+    // Server Protocol Values
+    public static final String DIST_SENSOR = "SENSOR_DISTANCE";
+    public static final String ACC_TARGET_VALUE = "ACC_TARGET_VALUE";
+    public static final String ACC_P_CONSTANT = "ACC_P_CONSTANT";
+    public static final String ACC_I_CONSTANT = "ACC_I_CONSTANT";
+    public static final String ACC_D_CONSTANT = "ACC_D_CONSTANT";
+    public static final String ACC_INTEGRAL_SUM = "ACC_INTEGRAL_SUM";
+    public static final String LAT_TARGET_VALUE = "LAT_TARGET_VALUE";
+    public static final String LAT_P_CONSTANT = "LAT_P_CONSTANT";
+    public static final String LAT_I_CONSTANT = "LAT_I_CONSTANT";
+    public static final String LAT_D_CONSTANT = "LAT_D_CONSTANT";
+    public static final String LAT_INTEGRAL_SUM = "LAT_INTEGRAL_SUM";
 
     public static final String CAM_TGT_OFFSET = "CAM_TGT_OFFSET";
     public static final String CAM_TGT_DIST = "CAM_TGT_DIST";
 
-    public static final int MIN_INTERMISSION_TIME = 250;
+    // Throttle values
+    public static final int MAX_SPEED = 60;
+    public static final int MIN_SPEED = -100;
+
+    // Steering values
+    public static final int MAX_STEER = 100;
+    public static final int MIN_STEER = -100;
+
+    // Safety measure values for PID resets
+    public static final int MAX_INTERMISSION_TIME = 1000;
 
     // Values used by the PIDController for the ACC
 
@@ -46,7 +65,7 @@ public class Config {
     // Values used by the PIDController for the lateral navigation
 
     // The delay in milliseconds before calling the ACC module. A higher value means slower updating of the motor values based on sensor values.
-    public static final int LAT_UPDATE_DELAY = 100; // milliseconds
+    public static final int LAT_UPDATE_DELAY = 50; // milliseconds
 
     // The offset in pixels from the center off the cameras perspective to the target that the moped aims to keep. A Positive value means that
     // the moped aims to keep the target to the right in the cameras perspective. There is no reason for this value to ever be changed from 0
@@ -55,7 +74,7 @@ public class Config {
 
     // The proportional constant of the PID controller for the lateral navigation. A higher value means that the moped will return higher
     // values to the servo which will result in a greater turning speed.
-    public static final double LAT_P = 1;
+    public static final double LAT_P = 2.2;
 
     // The relation between the proportional constant and the integral constant of the PID controller for the lateral navigation. A higher
     // value means that the integral sum will grow faster resulting in the target position being reached more quickly but with a greater
