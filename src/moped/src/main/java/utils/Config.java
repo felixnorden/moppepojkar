@@ -22,8 +22,8 @@ public class Config {
 
     public static final int MAX_INTERMISSION_TIME = 1000;
 
-    public static final int MAX_SPEED = 40;
-    public static final int MIN_SPEED = -40;
+    public static final int MAX_SPEED = 60;
+    public static final int MIN_SPEED = -100;
 
     public static final int MAX_STEER = 100;
     public static final int MIN_STEER = -100;
