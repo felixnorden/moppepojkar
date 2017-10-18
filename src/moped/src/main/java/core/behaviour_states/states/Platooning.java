@@ -4,7 +4,7 @@ import core.action_strategies.*;
 import core.car_control.CarControl;
 import core.sensors.SensorRepository;
 
-import static utils.Config.MIN_INTERMISSION_TIME;
+import static utils.Config.MAX_INTERMISSION_TIME;
 
 /**
  * State for handling platooningHandler,
@@ -31,7 +31,7 @@ public class Platooning implements BehaviourState {
     @Override
     public void run() {
         // TODO: 12/10/2017 Add reset methods to actions strategies
-        if (System.currentTimeMillis() - lastRunTime > MIN_INTERMISSION_TIME) {
+        if (System.currentTimeMillis() - lastRunTime > MAX_INTERMISSION_TIME) {
             // WARNING!!! Memory leak is created when this is run
             ActionStrategyFactory actionFactory = ActionStrategyFactoryImpl.getInstance();
 
