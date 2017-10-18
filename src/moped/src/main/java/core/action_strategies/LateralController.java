@@ -31,6 +31,7 @@ public class LateralController implements ActionStrategy, DataReceiver {
         long currentTime = System.currentTimeMillis();
         int deltaTime = (int) (currentTime - lastActionTime);
         lastAction = lateralPid.evaluation(currentCircleOffset, deltaTime * 1000);
+        lastActionTime = currentTime;
 
         return lastAction;
     }
