@@ -63,7 +63,7 @@ public class DistanceSensorImpl implements DistanceSensor {
 
     DistanceSensorImpl(CommunicationsMediator communicationsMediator, ArduinoCommunicator arduinoCommunicator) {
         dataConsumers = new ArrayList<>();
-        filter = new QuickChangeFilter(0.15, 20);
+        filter = new QuickChangeFilter(0.25, 4);
         arduinoInput = new StringBuilder();
         cvInput = new StringBuilder();
         currentSensorValue = 0.3;
