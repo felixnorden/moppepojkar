@@ -19,11 +19,11 @@ import static utils.Config.REGEX;
  */
 public class DistanceSensorImpl implements DistanceSensor {
 
-    private static final double FILTER_WEIGHT = 0.7;
-    private static final double MAX_VALUE_OFFSET = 0.25;
+    private static final int DEQUE_SIZE = 10;
+    private static final double MAX_VALUE_OFFSET = 0.15;
     private final ArduinoCommunicator arduinoCommunicator;
 
-    private LowPassFilter filter;
+    private Filter filter;
     private double currentSensorValue;
     private StringBuilder arduinoInput;
     private StringBuilder cvInput;
@@ -40,10 +40,12 @@ public class DistanceSensorImpl implements DistanceSensor {
         return getDistance();
     }
 
+    @Override
     public void subscribe(Consumer<Double> dataConsumer) {
         dataConsumers.add(dataConsumer);
     }
 
+    @Override
     public void unsubscribe(Consumer<Double> dataConsumer) {
         dataConsumers.remove(dataConsumer);
     }
@@ -69,7 +71,7 @@ public class DistanceSensorImpl implements DistanceSensor {
 
     DistanceSensorImpl(CommunicationsMediator communicationsMediator, ArduinoCommunicator arduinoCommunicator) {
         dataConsumers = new ArrayList<>();
-        filter = new LowPassFilter(FILTER_WEIGHT);
+        filter = new QuickChangeFilter(MAX_VALUE_OFFSET, DEQUE_SIZE);
         arduinoInput = new StringBuilder();
         cvInput = new StringBuilder();
         currentSensorValue = 0.3;

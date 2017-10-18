@@ -5,7 +5,7 @@ import static java.lang.Double.*;
 /**
  * Filters raw data values to dampen value spikes and smooth out transitions between values.
  */
-public class LowPassFilter {
+public class LowPassFilter implements Filter {
     private double currentValue;
     private final double weight;
 
