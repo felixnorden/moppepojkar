@@ -30,7 +30,6 @@ public class Config {
     public static final String CAM_TGT_OFFSET = "CAM_TGT_OFFSET";
     public static final String CAM_TGT_DIST = "CAM_TGT_DIST";
 
-
     // Throttle values
     public static final int MAX_SPEED = 60;
     public static final int MIN_SPEED = -100;
