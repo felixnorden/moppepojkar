@@ -1,5 +1,6 @@
 package core.behaviour_states.states;
 
+import com_io.CommunicatorFactory;
 import core.car_control.CarControl;
 import core.car_control.CarControlImpl;
 
@@ -12,7 +13,7 @@ import java.util.function.Consumer;
 public class BehaviourStateFactoryImpl implements BehaviourStateFactory{
 
     private static final BehaviourStateFactory INSTANCE = new BehaviourStateFactoryImpl();
-    private static final CarControl carController = new CarControlImpl();
+    private static final CarControl carController = new CarControlImpl(CommunicatorFactory.getComInstance());
 
     /**
      *
