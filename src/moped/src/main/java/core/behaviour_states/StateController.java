@@ -92,6 +92,7 @@ public class StateController implements Runnable, DataReceiver {
             informationData.add(ACC_P_CONSTANT + SEPARATOR + ACC_P);
             informationData.add(ACC_I_CONSTANT + SEPARATOR + ACC_I);
             informationData.add(ACC_D_CONSTANT + SEPARATOR + ACC_D);
+            informationData.add(LAT_TARGET_VALUE + SEPARATOR + LAT_TGT_POS);
             informationData.add(LAT_P_CONSTANT + SEPARATOR + LAT_P);
             informationData.add(LAT_I_CONSTANT + SEPARATOR + LAT_I);
             informationData.add(LAT_D_CONSTANT + SEPARATOR + LAT_D);

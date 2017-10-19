@@ -1,6 +1,7 @@
 import com.*;
 import com_io.CommunicationsMediator;
 import com_io.DataReceiver;
+import utils.StrToDoubleConverter;
 
 import static com_io.Direction.EXTERNAL;
 import static com_io.Direction.INTERNAL;
@@ -78,6 +79,12 @@ public class RemoteMediator implements DataReceiver, CommunicationListener {
                     System.out.println(iae.getMessage());
                 }
 
+            } else if (data[0].equals(DIST_SENSOR)) {
+                try {
+                    double value = new StrToDoubleConverter().convertStringToDouble(data[1]);
+                } catch (IllegalArgumentException | NullPointerException iae) {
+                    System.out.println(iae.getMessage());
+                }
             } else {
                 try {
                     MopedDataType mopedDataType = MopedDataType.valueOf(data[0]);
@@ -90,3 +97,4 @@ public class RemoteMediator implements DataReceiver, CommunicationListener {
         }
     }
 }
+
