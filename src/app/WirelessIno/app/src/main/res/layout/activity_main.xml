@@ -290,17 +290,17 @@ android:layout_height="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/SteeringBar"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
         android:text="ACC Target:"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginLeft="0dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.0" />
 
     <TextView
         android:id="@+id/LatPidTargetLabel"
@@ -445,42 +445,6 @@ android:layout_height="match_parent"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/LatPidSumLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/pidDLabel"
-        android:layout_below="@+id/pidDLabel"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="-1dp"
-        android:text="LAT IntSum:"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.415"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pidDLabel"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/LatPidSumTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/pidDTextView"
-        android:layout_alignTop="@+id/pidSumLabel"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="23dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="-1dp"
-        android:text="N/A"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintLeft_toRightOf="@+id/pidSumLabel"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pidDTextView"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
         android:id="@+id/pidTargetTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -605,42 +569,6 @@ android:layout_height="match_parent"
         app:layout_constraintHorizontal_bias="0.0" />
 
     <TextView
-        android:id="@+id/pidSumLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/pidDLabel"
-        android:layout_below="@+id/pidDLabel"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="-1dp"
-        android:text="ACC IntSum:"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pidDLabel"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/pidSumTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="N/A"
-        android:layout_alignStart="@+id/pidDTextView"
-        android:layout_alignTop="@+id/pidSumLabel"
-        android:layout_marginTop="-1dp"
-        app:layout_constraintTop_toBottomOf="@+id/pidDTextView"
-        app:layout_constraintLeft_toRightOf="@+id/pidSumLabel"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintVertical_bias="0.0"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.0" />
-
-    <TextView
         android:id="@+id/ThrottleLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -676,6 +604,25 @@ android:layout_height="match_parent"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintHorizontal_bias="0.716" />
+
+    <Button
+        android:id="@+id/debugToggle"
+        style="@android:style/Widget.Material.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:background="#4d4d4d"
+        android:onClick="toggleDebug"
+        android:text="PID Values"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
 
 </android.support.constraint.ConstraintLayout>
