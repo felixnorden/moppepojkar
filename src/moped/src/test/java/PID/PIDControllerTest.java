@@ -14,48 +14,28 @@ class PIDControllerTest{
     //Checks if the value of error steadily sinks when approaching a stationary target using the PIDController
     //Additionally the overshoot can't exceed 2
     @Test
-    @Disabled
     void evaluation() {
         double targetValue = 50;
-        PIDController pid = new PIDController(targetValue, 0.3, 1/10, 2);
+        PIDController pid = new PIDController(targetValue, 0.3, 1f/1000f, 2);
         double currentValue = 0;
-        double currentSpeedOfChange = 1;
-        double lastError = 51;
+        double currentSpeedOfChange = 0;
+        double lastError = 50;
 
-        for (int i=0; i<100; i++){
+        for (int i=0; i<150; i++){
             double throttle = pid.evaluation(currentValue,1);
-            currentSpeedOfChange = currentSpeedOfChange + throttle - currentSpeedOfChange * 0.1;
+            currentSpeedOfChange =  -throttle - currentSpeedOfChange * 0.1;
             currentValue+= currentSpeedOfChange;
-            double error = currentValue-targetValue;
-            assertTrue(Math.abs(error) < lastError || Math.abs(error) < 2);
+            double error = targetValue-currentValue;
+            assertTrue(Math.abs(error) <= lastError || Math.abs(error) < 2);
             lastError = Math.abs(error);
 
         }
+        assertTrue(lastError<=2);
 
     }
     //Checks if the value of error steadily sinks when approaching a moving target using the PIDController
     //Additionally the overshoot can't exceed 2
-    @Test
-    @Disabled
-    void evaluation1() {
-        double targetValue = 50;
-        PIDController pid = new PIDController(targetValue, 0.5, 1.0/10, 1.5);
-        double currentValue = 0;
-        double currentSpeedOfChange = 1;
-        double lastError = 51;
-        double targetSpeedOfChange = 10;
 
-        for (int i=0; i<100; i++){
-            double throttle = pid.evaluation(currentValue,1);
-            currentSpeedOfChange = currentSpeedOfChange + throttle - currentSpeedOfChange * 0.1;
-            currentValue+= currentSpeedOfChange - targetSpeedOfChange;
-            double error = currentValue-targetValue;
-            assertTrue(Math.abs(error) < lastError || Math.abs(error) < 2 || i < 10);
-            lastError = Math.abs(error);
-
-        }
-
-    }
     //Checks if evaluation returns 0 if deltaTime is 0.
     @Test
     void evaluation2() {
@@ -70,8 +50,6 @@ class PIDControllerTest{
             currentSpeedOfChange = currentSpeedOfChange + throttle - currentSpeedOfChange * 0.1;
             currentValue+= currentSpeedOfChange;
             double error = currentValue-targetValue;
-            System.out.println("Error 0: " + error);
-            System.out.println("throttle 0: " + throttle);
             assertTrue(Math.abs(error) == lastError);
             assertTrue(throttle==0);
             lastError = Math.abs(error);
