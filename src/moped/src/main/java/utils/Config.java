@@ -30,6 +30,13 @@ public class Config {
     public static final String CAM_TGT_OFFSET = "CAM_TGT_OFFSET";
     public static final String CAM_TGT_DIST = "CAM_TGT_DIST";
 
+    // Quick Change Filter Values
+    public static final int QC_DEQUE_SIZE = 4;
+    public static final double QC_MAX_VALUE_OFFSET = 0.25;
+
+    // Low Pass Filter Values
+    public static final double LP_WEIGHT = 0.7;
+
     // Throttle values
     public static final int MAX_SPEED = 60;
     public static final int MIN_SPEED = -100;

@@ -2,19 +2,24 @@ package core.sensors;
 
 import arduino.ArduinoCommunicator;
 import com_io.CommunicationsMediator;
+import com_io.Direction;
+import utils.Config;
 import utils.StrToDoubleConverter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
+import static utils.Config.CAM_TGT_DIST;
+import static utils.Config.DIST_SENSOR;
+import static utils.Config.REGEX;
+
 /**
  * Used for reading from the on-board distance sensor.
  */
 public class DistanceSensorImpl implements DistanceSensor {
 
-    private static final int DEQUE_SIZE = 4;
-    private static final double MAX_VALUE_OFFSET = 0.25;
+
     private final ArduinoCommunicator arduinoCommunicator;
 
 
@@ -64,23 +69,24 @@ public class DistanceSensorImpl implements DistanceSensor {
         }
     }
 
-    DistanceSensorImpl(CommunicationsMediator communicationsMediator, ArduinoCommunicator arduinoCommunicator) {
+    DistanceSensorImpl(CommunicationsMediator communicationsMediator,
+                       ArduinoCommunicator arduinoCommunicator,
+                       Filter filter) {
         dataConsumers = new ArrayList<>();
-        filter = new QuickChangeFilter(MAX_VALUE_OFFSET, DEQUE_SIZE);
+        this.filter = filter;
 
         arduinoInput = new StringBuilder();
         cvInput = new StringBuilder();
         currentSensorValue = 0.3;
 
-        //dataConsumers.add(sensorValue -> communicationsMediator.transmitData(DIST_SENSOR + REGEX + sensorValue.toString(), Direction.EXTERNAL));
+        dataConsumers.add(sensorValue -> communicationsMediator.transmitData(DIST_SENSOR + REGEX + sensorValue.toString(), Direction.EXTERNAL));
 
-        /*communicationsMediator.subscribe(Direction.INTERNAL, data -> {
-            String[] formattedData = data.split(Config.REGEX);
+        communicationsMediator.subscribe(Direction.INTERNAL, data -> {
+            String[] formattedData = data.split(REGEX);
             if (formattedData.length == 2 && formattedData[0].equals(CAM_TGT_DIST)) {
                 receivedString(formattedData[1], cvInput);
             }
         });
-*/
         this.arduinoCommunicator = arduinoCommunicator;
         this.arduinoCommunicator.addArduinoListener(string -> receivedString(string, arduinoInput));
     }

@@ -15,6 +15,7 @@ import java.util.function.Consumer;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 import static utils.Config.CAM_TGT_DIST;
+import static utils.Config.LP_WEIGHT;
 
 class DistanceSensorImplTest {
 
@@ -90,7 +91,7 @@ class DistanceSensorImplTest {
     void setUp() {
         comMock = mock(CommunicationsMediator.class);
         ardMock = mock(ArduinoCommunicator.class);
-        sensorInstance = new DistanceSensorImpl(comMock, ardMock);
+        sensorInstance = new DistanceSensorImpl(comMock, ardMock, new LowPassFilter(LP_WEIGHT));
     }
 
     @AfterEach
@@ -133,7 +134,7 @@ class DistanceSensorImplTest {
             }
         };
 
-        DistanceSensor ds = new DistanceSensorImpl(cm, ardMock);
+        DistanceSensor ds = new DistanceSensorImpl(cm, ardMock, new LowPassFilter(LP_WEIGHT));
         cm.transmitData(CAM_TGT_DIST + ",1.0\n", Direction.INTERNAL);
         /**
          * The lowPassFilter will return a value roughly equal to 70% of the value due to the weight(that is set to 0.7)
