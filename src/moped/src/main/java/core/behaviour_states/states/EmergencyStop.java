@@ -1,16 +1,11 @@
 package core.behaviour_states.states;
 
-import com_io.DataReceiver;
 import core.car_control.CarControl;
 import core.sensors.SensorRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
-
-import static utils.Config.CONNECTION;
-import static utils.Config.OFF;
-import static utils.Config.REGEX;
 
 public class EmergencyStop implements BehaviourState {
     private static final int EMERGENCY_BRAKE = -100;

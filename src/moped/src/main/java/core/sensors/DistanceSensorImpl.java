@@ -9,9 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-import static utils.Config.CAM_TGT_DIST;
-import static utils.Config.DIST_SENSOR;
-import static utils.Config.REGEX;
+import static utils.Config.*;
 
 /**
  * This class is used for reading from the different sensor data that

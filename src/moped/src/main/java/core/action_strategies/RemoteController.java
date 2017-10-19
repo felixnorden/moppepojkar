@@ -4,7 +4,8 @@ import com_io.CommunicationsMediator;
 import com_io.DataReceiver;
 import com_io.Direction;
 
-import static core.action_strategies.RemoteController.Axis.*;
+import static core.action_strategies.RemoteController.Axis.X;
+import static core.action_strategies.RemoteController.Axis.Y;
 
 /**
  * An {@link ActionStrategy} that handles the incoming navigational
