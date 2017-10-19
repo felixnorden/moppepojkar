@@ -5,6 +5,7 @@ import com_io.DataReceiver;
 import com_io.Direction;
 
 import static core.action_strategies.RemoteController.Axis.*;
+import static utils.Config.REGEX;
 import static utils.Config.STEER;
 import static utils.Config.THROTTLE;
 
@@ -35,7 +36,7 @@ public class RemoteController implements ActionStrategy, DataReceiver {
 
     @Override
     public void dataReceived(String unformattedData) {
-        String[] data = unformattedData.split(",");
+        String[] data = unformattedData.split(REGEX);
 
         if (data[0].equals(THROTTLE)) {
             if (axis == Y) {
