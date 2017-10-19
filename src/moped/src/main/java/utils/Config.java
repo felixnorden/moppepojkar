@@ -8,7 +8,7 @@ public class Config {
     public static final String STATE = "STATE";
 
     public static final String THROTTLE = "THROTTLE";
-    public static final String STEER = "STEER";
+    public static final String STEER = "STEERING";
 
     public static final String CONNECTION = "CONNECTION";
     public static final String OFF = "OFF";
