@@ -1,4 +1,4 @@
-package pid;
+package core.pid;
 
 import org.junit.jupiter.api.Test;
 

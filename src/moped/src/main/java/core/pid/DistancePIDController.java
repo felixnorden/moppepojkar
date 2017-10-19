@@ -1,4 +1,4 @@
-package pid;
+package core.pid;
 
 
 public class DistancePIDController extends PIDController {

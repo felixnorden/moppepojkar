@@ -4,7 +4,7 @@ public class Config {
 
     public static final String C_READER = "CircleReader.py";
 
-    public static final String REGEX = ",";
+    public static final String SEPARATOR = ",";
     public static final String STATE = "STATE";
 
     public static final String THROTTLE = "THROTTLE";

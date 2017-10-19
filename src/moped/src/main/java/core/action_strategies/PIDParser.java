@@ -2,7 +2,7 @@ package core.action_strategies;
 
 import core.sensors.DistanceSensor;
 import core.sensors.SensorRepository;
-import pid.DistancePIDController;
+import core.pid.DistancePIDController;
 
 import static utils.Config.*;
 
