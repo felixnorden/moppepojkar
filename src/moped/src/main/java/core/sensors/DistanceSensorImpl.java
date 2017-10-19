@@ -3,7 +3,6 @@ package core.sensors;
 import arduino.ArduinoCommunicator;
 import com_io.CommunicationsMediator;
 import com_io.Direction;
-import utils.Config;
 import utils.StrToDoubleConverter;
 
 import java.util.ArrayList;
@@ -26,7 +25,7 @@ public class DistanceSensorImpl implements DistanceSensor {
     private Filter filter;
     private double currentSensorValue;
     private StringBuilder arduinoInput;
-    private StringBuilder cvInput;
+    private StringBuilder crInput;
 
     private List<Consumer<Double>> dataConsumers;
 
@@ -76,7 +75,7 @@ public class DistanceSensorImpl implements DistanceSensor {
         this.filter = filter;
 
         arduinoInput = new StringBuilder();
-        cvInput = new StringBuilder();
+        crInput = new StringBuilder();
         currentSensorValue = 0.3;
 
         dataConsumers.add(sensorValue -> communicationsMediator.transmitData(DIST_SENSOR + REGEX + sensorValue.toString(), Direction.EXTERNAL));
@@ -84,7 +83,7 @@ public class DistanceSensorImpl implements DistanceSensor {
         communicationsMediator.subscribe(Direction.INTERNAL, data -> {
             String[] formattedData = data.split(REGEX);
             if (formattedData.length == 2 && formattedData[0].equals(CAM_TGT_DIST)) {
-                receivedString(formattedData[1], cvInput);
+                receivedString(formattedData[1], crInput);
             }
         });
         this.arduinoCommunicator = arduinoCommunicator;

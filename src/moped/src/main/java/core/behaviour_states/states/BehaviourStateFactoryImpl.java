@@ -40,14 +40,14 @@ public class BehaviourStateFactoryImpl implements BehaviourStateFactory{
 
     @Override
     public BehaviourState createSafeModeBehaviour() {
-        return new SafeModeBehaviour(carController);
+        return new SafeMode(carController);
     }
 
     @Override
     public BehaviourState createEmergencyStop(Consumer<BehaviourState> stateConsumer) {
-        EmergencyStopBehaviour emergencyStopBehaviour = new EmergencyStopBehaviour(carController);
-        emergencyStopBehaviour.setOnCollision(stateConsumer);
-        return emergencyStopBehaviour;
+        EmergencyStop emergencyStop = new EmergencyStop(carController);
+        emergencyStop.setOnCollision(stateConsumer);
+        return emergencyStop;
     }
 
 

@@ -69,6 +69,9 @@ public class StateController implements Runnable, DataReceiver {
             if (data[1].equals(OFF)) {
                 currentState = safeMode;
             }
+            else if (data[1].equals(ON)) {
+                currentState = manual;
+            }
         }
     }
 
