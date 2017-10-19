@@ -8,7 +8,8 @@ import static utils.Config.MAX_INTERMISSION_TIME;
 
 /**
  * Adaptive Cruise Control {@link BehaviourState} which has an
- * automated Y-axis control and {@link }
+ * automated Y-axis control and {@link RemoteController} for the X-axis
+ * control
  */
 class AdaptiveCruiseControl implements BehaviourState {
     private BidirectionalHandler currentHandler;
@@ -44,7 +45,6 @@ class AdaptiveCruiseControl implements BehaviourState {
         if (System.currentTimeMillis() - lastRunTime > MAX_INTERMISSION_TIME) {
             ActionStrategyFactory actionFactory = ActionStrategyFactoryImpl.getInstance();
 
-            // TODO: 2017-10-17 Ask arch if this is really necessary
             ActionStrategy pidController = actionFactory.createPIDController();
             ActionStrategy steerController = actionFactory.createSteerController();
             this.accHandler = new BidirectionalHandlerImpl(pidController, steerController);
