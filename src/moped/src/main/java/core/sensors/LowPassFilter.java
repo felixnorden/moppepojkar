@@ -1,7 +1,5 @@
 package core.sensors;
 
-import static java.lang.Double.*;
-
 /**
  * Filters raw data values to dampen value spikes and smooth out transitions between values.
  */
