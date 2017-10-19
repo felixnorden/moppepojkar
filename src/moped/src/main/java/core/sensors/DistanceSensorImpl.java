@@ -11,6 +11,7 @@ import java.util.function.Consumer;
 
 import static utils.Config.*;
 
+
 /**
  * This class is used for reading from the different sensor data that
  * is recieved from outside sources.
@@ -90,10 +91,10 @@ public class DistanceSensorImpl implements DistanceSensor {
         crInput = new StringBuilder();
         currentSensorValue = 0.3;
 
-        dataConsumers.add(sensorValue -> communicationsMediator.transmitData(DIST_SENSOR + REGEX + sensorValue.toString(), Direction.EXTERNAL));
+        dataConsumers.add(sensorValue -> communicationsMediator.transmitData(DIST_SENSOR + SEPARATOR + sensorValue.toString(), Direction.EXTERNAL));
 
         communicationsMediator.subscribe(Direction.INTERNAL, data -> {
-            String[] formattedData = data.split(REGEX);
+            String[] formattedData = data.split(SEPARATOR);
             if (formattedData.length == 2 && formattedData[0].equals(CAM_TGT_DIST)) {
                 receivedString(formattedData[1], crInput);
             }

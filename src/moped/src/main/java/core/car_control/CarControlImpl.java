@@ -130,8 +130,8 @@ public class CarControlImpl implements CarControl {
      * to all subscribers in {@link CommunicationsMediator}
      */
     private void transmitValuesToSubscribers() {
-        String throttle = THROTTLE + REGEX + currentThrottleValue;
-        String steer = STEER + REGEX + currentSteerValue;
+        String throttle = THROTTLE + SEPARATOR + currentThrottleValue;
+        String steer = STEER + SEPARATOR + currentSteerValue;
         communicationsMediator.transmitData(throttle, Direction.EXTERNAL);
         communicationsMediator.transmitData(steer, Direction.EXTERNAL);
     }

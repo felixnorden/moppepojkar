@@ -49,7 +49,7 @@ public class StateController implements Runnable, DataReceiver {
 
     @Override
     public synchronized void dataReceived(String unformattedData) {
-        String[] data = unformattedData.split(REGEX);
+        String[] data = unformattedData.split(SEPARATOR);
 
         if (data[0].equals(STATE)) {
             switch (data[1]) {
@@ -83,18 +83,18 @@ public class StateController implements Runnable, DataReceiver {
         List<String> informationData = new ArrayList<>();
 
         if (currentState.equals("ACC")) {
-            informationData.add(ACC_TARGET_VALUE + REGEX + ACC_TGT_DIST);
-            informationData.add(ACC_P_CONSTANT + REGEX + ACC_P);
-            informationData.add(ACC_I_CONSTANT + REGEX + ACC_I);
-            informationData.add(ACC_D_CONSTANT + REGEX + ACC_D);
+            informationData.add(ACC_TARGET_VALUE + SEPARATOR + ACC_TGT_DIST);
+            informationData.add(ACC_P_CONSTANT + SEPARATOR + ACC_P);
+            informationData.add(ACC_I_CONSTANT + SEPARATOR + ACC_I);
+            informationData.add(ACC_D_CONSTANT + SEPARATOR + ACC_D);
         } else if(currentState.equals("PLATOONING")) {
-            informationData.add(ACC_TARGET_VALUE + REGEX + ACC_TGT_DIST);
-            informationData.add(ACC_P_CONSTANT + REGEX + ACC_P);
-            informationData.add(ACC_I_CONSTANT + REGEX + ACC_I);
-            informationData.add(ACC_D_CONSTANT + REGEX + ACC_D);
-            informationData.add(LAT_P_CONSTANT + REGEX + LAT_P);
-            informationData.add(LAT_I_CONSTANT + REGEX + LAT_I);
-            informationData.add(LAT_D_CONSTANT + REGEX + LAT_D);
+            informationData.add(ACC_TARGET_VALUE + SEPARATOR + ACC_TGT_DIST);
+            informationData.add(ACC_P_CONSTANT + SEPARATOR + ACC_P);
+            informationData.add(ACC_I_CONSTANT + SEPARATOR + ACC_I);
+            informationData.add(ACC_D_CONSTANT + SEPARATOR + ACC_D);
+            informationData.add(LAT_P_CONSTANT + SEPARATOR + LAT_P);
+            informationData.add(LAT_I_CONSTANT + SEPARATOR + LAT_I);
+            informationData.add(LAT_D_CONSTANT + SEPARATOR + LAT_D);
         }
 
         CommunicationsMediator communicationsMediator = CommunicatorFactory.getComInstance();

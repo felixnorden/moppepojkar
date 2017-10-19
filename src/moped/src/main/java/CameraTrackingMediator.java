@@ -23,13 +23,13 @@ class CameraTrackingMediator {
             if (c != 10 && c != 13) {
                 stringBuilder.append(c);
             } else {
-                String[] formattedData = stringBuilder.toString().split(Config.REGEX);
+                String[] formattedData = stringBuilder.toString().split(Config.SEPARATOR);
                 if (formattedData.length == 2) {
                     String targetOffset  = formattedData[0];
                     String targetDistance  = formattedData[1];
 
-                    communicationsMediator.transmitData(Config.CAM_TGT_OFFSET + Config.REGEX + targetOffset, Direction.INTERNAL);
-                    communicationsMediator.transmitData(Config.CAM_TGT_DIST + Config.REGEX + targetDistance, Direction.INTERNAL);
+                    communicationsMediator.transmitData(Config.CAM_TGT_OFFSET + Config.SEPARATOR + targetOffset, Direction.INTERNAL);
+                    communicationsMediator.transmitData(Config.CAM_TGT_DIST + Config.SEPARATOR + targetDistance, Direction.INTERNAL);
                 }
                 stringBuilder.delete(0, stringBuilder.length());
             }

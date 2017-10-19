@@ -23,18 +23,18 @@ public class RemoteMediator implements DataReceiver, CommunicationListener {
     @Override
     public void onConnection() {
         System.out.println("Phone connected!");
-        communicationsMediator.transmitData(CONNECTION + REGEX + ON, INTERNAL);
+        communicationsMediator.transmitData(CONNECTION + SEPARATOR + ON, INTERNAL);
     }
 
     @Override
     public void onStateChange(MopedState mopedState) {
-        communicationsMediator.transmitData(STATE + REGEX + mopedState.toString(), INTERNAL);
+        communicationsMediator.transmitData(STATE + SEPARATOR + mopedState.toString(), INTERNAL);
     }
 
     @Override
     public void onDisconnection() {
         System.out.println("Connection lost!");
-        communicationsMediator.transmitData(CONNECTION + REGEX + OFF, INTERNAL);
+        communicationsMediator.transmitData(CONNECTION + SEPARATOR + OFF, INTERNAL);
     }
 
     @Override
@@ -43,10 +43,10 @@ public class RemoteMediator implements DataReceiver, CommunicationListener {
         //and not the other way around
         switch (mopedDataType) {
             case THROTTLE:
-                communicationsMediator.transmitData(THROTTLE + REGEX + i, INTERNAL);
+                communicationsMediator.transmitData(THROTTLE + SEPARATOR + i, INTERNAL);
                 break;
             case STEERING:
-                communicationsMediator.transmitData(STEER + REGEX + i, INTERNAL);
+                communicationsMediator.transmitData(STEER + SEPARATOR + i, INTERNAL);
                 break;
             default:
         }
@@ -67,7 +67,7 @@ public class RemoteMediator implements DataReceiver, CommunicationListener {
 
     @Override
     public void dataReceived(String unformattedDataString) {
-        String[] data = unformattedDataString.split(REGEX);
+        String[] data = unformattedDataString.split(SEPARATOR);
 
         if (data.length == 2) {
             if (data[0].equals(STATE)) {
