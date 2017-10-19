@@ -38,21 +38,36 @@ public class Main extends Activity implements CommunicationListener {
     private TextView velocityTextView;
     private TextView sensorTextView;
 
+    private TextView velocityLabel;
+    private TextView sensorLabel;
+
     private TextView AccPidTargetTextView;
     private TextView AccPidPTextView;
     private TextView AccPidITextView;
     private TextView AccPidDTextView;
-    private TextView AccPidSumTextView;
+
+    private TextView AccPidTargetLabel;
+    private TextView AccPidPLabel;
+    private TextView AccPidILabel;
+    private TextView AccPidDLabel;
+
 
     private TextView latPidTargetTextView;
     private TextView latPidPTextView;
     private TextView latPidITextView;
     private TextView latPidDTextView;
-    private TextView latPidSumTextView;
+
+    private TextView latPidTargetLabel;
+    private TextView latPidPLabel;
+    private TextView latPidILabel;
+    private TextView latPidDLabel;
+
 
 
     private SeekBar speedBar;
     private SeekBar steeringBar;
+
+    private Button debugToggle;
     private Button manualButton;
     private Button accButton;
     private Button platooningButton;
@@ -63,6 +78,7 @@ public class Main extends Activity implements CommunicationListener {
 
 
     private boolean isConnected = false;
+    private boolean debug = false;
 
     private Communicator communicator;
 
@@ -212,21 +228,61 @@ public class Main extends Activity implements CommunicationListener {
         AccPidPTextView = (TextView) findViewById(R.id. pidPTextView);
         AccPidITextView = (TextView) findViewById(R.id.pidYTextView);
         AccPidDTextView = (TextView) findViewById(R.id.pidDTextView);
-        AccPidSumTextView = (TextView) findViewById(R.id.pidSumTextView);
+
 
         latPidTargetTextView = (TextView) findViewById(R.id.LatPidTargetTextView);
         latPidPTextView = (TextView) findViewById(R.id. LatPidPTextView);
         latPidITextView = (TextView) findViewById(R.id.LatPidITextView);
         latPidDTextView = (TextView) findViewById(R.id.LatPidDTextView);
-        latPidSumTextView = (TextView) findViewById(R.id.LatPidSumTextView);
+
+        velocityLabel = (TextView) findViewById(R.id.velocityLabel);
+        sensorLabel = (TextView) findViewById(R.id.sensorLabel);
+        AccPidTargetLabel = (TextView) findViewById(R.id.pidTargetLabel);
+        AccPidPLabel = (TextView) findViewById(R.id. pidPLabel);
+        AccPidILabel = (TextView) findViewById(R.id.pidYLabel);
+        AccPidDLabel = (TextView) findViewById(R.id.pidDLabel);
+
+
+        latPidTargetLabel = (TextView) findViewById(R.id.LatPidTargetLabel);
+        latPidPLabel = (TextView) findViewById(R.id. LatPidPLabel);
+        latPidILabel = (TextView) findViewById(R.id.LatPidYLabel);
+        latPidDLabel = (TextView) findViewById(R.id.LatPidDLabel);
+
+
+
+        AccPidTargetTextView.setVisibility(View.GONE);
+        AccPidPTextView.setVisibility(View.GONE);
+        AccPidITextView.setVisibility(View.GONE);
+        AccPidDTextView.setVisibility(View.GONE);
+
+
+        latPidTargetTextView.setVisibility(View.GONE);
+        latPidPTextView.setVisibility(View.GONE);
+        latPidITextView.setVisibility(View.GONE);
+        latPidDTextView.setVisibility(View.GONE);
+
+        AccPidTargetLabel.setVisibility(View.GONE);
+        AccPidPLabel.setVisibility(View.GONE);
+        AccPidILabel.setVisibility(View.GONE);
+        AccPidDLabel.setVisibility(View.GONE);
+
+
+        latPidTargetLabel.setVisibility(View.GONE);
+        latPidPLabel.setVisibility(View.GONE);
+        latPidILabel.setVisibility(View.GONE);
+        latPidDLabel.setVisibility(View.GONE);
+
 
         manualButton = (Button) findViewById(R.id.manualButton);
         manualButton.setEnabled(false);
+        debugToggle = (Button) findViewById(R.id.debugToggle);
         accButton = (Button) findViewById(R.id.accButton);
         accButton.setEnabled(false);
         platooningButton = (Button) findViewById(R.id.platooningButton);
         platooningButton.setEnabled(false);
 
+
+        debugToggle.setBackgroundColor(Color.parseColor("#FF0000"));
         accButton.setBackgroundColor(Color.parseColor("#FF0000"));
         manualButton.setBackgroundColor(Color.parseColor("#FF0000"));
         platooningButton.setBackgroundColor(Color.parseColor("#FF0000"));
@@ -470,7 +526,7 @@ public class Main extends Activity implements CommunicationListener {
                 AccPidDTextView.setText(String.valueOf(i));
                 break;
             case ACC_INTEGRAL_SUM:
-                AccPidSumTextView.setText(String.valueOf(i));
+
                 break;
             case LAT_TARGET_VALUE:
                 latPidTargetTextView.setText(String.valueOf(i));
@@ -485,7 +541,7 @@ public class Main extends Activity implements CommunicationListener {
                 latPidDTextView.setText(String.valueOf(i));
                 break;
             case LAT_INTEGRAL_SUM:
-                latPidSumTextView.setText(String.valueOf(i));
+
                 break;
 
             case THROTTLE:
@@ -532,6 +588,76 @@ public class Main extends Activity implements CommunicationListener {
 
     public void platooningButtonPress(View view){
         platooningButtonEnable();
+    }
+
+    public void toggleDebug(View view){
+if(!debug) {
+    AccPidTargetTextView.setVisibility(View.VISIBLE);
+    AccPidPTextView.setVisibility(View.VISIBLE);
+   AccPidITextView.setVisibility(View.VISIBLE);
+    AccPidDTextView.setVisibility(View.VISIBLE);
+
+
+   latPidTargetTextView.setVisibility(View.VISIBLE);
+    latPidPTextView.setVisibility(View.VISIBLE);
+   latPidITextView.setVisibility(View.VISIBLE);
+    latPidDTextView.setVisibility(View.VISIBLE);
+
+    AccPidTargetLabel.setVisibility(View.VISIBLE);
+    AccPidPLabel.setVisibility(View.VISIBLE);
+    AccPidILabel.setVisibility(View.VISIBLE);
+    AccPidDLabel.setVisibility(View.VISIBLE);
+
+
+    latPidTargetTextView.setVisibility(View.VISIBLE);
+    latPidPTextView.setVisibility(View.VISIBLE);
+    latPidITextView.setVisibility(View.VISIBLE);
+    latPidDTextView.setVisibility(View.VISIBLE);
+
+    AccPidTargetLabel.setVisibility(View.VISIBLE);
+    AccPidPLabel.setVisibility(View.VISIBLE);
+    AccPidILabel.setVisibility(View.VISIBLE);
+    AccPidDLabel.setVisibility(View.VISIBLE);
+
+
+    latPidTargetLabel.setVisibility(View.VISIBLE);
+    latPidPLabel.setVisibility(View.VISIBLE);
+    latPidILabel.setVisibility(View.VISIBLE);
+    latPidDLabel.setVisibility(View.VISIBLE);
+
+
+    debug = true;
+    debugToggle.setBackgroundColor(Color.parseColor("#7CFC00"));
+}
+else{
+
+    AccPidTargetTextView.setVisibility(View.GONE);
+    AccPidPTextView.setVisibility(View.GONE);
+    AccPidITextView.setVisibility(View.GONE);
+    AccPidDTextView.setVisibility(View.GONE);
+
+
+    latPidTargetTextView.setVisibility(View.GONE);
+    latPidPTextView.setVisibility(View.GONE);
+    latPidITextView.setVisibility(View.GONE);
+    latPidDTextView.setVisibility(View.GONE);
+
+    AccPidTargetLabel.setVisibility(View.GONE);
+    AccPidPLabel.setVisibility(View.GONE);
+    AccPidILabel.setVisibility(View.GONE);
+    AccPidDLabel.setVisibility(View.GONE);
+
+
+    latPidTargetLabel.setVisibility(View.GONE);
+    latPidPLabel.setVisibility(View.GONE);
+    latPidILabel.setVisibility(View.GONE);
+    latPidDLabel.setVisibility(View.GONE);
+
+
+    debug = false;
+    debugToggle.setBackgroundColor(Color.parseColor("#FF0000"));
+}
+
     }
 
     private void platooningButtonEnable(){
