@@ -5,6 +5,10 @@ import com_io.DataReceiver;
 import com_io.Direction;
 
 import static core.action_strategies.RemoteController.Axis.*;
+import static utils.Config.SEPARATOR;
+import static utils.Config.STEER;
+import static utils.Config.THROTTLE;
+
 
 /**
  * An {@link ActionStrategy} that handles the incoming navigational
@@ -33,13 +37,13 @@ public class RemoteController implements ActionStrategy, DataReceiver {
 
     @Override
     public void dataReceived(String unformattedData) {
-        String[] data = unformattedData.split(",");
+        String[] data = unformattedData.split(SEPARATOR);
 
-        if (data[0].equals("THROTTLE")) {
+        if (data[0].equals(THROTTLE)) {
             if (axis == Y) {
                 updateValue(data[1]);
             }
-        } else if (data[0].equals("STEER")) {
+        } else if (data[0].equals(STEER)) {
             if (axis == X) {
                 updateValue(data[1]);
             }

@@ -9,6 +9,7 @@ import java.util.function.Consumer;
 
 /**
  * Created by Virtuality.
+ * Made awesome by Zackiboy
  */
 
 class StreamReader extends Thread {
@@ -36,12 +37,11 @@ class StreamReader extends Thread {
 
 
     private void readCharLoop() throws IOException {
-        InputStreamReader isr = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
-        BufferedReader br = new BufferedReader(isr);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
 
         int receivedValue = 0;
         while (receivedValue != -1) {
-            receivedValue = br.read();
+            receivedValue = reader.read();
             if (receivedValue != 0) {
                 onInputRead.accept(String.valueOf(((char)receivedValue)));
             }

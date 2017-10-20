@@ -1,4 +1,4 @@
-package pid;
+package core.pid;
 
 
 /**
@@ -10,7 +10,7 @@ public class LateralPIDController extends PIDController {
         super(targetValue, constantP, constantIRelation, constantDRelation);
     }
 
-    // Does nothing different from the general pid except changing the name of the arguments.
+    // Does nothing different from the general core.pid except changing the name of the arguments.
     // Ads the possibility of future lateral specific changes to the PID behavior.
     @Override
     public double evaluation(double currentRightOffset, double deltaTime){

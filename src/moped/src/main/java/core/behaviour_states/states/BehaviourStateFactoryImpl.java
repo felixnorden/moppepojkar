@@ -1,5 +1,6 @@
 package core.behaviour_states.states;
 
+import com_io.CommunicatorFactory;
 import core.car_control.CarControl;
 import core.car_control.CarControlImpl;
 
@@ -29,24 +30,24 @@ public class BehaviourStateFactoryImpl implements BehaviourStateFactory{
 
     @Override
     public BehaviourState createAdaptiveCruiseControlBehaviour() {
-        return new AdaptiveCruiseControl(carController);
+        return new AdaptiveCruiseControl(carController, CommunicatorFactory.getComInstance());
     }
 
     @Override
     public BehaviourState createPlatooningBehaviour() {
-        return new Platooning(carController);
+        return new Platooning(carController, CommunicatorFactory.getComInstance());
     }
 
     @Override
     public BehaviourState createSafeModeBehaviour() {
-        return new SafeModeBehaviour(carController);
+        return new SafeMode(carController);
     }
 
     @Override
     public BehaviourState createEmergencyStop(Consumer<BehaviourState> stateConsumer) {
-        EmergencyStopBehaviour emergencyStopBehaviour = new EmergencyStopBehaviour(carController);
-        emergencyStopBehaviour.setOnCollision(stateConsumer);
-        return emergencyStopBehaviour;
+        EmergencyStop emergencyStop = new EmergencyStop(carController);
+        emergencyStop.setOnCollision(stateConsumer);
+        return emergencyStop;
     }
 
 

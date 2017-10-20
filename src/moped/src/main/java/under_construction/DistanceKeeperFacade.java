@@ -1,6 +1,6 @@
 package under_construction;
 
-import pid.DistancePIDController;
+import core.pid.DistancePIDController;
 
 /**
  * Created by Elias and Marcus
@@ -19,7 +19,7 @@ public class DistanceKeeperFacade {
      * desired engine effect.
      * @param targetDistance the current distance to the object in front of the moped, given in cm.
      * @param deltaTime delta Time since last call.
-     * @return the pid-value for distance keeping.
+     * @return the core.pid-value for distance keeping.
      */
     public double calculatePIDValue(double targetDistance, double deltaTime){
         return distancePIDController.evaluation(targetDistance,deltaTime);

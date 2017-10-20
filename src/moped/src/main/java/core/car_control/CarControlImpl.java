@@ -2,6 +2,8 @@ package core.car_control;
 
 import arduino.ArduinoCommunicatorImpl;
 
+import static utils.Config.*;
+
 /**
  * Used for controlling a MOPED through a python script found on the device.
  * <p>
@@ -35,7 +37,7 @@ public class CarControlImpl implements CarControl {
                 }
                 sendValuesToCar();
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(150);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -58,14 +60,14 @@ public class CarControlImpl implements CarControl {
     @Override
     public synchronized void setThrottle(int value) {
         if (value != currentThrottleValue) {
-            currentThrottleValue = constrainInVCURange(value);
+            currentThrottleValue = constrainInRange(value, MIN_SPEED, MAX_SPEED);
         }
     }
 
     @Override
     public synchronized void setSteerValue(int value) {
         if (value != currentSteerValue) {
-            currentSteerValue = constrainInVCURange(value);
+            currentSteerValue = constrainInRange(value,MIN_STEER,MAX_STEER);
         }
     }
 

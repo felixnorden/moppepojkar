@@ -1,15 +1,20 @@
 package core.process_runner;
 
 
-import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Created by Virtuality.
@@ -17,186 +22,55 @@ import java.util.List;
 
 class ProcessIntegrationTest {
 
-    @Test
-    @Disabled
-    void cmdReadTest() {
-        // 1. Create process
-        ProcessBuilder pb = new ProcessBuilder("cmd");
-        ProcessRunner process = ProcessFactory.createCustomProcess(pb);
+    @AfterAll
+    static void deleteTestFiles() {
+        File processReadTest = new File("Test.java");
+        if (processReadTest.exists()) {
+            processReadTest.delete();
 
-        InputSubscriberImpl receiver = new InputSubscriberImpl();
-        process.subscribeToInput(receiver);
-
-        process.start();
-
-        // 2. Wait for process to start
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException ignored) {
         }
 
-        // 3. The first word should be "Microsoft"
-        String lastReceived;
-        StringBuilder sb = new StringBuilder();
-        while ((lastReceived = receiver.getNextInput()) != null && !lastReceived.equals(" ")) {
-            if (!lastReceived.equals("\n")) {
-                sb.append(lastReceived);
-            }
-        }
-
-        // First word should be "Microsoft"
-        assert sb.toString().equals("Microsoft");
+        File processReadCompile = new File("Test.class");
+        if (processReadCompile.exists())
+            processReadCompile.delete();
     }
 
     @Test
-    @Disabled
-    void cmdWriteTest() {
-        // 1. Create cmd process
-        ProcessBuilder pb = new ProcessBuilder("cmd");
+    void ProcessReadTest() throws IOException, InterruptedException {
+        // 1. Create temporary Java file
+        List<String> source = Arrays.asList("class Test{\n", "public static void main(String[] args) {\n",
+                "System.out.println(\"Test\");\n",
+                "}\n",
+                "}\n");
+
+        Path sourceFile = Paths.get("Test.java");
+        Files.write(sourceFile, source, Charset.forName("UTF-8"));
+
+        ProcessBuilder compilerProcess = new ProcessBuilder("javac", "Test.java");
+        compilerProcess.start().waitFor();
+
+        ProcessBuilder pb = new ProcessBuilder("java", "Test");
+
         ProcessRunner process = ProcessFactory.createCustomProcess(pb);
 
         InputSubscriberImpl receiver = new InputSubscriberImpl();
         process.subscribeToInput(receiver);
-
         process.start();
 
-        // 2. Wait for process to start
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException ignored) {
-        }
-
-
-        // 3. Skip beginning lines from cmd
-        receiver.clearBuffer();
-
-
-        // 4. Send "test"
-        try {
-            process.outputToScript("test\n");
-            process.flushOutput();
-        } catch (IOException ignored) {
-        }
-
-        // 5. Wait for command to process
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException ignored) {
-        }
+        Thread.sleep(500);
 
         // 6. Read the first word of the command output
         String lastReceived;
         StringBuilder sb = new StringBuilder();
         while ((lastReceived = receiver.getNextInput()) != null) {
-            if (!lastReceived.equals("\n")) {
+            if (!lastReceived.equals("\n") && !lastReceived.equals("\r")) {
                 sb.append(lastReceived);
-            } else {
+            } else
                 break;
-            }
         }
 
         // The first word read should be "test"
-        assert sb.toString().equals("test");
-    }
-
-    @Test
-    @Disabled
-    void pythonReadTest() throws IOException, InterruptedException {
-        // 1. Create temporary Python file
-        File pyScript = new File("pythonTemp.py");
-        BufferedWriter bf;
-        bf = new BufferedWriter(new FileWriter(pyScript));
-
-        String[] pythonCode = {
-                "import time\n" +
-                        "\n",
-                "while True:\n",
-                "\tprint(\"test\")\n",
-                "\ttime.sleep(0.05)\n",
-        };
-
-        bf.write("");
-        for (String s : pythonCode) {
-            bf.append(s);
-            bf.flush();
-        }
-
-        // 2. Create Python process
-        ProcessRunner process = ProcessFactory.createPythonProcess(pyScript.getAbsolutePath());
-
-        InputSubscriberImpl receiver = new InputSubscriberImpl();
-        process.subscribeToInput(receiver);
-        process.start();
-
-        // 3. Wait for process to start
-        Thread.sleep(500);
-
-        // 4. Read the first word of the command output
-        String lastReceived;
-        StringBuilder sb = new StringBuilder();
-        while (
-                (lastReceived = receiver.getNextInput()) != null &&
-                        !lastReceived.equals(" ") &&
-                        !lastReceived.equals("\n")
-                ) {
-            sb.append(lastReceived);
-        }
-
-        // First word should be "test" as seen in the python code
-        assert sb.toString().equals("test");
-    }
-
-    @Test
-    @Disabled
-    void pythonWriteTest() throws IOException, InterruptedException {
-        // 1. Create temporary Python file
-        File pyScript = new File("pythonTemp.py");
-        BufferedWriter bufferedWriter;
-        bufferedWriter = new BufferedWriter(new FileWriter(pyScript));
-
-        String[] pythonCode = {
-                "import time\n" +
-                        "\n" +
-                        "input(\"\")\n",
-                "print(\"test\")\n",
-        };
-
-        bufferedWriter.write("");
-        for (String s : pythonCode) {
-            bufferedWriter.append(s);
-            bufferedWriter.flush();
-        }
-
-        // 2. Create Python process
-        ProcessRunner process = ProcessFactory.createPythonProcess(pyScript.getAbsolutePath());
-
-        InputSubscriberImpl receiver = new InputSubscriberImpl();
-        process.subscribeToInput(receiver);
-        process.start();
-
-        // 3. Wait for process to start
-        Thread.sleep(250);
-
-        // 4. Output "1" to the process
-        process.outputToScript("1\n");
-        process.flushOutput();
-
-        // 5. Wait for process to receive and process the output
-        Thread.sleep(250);
-
-        // 6. Read the first output from the process
-        String lastReceived;
-        StringBuilder sb = new StringBuilder();
-        while (
-                (lastReceived = receiver.getNextInput()) != null &&
-                        !lastReceived.equals(" ") &&
-                        !lastReceived.equals("\n")
-                ) {
-            sb.append(lastReceived);
-        }
-
-        // First word should be "test" as seen in the python code
-        assert sb.toString().equals("test");
+        assertEquals("Test", sb.toString());
     }
 
 

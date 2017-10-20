@@ -4,29 +4,28 @@ import arduino.ArduinoCommunicator;
 import com_io.CommunicationsMediator;
 import com_io.Direction;
 import utils.StrToDoubleConverter;
-import utils.Config;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-import static utils.Config.CAM_TGT_DIST;
-import static utils.Config.DIST_SENSOR;
-import static utils.Config.REGEX;
+import static utils.Config.*;
+
 
 /**
- * Used for reading from the on-board distance sensor.
+ * This class is used for reading from the different sensor data that
+ * is recieved from outside sources.
  */
 public class DistanceSensorImpl implements DistanceSensor {
 
-    private static final double FILTER_WEIGHT = 0.7;
-    private static final double MAX_VALUE_OFFSET = 0.25;
+
     private final ArduinoCommunicator arduinoCommunicator;
 
-    private LowPassFilter filter;
+
+    private Filter filter;
     private double currentSensorValue;
     private StringBuilder arduinoInput;
-    private StringBuilder cvInput;
+    private StringBuilder crInput;
 
     private List<Consumer<Double>> dataConsumers;
 
@@ -40,14 +39,23 @@ public class DistanceSensorImpl implements DistanceSensor {
         return getDistance();
     }
 
+    @Override
     public void subscribe(Consumer<Double> dataConsumer) {
         dataConsumers.add(dataConsumer);
     }
 
+    @Override
     public void unsubscribe(Consumer<Double> dataConsumer) {
         dataConsumers.remove(dataConsumer);
     }
 
+    /**
+     * Builds a data string using the input {@link StringBuilder}
+     * and sets the current sensor value when a string is
+     * successfully built.
+     * @param string the input to be parsed
+     * @param sb the builder which builds the related sensor value
+     */
     synchronized void receivedString(String string, StringBuilder sb) {
         for (char c : string.toCharArray()) {
             if (c != 10 && c != 13) {
@@ -59,6 +67,12 @@ public class DistanceSensorImpl implements DistanceSensor {
         }
     }
 
+    /**
+     * Converts the input string to a double,
+     * sets the current sensor value to the parsed string
+     * and then notifies all its subscribers
+     * @param text
+     */
     private void setCurrentSensorValue(String text) {
         double value = new StrToDoubleConverter().convertStringToDouble(text);
         if (!Double.isNaN(value)) {
@@ -67,22 +81,25 @@ public class DistanceSensorImpl implements DistanceSensor {
         }
     }
 
-    DistanceSensorImpl(CommunicationsMediator communicationsMediator, ArduinoCommunicator arduinoCommunicator) {
+    DistanceSensorImpl(CommunicationsMediator communicationsMediator,
+                       ArduinoCommunicator arduinoCommunicator,
+                       Filter filter) {
         dataConsumers = new ArrayList<>();
-        filter = new LowPassFilter(FILTER_WEIGHT);
+        this.filter = filter;
+
         arduinoInput = new StringBuilder();
-        cvInput = new StringBuilder();
+        crInput = new StringBuilder();
         currentSensorValue = 0.3;
 
-        dataConsumers.add(sensorValue -> communicationsMediator.transmitData(DIST_SENSOR + REGEX + sensorValue.toString(), Direction.EXTERNAL));
+        //Sends data in centimeters, therefore multiply the sensordata with 100 when sending
+        dataConsumers.add(sensorValue -> communicationsMediator.transmitData(DIST_SENSOR + SEPARATOR + Double.toString(sensorValue * 100), Direction.EXTERNAL));
 
         communicationsMediator.subscribe(Direction.INTERNAL, data -> {
-            String[] formattedData = data.split(Config.REGEX);
+            String[] formattedData = data.split(SEPARATOR);
             if (formattedData.length == 2 && formattedData[0].equals(CAM_TGT_DIST)) {
-                receivedString(formattedData[1], cvInput);
+                receivedString(formattedData[1], crInput);
             }
         });
-
         this.arduinoCommunicator = arduinoCommunicator;
         this.arduinoCommunicator.addArduinoListener(string -> receivedString(string, arduinoInput));
     }
