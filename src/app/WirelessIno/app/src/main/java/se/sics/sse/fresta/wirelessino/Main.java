@@ -502,53 +502,132 @@ public class Main extends Activity implements CommunicationListener {
     }
 
     @Override
-    public void onValueChanged(MopedDataType mopedDataType, int i) {
+    public void onValueChanged(MopedDataType mopedDataType, int j) {
+        final int i = j;
         switch (mopedDataType) {
             case MOPED_STATE:
-                onStateChange(parseInt(i));
+                this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        onStateChange(parseInt(i));
+                    }
+                });
+
                 break;
             case VELOCITY:
-                velocityTextView.setText(String.valueOf(i));
+                this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        velocityTextView.setText(String.valueOf(i));
+                    }
+                });
+
                 break;
             case SENSOR_DISTANCE:
-                sensorTextView.setText(String.valueOf(i));
+                this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        sensorTextView.setText(String.valueOf(i));
+                    }
+                });
+
                 break;
             case ACC_TARGET_VALUE:
-                AccPidTargetTextView.setText(String.valueOf(i));
+                this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        AccPidTargetTextView.setText(String.valueOf(i));
+                    }
+                });
+
                 break;
             case ACC_P_CONSTANT:
-                AccPidPTextView.setText(String.valueOf(i));
+                this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        AccPidPTextView.setText(String.valueOf(i));
+                    }
+                });
+
                 break;
             case ACC_I_CONSTANT:
-                AccPidITextView.setText(String.valueOf(i));
+                this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        AccPidITextView.setText(String.valueOf(i));
+                    }
+                });
+
                 break;
             case ACC_D_CONSTANT:
-                AccPidDTextView.setText(String.valueOf(i));
+                this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        AccPidDTextView.setText(String.valueOf(i));
+                    }
+                });
+
                 break;
             case ACC_INTEGRAL_SUM:
 
                 break;
             case LAT_TARGET_VALUE:
-                latPidTargetTextView.setText(String.valueOf(i));
+                this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        latPidTargetTextView.setText(String.valueOf(i));
+                    }
+                });
+
                 break;
             case LAT_P_CONSTANT:
-                latPidPTextView.setText(String.valueOf(i));
+                this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        latPidPTextView.setText(String.valueOf(i));
+                    }
+                });
+
                 break;
             case LAT_I_CONSTANT:
-                latPidITextView.setText(String.valueOf(i));
+                this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        latPidITextView.setText(String.valueOf(i));
+                    }
+                });
+
                 break;
             case LAT_D_CONSTANT:
-                latPidDTextView.setText(String.valueOf(i));
+                this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        latPidDTextView.setText(String.valueOf(i));
+                    }
+                });
+
                 break;
             case LAT_INTEGRAL_SUM:
 
                 break;
 
             case THROTTLE:
-                speedTextView.setText(String.valueOf(i));
+                this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        speedTextView.setText(String.valueOf(i));
+                    }
+                });
+
                 break;
             case STEERING:
-                turningTextView.setText(String.valueOf(i));
+                this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        turningTextView.setText(String.valueOf(i));
+                    }
+                });
+
                 break;
             case CUSTOM_1:
                 break;
