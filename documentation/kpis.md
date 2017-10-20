@@ -44,6 +44,10 @@ Each individual group has a goal of 100 points in velocity per sprint. The group
 
 The point system will be kept constant, but the velocity of each task will be adapted to new estimations at each Sprint Planning.
 
+### Results Produced velocity
+
+The results from the project can be found here: https://docs.google.com/spreadsheets/d/1D-e4eu4Ox63KY1qPNM5qqKBDRvf7SXSrMOx7200cRGw/edit?usp=sharing
+
 ## Product Owner satisfaction
 
 ### Strategy
