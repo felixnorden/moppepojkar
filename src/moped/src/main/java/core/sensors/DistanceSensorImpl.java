@@ -91,7 +91,8 @@ public class DistanceSensorImpl implements DistanceSensor {
         crInput = new StringBuilder();
         currentSensorValue = 0.3;
 
-        dataConsumers.add(sensorValue -> communicationsMediator.transmitData(DIST_SENSOR + SEPARATOR + sensorValue.toString(), Direction.EXTERNAL));
+        //Sends data in centimeters, therefore multiply the sensordata with 100 when sending
+        dataConsumers.add(sensorValue -> communicationsMediator.transmitData(DIST_SENSOR + SEPARATOR + Double.toString(sensorValue * 100), Direction.EXTERNAL));
 
         communicationsMediator.subscribe(Direction.INTERNAL, data -> {
             String[] formattedData = data.split(SEPARATOR);
