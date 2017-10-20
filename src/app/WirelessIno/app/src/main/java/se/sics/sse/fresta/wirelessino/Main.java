@@ -96,6 +96,8 @@ public class Main extends Activity implements CommunicationListener {
         setContentView(R.layout.activity_main);
         speedBar = (SeekBar) findViewById(R.id.speedBar);
         steeringBar = (SeekBar) findViewById(R.id.SteeringBar);
+        speedBar.setEnabled(false);
+        steeringBar.setEnabled(false);
 
 
         /*Listener for change in SeekBars (Sliders) */
@@ -615,6 +617,7 @@ public class Main extends Activity implements CommunicationListener {
                 this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        speedBar.setProgress(i + 100);
                         speedTextView.setText(String.valueOf(i));
                     }
                 });
@@ -624,6 +627,7 @@ public class Main extends Activity implements CommunicationListener {
                 this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        steeringBar.setProgress(i + 100);
                         turningTextView.setText(String.valueOf(i));
                     }
                 });
@@ -659,6 +663,10 @@ public class Main extends Activity implements CommunicationListener {
    }
 
     private void accButtonEnable(){
+        speedBar.setEnabled(false);
+        steeringBar.setEnabled(true);
+        speedBar.setProgress(100);
+        steeringBar.setProgress(100);
         accButton.setBackgroundColor(Color.parseColor("#7CFC00"));
         manualButton.setBackgroundColor(Color.parseColor("#FF0000"));
         platooningButton.setBackgroundColor(Color.parseColor("#FF0000"));
@@ -740,6 +748,10 @@ else{
     }
 
     private void platooningButtonEnable(){
+        speedBar.setEnabled(false);
+        steeringBar.setEnabled(false);
+        speedBar.setProgress(100);
+        steeringBar.setProgress(100);
         accButton.setBackgroundColor(Color.parseColor("#FF0000"));
         manualButton.setBackgroundColor(Color.parseColor("#FF0000"));
         platooningButton.setBackgroundColor(Color.parseColor("#7CFC00"));
@@ -751,6 +763,10 @@ else{
     }
 
     private void manualButtonEnable(){
+        speedBar.setEnabled(true);
+        steeringBar.setEnabled(true);
+        speedBar.setProgress(100);
+        steeringBar.setProgress(100);
         accButton.setBackgroundColor(Color.parseColor("#FF0000"));
         manualButton.setBackgroundColor(Color.parseColor("#7CFC00"));
         platooningButton.setBackgroundColor(Color.parseColor("#FF0000"));
