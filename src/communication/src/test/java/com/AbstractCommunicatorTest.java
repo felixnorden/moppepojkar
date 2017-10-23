@@ -66,7 +66,7 @@ public class AbstractCommunicatorTest {
             }
 
             client.stop();
-            Thread.sleep(300);
+            Thread.sleep(5000);
             client.start();
             for (int i = 0; i < 1000; i++) {
                 if (passed.size() == 2) {
