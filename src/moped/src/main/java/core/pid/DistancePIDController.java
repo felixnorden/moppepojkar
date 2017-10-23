@@ -5,6 +5,10 @@ public class DistancePIDController extends PIDController {
 
     /**
      * An extension of PIDController, but with specific functionality for keeping distance, such as controlling that inputs are valid.
+     * @param targetValue the target distance in meters
+     * @param constantP the P constant of the PID
+     * @param constantIRelation the I constant of the PID
+     * @param constantDRelation the D constant of the PID
      */
 
     public DistancePIDController(double targetValue, double constantP, double constantIRelation, double constantDRelation){
@@ -15,7 +19,7 @@ public class DistancePIDController extends PIDController {
      * {@inheritDoc}
      * @param currentValue Current value to be compared to the target value.
      * @param deltaTime Elapsed time since the last method call.
-     * @return
+     * @return the evaluated
      */
 
     @Override

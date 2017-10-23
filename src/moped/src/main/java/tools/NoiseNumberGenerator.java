@@ -106,7 +106,7 @@ public class NoiseNumberGenerator {
     }
 
     /**
-     * Uses {@Link LowPassFilter} to print out all of the values created by different
+     * Uses {@link LowPassFilter} to print out all of the values created by different
      * weight values in a LowPassFilter, to the console. The data is based on the rawValues parameter
      * that the LowPassFilter will use.
      *

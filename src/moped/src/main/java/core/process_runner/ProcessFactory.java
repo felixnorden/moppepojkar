@@ -12,7 +12,9 @@ public class ProcessFactory {
      * Creates a new Python process.
      * @param pythonScriptPath Absolute or relative path to the python file.
      * @return The {@link ProcessRunner} object.
+     * @throws FileNotFoundException if the script to run is not found
      */
+
     public static ProcessRunner createPythonProcess(String pythonScriptPath) throws FileNotFoundException {
         File script = new File(pythonScriptPath);
         if (!script.exists()) {

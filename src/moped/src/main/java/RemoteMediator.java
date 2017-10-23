@@ -55,7 +55,7 @@ public class RemoteMediator implements DataReceiver, CommunicationListener {
     /**
      * Sets logging to true or false on the server communicator.
      *
-     * @param enable
+     * @param enable sets the state for debug logging
      */
     public void setDebugLogging(boolean enable) {
         if (enable) {

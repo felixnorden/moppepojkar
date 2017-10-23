@@ -9,7 +9,9 @@ import utils.Config;
 
 import static utils.Config.*;
 
-// TODO: 2017-10-05 Refactor with PIDParser class to find some common base class
+/**
+ * Lateral controlling class for handling lateral automation
+ */
 public class LateralController implements ActionStrategy, DataReceiver {
 
     private double currentCircleOffset;
