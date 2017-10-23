@@ -10,7 +10,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 class PIDControllerTest{
 
-    //TODO Would like to create a graph showing the core.pid in action.
     //Checks if the value of error steadily sinks when approaching a stationary target using the PIDController
     //Additionally the overshoot can't exceed 2
     @Test

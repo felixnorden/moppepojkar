@@ -1,8 +1,11 @@
 package core.car_control;
 
+import arduino.ArduinoCommunicator;
+import arduino.ArduinoCommunicatorImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -15,7 +18,8 @@ class CarControlImplTest {
 
     @BeforeEach
     void setUp() {
-        carControl = new CarControlImpl();
+        ArduinoCommunicator arduinoMock = Mockito.mock(ArduinoCommunicator.class);
+        carControl = new CarControlImpl(arduinoMock);
 
         carControl.setSteerValue(STEER_VALUE);
         carControl.setThrottle(THROTTLE_VALUE);
