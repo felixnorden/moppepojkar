@@ -24,6 +24,4 @@ public interface BehaviourStateFactory {
 
 
     BehaviourState createSafeModeBehaviour();
-
-    BehaviourState createEmergencyStop(Consumer<BehaviourState> consumer);
 }

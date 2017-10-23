@@ -36,7 +36,6 @@ public class StateController implements Runnable, DataReceiver {
         this.platooning = stateFactory.createPlatooningBehaviour();
 
         this.safeMode = stateFactory.createSafeModeBehaviour();
-        stateFactory.createEmergencyStop(this::setState);
 
         this.currentState = safeMode;
     }
