@@ -7,8 +7,6 @@ public class UsbBandwithTest {
     static int i = -100;
     static int mod = 1;
 
-    static long time;
-
     public static void main(String[] args){
         ArduinoCommunicator arduinoCommunicator = ArduinoCommunicatorImpl.getInstance();
 

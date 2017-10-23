@@ -26,13 +26,20 @@ class ProcessIntegrationTest {
     static void deleteTestFiles() {
         File processReadTest = new File("Test.java");
         if (processReadTest.exists()) {
-            processReadTest.delete();
+            boolean delete = processReadTest.delete();
+            if (!delete) {
+                System.out.println("Couldn't delete: " + processReadTest.getAbsolutePath());
+            }
 
         }
 
         File processReadCompile = new File("Test.class");
-        if (processReadCompile.exists())
-            processReadCompile.delete();
+        if (processReadCompile.exists()) {
+            boolean delete = processReadCompile.delete();
+            if (!delete) {
+                System.out.println("Couldn't delete: " + processReadTest.getAbsolutePath());
+            }
+        }
     }
 
     @Test
@@ -74,7 +81,7 @@ class ProcessIntegrationTest {
     }
 
 
-    class InputSubscriberImpl implements InputSubscriber {
+    static class InputSubscriberImpl implements InputSubscriber {
 
         private final List<String> buffer;
 

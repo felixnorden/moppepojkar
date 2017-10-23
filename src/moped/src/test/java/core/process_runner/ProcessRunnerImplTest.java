@@ -33,12 +33,18 @@ public class ProcessRunnerImplTest {
     static void cleanFiles() {
         File source = new File("ProcessRunnerImplTestSource.java");
         if (source.exists()) {
-            source.delete();
+            boolean delete = source.delete();
+            if (!delete) {
+                System.out.println("Couldn't delete: " + source.getAbsolutePath());
+            }
         }
 
         File compiled = new File("ProcessRunnerImplTestSource.class");
         if (compiled.exists()) {
-            compiled.delete();
+            boolean delete = compiled.delete();
+            if (!delete) {
+                System.out.println("Couldn't delete: " + source.getAbsolutePath());
+            }
         }
     }
 
@@ -66,11 +72,11 @@ public class ProcessRunnerImplTest {
 
         Thread.sleep(1000);
 
-        String receivedString = "";
+        StringBuilder receivedString = new StringBuilder();
         for (String s : received) {
-            receivedString += s;
+            receivedString.append(s);
         }
 
-        assertEquals("test123", receivedString);
+        assertEquals("test123", receivedString.toString());
     }
 }

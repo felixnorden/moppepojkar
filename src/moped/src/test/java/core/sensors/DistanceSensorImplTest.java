@@ -103,7 +103,7 @@ class DistanceSensorImplTest {
         assert sensorInstance != null;
     }
 
-    class ConsumerImpl implements Consumer<Double> {
+    static class ConsumerImpl implements Consumer<Double> {
         Double d;
 
         @Override

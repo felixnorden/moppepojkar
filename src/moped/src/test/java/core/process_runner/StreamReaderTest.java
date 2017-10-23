@@ -21,13 +21,17 @@ public class StreamReaderTest {
         InputStream stream = new ByteArrayInputStream(data.getBytes(StandardCharsets.UTF_8));
         StreamReader reader = new StreamReader(stream);
         reader.setOnInputRead(c::stringRecieved);
-        reader.run();
-
+        reader.start();
+        try {
+            reader.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         assertEquals(receivedData.get(0), data);
         assertEquals(receivedData.get(1), String.valueOf((char) -1));
     }
 
-    private class Consumer {
+    static private class Consumer {
         public List<String> received = new ArrayList<>();
 
         public Consumer(List<String> list){

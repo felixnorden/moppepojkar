@@ -12,7 +12,7 @@ public class PreliminaryDistanceLogicTest {
     @Test
     public void enginePower1() {
 
-        PreliminaryDistanceLogic logic = new PreliminaryDistanceLogic(1, 35, 2,4);
+        PreliminaryDistanceLogic logic = new PreliminaryDistanceLogic(1, 35, 2, 4);
 
         logic.enginePower(35);
         int b = logic.enginePower(35);
@@ -22,16 +22,18 @@ public class PreliminaryDistanceLogicTest {
 
         int a = logic.enginePower(40);
         System.out.println(a + "  " + b);
-        assertTrue(a>b);
-        try {Thread.sleep(2000);
-        }catch (Exception e){}
+        assertTrue(a > b);
+        try {
+            Thread.sleep(2000);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         logic.enginePower(35);
         b = logic.enginePower(25);
         System.out.println(b);
-        assertEquals(3,b);
+        assertEquals(3, b);
 
     }
-
 
 
 }
