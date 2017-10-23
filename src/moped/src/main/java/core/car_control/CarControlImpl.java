@@ -1,5 +1,6 @@
 package core.car_control;
 
+import arduino.ArduinoCommunicator;
 import arduino.ArduinoCommunicatorImpl;
 
 import static utils.Config.*;
@@ -15,11 +16,10 @@ public class CarControlImpl implements CarControl {
     private int currentThrottleValue;
     private int currentSteerValue;
 
-    private ArduinoCommunicatorImpl arduinoCommunicatorImpl;
+    private ArduinoCommunicator arduinoCommunicatorImpl;
 
-    public CarControlImpl() {
-        // TODO: 10/10/2017 Inject interface for ArduinoCommunicatorImpl
-        arduinoCommunicatorImpl = ArduinoCommunicatorImpl.getInstance();
+    public CarControlImpl(ArduinoCommunicator arduinoInstance) {
+        arduinoCommunicatorImpl = arduinoInstance;
 
         currentThrottleValue = 0;
         currentSteerValue = 0;
