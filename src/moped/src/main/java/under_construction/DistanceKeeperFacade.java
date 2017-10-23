@@ -3,7 +3,6 @@ package under_construction;
 import core.pid.DistancePIDController;
 
 /**
- * Created by Elias and Marcus
  * This class is used as a facade for the distanceKeeper module. Other parts of the program can use this class to calculate
  * the effect that should be sent to the engine when ACC is activated.
  */

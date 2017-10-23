@@ -1,8 +1,6 @@
 package core.pid;
 
 /**
- * Created by Emil Jansson on 2017-09-16.
- *
  * This class should be used as a controller for a feedback loop. It contains three constants and a target value which can be modified.
  * The the controller aims to reach a stable state where the current actual value is as close as possible to the target value.
  * Modifying the constants calibrates the controller and changes it's "strategy" to reach equilibrium.

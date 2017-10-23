@@ -9,9 +9,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.not;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/**
- * Created by amk19 on 26/09/2017.
- */
 class LowPassFilterTest {
 
     LowPassFilter filter;

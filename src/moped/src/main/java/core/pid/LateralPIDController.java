@@ -1,8 +1,8 @@
 package core.pid;
 
-
 /**
- * Created by Emil Jansson on 2017-10-03.
+ * Subclass of the {@link PIDController} class
+ * for handling lateral control.
  */
 public class LateralPIDController extends PIDController {
 

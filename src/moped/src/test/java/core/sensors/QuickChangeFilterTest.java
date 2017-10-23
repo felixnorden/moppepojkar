@@ -5,9 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/**
- * Created by Emil Jansson on 2017-10-17.
- */
 public class QuickChangeFilterTest {
 
 
@@ -32,7 +29,6 @@ public class QuickChangeFilterTest {
         }
         for (double d: dataSet) {
             double filteredValue = filter.filterValue(d);
-            System.out.println("Raw: "+d+"  Filtered: " + filteredValue);
             assertTrue(filteredValue<=10 && filteredValue>=1);
         }
     }
@@ -44,17 +40,14 @@ public class QuickChangeFilterTest {
         double[] zeroSet = {0,0,0,0,0,0,0,0,0,0};
         for(double d: zeroSet){
             double filteredValue = filter.filterValue(d);
-            System.out.println("Raw: "+d+"  Filtered: " + filteredValue);
         }
         double[] giantSet = {20,20,20,20,20,20,20,20,20,20};
         for (int i = 0; i < maxQueueSize/2 +1; i++){
             double filteredValue = filter.filterValue(giantSet[i]);
-            System.out.println("Raw: "+giantSet[i]+"  Filtered: " + filteredValue);
             assertTrue(filteredValue == 0);
         }
         for (int i = 0; i < maxQueueSize/2 -1; i++){
             double filteredValue = filter.filterValue(giantSet[i]);
-            System.out.println("Raw: "+giantSet[i]+"  Filtered: " + filteredValue);
             assertTrue(filteredValue == 20);
         }
     }

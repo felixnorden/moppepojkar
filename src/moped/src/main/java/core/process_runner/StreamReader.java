@@ -8,10 +8,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.function.Consumer;
 
 /**
- * Created by Virtuality.
- * Made awesome by Zackiboy
+ * Reader for handling the input stream of characters coming from
+ * the run process in {@link ProcessRunner}
  */
-
 class StreamReader extends Thread {
 
     private InputStream inputStream;

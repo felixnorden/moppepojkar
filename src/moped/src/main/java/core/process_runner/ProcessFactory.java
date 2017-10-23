@@ -5,8 +5,6 @@ import java.io.FileNotFoundException;
 
 /**
  * Factory for creating different types of external processes.
- *
- * Created by Virtuality.
  */
 public class ProcessFactory {
 

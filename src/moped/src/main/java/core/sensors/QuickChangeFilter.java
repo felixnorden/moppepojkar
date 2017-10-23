@@ -4,8 +4,6 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 /**
- * Created by Emil Jansson on 2017-10-17.
- *
  * This class serves to remove spiky values in a stream of numbers. It does this by not allowing
  * values that differ to much from previousInputs to pass through the filter.
  */

@@ -5,9 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/**
- * Created by Emil Jansson on 2017-09-16.
- */
 class PIDControllerTest{
 
     //Checks if the value of error steadily sinks when approaching a stationary target using the PIDController

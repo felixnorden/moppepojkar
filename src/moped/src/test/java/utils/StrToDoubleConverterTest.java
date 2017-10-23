@@ -4,9 +4,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/**
- * Created by elias and marcus on 2017-09-12.
- */
 public class StrToDoubleConverterTest {
     /**
      * Tests that the convertStringToDouble() method only accepts valid inputs and converts them to doubles

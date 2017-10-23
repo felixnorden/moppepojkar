@@ -1,9 +1,5 @@
 package under_construction;
 
-/**
- * Created by Emil Jansson and Hugo Ekelund on 2017-09-12.
- */
-
 public class PreliminaryDistanceLogic {
 
     private float offsetToSpeedRelation; //The relation between distance offset and target relative speed.

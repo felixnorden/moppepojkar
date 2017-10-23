@@ -3,7 +3,8 @@ package core.process_runner;
 import java.io.IOException;
 
 /**
- * Created by Virtuality.
+ * Interface for the {@link ProcessRunnerImpl} class to implement and for other
+ * classes to depend upon.
  * I/O Definition: Output is sent to the process and input is received from the process.
  */
 public interface ProcessRunner {
