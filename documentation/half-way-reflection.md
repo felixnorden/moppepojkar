@@ -34,7 +34,7 @@ Retrospectives developed a good structure early on and we feel like this part of
 
 ### The grand conflict
 
-At an early stage of the project, a big conflict happened between two of the smaller teams. This was due to loss in communication. However, thanks to our good retrospectives and the SM's mediation between teams led to a quick and painless resolution. Instead of having a cold and dull relationship between the teams, the period after the conflict has been more than ideal and the mood has been extremely positive.
+At an early stage of the project, a big conflict happened between two of the smaller teams. This was due to loss in communication. However, thanks to our good retrospectives and the SM's mediation between teams, we had a quick and painless resolution. Instead of having a cold and dull relationship between the teams, the period after the conflict has been more than ideal and the mood has been extremely positive.
 
 The important learning that we have taken from this is that having friction and conflicts in a group can be a good thing, because it enforces the team to cooperate and having to resolve the conflict leads to a better understanding of each other. We have also noted that these are good to have as early on as possible, as to have the team function optimally as soon as possible. Having these conflicts at later stages could instead freeze the project's state completely and the process would stagnate.
 
