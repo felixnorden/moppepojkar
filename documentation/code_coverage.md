@@ -1,7 +1,11 @@
+# Code Coverage and other stats
+
 !!!NOTE!!!
 These stats account exclusively for all java source code in the project.
-----------------------------------------------------
-Project:
+
+---
+
+##Project:
 	Code coverage: 53% lines (app package excluded)
 	
 	Source code lines: 61%
@@ -10,8 +14,9 @@ Project:
 	
 	Total lines (tests not included): 4124
 	
-----------------------------------------------------
-Moped package:
+---
+
+## Moped package:
 	Code coverage: 42% lines all classes
 	
 	Source code lines: 59% 
@@ -20,8 +25,9 @@ Moped package:
 	
 	Total lines (tests not included): 2589
 	
-----------------------------------------------------
-Communication package:
+---
+
+##Communication package:
 	Code coverage: 95% lines all classes
 	
 	Source code lines: 56% 
@@ -30,8 +36,9 @@ Communication package:
 	
 	Total lines (tests not included): 669
 	
-----------------------------------------------------
-Android app package:
+---
+
+## Android app package:
 	Code coverage: 0% lines all classes (no tests)
 	
 	Source code lines: 73% 
@@ -40,8 +47,9 @@ Android app package:
 	
 	Total lines (tests not included): 866
 	
-----------------------------------------------------
-Debugapp package: (excluded from project stats)
+---
+
+## Debugapp package: (excluded from project stats)
 	Code coverage: 0% lines all classes (no tests)
 	
 	Source code lines: 68% 
@@ -50,4 +58,3 @@ Debugapp package: (excluded from project stats)
 	
 	Total lines (tests not included): 479
 	
-----------------------------------------------------
