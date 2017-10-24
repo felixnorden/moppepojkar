@@ -5,7 +5,8 @@ These stats account exclusively for all java source code in the project.
 
 ---
 
-##Project:
+## Project:
+
 	Code coverage: 53% lines (app package excluded)
 	
 	Source code lines: 61%
@@ -17,6 +18,7 @@ These stats account exclusively for all java source code in the project.
 ---
 
 ## Moped package:
+
 	Code coverage: 42% lines all classes
 	
 	Source code lines: 59% 
@@ -28,6 +30,7 @@ These stats account exclusively for all java source code in the project.
 ---
 
 ##Communication package:
+
 	Code coverage: 95% lines all classes
 	
 	Source code lines: 56% 
@@ -39,6 +42,7 @@ These stats account exclusively for all java source code in the project.
 ---
 
 ## Android app package:
+
 	Code coverage: 0% lines all classes (no tests)
 	
 	Source code lines: 73% 
@@ -50,6 +54,7 @@ These stats account exclusively for all java source code in the project.
 ---
 
 ## Debugapp package: (excluded from project stats)
+
 	Code coverage: 0% lines all classes (no tests)
 	
 	Source code lines: 68% 
