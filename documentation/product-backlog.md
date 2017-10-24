@@ -152,6 +152,23 @@ Disclaimer: The listed user stories are not in the order that they were implemen
 
 ### Platooning
 
+#### As a development team we want to reuse the already created PID for the lateral control to get  a smoother steering reaction.
+- Make use of the PID created for the ACC
+
+#### As a development team we want to use the supplied camera for platooning as to reuse the availible hardware
+- Reseach availbe libraries for videostream analysis.
+- Create a videostream from the camera 
+- Decide how to recognize the vehicle in front.
+
+#### As a development team we want to search for QR-codes in the videostream as to identify and track their position
+- Implement the Zbar library in order to be able to recognize a QR-code
+- Analyze the horizontal offset of the vehicle infront.
+- Send the offset to the PID.
+
+#### As a devteam we want to track a green ball in place of QR-code since the latter resulted in performance issues while the vehicle is moving.
+- Define a colorspace to follow instead of the QR-code
+
+
 ### App
 
 
