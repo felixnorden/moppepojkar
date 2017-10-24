@@ -8,9 +8,9 @@
 
 Code coverage: 53% lines (app package excluded)
 
-Source code lines: 61%
-Comment lines: 20%
-Blank lines: 19%
+Source code lines: 61%  
+Comment lines: 20%  
+Blank lines: 19%  
 
 Total lines (tests not included): 4124
 	
@@ -20,9 +20,9 @@ Total lines (tests not included): 4124
 
 Code coverage: 42% lines all classes
 
-Source code lines: 59% 
-Comment lines: 21%
-Blank lines: 20%
+Source code lines: 59%   
+Comment lines: 21%  
+Blank lines: 20%  
 
 Total lines (tests not included): 2589
 	
@@ -32,9 +32,9 @@ Total lines (tests not included): 2589
 
 Code coverage: 95% lines all classes
 
-Source code lines: 56% 
-Comment lines: 30%
-Blank lines: 14%
+Source code lines: 56%   
+Comment lines: 30%  
+Blank lines: 14%  
 
 Total lines (tests not included): 669
 	
@@ -44,9 +44,9 @@ Total lines (tests not included): 669
 
 Code coverage: 0% lines all classes (no tests)
 
-Source code lines: 73% 
-Comment lines: 7%
-Blank lines: 20%
+Source code lines: 73%   
+Comment lines: 7%  
+Blank lines: 20%  
 
 Total lines (tests not included): 866
 
@@ -56,9 +56,9 @@ Total lines (tests not included): 866
 
 Code coverage: 0% lines all classes (no tests)
 
-Source code lines: 68% 
-Comment lines: 17%
-Blank lines: 15%
+Source code lines: 68%   
+Comment lines: 17%  
+Blank lines: 15%  
 
 Total lines (tests not included): 479
 	
