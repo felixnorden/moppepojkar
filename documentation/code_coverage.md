@@ -1,4 +1,4 @@
-# Code Coverage and other stats
+# Code Coverage
 
 **NOTE:** These stats account exclusively for all java source code in the project.
 
