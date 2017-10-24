@@ -292,13 +292,16 @@ public abstract class AbstractCommunicator implements Communicator {
     /**
      * Does the necessary setup for the sockets to establish a connection.
      * This is necessary because one communicator needs to act as a server and the other one as a client.
+     *
+     * @throws SocketTimeoutException thrown if the socket is not connected in a certain time span
      */
     protected abstract void connectSocket() throws SocketTimeoutException;
 
     /**
-     * Prints the given object in out.println and adds which thread printed it, but only if logging is enabled;
+     * Prints the given object in out.println and adds which
+     * thread printed it, but only if logging is enabled;
      *
-     * @param object
+     * @param object the object to log
      */
     protected void log(Object object) {
         if (loggingEnabled) {

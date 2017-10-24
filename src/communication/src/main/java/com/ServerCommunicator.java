@@ -15,7 +15,7 @@ public class ServerCommunicator extends AbstractCommunicator {
     /**
      * Creates a ServerCommunicator acting on the specified port.
      *
-     * @param port
+     * @param port the port that the server listens on
      */
     public ServerCommunicator(int port) {
         super(port);
