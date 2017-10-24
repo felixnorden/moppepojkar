@@ -6,34 +6,8 @@
     - [Epics](#epics)
     - [Themes](#themes)
     - [Elicited requirements](#elicited-requirements)
-        - [Adaptive cruise control](#adaptive-cruise-control)
-        - [Platooning](#platooning)
-        - [App](#app)
-        - [Safety](#safety)
     - [User Stories](#user-stories)
-        - [Base platform](#base-platform)
-            - [As a development team, we want to research the legacy code base to see what tools already exist](#as-a-development-team-we-want-to-research-the-legacy-code-base-to-see-what-tools-already-exist)
-            - [As a development team, we want to create a project structure to manage all different modules](#as-a-development-team-we-want-to-create-a-project-structure-to-manage-all-different-modules)
-            - [As a development team, we want to reuse the already existing python support to reuse the already existing code for maneuvering the vehicle](#as-a-development-team-we-want-to-reuse-the-already-existing-python-support-to-reuse-the-already-existing-code-for-maneuvering-the-vehicle)
-            - [As a development team, we want a functioning system architecture to act as the core of the MOPED platform with a single entry point for external communication](#as-a-development-team-we-want-a-functioning-system-architecture-to-act-as-the-core-of-the-moped-platform-with-a-single-entry-point-for-external-communication)
-            - [As a development team, we want to make our platform handle requests from the mobile app, without the need of unnecessary extra features](#as-a-development-team-we-want-to-make-our-platform-handle-requests-from-the-mobile-app-without-the-need-of-unnecessary-extra-features)
-        - [Adaptive Cruise Control](#adaptive-cruise-control)
-            - [As a product owner, I want the product to automatically move forward as to allow the driver to only focus on lateral control](#as-a-product-owner-i-want-the-product-to-automatically-move-forward-as-to-allow-the-driver-to-only-focus-on-lateral-control)
-            - [As a development team, we want to make us of a PID in order to get more even and responsive reactions to speed change](#as-a-development-team-we-want-to-make-us-of-a-pid-in-order-to-get-more-even-and-responsive-reactions-to-speed-change)
-            - [As a product owner, I want the product to autonomously adapt its speed to moving objects in front as to assure safety for the driver](#as-a-product-owner-i-want-the-product-to-autonomously-adapt-its-speed-to-moving-objects-in-front-as-to-assure-safety-for-the-driver)
-            - [As a development team, we want to implement an efficient filter to effectively filter out bad sensor values, which entails a smoother response in the ACC](#as-a-development-team-we-want-to-implement-an-efficient-filter-to-effectively-filter-out-bad-sensor-values-which-entails-a-smoother-response-in-the-acc)
-            - [As a user, I want the driven vehicle to automatically keep a safe distance from the vehicle in front, as to allow me to react in time if the vehicle cannot](#as-a-user-i-want-the-driven-vehicle-to-automatically-keep-a-safe-distance-from-the-vehicle-in-front-as-to-allow-me-to-react-in-time-if-the-vehicle-cannot)
-        - [Platooning](#platooning)
-        - [App](#app)
-            - [As a user, I want to be able to switch between different driving modes with a click of a button as to easily choose how I want to drive](#as-a-user-i-want-to-be-able-to-switch-between-different-driving-modes-with-a-click-of-a-button-as-to-easily-choose-how-i-want-to-drive)
-        - [Communication](#communication)
-            - [As a development team, we want to communicate with the MOPED through the application without sending data that we do not need](#as-a-development-team-we-want-to-communicate-with-the-moped-through-the-application-without-sending-data-that-we-do-not-need)
-            - [As a development team, we want the server and client to communicate under the same protocol as to maintain a communicative standard](#as-a-development-team-we-want-the-server-and-client-to-communicate-under-the-same-protocol-as-to-maintain-a-communicative-standard)
-        - [Safety](#safety)
-            - [As a user, I want to be given necessary information about the vehicle to make critical decisions regarding safety](#as-a-user-i-want-to-be-given-necessary-information-about-the-vehicle-to-make-critical-decisions-regarding-safety)
-            - [As a user, I want the vehicle to always start in the same, neutral state as to avoid surprising or erratic behaviour when started](#as-a-user-i-want-the-vehicle-to-always-start-in-the-same-neutral-state-as-to-avoid-surprising-or-erratic-behaviour-when-started)
     - [End Product](#end-product)
-        - [Check later on](#check-later-on)
 
 This document describes the key features that the Product Owner has in mind, in conjunction with the team's interpretation of the PO's requests in the for om user stories.
 
@@ -153,30 +127,36 @@ Disclaimer: The listed user stories are not in the order that they were implemen
 ### Platooning
 
 #### As a development team we want to reuse the already created PID for the lateral control to get  a smoother steering reaction.
+
 - Make use of the PID created for the ACC
 
 #### As a development team we want to use the supplied camera for platooning as to reuse the availible hardware
+
 - Reseach availbe libraries for videostream analysis.
 - Create a videostream from the camera 
 - Decide how to recognize the vehicle in front.
 
 #### As a development team we want to search for QR-codes in the videostream as to identify and track their position
+
 - Implement the Zbar library in order to be able to recognize a QR-code
 - Analyze the horizontal offset of the vehicle infront.
 - Send the offset to the PID.
 
 #### As a devteam we want to track a green ball in place of QR-code since the latter resulted in performance issues while the vehicle is moving.
+
 - Define a colorspace to follow instead of the QR-code
 
-
 ### App
-
 
 #### As a user, I want to be able to switch between different driving modes with a click of a button as to easily choose how I want to drive
 
 - Integrate state switching buttons into the app
 - Lock app rotation
-- 
+
+#### As a user, I want to be able to see necessary information, such as settings and car state, in order to decide on which mode the vehicle should be in
+
+- Store data sent from MOPED
+- Display data in the app
 
 ### Communication
 
