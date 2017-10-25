@@ -1,0 +1,31 @@
+@startuml
+allow_mixing
+
+node Server
+
+enum MopedDataType {
+    MOPED_STATE
+    VELOCITY
+    SENSOR_DISTANCE
+    ACC_TARGET_VALUE
+    ACC_P_CONSTANT
+    ACC_I_CONSTANT
+    ACC_D_CONSTANT
+    ACC_INTEGRAL_SUM
+    LAT_TARGET_VALUE
+    LAT_P_CONSTANT
+    LAT_I_CONSTANT
+    LAT_D_CONSTANT
+    LAT_INTEGRAL_SUM
+    THROTTLE
+    STEERING
+    CUSTOM_1
+    CUSTOM_2
+    CUSTOM_3
+}
+
+node Client
+
+MopedDataType <-> Client : communicates using
+Server  <-> MopedDataType : communicates using
+@enduml
