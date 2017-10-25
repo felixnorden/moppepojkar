@@ -148,15 +148,25 @@ Disclaimer: The listed user stories are not in the order that they were implemen
 
 ### App
 
+#### As a development team, we want to refactor the app to make it easier to work with
+- Research old code
+- Keep what is useful, replace the rest
+- Replace hard-coded UI elements with android library
+
 #### As a user, I want to be able to switch between different driving modes with a click of a button as to easily choose how I want to drive
 
 - Integrate state switching buttons into the app
 - Lock app rotation
+- Disable speed and/or turning bar in platooning and ACC modes.
+
 
 #### As a user, I want to be able to see necessary information, such as settings and car state, in order to decide on which mode the vehicle should be in
 
 - Store data sent from MOPED
 - Display data in the app
+- Add a toggle button to view/hide various values.
+- Animate and/or grey out speed and turning bars to reflect the data being transmitted to the app depending on the state the MOPED is in.
+-Display whether app is connected to MOPED in app
 
 ### Communication
 
