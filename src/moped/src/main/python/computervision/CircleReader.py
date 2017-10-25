@@ -1,3 +1,6 @@
+# Code for multithread camera taken fromhttps://www.pyimagesearch.com/2015/12/28/increasing-raspberry-pi-fps-with-python-and-opencv/
+# Code for detecting a ball taken from https://www.pyimagesearch.com/2015/09/14/ball-tracking-with-opencv/
+
 # import the necessary packages
 from __future__ import print_function
 from picamera.array import PiRGBArray
@@ -18,7 +21,7 @@ from threading import Thread
 import cv2
 
 class PiVideoStream:
-    def __init__(self, resolution=(480, 360), framerate=10):
+    def __init__(self, resolution=(960, 720), framerate=10):
         # initialize the camera and stream
         self.camera = PiCamera()
         self.camera.resolution = resolution
@@ -71,13 +74,12 @@ class PiVideoStream:
 vs = PiVideoStream().start()
 time.sleep(2.0)
 
-greenLower = (0.11*256, 0.60*256, 0.20*256)
-greenUpper = (0.14*256, 1.00*256, 1.00*256)
+sensitivity = 15;
+greenLower = (60 - sensitivity, 100, 100)
+greenUpper = (60 + sensitivity, 255, 255)
+
 while(1):
     frame = vs.read()
-    # width=400
-
-
     blurred = cv2.GaussianBlur(frame, (11, 11), 0)
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
@@ -105,7 +107,7 @@ while(1):
         # only proceed if the radius meets a minimum size
         if radius > 7:
             # print(str(center[0] - 480/2) + "  RADIUS: " + str(radius) + "  Distance: " + str(856.0/radius))
-            print(str(center[0] - 480/2) + "," + str(856.0/radius/100))
+            print(str(center[0] - 960/2) + "," + str(856.0/radius/100))
             # draw the circle and centroid on the frame,
             # then update the list of tracked points
             # cv2.circle(frame, (int(x), int(y)), int(radius),
