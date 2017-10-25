@@ -54,7 +54,14 @@ This document describes the key features that the Product Owner has in mind, in 
 - Change GUI for more UX
 - Armed state on startup
 
-### Safety
+### Check later on
+
+- Preferred distance between MOPEDs, based on sensors
+- Absolute start position using coordinates or something
+- Specifics for preferred GUI/maneuverability
+- SoS
+
+---
 
 ## User Stories
 
@@ -165,8 +172,8 @@ Disclaimer: The listed user stories are not in the order that they were implemen
 - Store data sent from MOPED
 - Display data in the app
 - Add a toggle button to view/hide various values.
-- Animate and/or grey out speed and turning bars to reflect the data being transmitted to the app depending on the state the MOPED is in.
--Display whether app is connected to MOPED in app
+- Animate and/or disable speed and turning controls to reflect the data being transmitted to the app depending on the state the MOPED is in.
+- Display whether the app is connected to MOPED or not
 
 ### Communication
 
@@ -205,10 +212,3 @@ The end goal is to produce column based driving demo, where one main vehicle is 
 This solution will help with sustainability and human safety for the future.
 
 Cars will converse with each other in SoS, but have to be functioning independently and can make decisions on their own. The demonstration will be made using all the different MOPEDs, that each utilize their own software, but can cooperate together.
-
-### Check later on
-
-- Preferred distance between MOPEDs, based on sensors
-- Absolute start position using coordinates or something
-- Specifics for preferred GUI/maneuverability
-- SoS
