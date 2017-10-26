@@ -12,7 +12,7 @@ import static org.junit.Assert.assertTrue;
 
 public class EnumTests {
     @Test
-    public void MopedStateTest() {
+    public void mopedStateTest() {
         for (MopedState type : MopedState.values()) {
             assertEquals(type, MopedState.parseInt(type.toInt()));
         }
@@ -21,7 +21,7 @@ public class EnumTests {
     }
 
     @Test
-    public void MopedDataTypeTest() {
+    public void mopedDataTypeTest() {
         for (MopedDataType type : MopedDataType.values()) {
             assertEquals(type, MopedDataType.parseInt(type.toInt()));
         }
