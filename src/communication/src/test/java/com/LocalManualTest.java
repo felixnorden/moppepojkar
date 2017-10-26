@@ -113,6 +113,9 @@ public class LocalManualTest {
                 case "cstate MANUAL":
                     client.setState(MopedState.MANUAL);
                     break;
+                default:
+                    System.out.println("Please insert a real command.");
+                    break;
             }
 
             //Client handling throttling
