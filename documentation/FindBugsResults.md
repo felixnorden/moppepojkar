@@ -1,3 +1,7 @@
+# FindBugs Report
+
+[Back to top](../README.md)
+
 FindBugs-IDEA: found 0 bugs in 76 classes
 using FindBugs-IDEA 1.0.1 with Findbugs version 3.0.1
 
