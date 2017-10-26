@@ -71,7 +71,7 @@ public class LocalManualTest {
         server.addListener(serverListener);
 
         //Loop which let you interact with the simulated client/server.
-        Scanner in = new Scanner(System.in);
+        Scanner in = new Scanner(System.in, "UTF-8");
         while (true) {
             String input = in.nextLine();
 
