@@ -15,6 +15,7 @@ The following links can be used for navigation throughout the repository:
 - [Definition of Done](./documentation/definition-of-done.md)
 - [UML](./documentation/uml/)
 - [Retrospective results](./documentation/retrospectives-results.md)
+- [FindBugs report](./documentation/FindBugsReport.md)
 
 #### Guidelines & Templates
 
