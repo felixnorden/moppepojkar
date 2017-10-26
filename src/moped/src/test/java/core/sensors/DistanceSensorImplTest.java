@@ -104,12 +104,8 @@ class DistanceSensorImplTest {
     }
 
     static class ConsumerImpl implements Consumer<Double> {
-        Double d;
-
         @Override
-        public void accept(Double aDouble) {
-            this.d = 1.0;
-        }
+        public void accept(Double aDouble) {}
     }
 
     @Test
