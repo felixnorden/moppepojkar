@@ -93,8 +93,8 @@ public class ClientCommunicatorTest {
 
                 }
             };
-
             Communicator client = new ClientCommunicator("0.0.0.0", 1111);
+            client.addListener(cl);
             client.start();
             Thread.sleep(500);
             client.stop();
