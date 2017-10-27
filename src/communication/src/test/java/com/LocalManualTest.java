@@ -11,64 +11,15 @@ import java.util.Scanner;
  * Usage: See switch-case below.
  */
 public class LocalManualTest {
+
     public static void main(String[] args) {
-        new LocalManualTest();
-    }
-
-    //Listener which acts as the servers listener.
-    CommunicationListener serverListener = new CommunicationListener() {
-        @Override
-        public void onConnection() {
-            System.out.println("[SERVER] CONNECT");
-        }
-
-        @Override
-        public void onStateChange(MopedState stateChange) {
-            System.out.println("[SERVER] STATE: " + stateChange.name());
-        }
-
-        @Override
-        public void onDisconnection() {
-            System.out.println("[SERVER] DISCONNECT");
-        }
-
-        @Override
-        public void onValueChanged(MopedDataType type, int value) {
-            System.out.println("[SERVER] VALUE: " + type.name() + " - " + value);
-        }
-    };
-
-    //Listener which acts as the clients listener.
-    CommunicationListener clientListener = new CommunicationListener() {
-        @Override
-        public void onConnection() {
-            System.out.println("[CLIENT] CONNECT");
-        }
-
-        @Override
-        public void onStateChange(MopedState stateChange) {
-            System.out.println("[CLIENT] STATE: " + stateChange.name());
-        }
-
-        @Override
-        public void onDisconnection() {
-            System.out.println("[CLIENT] DISCONNECT");
-        }
-
-        @Override
-        public void onValueChanged(MopedDataType type, int value) {
-            System.out.println("[CLIENT] VALUE: " + type.name() + " - " + value);
-        }
-    };
-
-    public LocalManualTest() {
         Communicator server = new ServerCommunicator(9000);
         //Change 0.0.0.0 to host ip if host isn't this computer.
         Communicator client = new ClientCommunicator("192.168.137.95", 9005);
 
 
-        client.addListener(clientListener);
-        server.addListener(serverListener);
+        client.addListener(new ClientListener());
+        server.addListener(new ServerListener());
 
         //Loop which let you interact with the simulated client/server.
         Scanner in = new Scanner(System.in, "UTF-8");
@@ -130,6 +81,50 @@ public class LocalManualTest {
                 t = Integer.parseInt(arg[2]);
                 client.setValue(MopedDataType.STEERING, t);
             }
+        }
+    }
+
+    private static class ServerListener implements CommunicationListener {
+        @Override
+        public void onConnection() {
+            System.out.println("[SERVER] CONNECT");
+        }
+
+        @Override
+        public void onStateChange(MopedState stateChange) {
+            System.out.println("[SERVER] STATE: " + stateChange.name());
+        }
+
+        @Override
+        public void onDisconnection() {
+            System.out.println("[SERVER] DISCONNECT");
+        }
+
+        @Override
+        public void onValueChanged(MopedDataType type, int value) {
+            System.out.println("[SERVER] VALUE: " + type.name() + " - " + value);
+        }
+    }
+
+    private static class ClientListener implements CommunicationListener {
+        @Override
+        public void onConnection() {
+            System.out.println("[CLIENT] CONNECT");
+        }
+
+        @Override
+        public void onStateChange(MopedState stateChange) {
+            System.out.println("[CLIENT] STATE: " + stateChange.name());
+        }
+
+        @Override
+        public void onDisconnection() {
+            System.out.println("[CLIENT] DISCONNECT");
+        }
+
+        @Override
+        public void onValueChanged(MopedDataType type, int value) {
+            System.out.println("[CLIENT] VALUE: " + type.name() + " - " + value);
         }
     }
 }

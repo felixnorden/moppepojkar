@@ -4,6 +4,7 @@ package com;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -18,33 +19,9 @@ public class CommunicatonTest {
     @Test
     public void testSendValueFromServer() {
         Communicator client = new ClientCommunicator("0.0.0.0", 12942);
-        final Communicator server = new ServerCommunicator(12942);
-
-        final ArrayList<Integer> vars = new ArrayList<>();
-        CommunicationListener cl = new CommunicationListener() {
-            @Override
-            public void onConnection() {
-                server.setValue(MopedDataType.VELOCITY, 10);
-            }
-
-            @Override
-            public void onStateChange(MopedState stateChange) {
-
-            }
-
-            @Override
-            public void onDisconnection() {
-
-            }
-
-            @Override
-            public void onValueChanged(MopedDataType type, int value) {
-                vars.add(type.toInt());
-                vars.add(value);
-            }
-        };
-
-        client.addListener(cl);
+        Communicator server = new ServerCommunicator(12942);
+        ArrayList<Integer> vars = new ArrayList<>();
+        client.addListener(new ClientListenerValue(server, vars));
         server.start();
         client.start();
 
@@ -65,33 +42,10 @@ public class CommunicatonTest {
 
     @Test
     public void testSendValueFromClient() {
-        final Communicator client = new ClientCommunicator("0.0.0.0", 12941);
+        Communicator client = new ClientCommunicator("0.0.0.0", 12941);
         Communicator server = new ServerCommunicator(12941);
-
-        final ArrayList<Integer> vars = new ArrayList<>();
-        CommunicationListener cl = new CommunicationListener() {
-            @Override
-            public void onConnection() {
-                client.setValue(MopedDataType.VELOCITY, 20);
-            }
-
-            @Override
-            public void onStateChange(MopedState stateChange) {
-            }
-
-            @Override
-            public void onDisconnection() {
-
-            }
-
-            @Override
-            public void onValueChanged(MopedDataType type, int value) {
-                vars.add(type.toInt());
-                vars.add(value);
-            }
-        };
-
-        server.addListener(cl);
+        ArrayList<Integer> vars = new ArrayList<>();
+        server.addListener(new ServerListenerValue(client, vars));
         server.start();
         client.start();
 
@@ -113,33 +67,10 @@ public class CommunicatonTest {
     @Test
     public void testSendStateFromClient() {
         Communicator client = new ClientCommunicator("0.0.0.0", 12939);
-        final Communicator server = new ServerCommunicator(12939);
+        Communicator server = new ServerCommunicator(12939);
+        ArrayList<Boolean> vars = new ArrayList<>();
 
-        final ArrayList<Boolean> vars = new ArrayList<>();
-        CommunicationListener cl = new CommunicationListener() {
-            @Override
-            public void onConnection() {
-                server.setState(MopedState.ACC);
-            }
-
-            @Override
-            public void onStateChange(MopedState stateChange) {
-                vars.add(true);
-                assertTrue(stateChange == MopedState.ACC);
-            }
-
-            @Override
-            public void onDisconnection() {
-
-            }
-
-            @Override
-            public void onValueChanged(MopedDataType type, int value) {
-
-            }
-        };
-
-        client.addListener(cl);
+        client.addListener(new ClientListenerState(server, vars));
         server.start();
         client.start();
 
@@ -159,34 +90,10 @@ public class CommunicatonTest {
 
     @Test
     public void testSendStateFromServer() {
-        final Communicator client = new ClientCommunicator("0.0.0.0", 12940);
+        Communicator client = new ClientCommunicator("0.0.0.0", 12940);
         Communicator server = new ServerCommunicator(12940);
-
-        final ArrayList<Boolean> vars = new ArrayList<>();
-        CommunicationListener cl = new CommunicationListener() {
-            @Override
-            public void onConnection() {
-                client.setState(MopedState.MANUAL);
-            }
-
-            @Override
-            public void onStateChange(MopedState stateChange) {
-                vars.add(true);
-                assertTrue(stateChange == MopedState.MANUAL);
-            }
-
-            @Override
-            public void onDisconnection() {
-
-            }
-
-            @Override
-            public void onValueChanged(MopedDataType type, int value) {
-
-            }
-        };
-
-        server.addListener(cl);
+        ArrayList<Boolean> vars = new ArrayList<>();
+        server.addListener(new ServerListenerState(client, vars));
         server.start();
         client.start();
 
@@ -208,30 +115,9 @@ public class CommunicatonTest {
     public void testOnServerDisconnection() {
         //Let's test the client first
         Communicator client = new ClientCommunicator("0.0.0.0", 8666);
-        final Communicator server = new ServerCommunicator(8666);
-        final ArrayList<Boolean> vars = new ArrayList<>();
-        CommunicationListener cl = new CommunicationListener() {
-            @Override
-            public void onConnection() {
-                server.stop();
-            }
-
-            @Override
-            public void onStateChange(MopedState stateChange) {
-
-            }
-
-            @Override
-            public void onDisconnection() {
-                vars.add(true);
-            }
-
-            @Override
-            public void onValueChanged(MopedDataType type, int value) {
-
-            }
-        };
-        client.addListener(cl);
+        Communicator server = new ServerCommunicator(8666);
+        ArrayList<Boolean> vars = new ArrayList<>();
+        client.addListener(new ServerListenerDisconnect(server, vars));
         server.start();
         client.start();
         try {
@@ -252,31 +138,10 @@ public class CommunicatonTest {
     @Test
     public void testOnClientDisconnection() {
         //Let's test the client first
-        final Communicator client = new ClientCommunicator("0.0.0.0", 8668);
+        Communicator client = new ClientCommunicator("0.0.0.0", 8668);
         Communicator server = new ServerCommunicator(8668);
-        final ArrayList<Boolean> vars = new ArrayList<>();
-        CommunicationListener cl = new CommunicationListener() {
-            @Override
-            public void onConnection() {
-                client.stop();
-            }
-
-            @Override
-            public void onStateChange(MopedState stateChange) {
-
-            }
-
-            @Override
-            public void onDisconnection() {
-                vars.add(true);
-            }
-
-            @Override
-            public void onValueChanged(MopedDataType type, int value) {
-
-            }
-        };
-        server.addListener(cl);
+        ArrayList<Boolean> vars = new ArrayList<>();
+        server.addListener(new ClientListenerDisconnect(client, vars));
         server.start();
         client.start();
         try {
@@ -307,5 +172,193 @@ public class CommunicatonTest {
         server.enableLogging();
 
         assertTrue(server.isLoggingEnabled());
+    }
+
+    private static class ClientListenerDisconnect implements CommunicationListener {
+
+        private List<Boolean> list;
+        private Communicator client;
+
+        ClientListenerDisconnect(Communicator client, List<Boolean> list) {
+            this.list = list;
+            this.client = client;
+        }
+
+        @Override
+        public void onConnection() {
+            client.stop();
+        }
+
+        @Override
+        public void onStateChange(MopedState stateChange) {
+
+        }
+
+        @Override
+        public void onDisconnection() {
+            list.add(true);
+        }
+
+        @Override
+        public void onValueChanged(MopedDataType type, int value) {
+        }
+    }
+
+    private static class ServerListenerDisconnect implements CommunicationListener {
+
+        private List<Boolean> list;
+        private Communicator server;
+
+        ServerListenerDisconnect(Communicator server, List<Boolean> list) {
+            this.list = list;
+            this.server = server;
+        }
+
+        @Override
+        public void onConnection() {
+            server.stop();
+        }
+
+        @Override
+        public void onStateChange(MopedState stateChange) {
+
+        }
+
+        @Override
+        public void onDisconnection() {
+            list.add(true);
+        }
+
+        @Override
+        public void onValueChanged(MopedDataType type, int value) {
+
+        }
+    }
+
+    private static class ServerListenerValue implements CommunicationListener {
+
+        private List<Integer> list;
+        private Communicator client;
+
+        ServerListenerValue(Communicator client, List<Integer> list) {
+            this.list = list;
+            this.client = client;
+        }
+
+        @Override
+        public void onConnection() {
+            client.setValue(MopedDataType.VELOCITY, 20);
+        }
+
+        @Override
+        public void onStateChange(MopedState stateChange) {
+        }
+
+        @Override
+        public void onDisconnection() {
+
+        }
+
+        @Override
+        public void onValueChanged(MopedDataType type, int value) {
+            list.add(type.toInt());
+            list.add(value);
+        }
+    }
+
+    private static class ClientListenerValue implements CommunicationListener {
+
+        private List<Integer> list;
+        private Communicator server;
+
+        ClientListenerValue(Communicator server, List<Integer> list) {
+            this.list = list;
+            this.server = server;
+        }
+
+        @Override
+        public void onConnection() {
+            server.setValue(MopedDataType.VELOCITY, 10);
+        }
+
+        @Override
+        public void onStateChange(MopedState stateChange) {
+
+        }
+
+        @Override
+        public void onDisconnection() {
+
+        }
+
+        @Override
+        public void onValueChanged(MopedDataType type, int value) {
+            list.add(type.toInt());
+            list.add(value);
+        }
+    }
+
+    private static class ServerListenerState implements CommunicationListener {
+
+        private List<Boolean> list;
+        private Communicator client;
+
+        ServerListenerState(Communicator client, List<Boolean> list) {
+            this.list = list;
+            this.client = client;
+        }
+
+        @Override
+        public void onConnection() {
+            client.setState(MopedState.MANUAL);
+        }
+
+        @Override
+        public void onStateChange(MopedState stateChange) {
+            list.add(true);
+            assertTrue(stateChange == MopedState.MANUAL);
+        }
+
+        @Override
+        public void onDisconnection() {
+
+        }
+
+        @Override
+        public void onValueChanged(MopedDataType type, int value) {
+
+        }
+    }
+
+    private static class ClientListenerState implements CommunicationListener {
+
+        private List<Boolean> list;
+        private Communicator server;
+
+        ClientListenerState(Communicator server, List<Boolean> list) {
+            this.list = list;
+            this.server = server;
+        }
+
+        @Override
+        public void onConnection() {
+            server.setState(MopedState.ACC);
+        }
+
+        @Override
+        public void onStateChange(MopedState stateChange) {
+            list.add(true);
+            assertTrue(stateChange == MopedState.ACC);
+        }
+
+        @Override
+        public void onDisconnection() {
+
+        }
+
+        @Override
+        public void onValueChanged(MopedDataType type, int value) {
+
+        }
     }
 }
