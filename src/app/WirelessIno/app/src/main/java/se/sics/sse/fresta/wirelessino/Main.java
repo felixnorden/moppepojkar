@@ -655,6 +655,8 @@ public class Main extends Activity implements CommunicationListener {
             case MANUAL:
                 manualButtonEnable();
                 break;
+            default:
+                break;
         }
     }
 
