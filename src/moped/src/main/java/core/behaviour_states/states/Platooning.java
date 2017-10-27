@@ -1,9 +1,11 @@
 package core.behaviour_states.states;
 
+import com_io.CommunicationsMediator;
+import com_io.Direction;
 import core.action_strategies.*;
 import core.car_control.CarControl;
 
-import static utils.Config.MAX_INTERMISSION_TIME;
+import static utils.Config.*;
 
 /**
  * State for handling platooning,
@@ -13,8 +15,10 @@ public class Platooning implements BehaviourState {
     private CarControl carControl;
     private BidirectionalHandler platooningHandler;
     private long lastRunTime;
+    private CommunicationsMediator communicationsMediator;
 
-    public Platooning(CarControl carController) {
+    public Platooning(CarControl carController, CommunicationsMediator communicationsMediator) {
+        this.communicationsMediator = communicationsMediator;
         lastRunTime = System.currentTimeMillis();
         this.carControl = carController;
 
@@ -40,8 +44,16 @@ public class Platooning implements BehaviourState {
             platooningHandler = new BidirectionalHandlerImpl(lateral,acc);
         }
 
-        carControl.setSteerValue((int) platooningHandler.takeLatitudeAction());
-        carControl.setThrottle((int) platooningHandler.takeLongitudeAction());
+        int steerValue = (int) platooningHandler.takeLatitudeAction();
+        int throttleValue = (int) platooningHandler.takeLongitudeAction();
+
+        carControl.setSteerValue(steerValue);
+        carControl.setThrottle(throttleValue);
+
+        communicationsMediator.transmitData(STEER + SEPARATOR + steerValue, Direction.EXTERNAL);
+        communicationsMediator.transmitData(THROTTLE + SEPARATOR + throttleValue, Direction.EXTERNAL);
+
+
         lastRunTime = System.currentTimeMillis();
 
 

@@ -13,7 +13,7 @@ import java.util.function.Consumer;
 public class BehaviourStateFactoryImpl implements BehaviourStateFactory{
 
     private static final BehaviourStateFactory INSTANCE = new BehaviourStateFactoryImpl();
-    private static final CarControl carController = new CarControlImpl(CommunicatorFactory.getComInstance());
+    private static final CarControl carController = new CarControlImpl();
 
     /**
      *
@@ -30,12 +30,12 @@ public class BehaviourStateFactoryImpl implements BehaviourStateFactory{
 
     @Override
     public BehaviourState createAdaptiveCruiseControlBehaviour() {
-        return new AdaptiveCruiseControl(carController);
+        return new AdaptiveCruiseControl(carController, CommunicatorFactory.getComInstance());
     }
 
     @Override
     public BehaviourState createPlatooningBehaviour() {
-        return new Platooning(carController);
+        return new Platooning(carController, CommunicatorFactory.getComInstance());
     }
 
     @Override
