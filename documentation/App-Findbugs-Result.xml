@@ -1,0 +1,567 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://findbugs.sourceforge.net/xsl/default.xsl"?>
+
+<BugCollection version="3.0.1" sequence="0" timestamp="1509115212525" analysisTimestamp="1509115201458" release="">
+  <Project projectName="WirelessIno[app]">
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\android\support\constraint\R$attr.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\android\support\constraint\R$id.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\android\support\constraint\R$styleable.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\android\support\constraint\R.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\android\support\v4\R.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\android\support\v7\appcompat\R$anim.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\android\support\v7\appcompat\R$attr.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\android\support\v7\appcompat\R$bool.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\android\support\v7\appcompat\R$color.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\android\support\v7\appcompat\R$dimen.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\android\support\v7\appcompat\R$drawable.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\android\support\v7\appcompat\R$id.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\android\support\v7\appcompat\R$integer.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\android\support\v7\appcompat\R$layout.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\android\support\v7\appcompat\R$string.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\android\support\v7\appcompat\R$style.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\android\support\v7\appcompat\R$styleable.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\android\support\v7\appcompat\R.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\se\sics\sse\fresta\wirelessino\BuildConfig.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\se\sics\sse\fresta\wirelessino\Main$1$1.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\se\sics\sse\fresta\wirelessino\Main$1.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\se\sics\sse\fresta\wirelessino\Main$10.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\se\sics\sse\fresta\wirelessino\Main$11.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\se\sics\sse\fresta\wirelessino\Main$12.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\se\sics\sse\fresta\wirelessino\Main$13.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\se\sics\sse\fresta\wirelessino\Main$14.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\se\sics\sse\fresta\wirelessino\Main$15.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\se\sics\sse\fresta\wirelessino\Main$16.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\se\sics\sse\fresta\wirelessino\Main$17.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\se\sics\sse\fresta\wirelessino\Main$18.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\se\sics\sse\fresta\wirelessino\Main$2$1.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\se\sics\sse\fresta\wirelessino\Main$2.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\se\sics\sse\fresta\wirelessino\Main$3.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\se\sics\sse\fresta\wirelessino\Main$4.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\se\sics\sse\fresta\wirelessino\Main$5.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\se\sics\sse\fresta\wirelessino\Main$6.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\se\sics\sse\fresta\wirelessino\Main$7.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\se\sics\sse\fresta\wirelessino\Main$8.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\se\sics\sse\fresta\wirelessino\Main$9.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\se\sics\sse\fresta\wirelessino\Main.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\se\sics\sse\fresta\wirelessino\R$anim.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\se\sics\sse\fresta\wirelessino\R$attr.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\se\sics\sse\fresta\wirelessino\R$bool.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\se\sics\sse\fresta\wirelessino\R$color.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\se\sics\sse\fresta\wirelessino\R$dimen.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\se\sics\sse\fresta\wirelessino\R$drawable.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\se\sics\sse\fresta\wirelessino\R$id.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\se\sics\sse\fresta\wirelessino\R$integer.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\se\sics\sse\fresta\wirelessino\R$layout.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\se\sics\sse\fresta\wirelessino\R$menu.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\se\sics\sse\fresta\wirelessino\R$mipmap.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\se\sics\sse\fresta\wirelessino\R$string.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\se\sics\sse\fresta\wirelessino\R$style.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\se\sics\sse\fresta\wirelessino\R$styleable.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\se\sics\sse\fresta\wirelessino\R.class</Jar>
+    <Jar>C:\Users\Nightingale\Documents\GitHub\moppepojkar\src\app\WirelessIno\app\build\intermediates\classes\debug\se\sics\sse\fresta\wirelessino\Settings.class</Jar>
+    <AuxClasspathEntry>C:/Users/Nightingale/Documents/GitHub/moppepojkar/src/app/WirelessIno/app/build/intermediates/classes/debug</AuxClasspathEntry>
+    <SrcDir>C:/Users/Nightingale/Documents/GitHub/moppepojkar/src/app/WirelessIno/app/build/generated/source/r/debug</SrcDir>
+    <SrcDir>C:/Users/Nightingale/Documents/GitHub/moppepojkar/src/app/WirelessIno/app/build/generated/source/aidl/debug</SrcDir>
+    <SrcDir>C:/Users/Nightingale/Documents/GitHub/moppepojkar/src/app/WirelessIno/app/build/generated/source/buildConfig/debug</SrcDir>
+    <SrcDir>C:/Users/Nightingale/Documents/GitHub/moppepojkar/src/app/WirelessIno/app/build/generated/source/rs/debug</SrcDir>
+    <SrcDir>C:/Users/Nightingale/Documents/GitHub/moppepojkar/src/app/WirelessIno/app/build/generated/source/apt/debug</SrcDir>
+    <SrcDir>C:/Users/Nightingale/Documents/GitHub/moppepojkar/src/app/WirelessIno/app/build/generated/res/rs/debug</SrcDir>
+    <SrcDir>C:/Users/Nightingale/Documents/GitHub/moppepojkar/src/app/WirelessIno/app/build/generated/res/resValues/debug</SrcDir>
+    <SrcDir>C:/Users/Nightingale/Documents/GitHub/moppepojkar/src/app/WirelessIno/app/build/generated/source/r/androidTest/debug</SrcDir>
+    <SrcDir>C:/Users/Nightingale/Documents/GitHub/moppepojkar/src/app/WirelessIno/app/build/generated/source/aidl/androidTest/debug</SrcDir>
+    <SrcDir>C:/Users/Nightingale/Documents/GitHub/moppepojkar/src/app/WirelessIno/app/build/generated/source/buildConfig/androidTest/debug</SrcDir>
+    <SrcDir>C:/Users/Nightingale/Documents/GitHub/moppepojkar/src/app/WirelessIno/app/build/generated/source/rs/androidTest/debug</SrcDir>
+    <SrcDir>C:/Users/Nightingale/Documents/GitHub/moppepojkar/src/app/WirelessIno/app/build/generated/res/rs/androidTest/debug</SrcDir>
+    <SrcDir>C:/Users/Nightingale/Documents/GitHub/moppepojkar/src/app/WirelessIno/app/build/generated/res/resValues/androidTest/debug</SrcDir>
+    <SrcDir>C:/Users/Nightingale/Documents/GitHub/moppepojkar/src/app/WirelessIno/app/src/main/res</SrcDir>
+    <SrcDir>C:/Users/Nightingale/Documents/GitHub/moppepojkar/src/app/WirelessIno/app/src/main/assets</SrcDir>
+    <SrcDir>C:/Users/Nightingale/Documents/GitHub/moppepojkar/src/app/WirelessIno/app/src/main/java</SrcDir>
+  </Project>
+  <BugInstance type="NM_CLASS_NAMING_CONVENTION" priority="2" rank="16" abbrev="Nm" category="BAD_PRACTICE" instanceHash="29b921b104f2f275c9c21678182bf8c7" instanceOccurrenceNum="0" instanceOccurrenceMax="0">
+    <ShortMessage>Class names should start with an upper case letter</ShortMessage>
+    <LongMessage>The class name android.support.constraint.R$attr doesn&apos;t start with an upper case letter</LongMessage>
+    <Class classname="android.support.constraint.R$attr" primary="true">
+      <SourceLine classname="android.support.constraint.R$attr" start="10" end="10" sourcefile="R.java" sourcepath="android/support/constraint/R.java" relSourcepath="build\generated\source\r\debug\android\support\constraint\R.java">
+        <Message>At R.java:[line 10]</Message>
+      </SourceLine>
+      <Message>In class android.support.constraint.R$attr</Message>
+    </Class>
+    <SourceLine classname="android.support.constraint.R$attr" start="10" end="10" sourcefile="R.java" sourcepath="android/support/constraint/R.java" relSourcepath="build\generated\source\r\debug\android\support\constraint\R.java" synthetic="true">
+      <Message>At R.java:[line 10]</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugInstance type="NM_CLASS_NAMING_CONVENTION" priority="2" rank="16" abbrev="Nm" category="BAD_PRACTICE" instanceHash="feedcfd494c49b882bdea79bbf7a61df" instanceOccurrenceNum="0" instanceOccurrenceMax="0">
+    <ShortMessage>Class names should start with an upper case letter</ShortMessage>
+    <LongMessage>The class name android.support.constraint.R$id doesn&apos;t start with an upper case letter</LongMessage>
+    <Class classname="android.support.constraint.R$id" primary="true">
+      <SourceLine classname="android.support.constraint.R$id" start="56" end="56" sourcefile="R.java" sourcepath="android/support/constraint/R.java" relSourcepath="build\generated\source\r\debug\android\support\constraint\R.java">
+        <Message>At R.java:[line 56]</Message>
+      </SourceLine>
+      <Message>In class android.support.constraint.R$id</Message>
+    </Class>
+    <SourceLine classname="android.support.constraint.R$id" start="56" end="56" sourcefile="R.java" sourcepath="android/support/constraint/R.java" relSourcepath="build\generated\source\r\debug\android\support\constraint\R.java" synthetic="true">
+      <Message>At R.java:[line 56]</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugInstance type="NM_CLASS_NAMING_CONVENTION" priority="2" rank="16" abbrev="Nm" category="BAD_PRACTICE" instanceHash="b24d03b7fcf2d3fe997ab2f9bc53a122" instanceOccurrenceNum="0" instanceOccurrenceMax="0">
+    <ShortMessage>Class names should start with an upper case letter</ShortMessage>
+    <LongMessage>The class name android.support.constraint.R$styleable doesn&apos;t start with an upper case letter</LongMessage>
+    <Class classname="android.support.constraint.R$styleable" primary="true">
+      <SourceLine classname="android.support.constraint.R$styleable" start="67" end="183" sourcefile="R.java" sourcepath="android/support/constraint/R.java" relSourcepath="build\generated\source\r\debug\android\support\constraint\R.java">
+        <Message>At R.java:[lines 67-183]</Message>
+      </SourceLine>
+      <Message>In class android.support.constraint.R$styleable</Message>
+    </Class>
+    <SourceLine classname="android.support.constraint.R$styleable" start="67" end="183" sourcefile="R.java" sourcepath="android/support/constraint/R.java" relSourcepath="build\generated\source\r\debug\android\support\constraint\R.java" synthetic="true">
+      <Message>At R.java:[lines 67-183]</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugInstance type="NM_CLASS_NAMING_CONVENTION" priority="2" rank="16" abbrev="Nm" category="BAD_PRACTICE" instanceHash="f6a1cbf292ff207d99da7a613befbb74" instanceOccurrenceNum="0" instanceOccurrenceMax="0">
+    <ShortMessage>Class names should start with an upper case letter</ShortMessage>
+    <LongMessage>The class name android.support.v7.appcompat.R$anim doesn&apos;t start with an upper case letter</LongMessage>
+    <Class classname="android.support.v7.appcompat.R$anim" primary="true">
+      <SourceLine classname="android.support.v7.appcompat.R$anim" start="10" end="10" sourcefile="R.java" sourcepath="android/support/v7/appcompat/R.java" relSourcepath="build\generated\source\r\debug\android\support\v7\appcompat\R.java">
+        <Message>At R.java:[line 10]</Message>
+      </SourceLine>
+      <Message>In class android.support.v7.appcompat.R$anim</Message>
+    </Class>
+    <SourceLine classname="android.support.v7.appcompat.R$anim" start="10" end="10" sourcefile="R.java" sourcepath="android/support/v7/appcompat/R.java" relSourcepath="build\generated\source\r\debug\android\support\v7\appcompat\R.java" synthetic="true">
+      <Message>At R.java:[line 10]</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugInstance type="NM_CLASS_NAMING_CONVENTION" priority="2" rank="16" abbrev="Nm" category="BAD_PRACTICE" instanceHash="1841a87261af5505ef0bac16428b3ee6" instanceOccurrenceNum="0" instanceOccurrenceMax="0">
+    <ShortMessage>Class names should start with an upper case letter</ShortMessage>
+    <LongMessage>The class name android.support.v7.appcompat.R$attr doesn&apos;t start with an upper case letter</LongMessage>
+    <Class classname="android.support.v7.appcompat.R$attr" primary="true">
+      <SourceLine classname="android.support.v7.appcompat.R$attr" start="18" end="18" sourcefile="R.java" sourcepath="android/support/v7/appcompat/R.java" relSourcepath="build\generated\source\r\debug\android\support\v7\appcompat\R.java">
+        <Message>At R.java:[line 18]</Message>
+      </SourceLine>
+      <Message>In class android.support.v7.appcompat.R$attr</Message>
+    </Class>
+    <SourceLine classname="android.support.v7.appcompat.R$attr" start="18" end="18" sourcefile="R.java" sourcepath="android/support/v7/appcompat/R.java" relSourcepath="build\generated\source\r\debug\android\support\v7\appcompat\R.java" synthetic="true">
+      <Message>At R.java:[line 18]</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugInstance type="NM_CLASS_NAMING_CONVENTION" priority="2" rank="16" abbrev="Nm" category="BAD_PRACTICE" instanceHash="6e15cf5b46efb9b08ec3ad487d23b8db" instanceOccurrenceNum="0" instanceOccurrenceMax="0">
+    <ShortMessage>Class names should start with an upper case letter</ShortMessage>
+    <LongMessage>The class name android.support.v7.appcompat.R$bool doesn&apos;t start with an upper case letter</LongMessage>
+    <Class classname="android.support.v7.appcompat.R$bool" primary="true">
+      <SourceLine classname="android.support.v7.appcompat.R$bool" start="189" end="189" sourcefile="R.java" sourcepath="android/support/v7/appcompat/R.java" relSourcepath="build\generated\source\r\debug\android\support\v7\appcompat\R.java">
+        <Message>At R.java:[line 189]</Message>
+      </SourceLine>
+      <Message>In class android.support.v7.appcompat.R$bool</Message>
+    </Class>
+    <SourceLine classname="android.support.v7.appcompat.R$bool" start="189" end="189" sourcefile="R.java" sourcepath="android/support/v7/appcompat/R.java" relSourcepath="build\generated\source\r\debug\android\support\v7\appcompat\R.java" synthetic="true">
+      <Message>At R.java:[line 189]</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugInstance type="NM_CLASS_NAMING_CONVENTION" priority="2" rank="16" abbrev="Nm" category="BAD_PRACTICE" instanceHash="d721e264e8a73ef86ae94e22cd8cc639" instanceOccurrenceNum="0" instanceOccurrenceMax="0">
+    <ShortMessage>Class names should start with an upper case letter</ShortMessage>
+    <LongMessage>The class name android.support.v7.appcompat.R$color doesn&apos;t start with an upper case letter</LongMessage>
+    <Class classname="android.support.v7.appcompat.R$color" primary="true">
+      <SourceLine classname="android.support.v7.appcompat.R$color" start="197" end="197" sourcefile="R.java" sourcepath="android/support/v7/appcompat/R.java" relSourcepath="build\generated\source\r\debug\android\support\v7\appcompat\R.java">
+        <Message>At R.java:[line 197]</Message>
+      </SourceLine>
+      <Message>In class android.support.v7.appcompat.R$color</Message>
+    </Class>
+    <SourceLine classname="android.support.v7.appcompat.R$color" start="197" end="197" sourcefile="R.java" sourcepath="android/support/v7/appcompat/R.java" relSourcepath="build\generated\source\r\debug\android\support\v7\appcompat\R.java" synthetic="true">
+      <Message>At R.java:[line 197]</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugInstance type="NM_CLASS_NAMING_CONVENTION" priority="2" rank="16" abbrev="Nm" category="BAD_PRACTICE" instanceHash="6c48a87875850baec10124065d2f5610" instanceOccurrenceNum="0" instanceOccurrenceMax="0">
+    <ShortMessage>Class names should start with an upper case letter</ShortMessage>
+    <LongMessage>The class name android.support.v7.appcompat.R$dimen doesn&apos;t start with an upper case letter</LongMessage>
+    <Class classname="android.support.v7.appcompat.R$dimen" primary="true">
+      <SourceLine classname="android.support.v7.appcompat.R$dimen" start="257" end="257" sourcefile="R.java" sourcepath="android/support/v7/appcompat/R.java" relSourcepath="build\generated\source\r\debug\android\support\v7\appcompat\R.java">
+        <Message>At R.java:[line 257]</Message>
+      </SourceLine>
+      <Message>In class android.support.v7.appcompat.R$dimen</Message>
+    </Class>
+    <SourceLine classname="android.support.v7.appcompat.R$dimen" start="257" end="257" sourcefile="R.java" sourcepath="android/support/v7/appcompat/R.java" relSourcepath="build\generated\source\r\debug\android\support\v7\appcompat\R.java" synthetic="true">
+      <Message>At R.java:[line 257]</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugInstance type="NM_CLASS_NAMING_CONVENTION" priority="2" rank="16" abbrev="Nm" category="BAD_PRACTICE" instanceHash="13f703ca4a33017dc948c8ea80d8ec8d" instanceOccurrenceNum="0" instanceOccurrenceMax="0">
+    <ShortMessage>Class names should start with an upper case letter</ShortMessage>
+    <LongMessage>The class name android.support.v7.appcompat.R$drawable doesn&apos;t start with an upper case letter</LongMessage>
+    <Class classname="android.support.v7.appcompat.R$drawable" primary="true">
+      <SourceLine classname="android.support.v7.appcompat.R$drawable" start="302" end="302" sourcefile="R.java" sourcepath="android/support/v7/appcompat/R.java" relSourcepath="build\generated\source\r\debug\android\support\v7\appcompat\R.java">
+        <Message>At R.java:[line 302]</Message>
+      </SourceLine>
+      <Message>In class android.support.v7.appcompat.R$drawable</Message>
+    </Class>
+    <SourceLine classname="android.support.v7.appcompat.R$drawable" start="302" end="302" sourcefile="R.java" sourcepath="android/support/v7/appcompat/R.java" relSourcepath="build\generated\source\r\debug\android\support\v7\appcompat\R.java" synthetic="true">
+      <Message>At R.java:[line 302]</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugInstance type="NM_CLASS_NAMING_CONVENTION" priority="2" rank="16" abbrev="Nm" category="BAD_PRACTICE" instanceHash="6d9f0f6db2329fa2e6de5bae23c8cc93" instanceOccurrenceNum="0" instanceOccurrenceMax="0">
+    <ShortMessage>Class names should start with an upper case letter</ShortMessage>
+    <LongMessage>The class name android.support.v7.appcompat.R$id doesn&apos;t start with an upper case letter</LongMessage>
+    <Class classname="android.support.v7.appcompat.R$id" primary="true">
+      <SourceLine classname="android.support.v7.appcompat.R$id" start="355" end="355" sourcefile="R.java" sourcepath="android/support/v7/appcompat/R.java" relSourcepath="build\generated\source\r\debug\android\support\v7\appcompat\R.java">
+        <Message>At R.java:[line 355]</Message>
+      </SourceLine>
+      <Message>In class android.support.v7.appcompat.R$id</Message>
+    </Class>
+    <SourceLine classname="android.support.v7.appcompat.R$id" start="355" end="355" sourcefile="R.java" sourcepath="android/support/v7/appcompat/R.java" relSourcepath="build\generated\source\r\debug\android\support\v7\appcompat\R.java" synthetic="true">
+      <Message>At R.java:[line 355]</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugInstance type="NM_CLASS_NAMING_CONVENTION" priority="2" rank="16" abbrev="Nm" category="BAD_PRACTICE" instanceHash="9d97a85fb4b15c9f5c7189d477ab1f4d" instanceOccurrenceNum="0" instanceOccurrenceMax="0">
+    <ShortMessage>Class names should start with an upper case letter</ShortMessage>
+    <LongMessage>The class name android.support.v7.appcompat.R$integer doesn&apos;t start with an upper case letter</LongMessage>
+    <Class classname="android.support.v7.appcompat.R$integer" primary="true">
+      <SourceLine classname="android.support.v7.appcompat.R$integer" start="422" end="422" sourcefile="R.java" sourcepath="android/support/v7/appcompat/R.java" relSourcepath="build\generated\source\r\debug\android\support\v7\appcompat\R.java">
+        <Message>At R.java:[line 422]</Message>
+      </SourceLine>
+      <Message>In class android.support.v7.appcompat.R$integer</Message>
+    </Class>
+    <SourceLine classname="android.support.v7.appcompat.R$integer" start="422" end="422" sourcefile="R.java" sourcepath="android/support/v7/appcompat/R.java" relSourcepath="build\generated\source\r\debug\android\support\v7\appcompat\R.java" synthetic="true">
+      <Message>At R.java:[line 422]</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugInstance type="NM_CLASS_NAMING_CONVENTION" priority="2" rank="16" abbrev="Nm" category="BAD_PRACTICE" instanceHash="6235b0ac91d4fa4768ae353cfc4409f4" instanceOccurrenceNum="0" instanceOccurrenceMax="0">
+    <ShortMessage>Class names should start with an upper case letter</ShortMessage>
+    <LongMessage>The class name android.support.v7.appcompat.R$layout doesn&apos;t start with an upper case letter</LongMessage>
+    <Class classname="android.support.v7.appcompat.R$layout" primary="true">
+      <SourceLine classname="android.support.v7.appcompat.R$layout" start="425" end="425" sourcefile="R.java" sourcepath="android/support/v7/appcompat/R.java" relSourcepath="build\generated\source\r\debug\android\support\v7\appcompat\R.java">
+        <Message>At R.java:[line 425]</Message>
+      </SourceLine>
+      <Message>In class android.support.v7.appcompat.R$layout</Message>
+    </Class>
+    <SourceLine classname="android.support.v7.appcompat.R$layout" start="425" end="425" sourcefile="R.java" sourcepath="android/support/v7/appcompat/R.java" relSourcepath="build\generated\source\r\debug\android\support\v7\appcompat\R.java" synthetic="true">
+      <Message>At R.java:[line 425]</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugInstance type="NM_CLASS_NAMING_CONVENTION" priority="2" rank="16" abbrev="Nm" category="BAD_PRACTICE" instanceHash="8a0a35ba0abb82cfadea608762efa21f" instanceOccurrenceNum="0" instanceOccurrenceMax="0">
+    <ShortMessage>Class names should start with an upper case letter</ShortMessage>
+    <LongMessage>The class name android.support.v7.appcompat.R$string doesn&apos;t start with an upper case letter</LongMessage>
+    <Class classname="android.support.v7.appcompat.R$string" primary="true">
+      <SourceLine classname="android.support.v7.appcompat.R$string" start="451" end="451" sourcefile="R.java" sourcepath="android/support/v7/appcompat/R.java" relSourcepath="build\generated\source\r\debug\android\support\v7\appcompat\R.java">
+        <Message>At R.java:[line 451]</Message>
+      </SourceLine>
+      <Message>In class android.support.v7.appcompat.R$string</Message>
+    </Class>
+    <SourceLine classname="android.support.v7.appcompat.R$string" start="451" end="451" sourcefile="R.java" sourcepath="android/support/v7/appcompat/R.java" relSourcepath="build\generated\source\r\debug\android\support\v7\appcompat\R.java" synthetic="true">
+      <Message>At R.java:[line 451]</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugInstance type="NM_CLASS_NAMING_CONVENTION" priority="2" rank="16" abbrev="Nm" category="BAD_PRACTICE" instanceHash="be71f48a6a0a1a64f7ea54d19087815d" instanceOccurrenceNum="0" instanceOccurrenceMax="0">
+    <ShortMessage>Class names should start with an upper case letter</ShortMessage>
+    <LongMessage>The class name android.support.v7.appcompat.R$style doesn&apos;t start with an upper case letter</LongMessage>
+    <Class classname="android.support.v7.appcompat.R$style" primary="true">
+      <SourceLine classname="android.support.v7.appcompat.R$style" start="468" end="468" sourcefile="R.java" sourcepath="android/support/v7/appcompat/R.java" relSourcepath="build\generated\source\r\debug\android\support\v7\appcompat\R.java">
+        <Message>At R.java:[line 468]</Message>
+      </SourceLine>
+      <Message>In class android.support.v7.appcompat.R$style</Message>
+    </Class>
+    <SourceLine classname="android.support.v7.appcompat.R$style" start="468" end="468" sourcefile="R.java" sourcepath="android/support/v7/appcompat/R.java" relSourcepath="build\generated\source\r\debug\android\support\v7\appcompat\R.java" synthetic="true">
+      <Message>At R.java:[line 468]</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugInstance type="NM_CLASS_NAMING_CONVENTION" priority="2" rank="16" abbrev="Nm" category="BAD_PRACTICE" instanceHash="a7cd7e4c358187a4ea2cd89a8c263e12" instanceOccurrenceNum="0" instanceOccurrenceMax="0">
+    <ShortMessage>Class names should start with an upper case letter</ShortMessage>
+    <LongMessage>The class name android.support.v7.appcompat.R$styleable doesn&apos;t start with an upper case letter</LongMessage>
+    <Class classname="android.support.v7.appcompat.R$styleable" primary="true">
+      <SourceLine classname="android.support.v7.appcompat.R$styleable" start="705" end="964" sourcefile="R.java" sourcepath="android/support/v7/appcompat/R.java" relSourcepath="build\generated\source\r\debug\android\support\v7\appcompat\R.java">
+        <Message>At R.java:[lines 705-964]</Message>
+      </SourceLine>
+      <Message>In class android.support.v7.appcompat.R$styleable</Message>
+    </Class>
+    <SourceLine classname="android.support.v7.appcompat.R$styleable" start="705" end="964" sourcefile="R.java" sourcepath="android/support/v7/appcompat/R.java" relSourcepath="build\generated\source\r\debug\android\support\v7\appcompat\R.java" synthetic="true">
+      <Message>At R.java:[lines 705-964]</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugInstance type="NM_CLASS_NAMING_CONVENTION" priority="2" rank="16" abbrev="Nm" category="BAD_PRACTICE" instanceHash="5b43e8b4dcc3d790bcd6dfc773c40904" instanceOccurrenceNum="0" instanceOccurrenceMax="0">
+    <ShortMessage>Class names should start with an upper case letter</ShortMessage>
+    <LongMessage>The class name se.sics.sse.fresta.wirelessino.R$anim doesn&apos;t start with an upper case letter</LongMessage>
+    <Class classname="se.sics.sse.fresta.wirelessino.R$anim" primary="true">
+      <SourceLine classname="se.sics.sse.fresta.wirelessino.R$anim" start="11" end="11" sourcefile="R.java" sourcepath="se/sics/sse/fresta/wirelessino/R.java" relSourcepath="build\generated\source\r\debug\se\sics\sse\fresta\wirelessino\R.java">
+        <Message>At R.java:[line 11]</Message>
+      </SourceLine>
+      <Message>In class se.sics.sse.fresta.wirelessino.R$anim</Message>
+    </Class>
+    <SourceLine classname="se.sics.sse.fresta.wirelessino.R$anim" start="11" end="11" sourcefile="R.java" sourcepath="se/sics/sse/fresta/wirelessino/R.java" relSourcepath="build\generated\source\r\debug\se\sics\sse\fresta\wirelessino\R.java" synthetic="true">
+      <Message>At R.java:[line 11]</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugInstance type="NM_CLASS_NAMING_CONVENTION" priority="2" rank="16" abbrev="Nm" category="BAD_PRACTICE" instanceHash="1de746c2ffeb3e35014412dfdadb9296" instanceOccurrenceNum="0" instanceOccurrenceMax="0">
+    <ShortMessage>Class names should start with an upper case letter</ShortMessage>
+    <LongMessage>The class name se.sics.sse.fresta.wirelessino.R$attr doesn&apos;t start with an upper case letter</LongMessage>
+    <Class classname="se.sics.sse.fresta.wirelessino.R$attr" primary="true">
+      <SourceLine classname="se.sics.sse.fresta.wirelessino.R$attr" start="19" end="19" sourcefile="R.java" sourcepath="se/sics/sse/fresta/wirelessino/R.java" relSourcepath="build\generated\source\r\debug\se\sics\sse\fresta\wirelessino\R.java">
+        <Message>At R.java:[line 19]</Message>
+      </SourceLine>
+      <Message>In class se.sics.sse.fresta.wirelessino.R$attr</Message>
+    </Class>
+    <SourceLine classname="se.sics.sse.fresta.wirelessino.R$attr" start="19" end="19" sourcefile="R.java" sourcepath="se/sics/sse/fresta/wirelessino/R.java" relSourcepath="build\generated\source\r\debug\se\sics\sse\fresta\wirelessino\R.java" synthetic="true">
+      <Message>At R.java:[line 19]</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugInstance type="NM_CLASS_NAMING_CONVENTION" priority="2" rank="16" abbrev="Nm" category="BAD_PRACTICE" instanceHash="487ff03bd4500db6f47c545f54fbcb32" instanceOccurrenceNum="0" instanceOccurrenceMax="0">
+    <ShortMessage>Class names should start with an upper case letter</ShortMessage>
+    <LongMessage>The class name se.sics.sse.fresta.wirelessino.R$bool doesn&apos;t start with an upper case letter</LongMessage>
+    <Class classname="se.sics.sse.fresta.wirelessino.R$bool" primary="true">
+      <SourceLine classname="se.sics.sse.fresta.wirelessino.R$bool" start="1585" end="1585" sourcefile="R.java" sourcepath="se/sics/sse/fresta/wirelessino/R.java" relSourcepath="build\generated\source\r\debug\se\sics\sse\fresta\wirelessino\R.java">
+        <Message>At R.java:[line 1585]</Message>
+      </SourceLine>
+      <Message>In class se.sics.sse.fresta.wirelessino.R$bool</Message>
+    </Class>
+    <SourceLine classname="se.sics.sse.fresta.wirelessino.R$bool" start="1585" end="1585" sourcefile="R.java" sourcepath="se/sics/sse/fresta/wirelessino/R.java" relSourcepath="build\generated\source\r\debug\se\sics\sse\fresta\wirelessino\R.java" synthetic="true">
+      <Message>At R.java:[line 1585]</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugInstance type="NM_CLASS_NAMING_CONVENTION" priority="2" rank="16" abbrev="Nm" category="BAD_PRACTICE" instanceHash="5affa5daa7754763bf400b39813ee5c6" instanceOccurrenceNum="0" instanceOccurrenceMax="0">
+    <ShortMessage>Class names should start with an upper case letter</ShortMessage>
+    <LongMessage>The class name se.sics.sse.fresta.wirelessino.R$color doesn&apos;t start with an upper case letter</LongMessage>
+    <Class classname="se.sics.sse.fresta.wirelessino.R$color" primary="true">
+      <SourceLine classname="se.sics.sse.fresta.wirelessino.R$color" start="1593" end="1593" sourcefile="R.java" sourcepath="se/sics/sse/fresta/wirelessino/R.java" relSourcepath="build\generated\source\r\debug\se\sics\sse\fresta\wirelessino\R.java">
+        <Message>At R.java:[line 1593]</Message>
+      </SourceLine>
+      <Message>In class se.sics.sse.fresta.wirelessino.R$color</Message>
+    </Class>
+    <SourceLine classname="se.sics.sse.fresta.wirelessino.R$color" start="1593" end="1593" sourcefile="R.java" sourcepath="se/sics/sse/fresta/wirelessino/R.java" relSourcepath="build\generated\source\r\debug\se\sics\sse\fresta\wirelessino\R.java" synthetic="true">
+      <Message>At R.java:[line 1593]</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugInstance type="NM_CLASS_NAMING_CONVENTION" priority="2" rank="16" abbrev="Nm" category="BAD_PRACTICE" instanceHash="a8f089c1e5b5d5f4b24d17353cb60e60" instanceOccurrenceNum="0" instanceOccurrenceMax="0">
+    <ShortMessage>Class names should start with an upper case letter</ShortMessage>
+    <LongMessage>The class name se.sics.sse.fresta.wirelessino.R$dimen doesn&apos;t start with an upper case letter</LongMessage>
+    <Class classname="se.sics.sse.fresta.wirelessino.R$dimen" primary="true">
+      <SourceLine classname="se.sics.sse.fresta.wirelessino.R$dimen" start="1653" end="1653" sourcefile="R.java" sourcepath="se/sics/sse/fresta/wirelessino/R.java" relSourcepath="build\generated\source\r\debug\se\sics\sse\fresta\wirelessino\R.java">
+        <Message>At R.java:[line 1653]</Message>
+      </SourceLine>
+      <Message>In class se.sics.sse.fresta.wirelessino.R$dimen</Message>
+    </Class>
+    <SourceLine classname="se.sics.sse.fresta.wirelessino.R$dimen" start="1653" end="1653" sourcefile="R.java" sourcepath="se/sics/sse/fresta/wirelessino/R.java" relSourcepath="build\generated\source\r\debug\se\sics\sse\fresta\wirelessino\R.java" synthetic="true">
+      <Message>At R.java:[line 1653]</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugInstance type="NM_CLASS_NAMING_CONVENTION" priority="2" rank="16" abbrev="Nm" category="BAD_PRACTICE" instanceHash="978708cc78ca2e9bef5cb060d12a58" instanceOccurrenceNum="0" instanceOccurrenceMax="0">
+    <ShortMessage>Class names should start with an upper case letter</ShortMessage>
+    <LongMessage>The class name se.sics.sse.fresta.wirelessino.R$drawable doesn&apos;t start with an upper case letter</LongMessage>
+    <Class classname="se.sics.sse.fresta.wirelessino.R$drawable" primary="true">
+      <SourceLine classname="se.sics.sse.fresta.wirelessino.R$drawable" start="1700" end="1700" sourcefile="R.java" sourcepath="se/sics/sse/fresta/wirelessino/R.java" relSourcepath="build\generated\source\r\debug\se\sics\sse\fresta\wirelessino\R.java">
+        <Message>At R.java:[line 1700]</Message>
+      </SourceLine>
+      <Message>In class se.sics.sse.fresta.wirelessino.R$drawable</Message>
+    </Class>
+    <SourceLine classname="se.sics.sse.fresta.wirelessino.R$drawable" start="1700" end="1700" sourcefile="R.java" sourcepath="se/sics/sse/fresta/wirelessino/R.java" relSourcepath="build\generated\source\r\debug\se\sics\sse\fresta\wirelessino\R.java" synthetic="true">
+      <Message>At R.java:[line 1700]</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugInstance type="NM_CLASS_NAMING_CONVENTION" priority="2" rank="16" abbrev="Nm" category="BAD_PRACTICE" instanceHash="e63b7a90bbee994a9032261501c5ca18" instanceOccurrenceNum="0" instanceOccurrenceMax="0">
+    <ShortMessage>Class names should start with an upper case letter</ShortMessage>
+    <LongMessage>The class name se.sics.sse.fresta.wirelessino.R$id doesn&apos;t start with an upper case letter</LongMessage>
+    <Class classname="se.sics.sse.fresta.wirelessino.R$id" primary="true">
+      <SourceLine classname="se.sics.sse.fresta.wirelessino.R$id" start="1758" end="1758" sourcefile="R.java" sourcepath="se/sics/sse/fresta/wirelessino/R.java" relSourcepath="build\generated\source\r\debug\se\sics\sse\fresta\wirelessino\R.java">
+        <Message>At R.java:[line 1758]</Message>
+      </SourceLine>
+      <Message>In class se.sics.sse.fresta.wirelessino.R$id</Message>
+    </Class>
+    <SourceLine classname="se.sics.sse.fresta.wirelessino.R$id" start="1758" end="1758" sourcefile="R.java" sourcepath="se/sics/sse/fresta/wirelessino/R.java" relSourcepath="build\generated\source\r\debug\se\sics\sse\fresta\wirelessino\R.java" synthetic="true">
+      <Message>At R.java:[line 1758]</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugInstance type="NM_CLASS_NAMING_CONVENTION" priority="2" rank="16" abbrev="Nm" category="BAD_PRACTICE" instanceHash="b9b824e4f7bd01ac31df11792bf1d00e" instanceOccurrenceNum="0" instanceOccurrenceMax="0">
+    <ShortMessage>Class names should start with an upper case letter</ShortMessage>
+    <LongMessage>The class name se.sics.sse.fresta.wirelessino.R$integer doesn&apos;t start with an upper case letter</LongMessage>
+    <Class classname="se.sics.sse.fresta.wirelessino.R$integer" primary="true">
+      <SourceLine classname="se.sics.sse.fresta.wirelessino.R$integer" start="1877" end="1877" sourcefile="R.java" sourcepath="se/sics/sse/fresta/wirelessino/R.java" relSourcepath="build\generated\source\r\debug\se\sics\sse\fresta\wirelessino\R.java">
+        <Message>At R.java:[line 1877]</Message>
+      </SourceLine>
+      <Message>In class se.sics.sse.fresta.wirelessino.R$integer</Message>
+    </Class>
+    <SourceLine classname="se.sics.sse.fresta.wirelessino.R$integer" start="1877" end="1877" sourcefile="R.java" sourcepath="se/sics/sse/fresta/wirelessino/R.java" relSourcepath="build\generated\source\r\debug\se\sics\sse\fresta\wirelessino\R.java" synthetic="true">
+      <Message>At R.java:[line 1877]</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugInstance type="NM_CLASS_NAMING_CONVENTION" priority="2" rank="16" abbrev="Nm" category="BAD_PRACTICE" instanceHash="b411dac5e439cc7edcfde4d2d51d6aae" instanceOccurrenceNum="0" instanceOccurrenceMax="0">
+    <ShortMessage>Class names should start with an upper case letter</ShortMessage>
+    <LongMessage>The class name se.sics.sse.fresta.wirelessino.R$layout doesn&apos;t start with an upper case letter</LongMessage>
+    <Class classname="se.sics.sse.fresta.wirelessino.R$layout" primary="true">
+      <SourceLine classname="se.sics.sse.fresta.wirelessino.R$layout" start="1880" end="1880" sourcefile="R.java" sourcepath="se/sics/sse/fresta/wirelessino/R.java" relSourcepath="build\generated\source\r\debug\se\sics\sse\fresta\wirelessino\R.java">
+        <Message>At R.java:[line 1880]</Message>
+      </SourceLine>
+      <Message>In class se.sics.sse.fresta.wirelessino.R$layout</Message>
+    </Class>
+    <SourceLine classname="se.sics.sse.fresta.wirelessino.R$layout" start="1880" end="1880" sourcefile="R.java" sourcepath="se/sics/sse/fresta/wirelessino/R.java" relSourcepath="build\generated\source\r\debug\se\sics\sse\fresta\wirelessino\R.java" synthetic="true">
+      <Message>At R.java:[line 1880]</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugInstance type="NM_CLASS_NAMING_CONVENTION" priority="2" rank="16" abbrev="Nm" category="BAD_PRACTICE" instanceHash="1b98604882f1e7ba5a83b2b4b7a234db" instanceOccurrenceNum="0" instanceOccurrenceMax="0">
+    <ShortMessage>Class names should start with an upper case letter</ShortMessage>
+    <LongMessage>The class name se.sics.sse.fresta.wirelessino.R$menu doesn&apos;t start with an upper case letter</LongMessage>
+    <Class classname="se.sics.sse.fresta.wirelessino.R$menu" primary="true">
+      <SourceLine classname="se.sics.sse.fresta.wirelessino.R$menu" start="1909" end="1909" sourcefile="R.java" sourcepath="se/sics/sse/fresta/wirelessino/R.java" relSourcepath="build\generated\source\r\debug\se\sics\sse\fresta\wirelessino\R.java">
+        <Message>At R.java:[line 1909]</Message>
+      </SourceLine>
+      <Message>In class se.sics.sse.fresta.wirelessino.R$menu</Message>
+    </Class>
+    <SourceLine classname="se.sics.sse.fresta.wirelessino.R$menu" start="1909" end="1909" sourcefile="R.java" sourcepath="se/sics/sse/fresta/wirelessino/R.java" relSourcepath="build\generated\source\r\debug\se\sics\sse\fresta\wirelessino\R.java" synthetic="true">
+      <Message>At R.java:[line 1909]</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugInstance type="NM_CLASS_NAMING_CONVENTION" priority="2" rank="16" abbrev="Nm" category="BAD_PRACTICE" instanceHash="914f4569e19aeebebce27916a6a113a7" instanceOccurrenceNum="0" instanceOccurrenceMax="0">
+    <ShortMessage>Class names should start with an upper case letter</ShortMessage>
+    <LongMessage>The class name se.sics.sse.fresta.wirelessino.R$mipmap doesn&apos;t start with an upper case letter</LongMessage>
+    <Class classname="se.sics.sse.fresta.wirelessino.R$mipmap" primary="true">
+      <SourceLine classname="se.sics.sse.fresta.wirelessino.R$mipmap" start="1912" end="1912" sourcefile="R.java" sourcepath="se/sics/sse/fresta/wirelessino/R.java" relSourcepath="build\generated\source\r\debug\se\sics\sse\fresta\wirelessino\R.java">
+        <Message>At R.java:[line 1912]</Message>
+      </SourceLine>
+      <Message>In class se.sics.sse.fresta.wirelessino.R$mipmap</Message>
+    </Class>
+    <SourceLine classname="se.sics.sse.fresta.wirelessino.R$mipmap" start="1912" end="1912" sourcefile="R.java" sourcepath="se/sics/sse/fresta/wirelessino/R.java" relSourcepath="build\generated\source\r\debug\se\sics\sse\fresta\wirelessino\R.java" synthetic="true">
+      <Message>At R.java:[line 1912]</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugInstance type="NM_CLASS_NAMING_CONVENTION" priority="2" rank="16" abbrev="Nm" category="BAD_PRACTICE" instanceHash="e2c2d09361cc4667aafa14946f2390e7" instanceOccurrenceNum="0" instanceOccurrenceMax="0">
+    <ShortMessage>Class names should start with an upper case letter</ShortMessage>
+    <LongMessage>The class name se.sics.sse.fresta.wirelessino.R$string doesn&apos;t start with an upper case letter</LongMessage>
+    <Class classname="se.sics.sse.fresta.wirelessino.R$string" primary="true">
+      <SourceLine classname="se.sics.sse.fresta.wirelessino.R$string" start="1916" end="1916" sourcefile="R.java" sourcepath="se/sics/sse/fresta/wirelessino/R.java" relSourcepath="build\generated\source\r\debug\se\sics\sse\fresta\wirelessino\R.java">
+        <Message>At R.java:[line 1916]</Message>
+      </SourceLine>
+      <Message>In class se.sics.sse.fresta.wirelessino.R$string</Message>
+    </Class>
+    <SourceLine classname="se.sics.sse.fresta.wirelessino.R$string" start="1916" end="1916" sourcefile="R.java" sourcepath="se/sics/sse/fresta/wirelessino/R.java" relSourcepath="build\generated\source\r\debug\se\sics\sse\fresta\wirelessino\R.java" synthetic="true">
+      <Message>At R.java:[line 1916]</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugInstance type="NM_CLASS_NAMING_CONVENTION" priority="2" rank="16" abbrev="Nm" category="BAD_PRACTICE" instanceHash="e9fdef84c5d690e79925027f3e0beb5d" instanceOccurrenceNum="0" instanceOccurrenceMax="0">
+    <ShortMessage>Class names should start with an upper case letter</ShortMessage>
+    <LongMessage>The class name se.sics.sse.fresta.wirelessino.R$style doesn&apos;t start with an upper case letter</LongMessage>
+    <Class classname="se.sics.sse.fresta.wirelessino.R$style" primary="true">
+      <SourceLine classname="se.sics.sse.fresta.wirelessino.R$style" start="1944" end="1944" sourcefile="R.java" sourcepath="se/sics/sse/fresta/wirelessino/R.java" relSourcepath="build\generated\source\r\debug\se\sics\sse\fresta\wirelessino\R.java">
+        <Message>At R.java:[line 1944]</Message>
+      </SourceLine>
+      <Message>In class se.sics.sse.fresta.wirelessino.R$style</Message>
+    </Class>
+    <SourceLine classname="se.sics.sse.fresta.wirelessino.R$style" start="1944" end="1944" sourcefile="R.java" sourcepath="se/sics/sse/fresta/wirelessino/R.java" relSourcepath="build\generated\source\r\debug\se\sics\sse\fresta\wirelessino\R.java" synthetic="true">
+      <Message>At R.java:[line 1944]</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugInstance type="NM_CLASS_NAMING_CONVENTION" priority="2" rank="16" abbrev="Nm" category="BAD_PRACTICE" instanceHash="8bf83e6993b86ef9981f683a6cf28f02" instanceOccurrenceNum="0" instanceOccurrenceMax="0">
+    <ShortMessage>Class names should start with an upper case letter</ShortMessage>
+    <LongMessage>The class name se.sics.sse.fresta.wirelessino.R$styleable doesn&apos;t start with an upper case letter</LongMessage>
+    <Class classname="se.sics.sse.fresta.wirelessino.R$styleable" primary="true">
+      <SourceLine classname="se.sics.sse.fresta.wirelessino.R$styleable" start="2193" end="7454" sourcefile="R.java" sourcepath="se/sics/sse/fresta/wirelessino/R.java" relSourcepath="build\generated\source\r\debug\se\sics\sse\fresta\wirelessino\R.java">
+        <Message>At R.java:[lines 2193-7454]</Message>
+      </SourceLine>
+      <Message>In class se.sics.sse.fresta.wirelessino.R$styleable</Message>
+    </Class>
+    <SourceLine classname="se.sics.sse.fresta.wirelessino.R$styleable" start="2193" end="7454" sourcefile="R.java" sourcepath="se/sics/sse/fresta/wirelessino/R.java" relSourcepath="build\generated\source\r\debug\se\sics\sse\fresta\wirelessino\R.java" synthetic="true">
+      <Message>At R.java:[lines 2193-7454]</Message>
+    </SourceLine>
+  </BugInstance>
+  <BugCategory category="BAD_PRACTICE">
+    <Description>Bad practice</Description>
+  </BugCategory>
+  <BugPattern type="NM_CLASS_NAMING_CONVENTION" abbrev="Nm" category="BAD_PRACTICE">
+    <ShortDescription>Class names should start with an upper case letter</ShortDescription>
+    <Details><![CDATA[
+
+  <p> Class names should be nouns, in mixed case with the first letter of each internal word capitalized. Try to keep your class names simple and descriptive. Use whole words-avoid acronyms and abbreviations (unless the abbreviation is much more widely used than the long form, such as URL or HTML).
+</p>
+
+    ]]></Details>
+  </BugPattern>
+  <BugCode abbrev="Nm">
+    <Description>Confusing method name</Description>
+  </BugCode>
+  <Errors errors="0" missingClasses="0"></Errors>
+  <FindBugsSummary timestamp="Fri, 27 Oct 2017 16:21:25 +0200" total_classes="56" referenced_classes="72" total_bugs="29" total_size="3060" num_packages="4" java_version="1.8.0_112-release" vm_version="25.112-b06" cpu_seconds="245.70" clock_seconds="671.09" peak_mbytes="535.93" alloc_mbytes="1246.75" gc_seconds="1.26" priority_2="29">
+    <FileStats path="android/support/constraint/R.java" bugCount="3" size="186" bugHash="a3b78914901b051a4e5f936dab3e855e"/>
+    <FileStats path="android/support/v4/R.java" bugCount="0" size="3"/>
+    <FileStats path="android/support/v7/appcompat/R.java" bugCount="12" size="1001" bugHash="20ad6abad1925927596aff0c83b001c5"/>
+    <FileStats path="se/sics/sse/fresta/wirelessino/BuildConfig.java" bugCount="0" size="11"/>
+    <FileStats path="se/sics/sse/fresta/wirelessino/Main.java" bugCount="0" size="571"/>
+    <FileStats path="se/sics/sse/fresta/wirelessino/R.java" bugCount="14" size="1249" bugHash="8252c24c8fdfd5e5c280bc70262ba21c"/>
+    <FileStats path="se/sics/sse/fresta/wirelessino/Settings.java" bugCount="0" size="39"/>
+    <PackageStats package="android.support.constraint" total_bugs="3" total_types="4" total_size="186" priority_2="3">
+      <ClassStats class="android.support.constraint.R" sourceFile="R.java" interface="false" size="3" bugs="0"/>
+      <ClassStats class="android.support.constraint.R$attr" sourceFile="R.java" interface="false" size="47" bugs="1" priority_2="1"/>
+      <ClassStats class="android.support.constraint.R$id" sourceFile="R.java" interface="false" size="12" bugs="1" priority_2="1"/>
+      <ClassStats class="android.support.constraint.R$styleable" sourceFile="R.java" interface="false" size="124" bugs="1" priority_2="1"/>
+    </PackageStats>
+    <PackageStats package="android.support.v4" total_bugs="0" total_types="1" total_size="3">
+      <ClassStats class="android.support.v4.R" sourceFile="R.java" interface="false" size="3" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="android.support.v7.appcompat" total_bugs="12" total_types="13" total_size="1001" priority_2="12">
+      <ClassStats class="android.support.v7.appcompat.R" sourceFile="R.java" interface="false" size="3" bugs="0"/>
+      <ClassStats class="android.support.v7.appcompat.R$anim" sourceFile="R.java" interface="false" size="9" bugs="1" priority_2="1"/>
+      <ClassStats class="android.support.v7.appcompat.R$attr" sourceFile="R.java" interface="false" size="172" bugs="1" priority_2="1"/>
+      <ClassStats class="android.support.v7.appcompat.R$bool" sourceFile="R.java" interface="false" size="9" bugs="1" priority_2="1"/>
+      <ClassStats class="android.support.v7.appcompat.R$color" sourceFile="R.java" interface="false" size="61" bugs="1" priority_2="1"/>
+      <ClassStats class="android.support.v7.appcompat.R$dimen" sourceFile="R.java" interface="false" size="46" bugs="1" priority_2="1"/>
+      <ClassStats class="android.support.v7.appcompat.R$drawable" sourceFile="R.java" interface="false" size="54" bugs="1" priority_2="1"/>
+      <ClassStats class="android.support.v7.appcompat.R$id" sourceFile="R.java" interface="false" size="68" bugs="1" priority_2="1"/>
+      <ClassStats class="android.support.v7.appcompat.R$integer" sourceFile="R.java" interface="false" size="4" bugs="1" priority_2="1"/>
+      <ClassStats class="android.support.v7.appcompat.R$layout" sourceFile="R.java" interface="false" size="27" bugs="1" priority_2="1"/>
+      <ClassStats class="android.support.v7.appcompat.R$string" sourceFile="R.java" interface="false" size="18" bugs="1" priority_2="1"/>
+      <ClassStats class="android.support.v7.appcompat.R$style" sourceFile="R.java" interface="false" size="238" bugs="1" priority_2="1"/>
+      <ClassStats class="android.support.v7.appcompat.R$styleable" sourceFile="R.java" interface="false" size="292" bugs="1" priority_2="1"/>
+    </PackageStats>
+    <PackageStats package="se.sics.sse.fresta.wirelessino" total_bugs="14" total_types="38" total_size="1870" priority_2="14">
+      <ClassStats class="se.sics.sse.fresta.wirelessino.BuildConfig" sourceFile="BuildConfig.java" interface="false" size="11" bugs="0"/>
+      <ClassStats class="se.sics.sse.fresta.wirelessino.Main" sourceFile="Main.java" interface="false" size="348" bugs="0"/>
+      <ClassStats class="se.sics.sse.fresta.wirelessino.Main$1" sourceFile="Main.java" interface="false" size="20" bugs="0"/>
+      <ClassStats class="se.sics.sse.fresta.wirelessino.Main$1$1" sourceFile="Main.java" interface="false" size="22" bugs="0"/>
+      <ClassStats class="se.sics.sse.fresta.wirelessino.Main$10" sourceFile="Main.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="se.sics.sse.fresta.wirelessino.Main$11" sourceFile="Main.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="se.sics.sse.fresta.wirelessino.Main$12" sourceFile="Main.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="se.sics.sse.fresta.wirelessino.Main$13" sourceFile="Main.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="se.sics.sse.fresta.wirelessino.Main$14" sourceFile="Main.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="se.sics.sse.fresta.wirelessino.Main$15" sourceFile="Main.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="se.sics.sse.fresta.wirelessino.Main$16" sourceFile="Main.java" interface="false" size="9" bugs="0"/>
+      <ClassStats class="se.sics.sse.fresta.wirelessino.Main$17" sourceFile="Main.java" interface="false" size="9" bugs="0"/>
+      <ClassStats class="se.sics.sse.fresta.wirelessino.Main$18" sourceFile="Main.java" interface="false" size="6" bugs="0"/>
+      <ClassStats class="se.sics.sse.fresta.wirelessino.Main$2" sourceFile="Main.java" interface="false" size="20" bugs="0"/>
+      <ClassStats class="se.sics.sse.fresta.wirelessino.Main$2$1" sourceFile="Main.java" interface="false" size="22" bugs="0"/>
+      <ClassStats class="se.sics.sse.fresta.wirelessino.Main$3" sourceFile="Main.java" interface="false" size="12" bugs="0"/>
+      <ClassStats class="se.sics.sse.fresta.wirelessino.Main$4" sourceFile="Main.java" interface="false" size="15" bugs="0"/>
+      <ClassStats class="se.sics.sse.fresta.wirelessino.Main$5" sourceFile="Main.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="se.sics.sse.fresta.wirelessino.Main$6" sourceFile="Main.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="se.sics.sse.fresta.wirelessino.Main$7" sourceFile="Main.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="se.sics.sse.fresta.wirelessino.Main$8" sourceFile="Main.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="se.sics.sse.fresta.wirelessino.Main$9" sourceFile="Main.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="se.sics.sse.fresta.wirelessino.R" sourceFile="R.java" interface="false" size="3" bugs="0"/>
+      <ClassStats class="se.sics.sse.fresta.wirelessino.R$anim" sourceFile="R.java" interface="false" size="9" bugs="1" priority_2="1"/>
+      <ClassStats class="se.sics.sse.fresta.wirelessino.R$attr" sourceFile="R.java" interface="false" size="216" bugs="1" priority_2="1"/>
+      <ClassStats class="se.sics.sse.fresta.wirelessino.R$bool" sourceFile="R.java" interface="false" size="9" bugs="1" priority_2="1"/>
+      <ClassStats class="se.sics.sse.fresta.wirelessino.R$color" sourceFile="R.java" interface="false" size="61" bugs="1" priority_2="1"/>
+      <ClassStats class="se.sics.sse.fresta.wirelessino.R$dimen" sourceFile="R.java" interface="false" size="48" bugs="1" priority_2="1"/>
+      <ClassStats class="se.sics.sse.fresta.wirelessino.R$drawable" sourceFile="R.java" interface="false" size="59" bugs="1" priority_2="1"/>
+      <ClassStats class="se.sics.sse.fresta.wirelessino.R$id" sourceFile="R.java" interface="false" size="120" bugs="1" priority_2="1"/>
+      <ClassStats class="se.sics.sse.fresta.wirelessino.R$integer" sourceFile="R.java" interface="false" size="4" bugs="1" priority_2="1"/>
+      <ClassStats class="se.sics.sse.fresta.wirelessino.R$layout" sourceFile="R.java" interface="false" size="30" bugs="1" priority_2="1"/>
+      <ClassStats class="se.sics.sse.fresta.wirelessino.R$menu" sourceFile="R.java" interface="false" size="4" bugs="1" priority_2="1"/>
+      <ClassStats class="se.sics.sse.fresta.wirelessino.R$mipmap" sourceFile="R.java" interface="false" size="5" bugs="1" priority_2="1"/>
+      <ClassStats class="se.sics.sse.fresta.wirelessino.R$string" sourceFile="R.java" interface="false" size="29" bugs="1" priority_2="1"/>
+      <ClassStats class="se.sics.sse.fresta.wirelessino.R$style" sourceFile="R.java" interface="false" size="240" bugs="1" priority_2="1"/>
+      <ClassStats class="se.sics.sse.fresta.wirelessino.R$styleable" sourceFile="R.java" interface="false" size="412" bugs="1" priority_2="1"/>
+      <ClassStats class="se.sics.sse.fresta.wirelessino.Settings" sourceFile="Settings.java" interface="false" size="39" bugs="0"/>
+    </PackageStats>
+    <FindBugsProfile>
+      <ClassProfile name="edu.umd.cs.findbugs.FindBugs2" totalMilliseconds="3540" invocations="2" avgMicrosecondsPerInvocation="1770035" maxMicrosecondsPerInvocation="2649187" standardDeviationMircosecondsPerInvocation="879152"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.ClassDataAnalysisEngine" totalMilliseconds="956" invocations="440" avgMicrosecondsPerInvocation="2173" maxMicrosecondsPerInvocation="45540" standardDeviationMircosecondsPerInvocation="5594"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.ClassInfoAnalysisEngine" totalMilliseconds="659" invocations="438" avgMicrosecondsPerInvocation="1505" maxMicrosecondsPerInvocation="76539" standardDeviationMircosecondsPerInvocation="5609"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.ReadReturnShouldBeChecked" totalMilliseconds="487" invocations="56" avgMicrosecondsPerInvocation="8703" maxMicrosecondsPerInvocation="466444" standardDeviationMircosecondsPerInvocation="61746"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.ValueNumberDataflowFactory" totalMilliseconds="292" invocations="127" avgMicrosecondsPerInvocation="2303" maxMicrosecondsPerInvocation="119394" standardDeviationMircosecondsPerInvocation="11425"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.TypeDataflowFactory" totalMilliseconds="256" invocations="127" avgMicrosecondsPerInvocation="2021" maxMicrosecondsPerInvocation="94466" standardDeviationMircosecondsPerInvocation="9045"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.Naming" totalMilliseconds="243" invocations="56" avgMicrosecondsPerInvocation="4354" maxMicrosecondsPerInvocation="48113" standardDeviationMircosecondsPerInvocation="9539"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.IsNullValueDataflowFactory" totalMilliseconds="240" invocations="127" avgMicrosecondsPerInvocation="1891" maxMicrosecondsPerInvocation="55455" standardDeviationMircosecondsPerInvocation="5704"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.CFGFactory" totalMilliseconds="236" invocations="128" avgMicrosecondsPerInvocation="1848" maxMicrosecondsPerInvocation="78386" standardDeviationMircosecondsPerInvocation="7773"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.MethodGenFactory" totalMilliseconds="227" invocations="128" avgMicrosecondsPerInvocation="1780" maxMicrosecondsPerInvocation="106682" standardDeviationMircosecondsPerInvocation="11052"/>
+      <ClassProfile name="edu.umd.cs.findbugs.ba.npe.NullDerefAndRedundantComparisonFinder" totalMilliseconds="210" invocations="127" avgMicrosecondsPerInvocation="1660" maxMicrosecondsPerInvocation="58060" standardDeviationMircosecondsPerInvocation="6402"/>
+      <ClassProfile name="edu.umd.cs.findbugs.DetectorToDetector2Adapter" totalMilliseconds="186" invocations="6712" avgMicrosecondsPerInvocation="27" maxMicrosecondsPerInvocation="135558" standardDeviationMircosecondsPerInvocation="1665"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FieldItemSummary" totalMilliseconds="164" invocations="72" avgMicrosecondsPerInvocation="2282" maxMicrosecondsPerInvocation="46925" standardDeviationMircosecondsPerInvocation="6535"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.UnconditionalValueDerefDataflowFactory" totalMilliseconds="155" invocations="127" avgMicrosecondsPerInvocation="1224" maxMicrosecondsPerInvocation="32885" standardDeviationMircosecondsPerInvocation="3914"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindNoSideEffectMethods" totalMilliseconds="149" invocations="72" avgMicrosecondsPerInvocation="2072" maxMicrosecondsPerInvocation="32347" standardDeviationMircosecondsPerInvocation="4994"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.DumbMethods" totalMilliseconds="128" invocations="56" avgMicrosecondsPerInvocation="2301" maxMicrosecondsPerInvocation="98571" standardDeviationMircosecondsPerInvocation="13031"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindUselessObjects" totalMilliseconds="128" invocations="56" avgMicrosecondsPerInvocation="2298" maxMicrosecondsPerInvocation="79281" standardDeviationMircosecondsPerInvocation="11469"/>
+    </FindBugsProfile>
+  </FindBugsSummary>
+  <ClassFeatures></ClassFeatures>
+  <History></History>
+</BugCollection>
