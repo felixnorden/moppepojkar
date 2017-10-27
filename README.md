@@ -27,6 +27,7 @@ The following links can be used for navigation throughout the repository:
 
 - [Learnings from LEGO-exercise](./documentation/scrum-learnings/)
 - [Half-time reflection](./documentation/half-way-reflection.md)
+- [Report, final assessment](./documentation/Rapport_DAT255_MOPED___12_Moppepojkar.pdf)
 
 
 ## Team members
