@@ -14,6 +14,8 @@ The following links can be used for navigation throughout the repository:
 - [Code Quality](./documentation/code-quality.md)
 - [Definition of Done](./documentation/definition-of-done.md)
 - [UML](./documentation/uml/)
+- [Retrospective results](./documentation/retrospectives-results.md)
+- [FindBugs report](./documentation/FindBugsReport.md)
 
 #### Guidelines & Templates
 
