@@ -2,6 +2,8 @@
 
 [Back to top](../README.md)
 
+# Findbugs output from Moped package 
+
 FindBugs-IDEA: found 0 bugs in 76 classes
 using FindBugs-IDEA 1.0.1 with Findbugs version 3.0.1
 
@@ -98,3 +100,7 @@ C:\Users\USER_FOLDER\IdeaProjects\moppepojkar\src\moped\target\test-classes\util
 Aux Classpath Entries (2)
 C:/Users/USER_FOLDER/IdeaProjects/moppepojkar/src/moped/target/classes
 C:/Users/USER_FOLDER/IdeaProjects/moppepojkar/src/moped/target/test-classes
+
+# Disclaimer
+FindBugs used is: FindBugs-IDEA 1.0.1 with Findbugs version 3.0.1
+We have used the default settings in FindBugs's Intellij plugin as the developers of FindBugs have a better idea what settings should be used.
